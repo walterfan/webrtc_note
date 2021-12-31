@@ -36,6 +36,6 @@ def make_note():
 def publish_note():
     local("touch ./build/html/.nojekyll")
     local("git add source")
-    local("git add build")
+    local("git add -f build")
     local('git commit -m "update notes"')
     local("git subtree push --prefix ./build/html origin gh-pages")
