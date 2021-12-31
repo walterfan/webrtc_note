@@ -38,4 +38,4 @@ def publish_note():
     local("git add source")
     local("git add -f build")
     local('git commit -m "update notes"')
-    local("git subtree push --prefix ./build/html origin gh-pages")
+    local("git subtree push --prefix build/html origin gh-pages")
