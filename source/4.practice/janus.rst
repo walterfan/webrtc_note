@@ -3,9 +3,22 @@ Janus Gateway
 ###################
 
 
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
+
+============ ==========================
+**Abstract** Janus gateway
+**Authors**  Walter Fan
+**Status**   WIP
+**Updated**  |date|
+============ ==========================
+
+.. |date| date::
 
 .. contents::
-    :local:
+   :local:
+
 
 Overview
 ========================
