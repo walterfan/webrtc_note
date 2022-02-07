@@ -110,6 +110,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#transport-wide-rtcp-feedback-message">Transport-wide RTCP Feedback Message</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#receive-delta">Receive Delta</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sender-bandwidth-estimation">Sender Bandwidth Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#evaluation">Evaluation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">参考资料</a></li>
 </ul>
 </li>
@@ -224,7 +225,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-01-04</p></td>
+<td><p>2022-02-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -252,7 +253,12 @@
 <li><p><a class="reference internal" href="#bandwidth-estimator" id="id16">Bandwidth estimator</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id3" id="id17">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#evaluation" id="id17">Evaluation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#use-ns-3-to-simulate-gcc-work" id="id18">use ns-3 to simulate gcc work</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id19">参考资料</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
@@ -467,9 +473,57 @@
 <p>第 i 个包组的单向延迟变化 One-Way Delay Variation 计算如下</p>
 <div class="math notranslate nohighlight">
 \[d_i = (G_i.complete\_time - G_{i-1}.complete\_time)\]</div>
+<p>那么其累积</p>
 </div>
 <div class="section" id="overuse-detector">
 <h3><a class="toc-backref" href="#id14">Overuse detector</a><a class="headerlink" href="#overuse-detector" title="Permalink to this headline">¶</a></h3>
+<p>对于带宽的使用，有三种状态：</p>
+<ol class="arabic simple">
+<li><p>Normal 正常使用</p></li>
+<li><p>Underusing 不足使用</p></li>
+<li><p>Overusing  过度使用</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="k">class</span> <span class="nc">BandwidthUsage</span> <span class="p">{</span>
+  <span class="n">kBwNormal</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">kBwUnderusing</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">kBwOverusing</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">kLast</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>对于网络状态的预测主要是根据网络的度量指标:</p>
+<ol class="arabic simple">
+<li><p>延迟梯度 m(t_i)</p></li>
+<li><p>丢包率 l(t_i)</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}m(t_i) &gt; \gamma (t_i) : overuse\\m(t_i) &lt; \gamma (t_i) : underuse\\\gamma (t_i) \le m(t_i) \le  \gamma (t_i): normal\end{aligned}\end{align} \]</div>
+<p>这个阈值的设置很关键，GCC 采用了一种 Adaptive threshold 自适应的阈值</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\gamma (t_i) = \gamma(t_{i−1}) + \Delta T · k_\gamma (t_i)(|m(t_i)| − \gamma(t{i−1}))
+</pre></div>
+</div>
+<p><span class="math notranslate nohighlight">\(k_\gamma\)</span> 代表阈值</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">k_</span>\<span class="n">gamma</span> <span class="p">(</span><span class="n">t_i</span><span class="p">)</span> <span class="o">=</span> \<span class="n">begin</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
+  <span class="o">&amp;</span> \<span class="n">text</span><span class="p">{</span> <span class="n">k_d</span> <span class="k">if</span> <span class="p">}</span> <span class="o">|</span><span class="n">m</span><span class="p">(</span><span class="n">t_i</span><span class="p">)</span><span class="o">|</span>  <span class="o">&lt;</span> \<span class="n">gamma</span> <span class="p">(</span><span class="n">t_</span><span class="p">{</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">})</span> \\
+  <span class="o">&amp;</span> \<span class="n">text</span><span class="p">{</span> <span class="n">k_u</span> <span class="k">if</span> <span class="p">}</span> <span class="n">otherwise</span>
+\<span class="n">end</span><span class="p">{</span><span class="n">cases</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>在 GCC 草案中 <span class="math notranslate nohighlight">\(k_d\)</span> 取值为 0.00018, <span class="math notranslate nohighlight">\(k_u\)</span> 取值为 0.01</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NetworkStatePredictor</span> <span class="p">{</span>
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">virtual</span> <span class="o">~</span><span class="n">NetworkStatePredictor</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="o">//</span> <span class="n">Returns</span> <span class="n">current</span> <span class="n">network</span> <span class="n">state</span> <span class="n">prediction</span><span class="o">.</span>
+  <span class="o">//</span> <span class="n">Inputs</span><span class="p">:</span>  <span class="n">send_time_ms</span> <span class="o">-</span> <span class="n">packet</span> <span class="n">send</span> <span class="n">time</span><span class="o">.</span>
+  <span class="o">//</span>          <span class="n">arrival_time_ms</span> <span class="o">-</span> <span class="n">packet</span> <span class="n">arrival</span> <span class="n">time</span><span class="o">.</span>
+  <span class="o">//</span>          <span class="n">network_state</span> <span class="o">-</span> <span class="n">computed</span> <span class="n">network</span> <span class="n">state</span><span class="o">.</span>
+  <span class="n">virtual</span> <span class="n">BandwidthUsage</span> <span class="n">Update</span><span class="p">(</span><span class="n">int64_t</span> <span class="n">send_time_ms</span><span class="p">,</span>
+                                <span class="n">int64_t</span> <span class="n">arrival_time_ms</span><span class="p">,</span>
+                                <span class="n">BandwidthUsage</span> <span class="n">network_state</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="aimd-controller">
 <h3><a class="toc-backref" href="#id15">AIMD controller</a><a class="headerlink" href="#aimd-controller" title="Permalink to this headline">¶</a></h3>
@@ -478,8 +532,38 @@
 <h3><a class="toc-backref" href="#id16">Bandwidth estimator</a><a class="headerlink" href="#bandwidth-estimator" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
+<div class="section" id="evaluation">
+<h2><a class="toc-backref" href="#id17">Evaluation</a><a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="use-ns-3-to-simulate-gcc-work">
+<h3><a class="toc-backref" href="#id18">use ns-3 to simulate gcc work</a><a class="headerlink" href="#use-ns-3-to-simulate-gcc-work" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>edit /etc/profile</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export WEBRTC_LIB=/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib
+export LD_LIBRARY_PATH=$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp:$LD_LIBRARY_PATH
+export CPLUS_INCLUDE_PATH=CPLUS_INCLUDE_PATH:$WEBRTC_LIB/webrtc/:$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>edit webrtc-ns3/wscript</p></li>
+</ol>
+<p>The path about the headers and so libs in wscript(under webrtc-ns3) should also be changed accordingly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conf</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">append_value</span><span class="p">(</span><span class="s1">&#39;INCLUDES&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/&#39;</span><span class="p">])</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">append_value</span><span class="p">(</span><span class="s2">&quot;LINKFLAGS&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/system_wrappers&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/rtc_base&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/api&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/logging&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/utility&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/pacing&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/congestion_controller&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/bitrate_controller&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/remote_bitrate_estimator&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/rtp_rtcp&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>put these modules to /home/walter/workspace/webrtc/ns-allinone-3.35/ns-3.35/src</p></li>
+</ol>
+<ul class="simple">
+<li><p>mystrace</p></li>
+<li><p>webrtc-ns3</p></li>
+<li><p>multipathvid</p></li>
+</ul>
+</div>
+</div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id17">参考资料</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">参考资料</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-holmer-rmcat-transport-wide-cc-extensions-01">RTP Extensions for Transport-wide Congestion Control (draft-holmer-rmcat-transport-wide-cc-extensions-01)</a></p></li>
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/8a8ad2f8170d0072941c2aa9e">Webrtc Rtp/rtcp</a></p></li>

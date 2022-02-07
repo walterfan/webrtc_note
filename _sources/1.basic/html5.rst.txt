@@ -2,39 +2,8 @@
 HTML5 for WebRTC
 ########################
 
-.. include:: ../links.ref
-.. include:: ../tags.ref
-.. include:: ../abbrs.ref
-
-============ =============
-**Abstract** Opus Codec review
-**Authors**  Walter Fan
-**Status**   WIP
-**Updated**  |date|
-============ =============
-
-.. |date| date::
-
 .. contents::
-   :local:
-
-概述
-=============
-
-Html5 为 WebRTC 的落地提供了坚实的基础，除了 WebRTC 报需要的三大 API
-
-* MediaDevices
-* MediaStream
-* RTCPeerConnection
-* RTCDataChannel
-
-
-它还提供了
-
-1. video element
-2. audio element
-3. canvas and 2d/3d context
-4. audio context and nodes
+    :local:
 
 
 Audio Element
@@ -45,8 +14,12 @@ Audio Element
     <audio src="xxx.mp3" controls autoplay> </audio>
 
 
-Audio Context
+Audio API
 ---------------------
+
+refer to `Audio API`_
+
+.. _Audio API: audio_api.html
 
 Video Element
 =======================
@@ -162,3 +135,18 @@ Canvas and image
         context.fillStyle = "black";
         context.fillText("I'm happy on web");
     }
+
+
+Web Worker
+=================
+
+Web worker 实现了 Web JS 中的多线程支持
+
+1. Dedicated Worker: 只能被首次生成它的脚本使用
+2. Shared Worker： 可以同时被多个脚本使用
+
+* 构造函数
+  
+.. code-block::
+
+  const myWorker = new Worker(aUrl, options)

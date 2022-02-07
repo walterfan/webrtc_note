@@ -99,6 +99,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebAssebly</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">简介</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">核心原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simd">SIMD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -107,9 +108,13 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_source.html">WebRTC 源码分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test suite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coturn.html">coturn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apprtc.html">AppRTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="janus.html">Janus Gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code.html">Janus Code analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mediasoup.html">MediaSoup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pion.html">Pion`</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../5.tool/index.html">5. WebRTC 工具</a></li>
@@ -199,7 +204,22 @@
 </div>
 <div class="section" id="id2">
 <h2>核心原理<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>Web 接口</p>
+<p>Wasm 二进制模块以 magic number 和 version 开头, 之后的内容存放在不同的段 segment 中
+Wasm 规范共定义了 12 种段 , 并分配了不同的 ID</p>
+<ol class="arabic simple">
+<li><p>类型段(ID=1)</p></li>
+<li><p>导入(ID=2)和导出段(ID=7)</p></li>
+<li><p>函数(ID=3)和代码(ID=10)段</p></li>
+<li><p>表(ID=4)和元素(ID=9)段</p></li>
+<li><p>内存(ID=5)和数据(ID=11)段</p></li>
+<li><p>全局段(ID=6)</p></li>
+<li><p>起始段(ID=8)</p></li>
+<li><p>自定义段(ID=0)</p></li>
+</ol>
+<p>Wasm 的特点是可以流式处理,边下载,边解码,验证和编译</p>
+</div>
+<div class="section" id="simd">
+<h2>SIMD<a class="headerlink" href="#simd" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
