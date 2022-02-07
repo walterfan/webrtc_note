@@ -33,12 +33,35 @@ AGC的调整分为模拟部分(AAGC)和数字部分(DAGC)，模拟部分是麦�
    :alt: AGC flow
 
 
-1. Calculate the short-term mean and variance, describe the instantaneous change of the voice envelope, which can accurately reflect the voice envelope,
+* Calculate the short-term mean and variance, describe the instantaneous change of the voice envelope, which can accurately reflect the voice envelope,
+
+* Calculate the long-term mean and variance, describe the overall slow change trend of the signal, outline the "center of gravity" of the signal, and it is more smooth to use the threshold as the detection condition, such as Figure 2 left blue curve ;
+
+* Calculate the standard score and describe the deviation of the short-term average from the "center of gravity". The part above the center can be considered as having a great possibility of voice activity;
 
 
-Calculate the long-term mean and variance, describe the overall slow change trend of the signal, outline the "center of gravity" of the signal, and it is more smooth to use the threshold as the detection condition, such as Figure 2 left blue curve ;
+Glossary
+=====================
+audio level
+--------------------
 
-Calculate the standard score and describe the deviation of the short-term average from the "center of gravity". The part above the center can be considered as having a great possibility of voice activity;
+
+single talk
+--------------------
+
+multiple talk
+--------------------
+
+boost volume
+--------------------
+
+
+Key points
+====================
+AAGC/DAGC supported by  
+
+
+
 
 Reference
 ===================

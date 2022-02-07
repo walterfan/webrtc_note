@@ -299,9 +299,75 @@ Trendline filter
 
   d_i = (G_i.complete\_time - G_{i-1}.complete\_time)
 
+那么其累积
+
 
 Overuse detector
 -----------------------------------------
+
+对于带宽的使用，有三种状态：
+
+1) Normal 正常使用 
+2) Underusing 不足使用
+3) Overusing  过度使用
+
+.. code-block::
+
+  enum class BandwidthUsage {
+    kBwNormal = 0, 
+    kBwUnderusing = 1,
+    kBwOverusing = 2,
+    kLast
+  };
+
+
+对于网络状态的预测主要是根据网络的度量指标:
+
+1) 延迟梯度 m(t_i)
+2) 丢包率 l(t_i)
+
+.. math::
+
+  m(t_i) > \gamma (t_i) : overuse
+
+  m(t_i) < \gamma (t_i) : underuse
+
+  \gamma (t_i) \le m(t_i) \le  \gamma (t_i): normal
+
+   
+这个阈值的设置很关键，GCC 采用了一种 Adaptive threshold 自适应的阈值
+
+.. code-block::
+
+  \gamma (t_i) = \gamma(t_{i−1}) + \Delta T · k_\gamma (t_i)(|m(t_i)| − \gamma(t{i−1}))
+
+
+:math:`k_\gamma` 代表阈值
+
+.. code-block::
+
+  k_\gamma (t_i) = \begin{cases}
+    & \text{ k_d if } |m(t_i)|  < \gamma (t_{i-1}) \\
+    & \text{ k_u if } otherwise
+  \end{cases}
+
+在 GCC 草案中 :math:`k_d` 取值为 0.00018, :math:`k_u` 取值为 0.01
+  
+.. code-block::
+
+  class NetworkStatePredictor {
+  public:
+    virtual ~NetworkStatePredictor() {}
+
+    // Returns current network state prediction.
+    // Inputs:  send_time_ms - packet send time.
+    //          arrival_time_ms - packet arrival time.
+    //          network_state - computed network state.
+    virtual BandwidthUsage Update(int64_t send_time_ms,
+                                  int64_t arrival_time_ms,
+                                  BandwidthUsage network_state) = 0;
+  };
+
 
 
 AIMD controller
@@ -310,6 +376,39 @@ AIMD controller
 
 Bandwidth estimator
 -----------------------------------------
+
+
+
+Evaluation
+=================================================
+
+use ns-3 to simulate gcc work
+-----------------------------------
+
+
+* edit /etc/profile
+
+.. code-block::
+
+  export WEBRTC_LIB=/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib
+  export LD_LIBRARY_PATH=$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp:$LD_LIBRARY_PATH  
+  export CPLUS_INCLUDE_PATH=CPLUS_INCLUDE_PATH:$WEBRTC_LIB/webrtc/:$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp 
+
+#. edit webrtc-ns3/wscript
+
+The path about the headers and so libs in wscript(under webrtc-ns3) should also be changed accordingly:
+
+.. code-block::
+
+  conf.env.append_value('INCLUDES', ['/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/'])
+  conf.env.append_value("LINKFLAGS", ['-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/system_wrappers','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/rtc_base','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/api','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/logging','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/utility','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/pacing','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/congestion_controller','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/bitrate_controller','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/remote_bitrate_estimator','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/rtp_rtcp'])
+
+#. put these modules to /home/walter/workspace/webrtc/ns-allinone-3.35/ns-3.35/src
+
+* mystrace
+* webrtc-ns3
+* multipathvid
+
 
 
 参考资料

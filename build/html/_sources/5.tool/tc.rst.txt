@@ -58,3 +58,4 @@ Linux Traffic Control
 ==========================
 * https://netbeez.net/blog/how-to-use-the-linux-traffic-control/
 * https://man7.org/linux/man-pages/man8/tc.8.html
+* https://www.cs.unm.edu/~crandall/netsfall13/TCtutorial.pdf
