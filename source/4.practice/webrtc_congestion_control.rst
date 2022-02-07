@@ -23,6 +23,51 @@ WebRTC Congestion Control
 Overview
 =============
 
+
+Receiver side congestion controller
+------------------------------------------
+从 https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller/BUILD.gn 可以看出以下的代码结构
+
+.. code-block::
+
+    rtc_library("congestion_controller") {
+      visibility = [ "*" ]
+      configs += [ ":bwe_test_logging" ]
+      sources = [
+        "include/receive_side_congestion_controller.h",
+        "receive_side_congestion_controller.cc",
+        "remb_throttler.cc",
+        "remb_throttler.h",
+      ]
+
+      deps = [
+        "..:module_api",
+        "../../api/transport:field_trial_based_config",
+        "../../api/transport:network_control",
+        "../../api/units:data_rate",
+        "../../api/units:time_delta",
+        "../../api/units:timestamp",
+        "../../rtc_base/synchronization:mutex",
+        "../pacing",
+        "../remote_bitrate_estimator",
+        "../rtp_rtcp:rtp_rtcp_format",
+      ]
+
+
+sender side congestion controller
+------------------------------------------
+
+从 https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller/goog_cc/BUILD.gn 可以看出以下的代码结构
+
+google congestion controller:
+
+* alr_detector
+* delay_based_bwe
+* estimators
+* probe_controller
+* pushback_controller
+* send_side_bwe
+
 Code
 =============
 

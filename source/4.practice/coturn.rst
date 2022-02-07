@@ -1,5 +1,5 @@
 ######################
-Coturn
+coturn
 ######################
 
 
@@ -8,7 +8,7 @@ Coturn
 .. include:: ../abbrs.ref
 
 ============ =============================
-**Abstract** Janus gateway code analysis
+**Abstract** coturn
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|
