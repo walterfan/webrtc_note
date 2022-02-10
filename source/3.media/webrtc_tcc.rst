@@ -299,7 +299,92 @@ Trendline filter
 
   d_i = (G_i.complete\_time - G_{i-1}.complete\_time)
 
-那么其累积
+通过对接收和发送的延迟的变化，计算拥塞延迟的变化趋势的斜率 (slope), 这里用到了最小二乘法
+
+.. math::
+
+  k = \sum (x_i-x_{avg})(y_i-y_{avg}) / \sum (x_i-x_{avg})^2
+
+
+TrendlineEstimator configuration:
+
+* **window_size** is the number of points required to compute a trend line.
+* **smoothing_coef** controls how much we smooth out the delay before fitting the trend line. 
+* **threshold_gain** is used to scale the trendline slope for comparison to the old threshold. Once the old estimator has been removed (or the thresholds been merged into the estimators), we can just set the threshold instead of setting a gain.
+
+main methods:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code::
+
+
+  // Returns the estimated trend k multiplied by some gain.
+  // 0 < k < 1   ->  the delay increases, queues are filling up
+  //   k == 0    ->  the delay does not change
+  //   k < 0     ->  the delay decreases, queues are being emptied
+  double trendline_slope() const { return trendline_ * threshold_gain_; }
+
+  // Update the estimator with a new sample. The deltas should represent deltas
+  // between timestamp groups as defined by the InterArrival class.
+  void Update(double recv_delta_ms,
+                                double send_delta_ms,
+                                int64_t arrival_time_ms) {
+    const double delta_ms = recv_delta_ms - send_delta_ms;
+    ++num_of_deltas_;
+    if (num_of_deltas_ > kDeltaCounterMax)
+      num_of_deltas_ = kDeltaCounterMax;
+    if (first_arrival_time_ms == -1)
+      first_arrival_time_ms = arrival_time_ms;
+
+    // Exponential backoff filter. -- 指数退避滤波器
+    accumulated_delay_ += delta_ms;
+    BWE_TEST_LOGGING_PLOT(1, "accumulated_delay_ms", arrival_time_ms,
+                          accumulated_delay_);
+    smoothed_delay_ = smoothing_coef_ * smoothed_delay_ +
+                      (1 - smoothing_coef_) * accumulated_delay_;
+    BWE_TEST_LOGGING_PLOT(1, "smoothed_delay_ms", arrival_time_ms,
+                          smoothed_delay_);
+
+    // Simple linear regression. -- 简单线性回归
+    delay_hist_.push_back(std::make_pair(
+        static_cast<double>(arrival_time_ms - first_arrival_time_ms),
+        smoothed_delay_));
+    if (delay_hist_.size() > window_size_)
+      delay_hist_.pop_front();
+    if (delay_hist_.size() == window_size_) {
+      // Only update trendline_ if it is possible to fit a line to the data.
+      trendline_ = LinearFitSlope(delay_hist_).value_or(trendline_);
+    }
+
+    BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
+  }
+
+  //计算线性回归的斜率，传入的是一个列表，其元素是一对数据：
+  //x 是到达时间的延迟: 组内最后一个包的到达时间 - 组内第一个包的到达时间
+  //y 是 OWDV 单向延迟变化: RTP 包组的接收延迟变化 - 发送延迟变化
+  rtc::Optional<double> LinearFitSlope(
+      const std::deque<std::pair<double, double>>& points) {
+    RTC_DCHECK(points.size() >= 2);
+    // Compute the "center of mass".
+    double sum_x = 0;
+    double sum_y = 0;
+    for (const auto& point : points) {
+      sum_x += point.first;
+      sum_y += point.second;
+    }
+    double x_avg = sum_x / points.size();
+    double y_avg = sum_y / points.size();
+    // Compute the slope k = \sum (x_i-x_avg)(y_i-y_avg) / \sum (x_i-x_avg)^2
+    double numerator = 0;
+    double denominator = 0;
+    for (const auto& point : points) {
+      numerator += (point.first - x_avg) * (point.second - y_avg);
+      denominator += (point.first - x_avg) * (point.first - x_avg);
+    }
+    if (denominator == 0)
+      return rtc::Optional<double>();
+    return rtc::Optional<double>(numerator / denominator);
+  }
 
 
 Overuse detector
@@ -337,14 +422,14 @@ Overuse detector
    
 这个阈值的设置很关键，GCC 采用了一种 Adaptive threshold 自适应的阈值
 
-.. code-block::
+.. math::
 
   \gamma (t_i) = \gamma(t_{i−1}) + \Delta T · k_\gamma (t_i)(|m(t_i)| − \gamma(t{i−1}))
 
 
 :math:`k_\gamma` 代表阈值
 
-.. code-block::
+.. math::
 
   k_\gamma (t_i) = \begin{cases}
     & \text{ k_d if } |m(t_i)|  < \gamma (t_{i-1}) \\
@@ -353,21 +438,6 @@ Overuse detector
 
 在 GCC 草案中 :math:`k_d` 取值为 0.00018, :math:`k_u` 取值为 0.01
   
-.. code-block::
-
-  class NetworkStatePredictor {
-  public:
-    virtual ~NetworkStatePredictor() {}
-
-    // Returns current network state prediction.
-    // Inputs:  send_time_ms - packet send time.
-    //          arrival_time_ms - packet arrival time.
-    //          network_state - computed network state.
-    virtual BandwidthUsage Update(int64_t send_time_ms,
-                                  int64_t arrival_time_ms,
-                                  BandwidthUsage network_state) = 0;
-  };
-
 
 
 AIMD controller

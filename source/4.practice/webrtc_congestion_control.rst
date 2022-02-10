@@ -23,7 +23,6 @@ WebRTC Congestion Control
 Overview
 =============
 
-<<<<<<< HEAD
 
 Receiver side congestion controller
 ------------------------------------------
@@ -71,10 +70,6 @@ google congestion controller:
 
 Code
 =============
-=======
-main interface
-=================================
->>>>>>> cc6ea54130f42bc5b1cc07490f9e1c8fbc95697b
 
 
 .. code-block:: c++
