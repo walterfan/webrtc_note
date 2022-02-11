@@ -360,8 +360,8 @@ main methods:
   }
 
   //计算线性回归的斜率，传入的是一个列表，其元素是一对数据：
-  //x 是到达时间的延迟: 组内最后一个包的到达时间 - 组内第一个包的到达时间
-  //y 是 OWDV 单向延迟变化: RTP 包组的接收延迟变化 - 发送延迟变化
+  //x 是到达时间 arrival_time_ms: 组内最后一个包的到达时间 - 组内第一个包的到达时间
+  //y 是 OWDV=recv_delta_ms - send_delta_ms 单向延迟变化: RTP 包组的接收延迟变化 - 发送延迟变化
   rtc::Optional<double> LinearFitSlope(
       const std::deque<std::pair<double, double>>& points) {
     RTC_DCHECK(points.size() >= 2);
@@ -442,7 +442,7 @@ Overuse detector
 
 AIMD controller
 -----------------------------------------
-
+A rate control implementation based on additive increases of bitrate when no over-use is detected and multiplicative decreases when over-uses are detected. 
 
 Bandwidth estimator
 -----------------------------------------
