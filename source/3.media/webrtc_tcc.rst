@@ -293,26 +293,59 @@ Sender Bandwidth Estimation
 Trendline filter
 -----------------------------------------
 
-第 i 个包组的单向延迟变化 One-Way Delay Variation 计算如下
+第 i 个包组的单向延迟变化 OWDV (One-Way Delay Variation) 计算如下, 即到达时间差减去发送时间差
 
 .. math::
 
-  d_i = (G_i.complete\_time - G_{i-1}.complete\_time)
+  inter_arrival_time = t(i) - t(i-1)
 
-通过对接收和发送的延迟的变化，计算拥塞延迟的变化趋势的斜率 (slope), 这里用到了最小二乘法
+  inter_departure_time = T(i) - T(i-1)
+
+  d(i) = t(i) - t(i-1) - (T(i) - T(i-1))
+
+
+通过对接收和发送的延迟的变化，计算拥塞延迟的变化趋势的斜率 (slope), 这里用到了指数平滑算法和最小二乘法
+
+
+EWMA（Exponentially Weighted Moving Average ）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EWMA 指数加权移动平滑法（Exponential Smoothing） 是在移动平均法基础上发展起来的一种时间序列分析预测法.
+
+具体解释参见 https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc431.htm
+
+.. math::
+
+  S_t = \alpha y_{t-1} + (1-\alpha)S_{t-1} \,\,\,\,\,\,\, 0 < \alpha \le 1 \,\,\,\,\,\,\, t \ge 3 \, .
+
+最小二乘法(Least Squars Method)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+具体算法参见 https://en.wikipedia.org/wiki/Numerical_methods_for_linear_least_square
+和 https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95
 
 .. math::
 
   k = \sum (x_i-x_{avg})(y_i-y_{avg}) / \sum (x_i-x_{avg})^2
 
 
-TrendlineEstimator configuration:
+TrendlineEstimator configuration - 其配置中主要指定了如下三个参数
 
-* **window_size** is the number of points required to compute a trend line.
-* **smoothing_coef** controls how much we smooth out the delay before fitting the trend line. 
-* **threshold_gain** is used to scale the trendline slope for comparison to the old threshold. Once the old estimator has been removed (or the thresholds been merged into the estimators), we can just set the threshold instead of setting a gain.
+* 窗口大小 **window_size** is the number of points required to compute a trend line. 
+  收到多少个包组后开始计算趋势
+* 平滑系数 **smoothing_coef** controls how much we smooth out the delay before fitting the trend line. 
+  在拟合趋势线前进行指数平滑的系数 
+* 阈值增益 **threshold_gain** is used to scale the trendline slope for comparison to the old threshold. Once the old estimator has been removed (or the thresholds been merged into the estimators), we can just set the threshold instead of setting a gain.
+  用于缩放趋势线斜率以与旧阈值进行比较。 一旦旧的估计器被删除（或阈值被合并到估计器中），我们可以只设置阈值而不设置增益。
 
-main methods:
+
+  下面是 WebRTC 中这三个参数的默认值。
+
+.. code-block::
+
+  constexpr size_t kDefaultTrendlineWindowSize = 20;
+  constexpr double kDefaultTrendlineSmoothingCoeff = 0.9;
+  constexpr double kDefaultTrendlineThresholdGain = 4.0;
+
+code analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code::
@@ -444,6 +477,24 @@ AIMD controller
 -----------------------------------------
 A rate control implementation based on additive increases of bitrate when no over-use is detected and multiplicative decreases when over-uses are detected. 
 
+
+AIMD 算法来源于 TCP 协议,参见 https://en.wikipedia.org/wiki/Additive_increase/multiplicative_decrease
+
+.. code-block::
+
+   +----+--------+-----------+------------+--------+
+   |     \ State |   Hold    |  Increase  |Decrease|
+   |      \      |           |            |        |
+   | Signal\     |           |            |        |
+   +--------+----+-----------+------------+--------+
+   |  Over-use   | Decrease  |  Decrease  |        |
+   +-------------+-----------+------------+--------+
+   |  Normal     | Increase  |            |  Hold  |
+   +-------------+-----------+------------+--------+
+   |  Under-use  |           |   Hold     |  Hold  |
+   +-------------+-----------+------------+--------+
+
+
 Bandwidth estimator
 -----------------------------------------
 
@@ -484,5 +535,6 @@ The path about the headers and so libs in wscript(under webrtc-ns3) should also 
 参考资料
 ==================================================
 * `RTP Extensions for Transport-wide Congestion Control (draft-holmer-rmcat-transport-wide-cc-extensions-01) <https://datatracker.ietf.org/doc/html/draft-holmer-rmcat-transport-wide-cc-extensions-01>`_
+* `A Google Congestion Control Algorithm for Real-Time Communication <https://datatracker.ietf.org/doc/html/draft-ietf-rmcat-gcc-02>`_
 * `Webrtc Rtp/rtcp  <https://xie.infoq.cn/article/8a8ad2f8170d0072941c2aa9e>`_
 * `webrtc 即时带宽评估器 BitrateEstimator <https://xie.infoq.cn/article/2f944089023274ef0ac6eabd8>`_
