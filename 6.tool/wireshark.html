@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>wireshark &mdash; webrtc_tutorial 1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Network Simulator" href="network_simulator.html" />
+    <link rel="prev" title="tcpdump" href="tcpdump.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 工具</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 常用工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Devtools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netcat.html">netcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scapy.html">scapy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sox.html">SoX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ffmpeg.html">FFmpeg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tc.html">Linux Traffic Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf.html">Linux Performance tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcpdump.html">tcpdump</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">wireshark</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capturing-rtp-streams">Capturing RTP streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capturing-turn-rtp-streams">Capturing TURN RTP streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="network_simulator.html">Network Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">5. WebRTC 工具</a> &raquo;</li>
+        
+      <li>wireshark</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/6.tool/wireshark.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="wireshark">
+<h1>wireshark<a class="headerlink" href="#wireshark" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>wireshark</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>v1</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-02-13</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#capturing-rtp-streams" id="id2">Capturing RTP streams</a></p></li>
+<li><p><a class="reference internal" href="#capturing-turn-rtp-streams" id="id3">Capturing TURN RTP streams</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id4">Reference</a></p></li>
+</ul>
+</div>
+<div class="section" id="capturing-rtp-streams">
+<h2><a class="toc-backref" href="#id2">Capturing RTP streams</a><a class="headerlink" href="#capturing-rtp-streams" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Select the network interface currently used for RTP traffic and start a capture.</p></li>
+<li><p>Right click on any package in the capture view and select Decode as.</p></li>
+<li><p>Make sure Both (src/dst port &lt;&gt; src/dst port) is selected in the drop-down menu.</p></li>
+<li><p>On the right scroll down to and select RTP then click OK.</p></li>
+<li><p>RTP packets should now be visible with SSRC details in the info column.</p>
+<ul class="simple">
+<li><p>If Unknown RTP version 0 appears its most likely not a RTP packet.</p></li>
+<li><p>If Unknown RTP version 1 appears it’s most likely RTP encapsulated in a TURN packet, see the Capturing TURN RTP streams section on how to capture them properly.</p></li>
+</ul>
+</li>
+<li><p>Go to the Telephony menu and select RTP then Show All Streams.</p></li>
+<li><p>A popup window should appear with lots of RTP streams.</p></li>
+<li><p>The RTP payload types indicate which codec is in use. For payload types between 96 and 128, they are assigned in the SDP negotiation setting up the RTP streams, but browsers typically have preferred values.</p></li>
+</ol>
+<p>The ones we are interested in typically have a payload type 96 (VP8 in Chrome), 111 (Opus in Chrome) and 127 (VP8 with RED in Chrome). Firefox and Opera may have different payload types for VP8 etc.</p>
+<p>Sorting by number of packets is usually a good approach to filter out the relevant streams.</p>
+<ol class="arabic simple" start="9">
+<li><p>If an rtcdump file is desired select a stream and click Save As.</p></li>
+</ol>
+</div>
+<div class="section" id="capturing-turn-rtp-streams">
+<h2><a class="toc-backref" href="#id3">Capturing TURN RTP streams</a><a class="headerlink" href="#capturing-turn-rtp-streams" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>First we need to enable the Try to decode RTP outside of conversations option.</p></li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>In Wireshark press Shift+Ctrl+p to bring up the preferences window.</p></li>
+<li><p>In the menu to the left, expand protocols.</p></li>
+<li><p>Scroll down to RTP.</p></li>
+<li><p>Check the Try to decode RTP outside of conversations checkbox.</p></li>
+<li><p>Click OK.</p></li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="7">
+<li><p>Now perform the steps in Capturing RTP streams section but skip the Decode As steps (2-4)</p></li>
+</ol>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id4">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://webrtc.github.io/webrtc-org/testing/wireshark/">https://webrtc.github.io/webrtc-org/testing/wireshark/</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="network_simulator.html" class="btn btn-neutral float-right" title="Network Simulator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tcpdump.html" class="btn btn-neutral float-left" title="tcpdump" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
