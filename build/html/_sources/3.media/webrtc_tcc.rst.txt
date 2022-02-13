@@ -259,6 +259,8 @@ Status Vector Chunk
 
 这块数据中 S = 1 ，包含了 7 个包的状态，每个包用 2 个比特来描述
 
+.. code-block::
+  
       1x "packet not received"
 
       1x "packet received, w/o timestamp"
@@ -319,8 +321,8 @@ EWMA 指数加权移动平滑法（Exponential Smoothing） 是在移动平均�
 
 最小二乘法(Least Squars Method)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-具体算法参见 https://en.wikipedia.org/wiki/Numerical_methods_for_linear_least_square
-和 https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95
+
+.. image:: ../_static/lsm.png
 
 .. math::
 
@@ -344,80 +346,6 @@ TrendlineEstimator configuration - 其配置中主要指定了如下三个参数
   constexpr size_t kDefaultTrendlineWindowSize = 20;
   constexpr double kDefaultTrendlineSmoothingCoeff = 0.9;
   constexpr double kDefaultTrendlineThresholdGain = 4.0;
-
-code analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code::
-
-
-  // Returns the estimated trend k multiplied by some gain.
-  // 0 < k < 1   ->  the delay increases, queues are filling up
-  //   k == 0    ->  the delay does not change
-  //   k < 0     ->  the delay decreases, queues are being emptied
-  double trendline_slope() const { return trendline_ * threshold_gain_; }
-
-  // Update the estimator with a new sample. The deltas should represent deltas
-  // between timestamp groups as defined by the InterArrival class.
-  void Update(double recv_delta_ms,
-                                double send_delta_ms,
-                                int64_t arrival_time_ms) {
-    const double delta_ms = recv_delta_ms - send_delta_ms;
-    ++num_of_deltas_;
-    if (num_of_deltas_ > kDeltaCounterMax)
-      num_of_deltas_ = kDeltaCounterMax;
-    if (first_arrival_time_ms == -1)
-      first_arrival_time_ms = arrival_time_ms;
-
-    // Exponential backoff filter. -- 指数退避滤波器
-    accumulated_delay_ += delta_ms;
-    BWE_TEST_LOGGING_PLOT(1, "accumulated_delay_ms", arrival_time_ms,
-                          accumulated_delay_);
-    smoothed_delay_ = smoothing_coef_ * smoothed_delay_ +
-                      (1 - smoothing_coef_) * accumulated_delay_;
-    BWE_TEST_LOGGING_PLOT(1, "smoothed_delay_ms", arrival_time_ms,
-                          smoothed_delay_);
-
-    // Simple linear regression. -- 简单线性回归
-    delay_hist_.push_back(std::make_pair(
-        static_cast<double>(arrival_time_ms - first_arrival_time_ms),
-        smoothed_delay_));
-    if (delay_hist_.size() > window_size_)
-      delay_hist_.pop_front();
-    if (delay_hist_.size() == window_size_) {
-      // Only update trendline_ if it is possible to fit a line to the data.
-      trendline_ = LinearFitSlope(delay_hist_).value_or(trendline_);
-    }
-
-    BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
-  }
-
-  //计算线性回归的斜率，传入的是一个列表，其元素是一对数据：
-  //x 是到达时间 arrival_time_ms: 组内最后一个包的到达时间 - 组内第一个包的到达时间
-  //y 是 OWDV=recv_delta_ms - send_delta_ms 单向延迟变化: RTP 包组的接收延迟变化 - 发送延迟变化
-  rtc::Optional<double> LinearFitSlope(
-      const std::deque<std::pair<double, double>>& points) {
-    RTC_DCHECK(points.size() >= 2);
-    // Compute the "center of mass".
-    double sum_x = 0;
-    double sum_y = 0;
-    for (const auto& point : points) {
-      sum_x += point.first;
-      sum_y += point.second;
-    }
-    double x_avg = sum_x / points.size();
-    double y_avg = sum_y / points.size();
-    // Compute the slope k = \sum (x_i-x_avg)(y_i-y_avg) / \sum (x_i-x_avg)^2
-    double numerator = 0;
-    double denominator = 0;
-    for (const auto& point : points) {
-      numerator += (point.first - x_avg) * (point.second - y_avg);
-      denominator += (point.first - x_avg) * (point.first - x_avg);
-    }
-    if (denominator == 0)
-      return rtc::Optional<double>();
-    return rtc::Optional<double>(numerator / denominator);
-  }
 
 
 Overuse detector
@@ -495,8 +423,7 @@ AIMD 算法来源于 TCP 协议,参见 https://en.wikipedia.org/wiki/Additive_in
    +-------------+-----------+------------+--------+
 
 
-Bandwidth estimator
------------------------------------------
+更多代码分析参见 `GCC 拥塞控制的实现 <../5.code/congestion_control.html>`_
 
 
 

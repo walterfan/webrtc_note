@@ -151,7 +151,9 @@ GoogleCcNetworkController
 
 DelayBasedBwe
 ---------------------------------
+基于延迟的带宽估计模块，主要方法为 `IncomingPacketFeedbackVector`, 其结果为 `DelayBasedBwe::Result` 
 
+其中根据 OWDV 单向延迟变化 进行趋势估算的类为 TrendlineEstimator
 
 .. code-block::
 
@@ -189,9 +191,34 @@ DelayBasedBwe
 
       }
 
-ALR Detector
+TrendlineEstimator
 -----------------------
-ALR（Application limited region detector）该模块也属于 gcc 的一个子模块, 其大概原理就是 SentRate/EstimatedRate 的百分比与 kAlrStartUsagePercent（60）做比较，当小于该值认为网络受限，需要启动 probe 重新探测带宽，当大于 kAlrEndUsagePercent（70），认为网络恢复则不会进行启动下次 probe 探测
+以线性回归和最小二乘法计算 OWDV 的趋势，自变量是时间，因变量是 OWDV, 其计算出来的斜率要和设定的阈值进行比较
+
+
+
+
+ALRDetector
+-----------------------
+
+ALR（Application limited region detector）该模块也属于 gcc 的一个子模块
+
+其大概原理就是检查 SentRate/EstimatedRate - 发送速率与估算速率的百分比
+
+当小于 kAlrStartUsagePercent (60%)，认为网络受限，需要启动 probe 重新探测带宽，
+
+当大于 kAlrEndUsagePercent (70%)，认为网络不会恢复了,需要启动下次 probe 探测
+
+
+CongestionWindowPushbackController
+---------------------------------------------
+This class enables pushback from congestion window directly to video encoder.
+When the congestion window is filling up, the video encoder target bitrate will be reduced accordingly to accommodate the network changes. To avoid pausing video too frequently, a minimum encoder target bitrate threshold is used to prevent video pause due to a full congestion window.
+
+BitrateEstimator
+---------------------------------------------
+Computes a bayesian estimate of the throughput given acks containing the arrival time and payload size.
+Samples which are far from the current estimate or are based on few packets are given a smaller weight, as they are considered to be more likely to have been caused by, e.g., delay spikes unrelated to congestion.
 
 
 
