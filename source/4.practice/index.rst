@@ -13,10 +13,6 @@
    signal_server
    media_server
 
-   webrtc_source
-   webrtc_test
-   webrtc_issues
-
    coturn
    apprtc
    janus

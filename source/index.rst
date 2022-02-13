@@ -19,14 +19,13 @@ WebRTC 学习笔记
    :maxdepth: 2
    :caption: Contents:
 
-   outline
-
    1.basic/index
    2.transport/index
    3.media/index
    4.practice/index
-   5.tool/index
-   6.misc/index
+   5.code/index
+   6.tool/index
+   7.misc/index
 
 Indices and tables
 ==================
