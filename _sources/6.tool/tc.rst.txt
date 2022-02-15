@@ -461,9 +461,98 @@ link
 Only available for qdiscs and performs a replace where the
 node must exist already.
 
+tc-tbf
+========================
+tbf 即 Token Bucket Filter 令牌桶过滤器，参见 `tc-tbf <https://man7.org/linux/man-pages/man8/tc-tbf.8.html>`_
+
+令牌桶过滤器是一种分类队列规则，可用于使用 tc(8) 命令进行流量控制。
+
+TBF 是一个纯粹的 shaper 整形者，从不安排流量。
+
+它是非工作守恒 non-work-conserving 的，并且可能会自我节流，以确保不超过配置的速率，即使这时有数据包可用。
+
+它能够以理想的最小突发性塑造高达 1mbit/s 的正常流量，以配置的速率准确发送数据。
+
+更高的速率是可能的，但代价是失去最小的突发性。 在这种情况下，数据平均以配置的速率出队，但在毫秒时间尺度上可能发送得更快。 
+由于网络适配器中存在更多队列，这通常不是问题。
+
+用法:
+
+.. code-block::
+
+    tc qdisc ... tbf rate rate burst bytes/cell ( latency ms | limit
+    bytes ) [ mpu bytes [ peakrate rate mtu bytes/cell ] ]
+
+    burst is also known as buffer and maxburst. mtu is also known as
+    minburst.
+
+实例
+-----------------------
+
+附加一个持续最大速率为 0.5 mbit/s, 峰值速率为 1.0 mbit/s, 5 KB 缓冲区的 TBF, 计算了预存储桶队列大小限制, 因此 TBF 导致最多 70 毫秒的延迟，具有完美的峰值速率行为， 命令如下：
+
+.. code-block:: bash
+
+    tc qdisc add dev eth0 handle 10: root tbf rate 0.5mbit \
+    burst 5kb latency 70ms peakrate 1mbit       \
+    minburst 1540
+
+要附加一个内部 qdisc，例如 sfq，命令如下：
+
+.. code-block:: bash
+
+    tc qdisc add dev eth0 parent 10:1 handle 100: sfq
+
+没有内部 qdisc TBF 队列充当 bfifo。 如果更改了内部 qdisc，则限制/延迟不再有效。
+
+tc-netem
+========================
+NetEm 即 Network Emulator 网络模拟器， 参见 `tc-netem <https://man7.org/linux/man-pages/man8/tc-netem.8.html>`_
+
+NetEm 是 Linux 流量控制工具的增强版，它允许为从选定网络接口传出的数据包添加延迟、数据包丢失、重复和更多其他特征。 
+NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (diffserv) 工具构建的。
+
+用法:
+
+.. code-block::
+
+       tc qdisc ... dev DEVICE ] add netem OPTIONS
+
+       OPTIONS := [ LIMIT ] [ DELAY ] [ LOSS ] [ CORRUPT ] [ DUPLICATION
+       ] [ REORDERING ] [ RATE ] [ SLOT ]
+
+       LIMIT := limit packets
+
+       DELAY := delay TIME [ JITTER [ CORRELATION ]]]
+              [ distribution { uniform | normal | pareto |  paretonormal
+       } ]
+
+       LOSS := loss { random PERCENT [ CORRELATION ]  |
+                      state p13 [ p31 [ p32 [ p23 [ p14]]]] |
+                      gemodel p [ r [ 1-h [ 1-k ]]] }  [ ecn ]
+
+       CORRUPT := corrupt PERCENT [ CORRELATION ]]
+
+       DUPLICATION := duplicate PERCENT [ CORRELATION ]]
+
+       REORDERING := reorder PERCENT [ CORRELATION ] [ gap DISTANCE ]
+
+       RATE := rate RATE [ PACKETOVERHEAD [ CELLSIZE [ CELLOVERHEAD ]]]]
+
+       SLOT := slot { MIN_DELAY [ MAX_DELAY ] |
+                      distribution { uniform | normal | pareto |
+       paretonormal | FILE } DELAY JITTER }
+                    [ packets PACKETS ] [ bytes BYTES ]
+
+例如,以 5kbit 的速率延迟设备 eth0 上的所有传出数据包，每个数据包开销为 20 字节，单元大小为 100 字节，每个单元开销为 5 字节：
+
+.. code-block:: bash
+
+    tc qdisc add dev eth0 root netem rate 5kbit 20 100 5
+
 
 TC 常用命令
--------------------------
+========================
 
 * 延迟 100 ms:    :code:`tc qdisc add dev eth0 root netem delay 100ms`
 
