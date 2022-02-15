@@ -19,16 +19,8 @@ WebRTC RTP
 .. contents::
    :local:
 
--  `RTP解决的问题`_
--  `1. RTP`_
--  `2. RTCP`_
--  `3. RTP 协议的度量要点`_
-
-   -  `1) 往返延时RTT`_
-   -  `2) 抖动Jitter`_
-   -  `3) 丢包 Packet loss`_
-
--  `4. 实例`_
+Overview
+=================
 
 为满多媒体应用传输实时数据的需要, IETF RFC 3550 定义了实时传输协议RTP: A
 Transport Protocol for Real-Time Applications
@@ -36,7 +28,7 @@ Transport Protocol for Real-Time Applications
 它为交互式音频和视频聊天和会议应用提供端到端的传输服务.
 
 RTP 解决的问题
-==============
+=================
 
 让我们先想想实时传输需要解决哪些问题:
 
