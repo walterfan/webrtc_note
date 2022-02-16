@@ -208,7 +208,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-02-15</p></td>
+<td><p>2022-02-16</p></td>
 </tr>
 </tbody>
 </table>
@@ -368,17 +368,14 @@ The sender determines if timing information should be included or not in the fee
 <div class="section" id="data-layout-details">
 <h3><a class="toc-backref" href="#id10">Data layout details</a><a class="headerlink" href="#data-layout-details" title="Permalink to this headline">¶</a></h3>
 <p>The data is written in the following order,</p>
-<ul class="simple">
+<ul>
 <li><p>transport-wide sequence number (16-bit unsigned integer)</p></li>
-<li><p>feedback request (optional) (16-bit unsigned integer)</p></li>
+<li><p>feedback request (optional) (16-bit unsigned integer)</p>
+<p>If the extension contains two extra bytes for feedback request, this means that a feedback packet should be generated and sent immediately. The feedback request consists of a one-bit field giving the flag value T and a 15-bit field giving the sequence count as an unsigned number.
+- If the bit T is set the feedback packet must contain timing information.
+- seq count specifies how many packets of history that should be included in the feedback packet. If seq count is zero no feedback should be be generated, which is equivalent of sending the two-byte extension above. This is added as an option to allow for a fixed packet header size.</p>
+</li>
 </ul>
-<dl class="simple">
-<dt>If the extension contains two extra bytes for feedback request, this means that a feedback packet should be generated and sent immediately. The feedback request consists of a one-bit field giving the flag value T and a 15-bit field giving the sequence count as an unsigned number.</dt><dd><ul class="simple">
-<li><p>If the bit T is set the feedback packet must contain timing information.</p></li>
-<li><p>seq count specifies how many packets of history that should be included in the feedback packet. If seq count is zero no feedback should be be generated, which is equivalent of sending the two-byte extension above. This is added as an option to allow for a fixed packet header size.</p></li>
-</ul>
-</dd>
-</dl>
 </div>
 </div>
 </div>
