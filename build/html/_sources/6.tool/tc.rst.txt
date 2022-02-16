@@ -24,7 +24,7 @@ Linux Traffic Control
 =========================
 Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题
 
-tc 命令
+TC 中的基本概念
 =========================
 Tc 用于在 Linux 内核中配置流量控制。流量控制包括以下内容：
 
@@ -48,9 +48,34 @@ Tc 用于在 Linux 内核中配置流量控制。流量控制包括以下内容�
 
 流量的处理由三种对象控制：
 
-* qdiscs 
-* classes
-* filters
+* qdiscs : 简单来说，它可以理解为一个队列，以及入队出队的调度器，默认的调度器是 FIFO, 包括可分类和不可分类的 qdisc
+* classes: 类存在于 classful qdisc 中，它可以包含多个子类或单个子 qdisc, 可用于极其复杂的场景
+* filters： 过滤器 filter 是Linux流量控制系统中最复杂的组件，它提供了一种方便的机制，可以将流量控制的几个关键元素粘合在一起
+
+还有常用的 
+
+* classifier 分类器
+
+分类器是可用作过滤器的一部分以识别数据包特征或数据包元数据的工具。
+可以使用 tc 操作的过滤器对象可以使用几种不同的分类机制，其中最常见的是 u32 分类器。 u32 分类器允许用户根据数据包的属性来选择数据包。
+
+* handle
+
+每个 class 和 classful qdisc都需要流量控制结构内的唯一标识符。这个唯一标识符被称为 handle，它有两个组成成员，一个主要编号和一个次要编号。
+这些号码可以由用户按照以下规则任意分配。
+
+- major
+
+这个参数对内核完全没有意义。用户可以使用任意编号方案，但是流量控制结构中具有相同父对象的所有对象必须共享一个主句柄编号。
+对于直接附加到 root qdisc 的对象，常规编号方案从 1 开始。
+
+- minor
+
+如果 minor 为0，则此参数将对象明确标识为qdisc。任何其他值将对象标识为 class。所有共享 parent 的 clas 都必须具有唯一的次要编号。
+
+特殊 handle - ffff:0 为 ingress qdisc 保留。
+
+handle 在 tc filter 语句的 classid 和 flowid 短语中用作目标。这些 handle 是对象的外部标识符，可供用户级应用程序使用。内核维护每个对象的内部标识符。
 
 
 QDISCS
@@ -63,16 +88,51 @@ qdisc 是 "queueing discipline"（排队规则）的缩写，它是理解流量�
 一个简单的 QDISC 是 "pfifo"，它根本不进行任何处理，是一个纯粹的先进先出队列。 
 但是，当网络接口暂时无法处理流量时，它会存储流量。
 
+qdisc 分为有类的 classful qdiscs 和无类的 classless qdiscs 
+
+每一个 interface 可以包含出口 egress(outbound traffic) 和入口 ingress(inbound traffic)
+
+我们又称用于出口的 egress qdisc 为 root qdisc, 它可以包含任何具有 class 的 qdiscs.
+在 interface 上传送的流量都要通过 egress qdisc 或称 root qdisc
+
+用于入口的流量控制的为 ingress qdisc, 它有一定的限制，不允许创建子类，仅仅作为可以附加 filter 的对象存在。
+一个 ingress qdisc 只能支持一个 policer 以限制其接收的流量
+
+简而言之， 我们可以使用 egress qdisc 做更多的控制，因为它包含真正全功能的 qdisc
+
+
+classful qdiscs
+~~~~~~~~~~~~~~~~~~~~~
+classful qdiscs 可以包含 class，并提供一个 handle 来附加 filter。
+
+classful qdiscs 当然也可以不包含 class，尽管这样做没有任何好处，只是空转并消耗系统资源。
+
+
+classless qdiscs
+~~~~~~~~~~~~~~~~~~~~~
+classless qdiscs 不能包含任何 class, 也不能附着任何 filter， 因为 classless qdiscs 不包含任何类型的子类，所以称之为无类的 qdisc
+
+
 CLASSES
 ---------------------
 
-一些 qdisc 可以包含类，这些类包含更多的 qdiscs - 然后流量可以在任何内部 qdisc 中排队，这些内部 qdisc 在类中。 
+classful qdisc 可以包含类，这些类可包含更多的 qdiscs - 然后流量可以在任何内部 qdisc 中排队，这些内部 qdisc 在类中。 
 当内核试图从这样一个有类的 qdisc 队列中取出一个数据包时，它可以来自任何类。 
 
 例如，一个 qdisc 可以通过尝试在其他类之前从某些类中出列来对某些类型的流量进行优先级排序。
 
+任意的 class 也可以附加任意数量的 filter ，这允许选择子类或使用 filter 重新分类或丢弃进入特定类的流量。
+
+叶类 leaf class 是 qdisc 中的终端类。 它包含一个 qdisc（默认 FIFO）并且永远不会包含子类。 任何包含子类的类都是内部类（或根类），而不是叶类。
+
 FILTERS 过滤器
 ---------------------
+
+过滤器 filter 是Linux流量控制系统中最复杂的组件。 过滤器提供了一种方便的机制，可以将流量控制的几个关键元素粘合在一起。 
+
+过滤器最简单、最明显的作用是对数据包进行分类。 Linux 过滤器允许用户使用几个不同的过滤器或单个过滤器将数据包分类到一个输出队列中。
+
+过滤器可以附加到有类 qdisc 或类，但是入队的数据包总是首先进入根 qdisc。 在遍历了附加到根 qdisc 的过滤器之后，数据包可以被定向到任何子类（可以有自己的过滤器），数据包可以在这些子类中进行进一步的分类。
 
 包含有 class 的 qdisc 使用 filter 过滤器来确定数据包将在哪个类中排队。 
 
@@ -407,11 +467,12 @@ Quick Fair Queueing is an O(1) scheduler that provides near-optimal guarantees, 
 The QFQ algorithm has no loops, and uses very simple instructions and data structures that lend themselves very well to a hardware implementation.
 
 
-TC COMMANDS 
-------------------------
+TC 用法
+==================================
 
-以下命令可用于 qdiscs、类和过滤器:
 
+命令
+----------------------------------
 add
 ~~~~~~~~~~~~
 
@@ -460,6 +521,123 @@ link
 
 Only available for qdiscs and performs a replace where the
 node must exist already.
+
+
+TC 命令实例
+---------------------
+
+Usage
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block::
+
+    Usage: tc [ OPTIONS ] OBJECT { COMMAND | help }
+    where  OBJECT := { qdisc | class | filter }
+       OPTIONS := { -s[tatistics] | -d[etails] | -r[aw] }
+
+
+
+* 延迟 100 ms:    :code:`tc qdisc add dev eth0 root netem delay 100ms`
+
+* 延迟 100ms ± 10ms (90 ~ 110 ms ):    :code:`tc qdisc add dev eth0 root netem delay 100ms 10ms`
+
+* 随机丢包 1%:    :code:`tc qdisc add dev eth0 root netem loss 1%`
+
+* 模拟包重复:    :code:`tc qdisc add dev eth0 root netem duplicate 1%`
+
+* 模拟数据包损坏:    :code:`tc qdisc add dev eth0 root netem corrupt 0.2%`
+
+* 模拟数据包乱序：    :code:`tc qdisc change dev eth0 root netem delay 10ms reorder 25% 50%`
+
+* 查看已经配置的网络条件：   :code:`tc qdisc show dev eth0`
+
+* 删除网卡上面的相关配置:    :code:`tc qdisc del dev enp0s3 root`
+
+* 对指定 ip 做限制:
+
+.. code-block:: bash
+
+    tc qdisc del dev enp0s3 root
+
+    tc qdisc add dev enp0s3  root handle 1: prio
+
+    tc filter add dev enp0s3 parent 1:0 protocol ip prio 1 u32 match ip dst 172.27.25.3 flowid 2:1
+
+    tc qdisc add dev enp0s3  parent 1:1 handle 2: netem delay 1500ms  loss 1%
+
+Example 1
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block::
+
+    # tc qdisc add    \ (1)
+    >    dev eth0     \ (2)
+    >    root         \ (3)
+    >    handle 1:0   \ (4)
+    >    htb            (5)
+
+    - (1) Add a queuing discipline. The verb could also be del.
+    - (2) Specify the device onto which we are attaching the new queuing discipline.
+    - (3) This means "egress" to tc. The word root must be used, however. Another qdisc with limited functionality, the ingress qdisc can be attached to the same device.
+    - (4) The handle is a user-specified number of the form major:minor. The minor number for any queueing discipline handle must always be zero (0). An acceptable shorthand for a qdisc handle is the syntax "1:", where the minor number is assumed to be zero (0) if not specified.
+    - (5) This is the queuing discipline to attach, HTB in this example. Queuing discipline specific parameters will follow this. In the example here, we add no qdisc-specific parameters.
+
+
+Example 3
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block::
+
+    # tc class add    \ (1)
+    >    dev eth0     \ (2)
+    >    parent 1:1   \ (3)
+    >    classid 1:6  \ (4)
+    >    htb          \ (5)
+    >    rate 256kbit \ (6)
+    >    ceil 512kbit   (7)
+   
+    - (1) Add a class. The verb could also be del.
+    - (2) Specify the device onto which we are attaching the new class.
+    - (3) Specify the parent handle to which we are attaching the new class.
+    - (4) This is a unique handle (major:minor) identifying this class. The minor number must be any non-zero (0) number.
+    - (5) Both of the classful qdiscs require that any children classes be classes of the same type as the parent. Thus an HTB qdisc will contain HTB classes.
+    - (6)(7) This is a class specific parameter
+
+
+Example 4
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block::
+
+    # tc filter add               \ (1)
+    >    dev eth0                 \ (2)
+    >    parent 1:0               \ (3)
+    >    protocol ip              \ (4)
+    >    prio 5                   \ (5)
+    >    u32                      \ (6)
+    >    match ip port 22 0xffff  \ (7)
+    >    match ip tos 0x10 0xff   \ (8)
+    >    flowid 1:6               \ (9)
+    >    police                   \ (10)
+    >    rate 32000bps            \ (11)
+    >    burst 10240              \ (12)
+    >    mpu 0                    \ (13)
+    >    action drop/continue       (14)
+   
+    - (1) Add a filter. The verb could also be del.
+    - (2) Specify the device onto which we are attaching the new filter.
+    - (3) Specify the parent handle to which we are attaching the new filter.
+    - (4) This parameter is required. It's use should be obvious, although I don't know more.
+    - (5) The prio parameter allows a given filter to be preferred above another. The pref is a synonym.
+    - (6) This is a classifier, and is a required phrase in every tc filter command.
+    - (7)(8) These are parameters to the classifier. In this case, packets with a type of service flag (indicating interactive usage) and matching port 22 will be selected by this statement.
+    - (9) The flowid specifies the handle of the target class (or qdisc) to which a matching filter should send its selected packets.
+    - (10) This is the policer, and is an optional phrase in every tc filter command.
+    - (11) The policer will perform one action above this rate, and another action below (see action parameter).
+    - (12) The burst is an exact analog to burst in HTB (burst is a buckets concept).
+    - (13) The minimum policed unit. To count all traffic, use an mpu of zero (0).
+    - (14) The action indicates what should be done if the rate based on the attributes of the policer. The first word specifies the action to take if the policer has been exceeded. The second word specifies action to take otherwise.
+
 
 tc-tbf
 ========================
@@ -551,36 +729,7 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
     tc qdisc add dev eth0 root netem rate 5kbit 20 100 5
 
 
-TC 常用命令
-========================
 
-* 延迟 100 ms:    :code:`tc qdisc add dev eth0 root netem delay 100ms`
-
-* 延迟 100ms ± 10ms (90 ~ 110 ms ):    :code:`tc qdisc add dev eth0 root netem delay 100ms 10ms`
-
-* 随机丢包 1%:    :code:`tc qdisc add dev eth0 root netem loss 1%`
-
-* 模拟包重复:    :code:`tc qdisc add dev eth0 root netem duplicate 1%`
-
-* 模拟数据包损坏:    :code:`tc qdisc add dev eth0 root netem corrupt 0.2%`
-
-* 模拟数据包乱序：    :code:`tc qdisc change dev eth0 root netem delay 10ms reorder 25% 50%`
-
-* 查看已经配置的网络条件：   :code:`tc qdisc show dev eth0`
-
-* 删除网卡上面的相关配置:    :code:`tc qdisc del dev enp0s3 root`
-
-* 对指定 ip 做限制:
-
-.. code-block:: bash
-
-    tc qdisc del dev enp0s3 root
-
-    tc qdisc add dev enp0s3  root handle 1: prio
-
-    tc filter add dev enp0s3 parent 1:0 protocol ip prio 1 u32 match ip dst 172.27.25.3 flowid 2:1
-
-    tc qdisc add dev enp0s3  parent 1:1 handle 2: netem delay 1500ms  loss 1%
 
 
 netimpair

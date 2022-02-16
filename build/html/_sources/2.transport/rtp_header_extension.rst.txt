@@ -202,6 +202,6 @@ The data is written in the following order,
 * transport-wide sequence number (16-bit unsigned integer)
 * feedback request (optional) (16-bit unsigned integer)
 
-If the extension contains two extra bytes for feedback request, this means that a feedback packet should be generated and sent immediately. The feedback request consists of a one-bit field giving the flag value T and a 15-bit field giving the sequence count as an unsigned number.
+  If the extension contains two extra bytes for feedback request, this means that a feedback packet should be generated and sent immediately. The feedback request consists of a one-bit field giving the flag value T and a 15-bit field giving the sequence count as an unsigned number.
   - If the bit T is set the feedback packet must contain timing information.
   - seq count specifies how many packets of history that should be included in the feedback packet. If seq count is zero no feedback should be be generated, which is equivalent of sending the two-byte extension above. This is added as an option to allow for a fixed packet header size.

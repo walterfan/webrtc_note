@@ -151,6 +151,7 @@ Reference
 ====================
 * `Chromium Code Search`_
 * `Webrtc video framerate/resolution 自适应 <https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9>`_
+* https://webrtc.googlesource.com/src/+/refs/heads/master/docs/native-code/index.md
 * https://ninja-build.org/manual.html
 
 
