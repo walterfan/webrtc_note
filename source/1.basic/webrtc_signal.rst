@@ -6,12 +6,21 @@ WebRTC 的信令
 .. include:: ../tags.ref
 .. include:: ../abbrs.ref
 
+============ ==========================
+**Abstract** FFmpeg
+**Authors**  Walter Fan
+**Status**   WIP
+**Updated**  |date|
+============ ==========================
+
+.. |date| date::
+
 
 .. contents::
     :local:
 
 
-overview
+Overview
 ==============
 signal 在英语中有两个不同的意思，一是信令，一是信号，这里我们主要讲信令。
 
@@ -28,6 +37,13 @@ signal 在英语中有两个不同的意思，一是信令，一是信号，这�
 4. `ICE`_ (Interactive Connectivity Establishment)， 即交互式连接建立协议
 
 前两者主要是描述了如何通过浏览器提供的 API 实现实时的音视频通讯，主要的接口，实体和方法是通过 `WebIDL`_ 来定义的
+
+
+信令协议的传输和格式
+==================
+无论是 SDP 还是其他的控制消息，都需要通过一个传输通道来收发消息，这个传输通道一般是基于 TCP 协议的，例如 HTTP, WebSocket 等
+格式一般以文本格式为佳，因为其数据量不大，而且容易理解和阅读。当然，二进制格式的也可以，比如用自己定义的 PDU 或者 Protobuffer 都可。
+
 
 
 WebIDL
