@@ -1,7 +1,7 @@
 :orphan:
 
 ################################
-Google Congestion Control
+Google Congestion Control v1
 ################################
 
 
@@ -10,7 +10,7 @@ Google Congestion Control
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC RTP 拥塞控制学习笔记
+**Abstract** Google Congestion Control v1
 **Category** Learning note
 **Authors**  Walter Fan
 **Status**   WIP
@@ -85,7 +85,7 @@ GCC [#]_ 拥塞控制算法根据估计的拥塞状态调节发送速率。 为�
 3. 反馈和扩展
 ---------------------------------------
 
-* 接收端：使用基于延迟的控制器， 可采用 RTP 扩展头 “abs_send_time”
+* 接收端：使用基于延迟的控制器， 可采用 RTP 扩展头 "abs_send_time"
 * 发送端：使用基于丢包的控制器， 可采用 `Google REMB <webrtc_remb.html>`_ 反馈估算的最大带宽和 RTCP Receiver Report 来反馈丢包及用来计算 RTT
    
 
@@ -221,8 +221,9 @@ v(i) 表示网络抖动和其他没有被这个模型捕捉到的延迟
 * u(i) 是指状态噪声, 把它建模为具有零均值和方差的高斯统计模拟的平稳过程
 * v(i) 是指测量噪声，它是具有方差 `var_v = E{v(i)^2}` 的零均值高斯白测量噪声
 
-注：
-* 中心化（又叫零均值化）：是指变量減去它的均值。其实就是一个平移的过程，平移后所有数据的中心是（0，0）。
+注:
+
+* 中心化（又叫零均值化）：是指变量減去它的均值。其实就是一个平移的过程，平移后所有数据的中心是（0，0）
 * 标准化（又叫归一化）： 是指數值減去均值，再除以标准差。
 
 卡尔曼滤波器递归地更新这个估计值 m_hat(i)
@@ -276,7 +277,8 @@ v(i) 表示网络抖动和其他没有被这个模型捕捉到的延迟
 
 5.5 Rate controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- The rate control is split in two parts, 
+
+The rate control is split in two parts, 
  
 1) controlling the bandwidth estimate based on delay 
 2) controlling the bandwidth estimate based on loss
@@ -336,7 +338,14 @@ v(i) 表示网络抖动和其他没有被这个模型捕捉到的延迟
 6. 基于丢包的控制器 Loss-based control
 ------------------------------------------------
 
-发送端控制器是一种基于丢失的拥塞控制算法，它在每次 tk 第 k 个 RTCP 报告消息到达发送方或每次 tr 携带 Ar 的第 r 个 REMB 消息到达发送方时起作用。 RTCP 报告的发送频率是可变的，它取决于反向路径的可用带宽； 反向路径可用带宽越高，RTCP 报告频率越高。 REMB 格式是 RTCP 协议 [20] 的扩展，RMCAT WG 正在讨论该协议（另见第 III-B 节）。 RTCP 报告包括如 [20] 中所述计算的丢失数据包比例 fl(tk)。 发送方使用 fl(tk) 计算发送速率 As(tk)，以 kbps 为单位，根据以下等式：
+发送端控制器是一种基于丢失的拥塞控制算法，它在每次 tk 第 k 个 RTCP 报告消息到达发送方或每次 tr 携带 Ar 的第 r 个 REMB 消息到达发送方时起作用。 
+RTCP 报告的发送频率是可变的，它取决于反向路径的可用带宽； 反向路径可用带宽越高，RTCP 报告频率越高。 
+
+REMB 格式是 RTCP 协议 [20] 的扩展，RMCAT WG 正在讨论该协议（另见第 III-B 节）。 
+
+RTCP 报告包括如 [20] 中所述计算的丢失数据包比例 fl(tk)。 
+
+发送方使用 fl(tk) 计算发送速率 As(tk)，以 kbps 为单位，根据以下等式：
 
 .. math::
 
@@ -345,7 +354,8 @@ v(i) 表示网络抖动和其他没有被这个模型捕捉到的延迟
 
 1）当丢包率 < 2% 时，这个时候会将码率（base bitrate）增长 5%
 
-这个码率(base bitrate)并不是当前及时码率，而是单位时间窗周期内出现的最小码率,WebRTC将这个时间窗周期设置在1000毫秒内。因为loss fraction是从接收端反馈过来的，中间会有时间差，这样做的目的是防止网络间歇性统计造成的网络码率增长过快而网络反复波动。
+这个码率(base bitrate)并不是当前及时码率，而是单位时间窗周期内出现的最小码率,WebRTC将这个时间窗周期设置在1000毫秒内。
+因为loss fraction是从接收端反馈过来的，中间会有时间差，这样做的目的是防止网络间歇性统计造成的网络码率增长过快而网络反复波动。
 
 2）当丢包率在 [2%, 10%] 之间,维持当前的码率值
 
@@ -357,9 +367,8 @@ v(i) 表示网络抖动和其他没有被这个模型捕捉到的延迟
 
 参考代码
 ======================
-* `congestion_controller <https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller>`
-* `remote_bitrate_estimator <https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator>`
-
+* `congestion_controller <https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller>`_
+* `remote_bitrate_estimator <https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator>`_
 
 
 

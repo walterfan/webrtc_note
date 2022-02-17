@@ -240,6 +240,8 @@ Status Vector Chunk
 
 这块数据中 S = 0 ，包含了 14 个包的状态，用 14 个比特位描述， 0 代表没收到，1 代表收到了
 
+.. code-block::
+  
    1x "packet not received" - 第一个包没收到
    5x "packet received"     - 之后 5 个包收到了
    3x "packet not received" - 之后 3 个包没收到
@@ -297,7 +299,7 @@ Trendline filter
 
 第 i 个包组的单向延迟变化 OWDV (One-Way Delay Variation) 计算如下, 即到达时间差减去发送时间差
 
-.. math::
+.. code-block::
 
   inter_arrival_time = t(i) - t(i-1)
 
