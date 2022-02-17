@@ -290,8 +290,15 @@ Receive Delta 长度为一个字节或两个字节, 记录每个包与之前收�
 * 如果间隔时间太大,就需要启用使用新的 RTCP feedback 包
 
 
-Sender Bandwidth Estimation
+Sender-side Bandwidth Estimation based on delay
 ==================================================
+
+1)  Pre-filtering: 当网络发生中断或一些突发情况
+2)  Arrival-time filter: 采用卡尔曼滤波或趋势线滤波
+3)  Over-use detector: 与预设的阈值进行比较, 检测是否有拥塞
+4)  Rate control : 进行发送速率的调整, 可采用 TCP 中使用的 AIMD(加增乘减法)
+
+相关代码:
 
 * GoogleCcNetworkController
 * SendSideBandwidthEstimator
@@ -301,7 +308,7 @@ Sender Bandwidth Estimation
   - AIMDRateController
 * Trendline
 
-Trendline filter
+Arrival-time model
 -----------------------------------------
 
 第 i 个包组的单向延迟变化 OWDV (One-Way Delay Variation) 计算如下, 即到达时间差减去发送时间差
