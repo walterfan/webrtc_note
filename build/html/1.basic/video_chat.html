@@ -107,7 +107,10 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp.html">WebRTC SDP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_stats.html">WebRTC stats</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">视频聊天实例</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">总体设计</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">总体设计</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#components">components</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -191,6 +194,29 @@
 <h1>视频聊天实例<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
 <h2>总体设计<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="components">
+<h3>components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>a web application contains
+* room name
+* user name
+* join button
+* leave button
+* open camera/mic button
+* close camera/mic button
+* roster list: attendee name, attendee video, attendee message</p></li>
+<li><p>signal server
+* http service
+* websocket service
+* room management
+* roster management: accept, reject, expel attendee</p></li>
+<li><p>turn server
+leverage coturn</p></li>
+<li><p>media server
+* dtls and srtp service
+* switch RTP packets among the attendeess in a room</p></li>
+</ol>
+</div>
 </div>
 </div>
 

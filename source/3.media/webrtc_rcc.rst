@@ -457,7 +457,7 @@ Having a common log format simplifies running analyses across different measurem
 =========================
 
 * `Analysis and Design of the Google Congestion Control for WebRTC <https://c3lab.poliba.it/images/6/65/Gcc-analysis.pdf>`_
-* `What is RMCAT congestion control, and how will it affect WebRTC? <https://blog.mozilla.org/webrtc/what-is-rmcat-congestion-control/>`
+* `What is RMCAT congestion control, and how will it affect WebRTC? <https://blog.mozilla.org/webrtc/what-is-rmcat-congestion-control/>`_
 * `RMCAT work group <https://datatracker.ietf.org/wg/rmcat/about/>`_ 
 * `RMCAT documents`_: RTP Media Congestion Avoidance Techniques documents
  

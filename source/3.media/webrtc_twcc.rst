@@ -277,13 +277,15 @@ Receive Delta
 Receive Delta 长度为一个字节或两个字节, 记录每个包与之前收到的包的间隔时间, 它是 250us 的倍数
 因为 reference_time 是当前包组第一个 packet 到达的时间,, 所以:
 
+.. code-block::
+
     1st arrive_time = reference_time + receive_delta
     2nd arrtive_time = 1st arrive_time + receive_delta
 
 当包的状态为 Packet received，此时 fb packet 会通过 Receive Delta 记录其与前一个 RTP 包到达时间的间隔，单位是 250us. 
 
 * 当状态是 "Packet received, small delta"，用 8-bit unsigned 存储 delta, 附加在 packet status list 之后，
-此时 delta 取值为 `[0,255] * 250` , 表示范围为 [0, 63.75] ms.
+  此时 delta 取值为 `[0,255] * 250` , 表示范围为 [0, 63.75] ms.
 
 * 当状态是 "Packet received, large or negative delta"，用 16-bit signed 存储 delta，附加在 packet status list 之后, 此时 delta 取值为 `[-32767, 32768] * 250`, 表示范围为 [-8192.0, 8191.75] ms.
 
