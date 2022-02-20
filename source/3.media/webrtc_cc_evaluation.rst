@@ -156,3 +156,31 @@ RTP Video Model
 Background UDP
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+Evaluation by ns-3
+=========================================================
+
+
+* edit /etc/profile
+
+.. code-block::
+
+  export WEBRTC_LIB=/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib
+  export LD_LIBRARY_PATH=$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp:$LD_LIBRARY_PATH  
+  export CPLUS_INCLUDE_PATH=CPLUS_INCLUDE_PATH:$WEBRTC_LIB/webrtc/:$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp 
+
+#. edit webrtc-ns3/wscript
+
+The path about the headers and so libs in wscript(under webrtc-ns3) should also be changed accordingly:
+
+.. code-block::
+
+  conf.env.append_value('INCLUDES', ['/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/'])
+  conf.env.append_value("LINKFLAGS", ['-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/system_wrappers','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/rtc_base','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/api','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/logging','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/utility','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/pacing','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/congestion_controller','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/bitrate_controller','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/remote_bitrate_estimator','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/rtp_rtcp'])
+
+#. put these modules to /home/walter/workspace/webrtc/ns-allinone-3.35/ns-3.35/src
+
+* mystrace
+* webrtc-ns3
+* multipathvid
+
