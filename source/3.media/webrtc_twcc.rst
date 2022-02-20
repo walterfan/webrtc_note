@@ -292,40 +292,139 @@ Receive Delta 长度为一个字节或两个字节, 记录每个包与之前收�
 * 如果间隔时间太大,就需要启用使用新的 RTCP feedback 包
 
 
-Sender-side Bandwidth Estimation based on delay
+基于延迟的发送端拥塞控制
 ==================================================
+发送端带宽估计的基本框架和之前版本的接收端的框架类似
 
-1)  Pre-filtering: 当网络发生中断或一些突发情况
+1)  Pre-filtering: 过滤掉当网络发生中断或一些突发情况
 2)  Arrival-time filter: 采用卡尔曼滤波或趋势线滤波
 3)  Over-use detector: 与预设的阈值进行比较, 检测是否有拥塞
 4)  Rate control : 进行发送速率的调整, 可采用 TCP 中使用的 AIMD(加增乘减法)
 
-相关代码:
+基本方法
+-------------------------------------------------
+1. 发送端为每个 RTP 包添加 transport wide sequence number 扩展头, 它是一个传输通道范围的序号
+2. 发送端保存这个序号和相应的发送时间 send_time
+3. 接收端记录 RTP 包的到达状态 packet status(是否到达,到达时间),并构造一个 transport wide cc RTCP feedback 消息, 发回给发送方
+4. 发送端将这些 RTP 包的发送时间 send_time, 到达时间 arrive_time 取出来, 并将它们分组(以 5ms 长度)
+5. 发送端计算 group one way delay variant 包组的单向延迟变化
 
-* GoogleCcNetworkController
-* SendSideBandwidthEstimator
-* DelayBaseBwe
-  - Interarrival
-  - Trendline
-  - AIMDRateController
-* Trendline
+  
+  * g_i: the last packet arriving time of i-th packet group
+  * G_i: the first packet sending time of i-th packet group
+  * recv_delta_ms = g_i - g_{i-1}
+  * send_delta_ms = G_i - G_{i-1}
+  * delta_ms = recv_delta_ms - send_delta_ms
 
-Arrival-time model
------------------------------------------
+5. 计算累计延迟变化
 
-第 i 个包组的单向延迟变化 OWDV (One-Way Delay Variation) 计算如下, 即到达时间差减去发送时间差
+.. math::
+
+  accumulated\_delay_i = \sum_{j-1}^{i} delta\_ms_{j}
+
+6. 将累积延迟变化进行指数平滑 exponential backoff filter
+
+.. math::
+
+  smoothed\_delay_i = smoothing\_coef * smoothed\_delay_{i-1} + (1 - smoothing\_coef) * accumulated\_delay_i
+
+6. 以到达时间为横轴, 延迟变化为纵轴进行线性回归, 计算其拟合出的趋势线的斜率 slope
+
+x 轴为 arrive\_time\_ms_i, 并不是第 i 个包组的到达时间, 而是 第 i 个包组最后一个包的到达时间减去第一个包组的最后一个包的到达时间
+y 轴为 smoothed\_delay\_ms_i, 即上而算出的平滑累计延迟变化
+
+.. math::
+
+  slope =  \sum (x_i-x_{avg})(y_i-y_{avg}) / \sum (x_i-x_{avg})^2
+
+
+7. 将计算出来的斜率与一个动态阈值进行比较, 来发现通道是否有拥塞
+
+每次接收到视频帧 :math:`t_i` 时，过度使用检测器都会产生一个信号 s，该信号基于排队延迟梯度 :math:`m(t_i)` 和阈值 :math:`\gamma` 来驱动 FSM (下面的有限状态机) 的状态 :math:`\sigma`，算法 1 详细显示了 s 是如何生成的 ：
+
+当 :math:`m(t_i) > \gamma` 时，算法通过增加帧间隔时间 :math:`\Delta T` 的变量 :math:`t_{OU}` 来跟踪在这种情况下花费的时间。 
+当 :math:`t_{OU}` 达到 :math:`\bar{t}_{OU}=100ms` 且 :math:`m(t_i) > m(t_{i-1})`` 时，产生过度使用信号。 
+
+另一方面，如果 :math:`m(t_i)` 减小到 :math:`\gamma` 以下，则产生未充分利用信号，而当 :math:`-\gamma \leq m(t_i) \leq \gamma` 时触发正常信号。
+
+
+.. figure:: ../_static/rate-controller-fsm.gif
+      :scale: 90 %
+      :alt: remote rate controller finite state machine
+      :align: center
+
+      remote rate controller finite state machine
+
+
+* 算法: Over-use Detector pseudo-code 过度使用检测器的伪代码
+
+.. figure:: ../_static/over-use-detector-pseudo-code.gif
+   :scale: 90 %
+   :alt: over-use detector pseudo code
+   :align: center
+
+   over-use detector pseudo code
+
+
+8. 根据以上的检测结果, 调整发送速率, GCC 采用 AIMD 算法
+
+AIMD 算法来源于 TCP 协议,参见 https://en.wikipedia.org/wiki/Additive_increase/multiplicative_decrease
+
+速率控制分为两部分, 
+ 
+1) 根据延迟 delay 来调整带宽估计,或称发送速率 
+2) 根据丢包 loss 来调整带宽估计,或称发送速率
+
+最终会综合比较 :math:`A_d` 和 :math:`A_l`, 即两者之间的一个最小值此
+
+* 以下为其状态转换图, 空白单元表示维持当前状态
 
 .. code-block::
 
-  inter_arrival_time = t(i) - t(i-1)
+   +----+--------+-----------+------------+--------+
+   |     \ State |   Hold    |  Increase  |Decrease|
+   |      \      |           |            |        |
+   | Signal\     |           |            |        |
+   +--------+----+-----------+------------+--------+
+   |  Over-use   | Decrease  |  Decrease  |        |
+   +-------------+-----------+------------+--------+
+   |  Normal     | Increase  |            |  Hold  |
+   +-------------+-----------+------------+--------+
+   |  Under-use  |           |   Hold     |  Hold  |
+   +-------------+-----------+------------+--------+
 
-  inter_departure_time = T(i) - T(i-1)
+其他算法细节
+===================================
 
-  d(i) = t(i) - t(i-1) - (T(i) - T(i-1))
+动态阈值的生成
+--------------------------------------------------
+为避免路由队列过小或由于并发的TCP flow 竞争所造成的饥饿, 这个阈值的设置很关键.
+阈值如果太小会对于网络的瞬时干扰过于敏感, 如果太大则会反应太迟钝, 很难设置一个合适的值.
+GCC v2 采用了一种在 GCC v1 中定义的自适应的阈值  Adaptive threshold 
 
+.. math::
 
-通过对接收和发送的延迟的变化，计算拥塞延迟的变化趋势的斜率 (slope), 这里用到了指数平滑算法和最小二乘法
+  \gamma (t_i) = \gamma(t_{i−1}) + \Delta T · k_\gamma (t_i)(|m(t_i)| − \gamma(t{i−1}))
 
+这里的 :math:`\Delta T` 是指 :math:`t_i - t_{i-1}`, :math:`t_i` 是第 i-th 包到达的时间 
+
+:math:`\gamma(t_i)` 代表阈值
+:math:`m(t_i)` 代表趋势斜率
+:math:`k_\gamma` 代表阈值调整系数, 定义如下:
+
+.. math::
+
+  k_\gamma (t_i) = \begin{cases}
+    & \text{ k_d if } |m(t_i)|  < \gamma (t_{i-1}) \\
+    & \text{ k_u if } otherwise
+  \end{cases}
+
+在 GCC 草案中 :math:`k_d` 取值为 0.00018, :math:`k_u` 取值为 0.01
+
+指数平滑算法和最小二乘法
+---------------------------------------------------
+
+通过对接收和发送的延迟的变化，计算拥塞延迟的变化趋势的斜率 (slope), 用到了指数平滑算法和最小二乘法
 
 EWMA（Exponentially Weighted Moving Average ）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -347,134 +446,7 @@ EWMA 指数加权移动平滑法（Exponential Smoothing） 是在移动平均�
   k = \sum (x_i-x_{avg})(y_i-y_{avg}) / \sum (x_i-x_{avg})^2
 
 
-TrendlineEstimator configuration - 其配置中主要指定了如下三个参数
-
-* 窗口大小 **window_size** is the number of points required to compute a trend line. 
-  收到多少个包组后开始计算趋势
-* 平滑系数 **smoothing_coef** controls how much we smooth out the delay before fitting the trend line. 
-  在拟合趋势线前进行指数平滑的系数 
-* 阈值增益 **threshold_gain** is used to scale the trendline slope for comparison to the old threshold. Once the old estimator has been removed (or the thresholds been merged into the estimators), we can just set the threshold instead of setting a gain.
-  用于缩放趋势线斜率以与旧阈值进行比较。 一旦旧的估计器被删除（或阈值被合并到估计器中），我们可以只设置阈值而不设置增益。
-
-
-  下面是 WebRTC 中这三个参数的默认值。
-
-.. code-block::
-
-  constexpr size_t kDefaultTrendlineWindowSize = 20;
-  constexpr double kDefaultTrendlineSmoothingCoeff = 0.9;
-  constexpr double kDefaultTrendlineThresholdGain = 4.0;
-
-
-Overuse detector
------------------------------------------
-
-对于带宽的使用，有三种状态：
-
-1) Normal 正常使用 
-2) Underusing 不足使用
-3) Overusing  过度使用
-
-.. code-block::
-
-  enum class BandwidthUsage {
-    kBwNormal = 0, 
-    kBwUnderusing = 1,
-    kBwOverusing = 2,
-    kLast
-  };
-
-
-对于网络状态的预测主要是根据网络的度量指标:
-
-1) 延迟梯度 m(t_i)
-2) 丢包率 l(t_i)
-
-.. math::
-
-  m(t_i) > \gamma (t_i) : overuse
-
-  m(t_i) < \gamma (t_i) : underuse
-
-  \gamma (t_i) \le m(t_i) \le  \gamma (t_i): normal
-
-   
-这个阈值的设置很关键，GCC 采用了一种 Adaptive threshold 自适应的阈值
-
-.. math::
-
-  \gamma (t_i) = \gamma(t_{i−1}) + \Delta T · k_\gamma (t_i)(|m(t_i)| − \gamma(t{i−1}))
-
-
-:math:`k_\gamma` 代表阈值
-
-.. math::
-
-  k_\gamma (t_i) = \begin{cases}
-    & \text{ k_d if } |m(t_i)|  < \gamma (t_{i-1}) \\
-    & \text{ k_u if } otherwise
-  \end{cases}
-
-在 GCC 草案中 :math:`k_d` 取值为 0.00018, :math:`k_u` 取值为 0.01
-  
-
-
-AIMD controller
------------------------------------------
-A rate control implementation based on additive increases of bitrate when no over-use is detected and multiplicative decreases when over-uses are detected. 
-
-
-AIMD 算法来源于 TCP 协议,参见 https://en.wikipedia.org/wiki/Additive_increase/multiplicative_decrease
-
-.. code-block::
-
-   +----+--------+-----------+------------+--------+
-   |     \ State |   Hold    |  Increase  |Decrease|
-   |      \      |           |            |        |
-   | Signal\     |           |            |        |
-   +--------+----+-----------+------------+--------+
-   |  Over-use   | Decrease  |  Decrease  |        |
-   +-------------+-----------+------------+--------+
-   |  Normal     | Increase  |            |  Hold  |
-   +-------------+-----------+------------+--------+
-   |  Under-use  |           |   Hold     |  Hold  |
-   +-------------+-----------+------------+--------+
-
-
 更多代码分析参见 `GCC 拥塞控制的实现 <../5.code/congestion_control.html>`_
-
-
-
-Evaluation
-=================================================
-
-use ns-3 to simulate gcc work
------------------------------------
-
-
-* edit /etc/profile
-
-.. code-block::
-
-  export WEBRTC_LIB=/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib
-  export LD_LIBRARY_PATH=$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp:$LD_LIBRARY_PATH  
-  export CPLUS_INCLUDE_PATH=CPLUS_INCLUDE_PATH:$WEBRTC_LIB/webrtc/:$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp 
-
-#. edit webrtc-ns3/wscript
-
-The path about the headers and so libs in wscript(under webrtc-ns3) should also be changed accordingly:
-
-.. code-block::
-
-  conf.env.append_value('INCLUDES', ['/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/'])
-  conf.env.append_value("LINKFLAGS", ['-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/system_wrappers','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/rtc_base','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/api','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/logging','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/utility','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/pacing','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/congestion_controller','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/bitrate_controller','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/remote_bitrate_estimator','-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/rtp_rtcp'])
-
-#. put these modules to /home/walter/workspace/webrtc/ns-allinone-3.35/ns-3.35/src
-
-* mystrace
-* webrtc-ns3
-* multipathvid
-
 
 
 参考资料
