@@ -12,6 +12,6 @@
    webrtc_test
    webrtc_issues
 
-   congestion_control
+   webrtc_cc
    overuse_frame_decoder
    remote_bitrate_estimator

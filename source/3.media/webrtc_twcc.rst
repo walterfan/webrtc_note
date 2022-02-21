@@ -88,39 +88,18 @@ Transport-wide RTCP Feedback Message
        |           recv delta          |  recv delta   | zero padding  |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-* version (V):  2 bits This field identifies the RTP version.  The current version is 2.
-
-* padding (P):  1 bit If set, the padding bit indicates that the packet contains additional padding octets at the end that are not part of the control information but are included in the length field.
-
-* feedback message type (FMT):  5 bits This field identifies the type of the FB message.  It must have the value 15.
-
-* payload type (PT):  8 bits This is the RTCP packet type that  identifies the packet as being an RTCP FB message. The value must be RTPFB = 205.
-
-* SSRC of packet sender:  32 bits The synchronization source identifier for the originator of this packet.
-
-* SSRC of media source:  32 bits The synchronization source identifier of the media source that this piece of feedback
-
-* information is related to.  TODO: This is transport wide, do we just pick any of the media source SSRCs?
-
-* base sequence number:  16 bits The transport-wide sequence number of the first packet in this feedback.  This number is not necessarily increased for every feedback; in the case of reordering it may be decreased.
-  - 该 fb 包首个 rtp 包的 transport seq，非 rtp 包序列号。
-
-* packet status count:  16 bits The number of packets this feedback  contains status for, starting with the packet identified by the base sequence number.
-  - 该 fb packet 包含 rtp 包个数。
-
-* reference time:  24 bits Signed integer indicating an absolute reference time in some (unknown) time base chosen by the sender of the feedback packets.  The value is to be  interpreted in multiples of 64ms.  The first recv delta in this packet is relative to the reference time.  The reference time makes it possible to calculate the delta between feedbacks even if some feedback packets are lost,  since it always uses the same time base.
-  - 参考时间，fb 包首个 rtp 的到达时间/64
-  
-* feedback packet count:  8 bits A counter incremented by one for each feedback packet sent.  Used to detect feedback packet losses.
-  - 已发送 feedback 包计数器，可用于 fb packet 丢失检测
-  
-* packet chunk:  16 bits A list of packet status chunks.  These indicate the status of a number of packets starting with the one identified by base sequence number.  See below  for details.
-  - 描述 rtp 包 4 种状态（见：4.2），有 Run Length Chunk 和 Status Vector Chunk 两种格式
-  
-* recv delta: 8 bits For each "packet received" status, in the packet  status chunks, a receive delta block will follow.  See details below.
-  - 当 rtp 包的状态为 Packet received，通过 recv delta 记录其与前一个 rtp 包到达的时间间隔。
-
-
+-   **version (V)**: 2 bits This field identifies the RTP version.  **- RTP 的版本，当前版本都是 2.**
+-   **padding (P)**: 1 bit If set, the padding bit indicates that the packet contains additional padding octets at the end that are not part of the control information but are included in the length field. **- 指示是否有填充内容**
+-   **feedback message type (FMT)**: 5 bits This field identifies the type of the FB message. It must have the value 15. ** - 反馈消息类型,  根据RFC4585 的定义，值为 15， 含义是   Application layer FB (AFB) message 应用层反馈消息**
+-   **payload type (PT)**: 8 bits This is the RTCP packet type that identifies the packet as being an RTCP FB message. The value must be RTPFB = 205. **- 荷载类型，根据RFC4585 的定义，值为 205，含义是Transport layer FB message 传输层反馈消息**
+-   **SSRC of packet sender**: 32 bits The synchronization source identifier for the originator of this packet. **- 这个反馈消息包发起者的同步源标识**
+-   **SSRC of media source**: 32 bits The synchronization source identifier of the media source that this piece of feedback  information is related to. TODO: This is transport wide, do we just  pick any of the media source SSRCs? **- 这个反馈消息包对应的媒体流的同步源标识，这个值待确定，因为这是一个传输通道范围的反馈，这个值必要性不大，可以随意选取一个 media SSRC**
+-   **base sequence number**: 16 bits The transport-wide sequence number of the first packet in this feedback. This number is not necessarily increased for every feedback; in the case of reordering it may be decreased.  **- 该 fb 包首个 rtp 包的 transport seq，非 rtp 包序列号。**
+-   **packet status count**: 16 bits The number of packets this feedback contains status for, starting with the packet identified by the base  sequence number.    **- 该 fb packet 包含 rtp 包个数。**
+-   **reference time**: 24 bits Signed integer indicating an absolute reference time in some (unknown) time base chosen by the sender of  the feedback packets. The value is to be interpreted in multiples of 64ms. The first recv delta in this packet is relative to the reference time. The reference time makes it possible to calculate  the delta between feedbacks even if some feedback packets are lost,  since it always uses the same time base. **- 参考时间，fb 包首个 rtp 的到达时间/64**
+-   **feedback packet count**: 8 bits A counter incremented by one for each feedback packet sent. Used to detect feedback packet losses. **-   已发送 feedback 包计数器，可用于 fb packet 丢失检测**
+-   **packet chunk**: 16 bits A list of packet status chunks. These indicate  the status of a number of packets starting with the one identified  by base sequence number. See below for details. ** -   描述 rtp 包 4 种状态（见：4.2），有 Run Length Chunk 和 Status Vector Chunk 两种格式**
+-   **recv delta**: 8 bits For each \"packet received\" status, in the  packet status chunks, a receive delta block will follow. See details   below. **-   当 rtp 包的状态为 Packet received，通过 recv delta 记录其与前一个 rtp 包到达的时间间隔。**
 
 Rtp Packet Status
 ---------------------------------
@@ -289,7 +268,7 @@ Receive Delta 长度为一个字节或两个字节, 记录每个包与之前收�
 
 * 当状态是 "Packet received, large or negative delta"，用 16-bit signed 存储 delta，附加在 packet status list 之后, 此时 delta 取值为 `[-32767, 32768] * 250`, 表示范围为 [-8192.0, 8191.75] ms.
 
-* 如果间隔时间太大,就需要启用使用新的 RTCP feedback 包
+* 如果间隔时间太大,就需要启用使用新的 RTCP feedback 包了，不过一般也不会有这么大的延迟，除非网络中断了。
 
 
 基于延迟的发送端拥塞控制
@@ -300,6 +279,8 @@ Receive Delta 长度为一个字节或两个字节, 记录每个包与之前收�
 2)  Arrival-time filter: 采用卡尔曼滤波或趋势线滤波
 3)  Over-use detector: 与预设的阈值进行比较, 检测是否有拥塞
 4)  Rate control : 进行发送速率的调整, 可采用 TCP 中使用的 AIMD(加增乘减法)
+
+.. image:: ../_static/gcc_flow.png
 
 基本方法
 -------------------------------------------------
@@ -453,5 +434,3 @@ EWMA 指数加权移动平滑法（Exponential Smoothing） 是在移动平均�
 ==================================================
 * `RTP Extensions for Transport-wide Congestion Control (draft-holmer-rmcat-transport-wide-cc-extensions-01) <https://datatracker.ietf.org/doc/html/draft-holmer-rmcat-transport-wide-cc-extensions-01>`_
 * `A Google Congestion Control Algorithm for Real-Time Communication <https://datatracker.ietf.org/doc/html/draft-ietf-rmcat-gcc-02>`_
-* `Webrtc Rtp/rtcp  <https://xie.infoq.cn/article/8a8ad2f8170d0072941c2aa9e>`_
-* `webrtc 即时带宽评估器 BitrateEstimator <https://xie.infoq.cn/article/2f944089023274ef0ac6eabd8>`_

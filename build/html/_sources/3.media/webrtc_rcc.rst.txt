@@ -54,7 +54,7 @@ WebRTC 拥塞控制
 * 基于延迟的控制器 delay-based controller
 * 基于丢包的控制器 loss-based controller
 
-例如 Google 所提出的 `GCC 算法 <webrtc_gcc.html>`_, `REMB 扩展 <webrtc_remb.html>`_， `TCC 算法 <webrtc_tcc.html>`_
+例如 Google 所提出的 `GCC 算法 <webrtc_gcc.html>`_, `REMB 扩展 <webrtc_remb.html>`_， `TCC 算法 <webrtc_twcc.html>`_
 
 基本架构
 =========================
