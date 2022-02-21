@@ -106,6 +106,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Congeston Control Evaluation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id2">概述</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#evaluating-congestion-control-for-interactive-real-time-media">Evaluating Congestion Control for Interactive Real-Time Media</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#evaluation-by-ns-3">Evaluation by ns-3</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_rcc.html#id2">简介</a></li>
@@ -222,7 +223,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-02-19</p></td>
+<td><p>2022-02-21</p></td>
 </tr>
 </tbody>
 </table>
@@ -253,6 +254,7 @@
 </li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#evaluation-by-ns-3" id="id20">Evaluation by ns-3</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
@@ -364,6 +366,33 @@ histogram or cumulative distribution function (CDF) of packet delay.</p>
 <h4><a class="toc-backref" href="#id19">Background UDP</a><a class="headerlink" href="#background-udp" title="Permalink to this headline">¶</a></h4>
 </div>
 </div>
+</div>
+<div class="section" id="evaluation-by-ns-3">
+<h2><a class="toc-backref" href="#id20">Evaluation by ns-3</a><a class="headerlink" href="#evaluation-by-ns-3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>edit /etc/profile</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export WEBRTC_LIB=/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib
+export LD_LIBRARY_PATH=$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp:$LD_LIBRARY_PATH
+export CPLUS_INCLUDE_PATH=CPLUS_INCLUDE_PATH:$WEBRTC_LIB/webrtc/:$WEBRTC_LIB/webrtc/system_wrappers:$WEBRTC_LIB/webrtc/rtc_base:$WEBRTC_LIB/webrtc/api:$WEBRTC_LIB/webrtc/logging:$WEBRTC_LIB/webrtc/modules/utility:$WEBRTC_LIB/webrtc/modules/pacing:$WEBRTC_LIB/webrtc/modules/congestion_controller:$WEBRTC_LIB/webrtc/modules/bitrate_controller:$WEBRTC_LIB/webrtc/modules/remote_bitrate_estimator:$WEBRTC_LIB/webrtc/modules/rtp_rtcp
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>edit webrtc-ns3/wscript</p></li>
+</ol>
+<p>The path about the headers and so libs in wscript(under webrtc-ns3) should also be changed accordingly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conf</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">append_value</span><span class="p">(</span><span class="s1">&#39;INCLUDES&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/&#39;</span><span class="p">])</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">append_value</span><span class="p">(</span><span class="s2">&quot;LINKFLAGS&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/system_wrappers&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/rtc_base&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/api&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/logging&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/utility&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/pacing&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/congestion_controller&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/bitrate_controller&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/remote_bitrate_estimator&#39;</span><span class="p">,</span><span class="s1">&#39;-L/home/walter/workspace/webrtc/rmcat-ns3/webrtc-lib/webrtc/modules/rtp_rtcp&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>put these modules to /home/walter/workspace/webrtc/ns-allinone-3.35/ns-3.35/src</p></li>
+</ol>
+<ul class="simple">
+<li><p>mystrace</p></li>
+<li><p>webrtc-ns3</p></li>
+<li><p>multipathvid</p></li>
+</ul>
 </div>
 </div>
 

@@ -310,3 +310,5 @@ Reference
 * https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/encode_usage_resource.h
 * https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h
 
+* `Webrtc Rtp/rtcp  <https://xie.infoq.cn/article/8a8ad2f8170d0072941c2aa9e>`_
+* `webrtc 即时带宽评估器 BitrateEstimator <https://xie.infoq.cn/article/2f944089023274ef0ac6eabd8>`_
