@@ -31,6 +31,49 @@ Overview
 .. _congestion_controller: https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller
 
 
+核心接口
+===============
+
+.. code-block:: c++
+
+
+    class NetworkControllerInterface {
+    public:
+      virtual ~NetworkControllerInterface() = default;
+
+      // Called when network availabilty changes.  -- 当网络有效或无效时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnNetworkAvailability(NetworkAvailability) = 0;
+      // Called when the receiving or sending endpoint changes address.  -- 当网络地址更改时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnNetworkRouteChange(NetworkRouteChange) = 0;
+      // Called periodically with a periodicy as specified by
+      // NetworkControllerFactoryInterface::GetProcessInterval.  -- 定时回调，以检查网络
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnProcessInterval( ProcessInterval) = 0;
+      // Called when remotely calculated bitrate is received.    -- 当收到 REMB RTCP 消息时回调
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnRemoteBitrateReport(RemoteBitrateReport) = 0;
+      // Called round trip time has been calculated by protocol specific mechanisms.  -- 当 RTT 更改时回调（可通过 RTCP RR）
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnRoundTripTimeUpdate(RoundTripTimeUpdate) = 0;
+      // Called when a packet is sent on the network.  -- 当发出一个 RTP 包时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnSentPacket(SentPacket) = 0;
+      // Called when a packet is received from the remote client. -- 当收到一个 RTP 包时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnReceivedPacket(ReceivedPacket) = 0;
+      // Called when the stream specific configuration has been updated.  -- 当有流相关的配置更新时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnStreamsConfig(StreamsConfig) = 0;
+      // Called when target transfer rate constraints has been changed.  -- 当目标速率约束更改时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnTargetRateConstraints(TargetRateConstraints) = 0;
+      // Called when a protocol specific calculation of packet loss has been made.  -- 当收到 TransportLossReport 时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnTransportLossReport(TransportLossReport) = 0;
+      // Called with per packet feedback regarding receive time.  -- 当收到 TransportPacketsFeedback 时
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnTransportPacketsFeedback(TransportPacketsFeedback) = 0;
+      // Called with network state estimate updates. -- 当网络状态估计更新时，还在开发中
+      ABSL_MUST_USE_RESULT virtual NetworkControlUpdate OnNetworkStateEstimate(NetworkStateEstimate) = 0;
+    };
+
+
+我们比较关心的方法是
+
+* OnTransportLossReport 传输通道的丢失报告
+* OnTransportPacketsFeedback 传输通道的 RTP 包的状态反馈报告
+
 Receiver side congestion controller
 ------------------------------------------
 兼容旧版本的 REMB 消息，由接收方来指定最大的传输带宽
@@ -65,6 +108,20 @@ sender side congestion controller
 ------------------------------------------
 发送端的拥塞控制逻辑，主要控制类是 GoogleCcNetworkController
 
+
+.. list-table:: congestion controller classes
+   :widths: 25 25 25 25
+   :header-rows: 1
+
+   * - Class
+     - Responsibility
+     - Collablorator
+     - Comments
+   * - ProbeController
+     - 探测控制器，通过目标码率判断下次是否探测，探测码率大小
+     - ProbeControllerConfig 
+     - 探测是在开始阶段，及特定的网络状态和条件下触发的
+
 其依赖项有
 
 * ProbeController : 探测控制器，通过目标码率判断下次是否探测，探测码率大小
@@ -78,7 +135,7 @@ sender side congestion controller
 * CongestionWindowPushbackController : 基于当前的rtt设置一个时间窗口，同时基于当前的码率设置当前时间窗口下的数据量，通过判断当前窗口的使用量，如果使用量过大的时候，降低编码时使用的目标码率，加速窗口消退，减少延迟
 * AlrDetector : 应用(码率)受限检测，检测当前的发送码率是否和目标码率由于编码器等原因相差过大受限了，受限情况下会触发带宽预测过程的特殊处理
 
-config classes
+config classes 配置类
 =================================
 * NetworkControllerConfig
 
@@ -148,6 +205,16 @@ main classes
 GoogleCcNetworkController
 ---------------------------------
 
+
+.. code-block::
+
+  $ ./out/Default/modules_unittests --gtest_filter="GoogCcNetworkControllerTest.*"
+  [ RUN      ] GoogCcNetworkControllerTest.InitializeTargetRateOnFirstProcessInterval
+  [ RUN      ] GoogCcNetworkControllerTest.ReactsToChangedNetworkConditions
+  [ RUN      ] GoogCcNetworkControllerTest.OnNetworkRouteChanged
+  [ RUN      ] GoogCcNetworkControllerTest.ProbeOnRouteChange
+  [ RUN      ] GoogCcNetworkControllerTest.UpdatesDelayBasedEstimate
+  [ RUN      ] GoogCcNetworkControllerTest.PaceAtMaxOfLowerLinkCapacityAndBwe
 
 DelayBasedBwe
 ---------------------------------

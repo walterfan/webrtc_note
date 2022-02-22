@@ -184,3 +184,6 @@ The path about the headers and so libs in wscript(under webrtc-ns3) should also 
 * webrtc-ns3
 * multipathvid
 
+
+
+./waf --run webrtc-scratch
