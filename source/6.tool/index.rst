@@ -15,6 +15,7 @@
    ffmpeg
 
    tc
+   iperf
    perf
    tcpdump
    wireshark
