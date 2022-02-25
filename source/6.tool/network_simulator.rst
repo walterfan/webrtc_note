@@ -223,6 +223,19 @@ first.cc
         return 0;
     }
 
+
+.. code-block::
+
+    cp ./examples/tutorial/first.cc ./scratch/myfirst.cc
+    cd ns-allinone-3.35/ns-3.35/
+    ./waf --run myfirst
+
+
+基本框架
+===============
+
+
+
 参考资料
 ===============
 * https://www.nsnam.org/docs/release/3.35/tutorial/html/getting-started.html#getting-started
