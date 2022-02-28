@@ -199,12 +199,12 @@ config classes 配置类
       bool feedback_only = false;
    };
 
-main classes
+Controller classes
 =================================
 
 GoogleCcNetworkController
 ---------------------------------
-
+It is the first class of congestion controller 
 
 .. code-block::
 
@@ -257,6 +257,15 @@ DelayBasedBwe
 
 
       }
+
+Estimator classes
+=======================
+* probe_bitrate_estimator
+* acknowledged_bitrate_estimator
+
+* robust_throughput_estimator
+* trendline_estimator
+
 
 TrendlineEstimator
 -----------------------

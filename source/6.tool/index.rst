@@ -22,5 +22,6 @@
    
    network_simulator
    
+   analytics
    cookbook
    buildtools
