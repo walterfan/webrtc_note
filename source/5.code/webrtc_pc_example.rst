@@ -79,7 +79,7 @@ PeerConnection Client
 ===========================
 
 
-main class
+main class of pc client
 ---------------------------
 .. list-table:: CRCC Cards
   :widths: 25 25 25 25
@@ -139,7 +139,7 @@ main class
   }; 
 
 
-main flow
+main flow of pc client
 -------------------------
 
 1. conect the signal server - peerconnection server
