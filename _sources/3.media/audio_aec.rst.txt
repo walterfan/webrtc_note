@@ -88,5 +88,47 @@ In audio signal processing and acoustics, an echo is a reflection of sound that 
 * subband processing
 
 
+Glossary
+========================
+near end
+far end
+
+
+Methods
+========================
+
+AECM
+------------------------
+
+Input processing
+~~~~~~~~~~~~~~~~~~~~~~~~
+* Hanning window
+* FFT
+
+Echo Delay Estimation
+~~~~~~~~~~~~~~~~~~~~~~~~~
+* VAD
+* Align Far Near End
+
+Adaptive Filter
+~~~~~~~~~~~~~~~~~~~~~~~~~
+NLMS - Normalized Least-Mean-Squares
+
+
+Non-linear processing
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+Winner Filter
+
+Comfort Noise
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+CNG generate
+
+Output result
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+IFFT
+
+
+
+
 Reference
 =====================

@@ -213,22 +213,133 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-02-21</p></td>
+<td><p>2022-02-28</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id2" id="id3">概述</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id4">Reference</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id4">概述</a></p>
+<ul>
+<li><p><a class="reference internal" href="#device-adaptation" id="id5">Device adaptation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#encodeusageresource" id="id6">EncodeUsageResource</a></p></li>
+<li><p><a class="reference internal" href="#qualityscaler" id="id7">QualityScaler</a></p></li>
+<li><p><a class="reference internal" href="#qualityscalerqpusagehandlerinterface" id="id8">QualityScalerQpUsageHandlerInterface</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#network-adaptation" id="id9">Network adaptation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id10">Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id3">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>用于 WebRTC 应用的设备往往参差不齐，有高大上的 macbook pro, 也有老掉牙的老笔记本或台式机，或者轻便小巧的平板。多媒体特别是视频的编解码是很耗费资源的, 这时候，需要根据设备的资源消耗情况，实时调整编码质量，如分辨率，帧率等，避免对系统资源主要是 CPU 的使用宜占用过多。</p>
+<p>对于视频的调整, 主要是调帧率和分辨率, 策略有 3 种</p>
+<ul class="simple">
+<li><p>MAINTAIN_FRAMERATE：保帧率，降分辨率，该模式的使用场景为视频模式。</p></li>
+<li><p>MAINTAIN_RESOLUTION: 保分辨率降帧率，使用场景为屏幕共享或者文档模式，对清晰度要求较高的场景。</p></li>
+<li><p>BALANCED: 平衡帧率与分辨率。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="k">class</span> <span class="nc">DegradationPreference</span> <span class="p">{</span>
+   <span class="o">//</span> <span class="n">Don</span><span class="s1">&#39;t take any actions based on over-utilization signals. Not part of the</span>
+   <span class="o">//</span> <span class="n">web</span> <span class="n">API</span><span class="o">.</span>
+   <span class="n">DISABLED</span><span class="p">,</span>
+   <span class="o">//</span> <span class="n">On</span> <span class="n">over</span><span class="o">-</span><span class="n">use</span><span class="p">,</span> <span class="n">request</span> <span class="n">lower</span> <span class="n">resolution</span><span class="p">,</span> <span class="n">possibly</span> <span class="n">causing</span> <span class="n">down</span><span class="o">-</span><span class="n">scaling</span><span class="o">.</span>
+   <span class="n">MAINTAIN_FRAMERATE</span><span class="p">,</span>
+   <span class="o">//</span> <span class="n">On</span> <span class="n">over</span><span class="o">-</span><span class="n">use</span><span class="p">,</span> <span class="n">request</span> <span class="n">lower</span> <span class="n">frame</span> <span class="n">rate</span><span class="p">,</span> <span class="n">possibly</span> <span class="n">causing</span> <span class="n">frame</span> <span class="n">drops</span><span class="o">.</span>
+   <span class="n">MAINTAIN_RESOLUTION</span><span class="p">,</span>
+   <span class="o">//</span> <span class="n">Try</span> <span class="n">to</span> <span class="n">strike</span> <span class="n">a</span> <span class="s2">&quot;pleasing&quot;</span> <span class="n">balance</span> <span class="n">between</span> <span class="n">frame</span> <span class="n">rate</span> <span class="ow">or</span> <span class="n">resolution</span><span class="o">.</span>
+   <span class="n">BALANCED</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>webrtc api 层提供了自适应策略的设置接口，通过设置 videotrack 的 ContentHint 属性就可以了。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="k">class</span> <span class="nc">ContentHint</span> <span class="p">{</span> <span class="n">kNone</span><span class="p">,</span> <span class="n">kFluid</span><span class="p">,</span> <span class="n">kDetailed</span><span class="p">,</span> <span class="n">kText</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>ContentHint 为 kDetailed/kText 暗示了编码器保持分辨率，降帧率，设置为 kFluid，暗示编码器保持帧率，示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">void</span> <span class="n">StartVideo</span><span class="p">(){</span>
+                       <span class="o">.....</span>
+       <span class="n">auto</span> <span class="n">track</span> <span class="o">=</span> <span class="n">mSharedFactory</span><span class="o">-&gt;</span><span class="n">createVideoTrack</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">source</span><span class="p">);</span>
+                       <span class="n">track</span><span class="o">-&gt;</span><span class="n">set_content_hint</span><span class="p">(</span><span class="n">webrtc</span><span class="p">::</span><span class="n">VideoTrackInterface</span><span class="p">::</span><span class="n">ContentHint</span><span class="p">::</span><span class="n">kFluid</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="device-adaptation">
+<h3><a class="toc-backref" href="#id5">Device adaptation</a><a class="headerlink" href="#device-adaptation" title="Permalink to this headline">¶</a></h3>
+<p>设备的计算和存储资源对于视频的编解码, 捕获和渲染是有很大影响的. 如果设备性能太差, 则不适合进行高分辨率和高帧率的视频编解码.</p>
+<p>在 webrtc library 中的 video 模块中有一个子模块 adaption, 它主要有如下的类来适应设备和网络状态</p>
+<div class="section" id="encodeusageresource">
+<h4><a class="toc-backref" href="#id6">EncodeUsageResource</a><a class="headerlink" href="#encodeusageresource" title="Permalink to this headline">¶</a></h4>
+<p>Handles interaction with the OveruseDetector.</p>
+</div>
+<div class="section" id="qualityscaler">
+<h4><a class="toc-backref" href="#id7">QualityScaler</a><a class="headerlink" href="#qualityscaler" title="Permalink to this headline">¶</a></h4>
+<p>QualityScaler runs asynchronously and monitors QP values of encoded frames.
+It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to signal an overuse or underuse of QP
+(which indicate a desire to scale the video stream down or up).</p>
+</div>
+<div class="section" id="qualityscalerqpusagehandlerinterface">
+<h4><a class="toc-backref" href="#id8">QualityScalerQpUsageHandlerInterface</a><a class="headerlink" href="#qualityscalerqpusagehandlerinterface" title="Permalink to this headline">¶</a></h4>
+<p>Reacts to QP being too high or too low.</p>
+<p>For best quality, when QP is high it is desired to decrease the resolution or frame rate of the stream and when QP is low it is desired to increase the resolution or frame rate of the stream.</p>
+<p>Whether to reconfigure the stream is ultimately up to the handler, which is able to respond asynchronously.</p>
+</div>
+</div>
+<div class="section" id="network-adaptation">
+<h3><a class="toc-backref" href="#id9">Network adaptation</a><a class="headerlink" href="#network-adaptation" title="Permalink to this headline">¶</a></h3>
+<p>WebRTC 有一个网络拥塞和带宽估计的模块, 当检测到网络带宽有变化的(over-use, under-use), 就可以来调整视频的分辨率或帧率</p>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-text">分辨率对应的大约带宽</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>bandwidth</p></th>
+<th class="head"><p>Resolution</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>64kbps</p></td>
+<td><p>90p</p></td>
+<td><p>160 x 90</p></td>
+</tr>
+<tr class="row-odd"><td><p>128kbps</p></td>
+<td><p>180p</p></td>
+<td><p>320 x 180</p></td>
+</tr>
+<tr class="row-even"><td><p>448kbps</p></td>
+<td><p>360p</p></td>
+<td><p>640 x 360</p></td>
+</tr>
+<tr class="row-odd"><td><p>1536kbps</p></td>
+<td><p>720p</p></td>
+<td><p>1280 x 720</p></td>
+</tr>
+<tr class="row-even"><td><p>4mbps</p></td>
+<td><p>1080p</p></td>
+<td><p>1920 x 1080, may more than 4mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>12mbps</p></td>
+<td><p>2K</p></td>
+<td><p>3840 × 2160, may more than 12mbps</p></td>
+</tr>
+<tr class="row-even"><td><p>20mbps</p></td>
+<td><p>4K</p></td>
+<td><p>7680 × 4320, may more than 20mbps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="reference">
-<h2><a class="toc-backref" href="#id4">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h">overuse_frame_detector</a></p></li>

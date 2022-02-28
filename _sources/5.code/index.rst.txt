@@ -15,3 +15,5 @@
    webrtc_cc
    overuse_frame_decoder
    remote_bitrate_estimator
+
+   webrtc_pc_example

@@ -15,11 +15,13 @@
    ffmpeg
 
    tc
+   iperf
    perf
    tcpdump
    wireshark
    
    network_simulator
    
+   analytics
    cookbook
    buildtools

@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC Congestion Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
@@ -205,7 +206,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-02-21</p></td>
+<td><p>2022-02-28</p></td>
 </tr>
 </tbody>
 </table>
@@ -239,7 +240,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir webrtc-checkout
 $ <span class="nb">cd</span> webrtc-checkout
 $ fetch --nohooks webrtc
-$ gclient sync
+$ gclient sync --force
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
@@ -268,6 +269,7 @@ $ ninja -C out/Default
 </div>
 <p>在 windows 系统上，建议安装 visual studio 和 windows 10 SDK
 (注意一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)</p>
+<p>note: In order to use your locally installed version of Visual Studio to build Chrome please set DEPOT_TOOLS_WIN_TOOLCHAIN=0.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gn</span> <span class="n">gen</span> <span class="o">--</span><span class="n">ide</span><span class="o">=</span><span class="n">vs</span> <span class="n">out</span>\<span class="n">Default</span>
 </pre></div>
 </div>
