@@ -27,6 +27,12 @@ video quality
 * structural similarity index measure (SSIM) 
 
 
+Method
+==========
+
+
+
+
 Reference
 ================
 * https://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio
