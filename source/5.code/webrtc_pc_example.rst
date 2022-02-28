@@ -20,8 +20,9 @@ WebRTC PeerConnection Example
 
 Overview
 =============
+在 windows 平台上编译 webrtc library 后会生成一些例子程序,其中的例子 peerconnection client and server 用来研究 WebRTC 源码, 是一份绝佳的餐前开味小菜
 
-demo steps:
+测试步骤:
 
 1) start peer connection server
 2) start peer connection client 1 - Alice
@@ -150,3 +151,41 @@ main flow
 7. send local media stream via the peer connection
 8. got remote media stream and render 
 
+FAQ
+=========================
+
+What's PhysicalSocketServer
+-------------------------------------------
+
+PhysicalSocketServer is A socket server that provides the real sockets of the underlying OS.
+
+It may contains  select(), epoll() or WSAWaitForMultipleEvents loop
+
+And the SocketServer Provides the ability to wait for activity on a set of sockets.  
+
+The Thread class provides a nice wrapper on a socket server.
+
+The server is also a socket factory.  
+
+The sockets it creates will be notified of asynchronous I/O from this server's Wait method.
+
+
+What's AutoSocketServerThread
+-------------------------------------------
+
+AutoSocketServerThread automatically installs itself at construction and uninstalls at destruction. If a Thread object is already associated with the current OS thread, 
+it is temporarily disassociated and restored by the destructor.
+
+
+The rtc::Thread is extended from webrtc::TaskQueueBase
+
+TaskQueueBase means Asynchronously executes tasks in a way that guarantees 
+that they're executedin FIFO order and that tasks never overlap. 
+
+Tasks may always execute on the same worker thread and they may not. 
+
+To DCHECK that tasks are executing on a known task queue, use IsCurrent().
+
+What is the difference between wWinMain and WinMain?
+---------------------------------------------------------------
+The only difference between WinMain and wWinMain is the command line string and you should use wWinMain in Unicode applications (and all applications created these days should use Unicode). You can of course manually call GetCommandLineW() in WinMain and parse it yourself if you really want to.

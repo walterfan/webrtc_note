@@ -34,7 +34,7 @@ Source code
    $ mkdir webrtc-checkout
    $ cd webrtc-checkout
    $ fetch --nohooks webrtc
-   $ gclient sync
+   $ gclient sync --force
 
 
 3. 更新源码到你自己的分支
@@ -65,6 +65,8 @@ Source code
 
 在 windows 系统上，建议安装 visual studio 和 windows 10 SDK
 (注意一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)
+
+note: In order to use your locally installed version of Visual Studio to build Chrome please set DEPOT_TOOLS_WIN_TOOLCHAIN=0.
 
 .. code-block::
 
