@@ -96,11 +96,14 @@
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="audio_basic.html">Audio Basic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_process.html">Audio Process pipeline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_level.html">Audio Level</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_api.html">Web Audio API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_qos.html">Audio QoS</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Acoustic Echo Canceller</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id2">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glossary">Glossary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods">Methods</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -220,7 +223,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-02-21</p></td>
+<td><p>2022-02-28</p></td>
 </tr>
 </tbody>
 </table>
@@ -238,7 +241,22 @@
 <li><p><a class="reference internal" href="#id7" id="id13">回声消除的方法</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#reference" id="id14">Reference</a></p></li>
+<li><p><a class="reference internal" href="#glossary" id="id14">Glossary</a></p></li>
+<li><p><a class="reference internal" href="#methods" id="id15">Methods</a></p>
+<ul>
+<li><p><a class="reference internal" href="#aecm" id="id16">AECM</a></p>
+<ul>
+<li><p><a class="reference internal" href="#input-processing" id="id17">Input processing</a></p></li>
+<li><p><a class="reference internal" href="#echo-delay-estimation" id="id18">Echo Delay Estimation</a></p></li>
+<li><p><a class="reference internal" href="#adaptive-filter" id="id19">Adaptive Filter</a></p></li>
+<li><p><a class="reference internal" href="#non-linear-processing" id="id20">Non-linear processing</a></p></li>
+<li><p><a class="reference internal" href="#comfort-noise" id="id21">Comfort Noise</a></p></li>
+<li><p><a class="reference internal" href="#output-result" id="id22">Output result</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id23">Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
@@ -294,8 +312,49 @@
 </ul>
 </div>
 </div>
+<div class="section" id="glossary">
+<h2><a class="toc-backref" href="#id14">Glossary</a><a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<p>near end
+far end</p>
+</div>
+<div class="section" id="methods">
+<h2><a class="toc-backref" href="#id15">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="aecm">
+<h3><a class="toc-backref" href="#id16">AECM</a><a class="headerlink" href="#aecm" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="input-processing">
+<h4><a class="toc-backref" href="#id17">Input processing</a><a class="headerlink" href="#input-processing" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Hanning window</p></li>
+<li><p>FFT</p></li>
+</ul>
+</div>
+<div class="section" id="echo-delay-estimation">
+<h4><a class="toc-backref" href="#id18">Echo Delay Estimation</a><a class="headerlink" href="#echo-delay-estimation" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>VAD</p></li>
+<li><p>Align Far Near End</p></li>
+</ul>
+</div>
+<div class="section" id="adaptive-filter">
+<h4><a class="toc-backref" href="#id19">Adaptive Filter</a><a class="headerlink" href="#adaptive-filter" title="Permalink to this headline">¶</a></h4>
+<p>NLMS - Normalized Least-Mean-Squares</p>
+</div>
+<div class="section" id="non-linear-processing">
+<h4><a class="toc-backref" href="#id20">Non-linear processing</a><a class="headerlink" href="#non-linear-processing" title="Permalink to this headline">¶</a></h4>
+<p>Winner Filter</p>
+</div>
+<div class="section" id="comfort-noise">
+<h4><a class="toc-backref" href="#id21">Comfort Noise</a><a class="headerlink" href="#comfort-noise" title="Permalink to this headline">¶</a></h4>
+<p>CNG generate</p>
+</div>
+<div class="section" id="output-result">
+<h4><a class="toc-backref" href="#id22">Output result</a><a class="headerlink" href="#output-result" title="Permalink to this headline">¶</a></h4>
+<p>IFFT</p>
+</div>
+</div>
+</div>
 <div class="section" id="reference">
-<h2><a class="toc-backref" href="#id14">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

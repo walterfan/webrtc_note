@@ -66,6 +66,28 @@ Device adaptation
 --------------------
 设备的计算和存储资源对于视频的编解码, 捕获和渲染是有很大影响的. 如果设备性能太差, 则不适合进行高分辨率和高帧率的视频编解码.
 
+在 webrtc library 中的 video 模块中有一个子模块 adaption, 它主要有如下的类来适应设备和网络状态
+
+EncodeUsageResource
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+Handles interaction with the OveruseDetector.
+
+
+QualityScaler
+~~~~~~~~~~~~~~~~~~~~~~
+QualityScaler runs asynchronously and monitors QP values of encoded frames.
+It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to signal an overuse or underuse of QP 
+(which indicate a desire to scale the video stream down or up).
+
+QualityScalerQpUsageHandlerInterface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Reacts to QP being too high or too low. 
+
+For best quality, when QP is high it is desired to decrease the resolution or frame rate of the stream and when QP is low it is desired to increase the resolution or frame rate of the stream.
+
+Whether to reconfigure the stream is ultimately up to the handler, which is able to respond asynchronously.
+
+
 
 Network adaptation
 --------------------
@@ -73,7 +95,7 @@ Network adaptation
 WebRTC 有一个网络拥塞和带宽估计的模块, 当检测到网络带宽有变化的(over-use, under-use), 就可以来调整视频的分辨率或帧率
 
 
-.. csv-table:: resolution adapt bandwidth 
+.. csv-table:: 分辨率对应的大约带宽 
    :header: "bandwidth", "Resolution", "Comments"
    :widths: 30, 30, 30
 
