@@ -15,7 +15,9 @@
 
    webrtc_thread
    webrtc_cc
+   webrtc_pacer
    overuse_frame_decoder
    remote_bitrate_estimator
 
    webrtc_pc_example
+   janus_code_1
