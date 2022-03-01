@@ -88,7 +88,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
@@ -413,7 +413,7 @@
 <p>参见 <a class="reference external" href="https://chromium.googlesource.com/external/webrtc/+/master/media/engine/webrtc_video_engine.cc#326">https://chromium.googlesource.com/external/webrtc/+/master/media/engine/webrtc_video_engine.cc#326</a></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// The selected thresholds for QVGA and VGA corresponded to a QP around 10.</span>
 <span class="c1">// The change in QP declined above the selected bitrates.</span>
-<span class="k">static</span> <span class="kt">int</span> <span class="n">GetMaxDefaultVideoBitrateKbps</span><span class="p">(</span><span class="kt">int</span> <span class="n">width</span><span class="p">,</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="nf">GetMaxDefaultVideoBitrateKbps</span><span class="p">(</span><span class="kt">int</span> <span class="n">width</span><span class="p">,</span>
                                         <span class="kt">int</span> <span class="n">height</span><span class="p">,</span>
                                         <span class="kt">bool</span> <span class="n">is_screenshare</span><span class="p">)</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="n">max_bitrate</span><span class="p">;</span>

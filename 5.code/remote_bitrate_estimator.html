@@ -88,7 +88,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
@@ -109,6 +109,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
@@ -229,15 +230,15 @@
                              <span class="k">const</span> <span class="n">RTPHeader</span><span class="o">&amp;</span> <span class="n">header</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
      <span class="c1">// 移除 `ssrc` 所标识的流的所有数据</span>
-     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">RemoveStream</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">ssrc</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+     <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">RemoveStream</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">ssrc</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
      <span class="c1">// 返回 true if a valid estimate exists and sets `bitrate_bps` to the</span>
      <span class="c1">// estimated payload bitrate in bits per second. `ssrcs` is the list of ssrcs</span>
      <span class="c1">// currently being received and of which the bitrate estimate is based upon.</span>
-     <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">LatestEstimate</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;*</span> <span class="n">ssrcs</span><span class="p">,</span>
+     <span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">LatestEstimate</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;*</span> <span class="n">ssrcs</span><span class="p">,</span>
                              <span class="kt">uint32_t</span><span class="o">*</span> <span class="n">bitrate_bps</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">SetMinBitrate</span><span class="p">(</span><span class="kt">int</span> <span class="n">min_bitrate_bps</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+     <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">SetMinBitrate</span><span class="p">(</span><span class="kt">int</span> <span class="n">min_bitrate_bps</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
  <span class="k">protected</span><span class="o">:</span>
      <span class="k">static</span> <span class="k">const</span> <span class="kt">int64_t</span> <span class="n">kProcessIntervalMs</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>

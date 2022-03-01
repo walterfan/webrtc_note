@@ -427,7 +427,7 @@ EWMA 指数加权移动平滑法（Exponential Smoothing） 是在移动平均�
   k = \sum (x_i-x_{avg})(y_i-y_{avg}) / \sum (x_i-x_{avg})^2
 
 
-更多代码分析参见 `GCC 拥塞控制的实现 <../5.code/congestion_control.html>`_
+更多代码分析参见 `GCC 拥塞控制的实现 <../5.code/webrtc_cc.html>`_
 
 
 参考资料

@@ -42,7 +42,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="WebRTC OveruseFrameDetector" href="overuse_frame_decoder.html" />
+    <link rel="next" title="WebRTC Pacer" href="webrtc_pacer.html" />
     <link rel="prev" title="WebRTC Congestion Control" href="webrtc_thread.html" /> 
 </head>
 
@@ -88,7 +88,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
@@ -124,9 +124,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
@@ -352,6 +354,51 @@
 <td><p>探测控制器，通过目标码率判断下次是否探测，探测码率大小</p></td>
 <td><p>ProbeControllerConfig</p></td>
 <td><p>探测是在开始阶段，及特定的网络状态和条件下触发的</p></td>
+</tr>
+<tr class="row-odd"><td><p>ProbeBitrateEstimator</p></td>
+<td><p>根据feedback计算探测码率</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-even"><td><p>AcknowledgedBitrateEstimator</p></td>
+<td><p>估算当前的吞吐量</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-odd"><td><p>BitrateEstimator</p></td>
+<td><p>使用滑动窗口 + 卡尔曼滤波计算当前发送吞吐量</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-even"><td><p>DelayBasedBwe</p></td>
+<td><p>基于延迟预估码率</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-odd"><td><p>TrendlineEstimator</p></td>
+<td><p>使用线性回归计算当前网络拥堵情况</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-even"><td><p>AimdRateControl</p></td>
+<td><p>通过TrendLine预测出来的网络状态对码率进行 AIMD(加增乘减)方式调整</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-odd"><td><p>SendSideBandwidthEstimation</p></td>
+<td><p>基于丢包计算预估码率，结合延迟预估码率，得到最终的目标码率</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-even"><td><p>CongestionWindowPushbackController</p></td>
+<td><p>基于当前的rtt设置一个时间窗口，同时基于当前的码率设置当前时间窗口下的数据量，通过判断当前窗口的使用量，如果使用量过大的时候，降低编码时使用的目标码率，加速窗口消退，减少延迟</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
+</tr>
+<tr class="row-odd"><td><p>AlrDetector</p></td>
+<td><p>应用(码率)受限检测，检测当前的发送码率是否和目标码率由于编码器等原因相差过大受限了，受限情况下会触发带宽预测过程的特殊处理</p></td>
+<td><p>TBD</p></td>
+<td><p>TBD</p></td>
 </tr>
 </tbody>
 </table>
@@ -619,7 +666,7 @@ Samples which are far from the current estimate or are based on few packets are 
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="overuse_frame_decoder.html" class="btn btn-neutral float-right" title="WebRTC OveruseFrameDetector" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="webrtc_pacer.html" class="btn btn-neutral float-right" title="WebRTC Pacer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="webrtc_thread.html" class="btn btn-neutral float-left" title="WebRTC Congestion Control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
