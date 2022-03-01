@@ -26,10 +26,3 @@ Chome Devtools
 .. _Analyze runtime performance: https://developer.chrome.com/docs/devtools/evaluate-performance/
 
 
-nanja
-====================
-
-
-
-cmake
-====================
