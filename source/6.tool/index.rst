@@ -14,6 +14,7 @@
    sox
    ffmpeg
 
+   vnc
    tc
    iperf
    perf
