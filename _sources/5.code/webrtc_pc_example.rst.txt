@@ -154,10 +154,6 @@ main flow of pc client
 
 FAQ
 =========================
-No response when click connect in peerconnection client?
---------------------------------------------------------------------------------------
-
-start main thread after thread creation in main.cc in examples/peerconnection/client/main.cc
 
 
 What's PhysicalSocketServer

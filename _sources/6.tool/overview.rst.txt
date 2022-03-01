@@ -38,3 +38,34 @@ uniq
 * vim: 输入 `:%! xxd` 用来编辑二进制文件 
 
 
+例如:
+
+.. code-block:: python
+
+   def localip(eth="en0"):
+      cmd = "ifconfig %s | grep inet | awk '$1==\"inet\" {print $2}'" % eth
+      local(cmd)
+
+
+Python Tools
+=====================
+
+psutil
+---------------------
+.. code-block:: python
+
+   import psutil
+
+   #refer to https://psutil.readthedocs.io/en/latest/#processes
+
+   def localres(times=10, type="cpu", app="safari"):
+      for i in range(int(times)):
+         if type == 'cpu':
+               print(psutil.cpu_percent(interval=1, percpu=True))
+               continue
+         
+         print(psutil.net_if_stats())
+         
+         for proc in psutil.process_iter(['pid', 'name', 'username']):
+               if app in proc.info["name"].lower():
+                  print(proc.info)

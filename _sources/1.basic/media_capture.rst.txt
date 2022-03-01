@@ -214,6 +214,23 @@ Example
 FAQ
 =======================
 
+如何缩放编码的分辨率
+------------------------
+RTCRtpEncodingParameters used by RTCRtpSender.setParameters()
+RTCRtpDecodingParameters used by RTCRtpReceiver.setParameters()
+
+* scaleResolutionDownBy
+  
+Only used for senders whose track's kind is video, this is a double-precision floating-point value specifying a factor by which to scale down the video during encoding. 
+
+The default value, 1.0, means that the sent video's size will be the same as the original. A value of 2.0 scales the video frames down by a factor of 2 in each dimension, resulting in a video 1/4 the size of the original. 
+
+The value must not be less than 1.0 (you can't use this to scale the video up).
+
+
+
+
+
 如何获取摄像头的分辨率
 ------------------------
 采用探测法，给 getUserMedia 方法传入不同的分辨率，看是否能成功获取到媒体流，参见 `W3C Media Capture and Streams Spec`_。
