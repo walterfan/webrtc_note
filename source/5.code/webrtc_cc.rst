@@ -29,6 +29,11 @@ Overview
 .. _congestion_controller: https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller
 
 
+带宽估计的类有
+
+* AcknowledgedBitrateEstimator
+* BitrateEstimator
+
 核心接口
 ===============
 
@@ -166,18 +171,6 @@ sender side congestion controller
      - TBD
 
 
-其依赖项有
-
-* ProbeController : 探测控制器，通过目标码率判断下次是否探测，探测码率大小
-* ProbeBitrateEstimator : 根据feedback计算探测码率，PacingController中会将包按照cluster进行划分，transport-CC报文能得到包所属的cluster以及发送和接收信息，通过发送和接收的数据大小比判断是否到达链路上限从而进行带宽探测
-* AcknowledgedBitrateEstimator : 估算当前的吞吐量
-* BitrateEstimator :使用滑动窗口 + 卡尔曼滤波计算当前发送吞吐量
-* DelayBasedBwe : 基于延迟预估码率
-* TrendlineEstimator : 使用线性回归计算当前网络拥堵情况
-* AimdRateControl : 通过TrendLine预测出来的网络状态对码率进行 AIMD(加增乘减)方式调整
-* SendSideBandwidthEstimation : 基于丢包计算预估码率，结合延迟预估码率，得到最终的目标码率
-* CongestionWindowPushbackController : 基于当前的rtt设置一个时间窗口，同时基于当前的码率设置当前时间窗口下的数据量，通过判断当前窗口的使用量，如果使用量过大的时候，降低编码时使用的目标码率，加速窗口消退，减少延迟
-* AlrDetector : 应用(码率)受限检测，检测当前的发送码率是否和目标码率由于编码器等原因相差过大受限了，受限情况下会触发带宽预测过程的特殊处理
 
 config classes 配置类
 =================================
