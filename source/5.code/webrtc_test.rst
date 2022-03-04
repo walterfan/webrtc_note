@@ -22,7 +22,7 @@ Overview
 =============
 
 
-测试
+Chrome testing
 ====================
 
 * Chrome command line flags that are useful for WebRTC-related testing:
@@ -73,6 +73,63 @@ Load local vide file as a virtual camear
    ./Google\ Chrome\ Canary --disable-webrtc-encryption
 
 
+Firefox testing
+===============================
+
+Input "about:webrtc" in the browser address line
+
+How to turn on RTP logging
+---------------------------------
+As described on Firefox Media Logging page you have to set environment variables to turn on the logging. 
+Note that we now need to use MOZ_LOG instead of NSPR_LOG as used to be the case. 
+So a real world example which logs the SDP and the RTP would look like this:
+
+.. code-block::
+
+  MOZ_LOG=timestamp,signaling:5,jsep:5,RtpLogger:5
+  MOZ_LOG_FILE=/tmp/logs/moz.log
+
+The log lines are in the text2pcap format. RTP packets will have RTP_PACKET at the end of the line, 
+which allows you to filter for either that or RTCP packets. 
+
+You might have also noticed that the track ID from the MSID is present. 
+So if you have access to the SDP from the signaling, for example on ‘about:webrtc‘, 
+you can also filter all incoming and outgoing RTP and RTCP messages for a single audio or video track.
+
+
+How to Convert logs into PCAP
+-------------------------------------
+Finally here is one handy line to convert all RTP and RTCP from the log file into a PCAP file which can be loaded and analyzed with Wireshark:
+
+.. code-block::
+
+   egrep '(RTP_PACKET|RTCP_PACKET)' moz.log | text2pcap -D -n -l 1 -i 17 -u 1234,1235 -t '%H:%M:%S.' - rtp.pcap
+
+Wireshark allows you now easily to search for example for NACKs or PLIs in the RTCP and check if the requested video packet got send to or by Firefox.
+
+
+And here are two filter criteria for future reference:
+
+.. code-block::
+
+   NACK: ‘rtcp.rtpfb.fmt == 1’
+   PLI: ‘rtcp.psfb.fmt == 1’
+
+* Update
+
+If your log lines start with an extra GECKO like this “GECKO(23379) | I 16:36:58.954388” you might need to tweak you grep command to something like this:
+
+.. code-block::
+
+   egrep '(RTP_PACKET|RTCP_PACKET)' moz.log | cut -d '|' -f 2 | text2pcap -D -n -l 1 -i 17 -u 1234,1235 -t '%H:%M:%S.' - rtp.pcap
+
+* Update 2
+
+Most recently more updates made the above line not work fully any more. So here is a version which works again with Firefox >= 65:
+
+.. code-block::
+
+   egrep '(RTP_PACKET|RTCP_PACKET)' moz.log.child-4 | cut -d '|' -f 2 | cut -d ' ' -f 5- | text2pcap -D -n -l 1 -i 17 -u 1234,1235 -t '%H:%M:%S.' - rtp.pcap   
 
 Unit testing
 ===============================

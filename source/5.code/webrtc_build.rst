@@ -21,6 +21,11 @@ WebRTC 源码构建
 
 Source code
 =============
+
+按照 https://webrtc.github.io/webrtc-org/native-code/development， 可以在 windows, mac 或 linux 上构建 webrtc library.
+
+前提是你要能连接上 webrtc 的仓库，有些地方需要翻墙。
+
 1. 安装 Chromium 软件库工具.
    
    参见 

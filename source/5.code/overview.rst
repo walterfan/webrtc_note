@@ -22,6 +22,8 @@ WebRTC 源码概览
 Overview
 =============
 
+WebRTC release notes are posted to the discuss-webrtc mailing list before the release:
+https://webrtc.googlesource.com/src/+/refs/heads/main/docs/release-notes.md
 
 
 Modules
