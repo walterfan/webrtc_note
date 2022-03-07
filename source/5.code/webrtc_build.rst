@@ -97,6 +97,16 @@ gn
 --------------------
 The meta-build system used to generate build files for Google Chrome and related projects (v8, node.js), as well as Google Fuchsia. gn can generate Ninja files for all platforms supported by Chrome.
 
+
+.gn
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.gn 文件是 GN build 的 “源文件”，在这里可以做各种条件判断和配置，gn 会根据这些配置生成特定的 ninja 文件。
+
+.gn 文件中可以使用预定义的参数，比如 is_debug ， target_os ， rtc_use_h264 等。
+
+.gn 中可以 import .gni 文件。
+
+
 CMake
 --------------------
 A widely used meta-build system that can generate Ninja files on Linux as of CMake version 2.8.8. Newer versions of CMake support generating Ninja files on Windows and Mac OS X too.
@@ -110,11 +120,9 @@ Reference
 * https://webrtc.googlesource.com/src/+/refs/heads/master/docs/native-code/index.md
 * https://ninja-build.org/manual.html
 
-
 .. _Chromium Code Search: https://source.chromium.org/chromium/chromium/src
 .. _ninja-tool: https://ninja-build.org/
 .. _webrtc-prerequisite-sw: https://webrtc.googlesource.com/src/+/main/docs/native-code/development/prerequisite-sw/index.md
 .. _webrtc-depot-tools: https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up
-
 .. _overuse_frame_detector: ./webrtc_overuse_frame_decoder.html
 .. _congestion control: ./webrtc_cc.html

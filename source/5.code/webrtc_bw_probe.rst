@@ -1,5 +1,5 @@
 ##############################
-WebRTC Probe
+WebRTC Bandwidth Probe
 ##############################
 
 .. include:: ../links.ref
@@ -7,8 +7,9 @@ WebRTC Probe
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC Probe
+**Abstract** WebRTC Bandwidth Probe
 **Authors**  Walter Fan
+**Category** LearningNote
 **Status**   WIP
 **Updated**  |date|
 ============ ==========================
@@ -21,6 +22,27 @@ WebRTC Probe
 Overview
 =============
 
+在会话刚建立时需要确定远端的一个初始带宽，congestion_controller 通过 
+
+* ProbeController 控制何时进行启动探测
+* ProbeBitrateEstimator 基于探测包进行带宽估算
+
+带宽探测的基本思路是以 cluster 为单位按照一定的速度来发送RTP包，然后在收到RTP包的反馈消息时计算发送速度和接收端的接收速度，取这两个速度的最小值为远端带宽速度。
+
+一次探测为一个cluster, 在同一个cluster内RTP包的cluster_id都相同。ProbeController类用来控制探测行为，例如设定开始探测比特率、分配cluster_id等。
+
+用于探测带宽的RTP包其实就是音视频的RTP包，如果没有发送过音视频RTP包那么探测行为不会发生。音视频编码出生的RTP数量有限，在探测带宽时为满足以一定的速度发送数据的要求，很可能会对已经发送过的RTP包进行填充发送。
+
+和所有的RTP、RTCP包的发送一样，探测包的发送也是通过pacing模块来进行的，所有发送的RTP包都会被保存到congestion_controller模块
+
+在收到feedback消息时，如果此RTP包是用来探测带宽的，那么就会调用到ProbeBitrateEstimator::HandleProbeAndEstimateBitrate函数进行处理。
+
+会话刚建立时会探测两次，以及编码器配置改变时会探测两次，一个cluster为一次探测，
+
+会话刚建立时进行两次探测的bps分别为900000、1800000，一般连续的两次探测，第二次的bps为第一次的两倍。
+
+触发探测的条件
+----------------------------------------
 1）network available at startup
 2）enable_periodic_alr_probing_
 3）large drop in estimated bandwidth

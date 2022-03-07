@@ -19,6 +19,9 @@ WebRTC 常用工具
    :local:
 
 
+   
+
+
 Linux Tools
 ====================
 
@@ -45,6 +48,18 @@ uniq
    def localip(eth="en0"):
       cmd = "ifconfig %s | grep inet | awk '$1==\"inet\" {print $2}'" % eth
       local(cmd)
+
+
+
+gprof
+---------------------
+
+cc -g -c myprog.c utils.c -pg
+cc -o myprog myprog.o utils.o -pg
+
+
+
+refer to https://sourceware.org/binutils/docs/gprof/index.html
 
 
 Python Tools

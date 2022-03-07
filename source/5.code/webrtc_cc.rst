@@ -9,6 +9,7 @@ WebRTC Congestion Control
 ============ ==========================
 **Abstract** WebRTC Congestion Control
 **Authors**  Walter Fan
+**Category** LearningNote
 **Status**   WIP
 **Updated**  |date|
 ============ ==========================
@@ -29,10 +30,21 @@ Overview
 .. _congestion_controller: https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller
 
 
-带宽估计的类有
 
-* AcknowledgedBitrateEstimator
-* BitrateEstimator
+带宽估计的总控类为 GoogCcNetworkController
+
+带宽估计的相关类有
+
+* AcknowledgedBitrateEstimator 估算发送吞量
+* BitrateEstimator 利用了滑动窗口和卡尔曼滤波来估算发送吞吐量
+* DelayBasedBwe 基于延迟来估算带宽
+* LinkCapacityEstimator 
+* LossBasedBandwidthEstimation 基于丢包来估算带宽
+* LossBasedBweV2
+* ProbeBitrateEstimator 估算探测码率
+* RobustThroughputEstimator 
+* SendSideBandwidthEstimation
+* TrendlineEstimator 用线性回归来估算拥塞状态
 
 核心接口
 ===============

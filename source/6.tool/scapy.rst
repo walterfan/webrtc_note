@@ -21,7 +21,10 @@ scapy
 
 简介
 ====================
-scapy
+Scapy is a packet manipulation tool for computer networks,[1][2] written in Python by Philippe Biondi.
+
+https://github.com/phaethon/scapy
+http://phaethon.github.io/scapy/api/
 
 
 参考资料

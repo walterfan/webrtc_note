@@ -15,7 +15,7 @@
 
    webrtc_thread
    webrtc_cc
-   webrtc_probe
+   webrtc_bw_probe
    webrtc_pacer
    overuse_frame_decoder
    remote_bitrate_estimator
