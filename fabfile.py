@@ -1,24 +1,23 @@
-from fabric.api import *
-from fabric.context_managers import *
-from fabric.contrib.console import confirm
+from fabric import task
+
 from datetime import date
 from sys import platform
 import os, subprocess
 
 BASE_PATH = os.path.dirname(__file__)
-
+default_hosts = ["localhost"]
 
 @task
 def usage():
     print("usage: fab make_note|publish_note")
 
 
-@task
-def md2rst(src, dest=None):
+@task(hosts=default_hosts)
+def md2rst(c, src, dest=None):
     if not dest:
         dest = src[:-3] + ".rst";
     cmd = "pandoc --to RST --reference-links {} > {}".format(src, dest)
-    local(cmd)
+    c.local(cmd)
 
 @task
 def rst2md(src, dest=None):

@@ -31,20 +31,24 @@ Overview
 
 
 
-带宽估计的总控类为 GoogCcNetworkController
+发送方从接收方可能会收到以下几种 RTCP 消息
 
-带宽估计的相关类有
+* RTCP Receiver Report
+* RTCP REMB Report
+* RTCP Transport Wide CC Feedback
 
-* AcknowledgedBitrateEstimator 估算发送吞量
-* BitrateEstimator 利用了滑动窗口和卡尔曼滤波来估算发送吞吐量
-* DelayBasedBwe 基于延迟来估算带宽
-* LinkCapacityEstimator 
-* LossBasedBandwidthEstimation 基于丢包来估算带宽
-* LossBasedBweV2
-* ProbeBitrateEstimator 估算探测码率
-* RobustThroughputEstimator 
-* SendSideBandwidthEstimation
-* TrendlineEstimator 用线性回归来估算拥塞状态
+这样我们可以根据这些 RTCP 消息计算出 RTT, Packet Loss 和 Delay 来估算带宽
+
+估算的比特率有
+
+1) 探测出的带宽
+2）实际的吞吐量
+3）基于延迟的带宽估算：主要考虑 OWDV, 也会参考 RTT
+4）基于丢包的带宽估算
+
+先综合估算一个带宽，再与一个自适应的阈值进行比较，
+再决定是否是 Overuser 或者 Underuser
+再决定如何增加或减少发送速率 (AIMD)
 
 核心接口
 ===============
