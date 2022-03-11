@@ -23,6 +23,13 @@ Overview
 将要发的包追加到一个队列中，由 Pacer 这个模块按照设定的速率将媒体包发送出去
 
 
+主要方法：
+
+* PacketRouter::SendPacket(...)
+* ModuleRtpRtcpImpl::TrySendPacket(...)
+* std::vector<std::unique_ptr<RtpPacketToSend>> RTPSender::GeneratePadding(...)
+
+
 Types
 ==============
 
