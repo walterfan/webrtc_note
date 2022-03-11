@@ -44,7 +44,7 @@ Overview
 触发探测的条件
 ----------------------------------------
 1）network available at startup
-2）enable_periodic_alr_probing_
+2）enable periodic alr probing
 3）large drop in estimated bandwidth
 4) probing results indicate channel has greater capacity.
 
@@ -56,93 +56,8 @@ handle TransportPacketsFeedback
 ---------------------------------------
 * GoogCcNetworkController::OnTransportPacketsFeedback
 
-.. code-block:: c++
 
-    NetworkControlUpdate GoogCcNetworkController::OnTransportPacketsFeedback(
-    TransportPacketsFeedback report) {
-    //...
 
-    if (feedback.sent_packet.pacing_info.probe_cluster_id !=
-        PacedPacketInfo::kNotAProbe) {
-      probe_bitrate_estimator_->HandleProbeAndEstimateBitrate(feedback);
-    }
-
-    //... 
-    // 取出上次估计的比特率，并将上次估计的比特率重置为0
-    absl::optional<DataRate> probe_bitrate =
-        probe_bitrate_estimator_->FetchAndResetLastEstimatedBitrate();
-    // 如果探测的比特率小于估计的比特率， 重置探测的比特率
-    if (ignore_probes_lower_than_network_estimate_ && probe_bitrate &&
-        estimate_ && *probe_bitrate < delay_based_bwe_->last_estimate() &&
-        *probe_bitrate < estimate_->link_capacity_lower) {
-        probe_bitrate.reset();
-    }
-    if (limit_probes_lower_than_throughput_estimate_ && probe_bitrate &&
-        acknowledged_bitrate) {
-        // Limit the backoff to something slightly below the acknowledged
-        // bitrate. ("Slightly below" because we want to drain the queues
-        // if we are actually overusing.)
-        // The acknowledged bitrate shouldn't normally be higher than the delay
-        // based estimate, but it could happen e.g. due to packet bursts or
-        // encoder overshoot. We use std::min to ensure that a probe result
-        // below the current BWE never causes an increase.
-        DataRate limit =
-            std::min(delay_based_bwe_->last_estimate(),
-                    *acknowledged_bitrate * kProbeDropThroughputFraction);
-        probe_bitrate = std::max(*probe_bitrate, limit);
-    }
-
-    NetworkControlUpdate update;
-    bool recovered_from_overuse = false;
-    bool backoff_in_alr = false;
-
-    DelayBasedBwe::Result result;
-    result = delay_based_bwe_->IncomingPacketFeedbackVector(
-        report, acknowledged_bitrate, probe_bitrate, estimate_,
-        alr_start_time.has_value());
-
-    if (result.updated) {
-        if (result.probe) {
-        bandwidth_estimation_->SetSendBitrate(result.target_bitrate,
-                                                report.feedback_time);
-        }
-        // Since SetSendBitrate now resets the delay-based estimate, we have to
-        // call UpdateDelayBasedEstimate after SetSendBitrate.
-        bandwidth_estimation_->UpdateDelayBasedEstimate(report.feedback_time,
-                                                        result.target_bitrate);
-        // Update the estimate in the ProbeController, in case we want to probe.
-        MaybeTriggerOnNetworkChanged(&update, report.feedback_time);
-    }
-    recovered_from_overuse = result.recovered_from_overuse;
-    backoff_in_alr = result.backoff_in_alr;
-
-    if (recovered_from_overuse) {
-        probe_controller_->SetAlrStartTimeMs(alr_start_time);
-        auto probes = probe_controller_->RequestProbe(report.feedback_time.ms());
-        update.probe_cluster_configs.insert(update.probe_cluster_configs.end(),
-                                            probes.begin(), probes.end());
-    } else if (backoff_in_alr) {
-        // If we just backed off during ALR, request a new probe.
-        auto probes = probe_controller_->RequestProbe(report.feedback_time.ms());
-        update.probe_cluster_configs.insert(update.probe_cluster_configs.end(),
-                                            probes.begin(), probes.end());
-    }
-
-    // No valid RTT could be because send-side BWE isn't used, in which case
-    // we don't try to limit the outstanding packets.
-    if (rate_control_settings_.UseCongestionWindow() &&
-        max_feedback_rtt.IsFinite()) {
-        UpdateCongestionWindowSize();
-    }
-    if (congestion_window_pushback_controller_ && current_data_window_) {
-        congestion_window_pushback_controller_->SetDataWindow(
-            *current_data_window_);
-    } else {
-        update.congestion_window = current_data_window_;
-    }
-
-    return update;
-    }
 
 structures
 ================
