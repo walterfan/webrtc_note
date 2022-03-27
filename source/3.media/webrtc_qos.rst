@@ -117,6 +117,15 @@ WebRTC 提供一个接口 MediaStreamTrack Content Hints 用来告知当前所�
 
 https://www.w3.org/TR/mst-content-hint/
 
+Metrics
+===================
+
+* Network transport metrics
+
+* Audio related metrics
+
+* Video related metrics
+
 
 Glossary
 ==================

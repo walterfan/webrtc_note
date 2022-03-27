@@ -346,7 +346,6 @@ RTCP 报告包括如 [20] 中所述计算的丢失数据包比例 fl(tk)。
 * `WebRTC视频接收缓冲区基于KalmanFilter的延迟模型 <http://www.jianshu.com/p/bb34995c549a>`_
 * `WebRTC基于GCC的拥塞控制(上) - 算法分析 <https://www.jianshu.com/p/0f7ee0e0b3be>`_
 * `WebRTC基于GCC的拥塞控制(下) - 实现分析 <https://www.jianshu.com/p/5259a8659112>`_
-* `WebRTC的拥塞控制和带宽策略 <https://mp.weixin.qq.com/s/Ej63-FTe5-2pkxyXoXBUTw>`_
 
 .. [#] `A Google Congestion Control Algorithm for Real-Time Communication`_ （draft-ietf-rmcat-gcc-02）
 
