@@ -90,8 +90,8 @@ In audio signal processing and acoustics, an echo is a reflection of sound that 
 
 Glossary
 ========================
-near end
-far end
+* near end
+* far end
 
 
 Methods
