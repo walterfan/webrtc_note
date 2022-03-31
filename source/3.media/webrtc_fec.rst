@@ -25,6 +25,10 @@ WebRTC FEC
 
 FEC 即 Forward Error Correction 前向纠错，如果网络由于拥塞或中断丢失了一些媒体数据包，由于发送端通过 FEC 也发了一些冗余包，这样接收方依然能够正常地恢复和解码
 
+NACK 作为应付丢包的常用手段默认会启用，但是如果延迟较大， NACK 的效果会大打折扣， FEC 会在延迟较大时启用，理论上可以支持 50% 的丢包。但是如果带宽过小，FEC 及 RTX 都会占用带宽，导致需要进一步降低发送码率，也就是降低质量。
+
+
+
 目前在 WebRTC 中支持的 FEC 主要有以下两种，原理基本是用 XOR 的方法来进行错误恢复
 
 * ULP FEC
@@ -32,8 +36,7 @@ FEC 即 Forward Error Correction 前向纠错，如果网络由于拥塞或中�
 
 奇偶校验 FEC Parity FEC
 ========================
-
-最简单的 FEC 是异或 (XOR) 奇偶校验方案。 方案如下：
+比较简单的 FEC 是异或 (XOR) 奇偶校验方案。 方案如下：
 
 * 发送方确定受修复数据包保护的源数据包组（固定大小）。
 * 发送方通过对这些数据包组执行 XOR 操作来生成修复数据包。
@@ -46,6 +49,48 @@ FEC 即 Forward Error Correction 前向纠错，如果网络由于拥塞或中�
 * 单维：一个数据包只能用于一组源数据包。 例如，行（非交错）和列（交错）。
 * 多维：一个数据包可以用于多组源数据包。 例如，楼梯图案等。
 
+
+
+原理
+
+.. code-block::
+
+    a xor b = c
+    a xor c = b
+    b xor c = a
+
+Python test code:
+
+.. code-block:: python
+
+    from operator import xor
+    a = 3
+    b = 4
+    c = xor(a, b)
+    print(xor(a, c) == b, xor(b, c) == a)
+    #output: (True, True)
+
+ULP FEC
+=========================
+
+
+ULP 在 RFC5109 中有详细定义，即 Uneven Level Protection 意为不均等保护，根据数据包重要程度使用不同级别的保护策略，
+webrtc 针对 I 帧和 P 帧有两个冗余度，这个冗余度是根据上述 kFecRateTable 表查询得到
+
+
+* fec_rate_table.h
+
+.. code-block::
+
+
+    // Table for Protection factor (code rate) of delta frames, for the XOR FEC.
+    // Input is the packet loss and an effective rate (bits/frame).
+    // Output is array kFecRateTable[k], where k = rate_i*129 + loss_j;
+    // loss_j = 0,1,..128, and rate_i varies over some range.
+    // TODO(brandtr): Consider replacing this big static table with a closed-form
+    // expression instead.
+    static const int kFecRateTableSize = 6450;
+    static const unsigned char kFecRateTable[kFecRateTableSize] = { ... }
 
 
 Example
@@ -284,10 +329,12 @@ Example
 
 参考资料
 =========================
+* `RFC5109`_: RTP Payload Format for Generic Forward Error Correction
 * `RFC6015`_: RTP Payload Format for 1-D Interleaved Parity Forward Error Correction (FEC)
 * `RFC8627`_: RTP Payload Format for Flexible Forward Error Correction (FEC)
 * https://www.callstats.io/blog/2016/11/09/how-to-recover-lost-media-packets-in-webrtc-with-fec
 
+.. _RFC5109: https://tools.ietf.org/html/rfc5109
 .. _RFC6015: https://tools.ietf.org/html/rfc6015
 .. _RFC8627: https://tools.ietf.org/html/rfc8627
 

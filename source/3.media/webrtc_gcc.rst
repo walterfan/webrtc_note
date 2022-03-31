@@ -48,7 +48,7 @@ GCC [#]_ 拥塞控制算法根据估计的拥塞状态调节发送速率。 为�
 
 除了 RFC草案 `A Google Congestion Control Algorithm for Real-Time Communication`_ 有详细阐述，在 IEEE 发布的文章 “Understanding the Dynamic Behaviour of the Google Congestion Control for RTCWeb” [#]_ 亦有所探讨。
 
-
+早期是
 
 
 详细设计
