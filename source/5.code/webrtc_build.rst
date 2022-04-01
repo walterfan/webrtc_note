@@ -54,7 +54,7 @@ Source code
 
 4. 构建
 
-先要安装 `ninja 构建工具 <ninja-tool_>`_ 这一构建工具, 通过它来生成构建脚本
+先要安装 ninja 这一构建工具, 通过它来生成构建脚本
 
 在 Linux 系统上，比较简单的方法是运行 `./build/install-build-deps.sh`
 

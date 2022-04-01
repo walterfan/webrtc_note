@@ -62,7 +62,10 @@ Basic Usage
 
 例如将 pcapng 文件中的前 100 包按以下条件过滤出来，并导出为 json 文件
 
- `tshark -r 2022-03-30-cc.pcapng -2 -Y "ip.addr == 10.140.202.120 and rtp.p_type == 123" -V -c 100 -T json > packet_sample.json"
+.. code-block::
+
+   tshark -r 2022-03-30-cc.pcapng -2 -Y "ip.addr == 10.140.202.120 and rtp.p_type == 123" -V -c 100 -T json >
+   packet_sample.json"
 
 
 输出结果如下

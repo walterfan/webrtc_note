@@ -49,8 +49,13 @@ WebRTC QoS
 * 故障转移 Fallover: 切换到不同的连接通道，协议和服务器集群
 
 
-高质量与低延迟的平衡
+流畅与清晰的平衡
 ============================
+网络会议中的媒体流以语音优先级最高，屏幕分享其次， 最后是视频（可以从高分辨率向低分辨率调整）
+
+高质量与低延迟的平衡
+----------------------------
+
 以 Video 为例， 在网络会议中需要流畅的视频，可是带宽有限，网络质量不是太好，这样就需要降低视频和图像质量（例如降低分辨率，帧率等）
 所以我们需要在高质量与低延迟之间做平衡，如何平衡的依据很重要，我们要看度量数据(metrics), 例如丢包，延迟，抖动等数据。
 
@@ -59,36 +64,33 @@ WebRTC QoS
 
 
 发送方
-* 根据丢包(remotePacketLoss)和延迟(RTT), 调整分辨率和帧率
+
+* 根据丢包(RemotePacketLoss)和延迟(RTT or Inter-group delay variation), 调整分辨率和帧率
+* 通过启用 RTX 来传送修复包
 * 通过启用 FEC 来避免重传(retransmission)
-
+* 如果收到 NACK， PLI 或 FIR, 重新发送丢失的包
+  
 接收方
+
 * 根据丢包(packetLoss)和延迟(receiveSkew), 抖动(jitter) 来估算带宽，发送  REMB 来告知发送方调整带宽
-* use FEC to repair error
+* 或者只是简单的反馈接收包的结果 (收到与否，以及到达时间)
+* 使用 FEC 或 RTX 来修复错误
+* 如果发现有包丢失，向发送方发送重发请求 NACK, PLI 或 FIR 
 
-WebRTC 内置的机制
-============================
-在 API 层面, 可以设置视频的最小和最大分辨率（width * height) 和帧率 (frameRate)，例如
+带宽与冗余的平衡
+----------------------------
 
-.. code-block::
 
-  {
-    "audio": true,
-    "video": {
-        "width": {
-            "min": "1280",
-            "max": "4096"
-        },
-        "height": {
-            "min": "720",
-            "max": "2160"
-        },
-        "frameRate": {
-            "min": "5",
-            "max": "60"
-        }
-    }
-  }
+webrtc 对抗网络丢包使用的技术有 NACK, FEC, RTX
+
+当 rtt < 20ms ,fec 功能是不启用。
+
+当 rtt >=20ms，fec 功能开启，webrtc 维护了一个 FEC Rate 一维的冗余表，其实相当一个二维表 kFecRateTable[rate_i][loss_j], 行代表单帧码率, 列代表丢包率 loss_ratio * 256, 理论上丢包率是能支持的最大值 50%。
+
+
+
+资源与质量的权衡
+----------------------------
 
 WebRTC 内部有一些控制，例如 overuse_frame_detector, 它可以根据编码时间(CPU 时间)占采样间隔的占用率来评估当前设备是否过载。
 
@@ -118,6 +120,43 @@ WebRTC 提供一个接口 MediaStreamTrack Content Hints 用来告知当前所�
 https://www.w3.org/TR/mst-content-hint/
 
 
+在 API 层面, 可以设置视频的最小和最大分辨率（width * height) 和帧率 (frameRate)，例如
+
+.. code-block::
+
+  {
+    "audio": true,
+    "video": {
+        "width": {
+            "min": "1280",
+            "max": "4096"
+        },
+        "height": {
+            "min": "720",
+            "max": "2160"
+        },
+        "frameRate": {
+            "min": "5",
+            "max": "60"
+        }
+    }
+  }
+
+
+
+
+
+
+Metrics
+===================
+
+* Network transport metrics
+
+* Audio related metrics
+
+* Video related metrics
+
+
 Glossary
 ==================
 * PLI: Picture Loss Indication 图片丢失通知
@@ -143,9 +182,9 @@ While retransmission is usually useless in RTC, there are times where it can mak
 
 测试工具
 ==================================
+* Linux Traffic Control
+* Network Link Conditioner
 
-Network Link Conditioner
------------------------------------
 
 
 实例

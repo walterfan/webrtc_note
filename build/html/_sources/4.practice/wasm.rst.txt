@@ -1,10 +1,27 @@
 ######################
-WebAssebly
+WebAssembly
 ######################
 
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
 
-简介
-===================
+============ ==========================
+**Abstract** WebAssembly
+**Authors**  Walter Fan
+**Status**   WIP
+**Updated**  |date|
+============ ==========================
+
+.. |date| date::
+
+.. contents::
+   :local:
+
+
+Overview
+========================
+
 
 WebAssembly 的基本想法就是让浏览器加载由其他语言编译而成的二进制模块,并高效地解释和执行, 从而提高性能。
 
@@ -41,6 +58,54 @@ Wasm 规范共定义了 12 种段 , 并分配了不同的 ID
 8. 自定义段(ID=0)
 
 Wasm 的特点是可以流式处理,边下载,边解码,验证和编译
+
+
+工具链
+==================
+
+
+Emscripten
+------------------
+
+Emscripten is a complete compiler toolchain to WebAssembly, using LLVM, with a special focus on speed, size, and the Web platform
+
+* 安装 emsdk
+
+.. code-block::
+
+   # Get the emsdk repo
+   git clone https://github.com/emscripten-core/emsdk.git
+
+   # Enter that directory
+   cd emsdk
+
+   # Fetch the latest version of the emsdk (not needed the first time you clone)
+   git pull origin main
+
+   # Download and install the latest SDK tools.
+   ./emsdk install latest
+
+   # Make the "latest" SDK "active" for the current user. (writes .emscripten file)
+   ./emsdk activate latest
+
+   # Activate PATH and other environment variables in the current terminal
+   source ./emsdk_env.sh
+
+   emcc -v
+
+* 测试   
+
+.. code-block:: cpp
+
+
+   ./emcc hello_world.c
+   //--------------------
+   #include <stdio.h>
+
+   int main() {
+   printf("hello, world!\n");
+   return 0;
+   }
 
 
 SIMD

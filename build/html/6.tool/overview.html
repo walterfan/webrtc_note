@@ -97,7 +97,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 工具</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC 常用工具</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#linux-tools">Linux Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binutils">binutils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#linux-tools">Linux Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gprof">gprof</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#python-tools">Python Tools</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#psutil">psutil</a></li>
 </ul>
@@ -209,22 +216,62 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-03-01</p></td>
+<td><p>2022-04-01</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#linux-tools" id="id2">Linux Tools</a></p></li>
-<li><p><a class="reference internal" href="#python-tools" id="id3">Python Tools</a></p>
+<li><p><a class="reference internal" href="#binutils" id="id2">binutils</a></p>
 <ul>
-<li><p><a class="reference internal" href="#psutil" id="id4">psutil</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id3">example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#linux-tools" id="id4">Linux Tools</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gprof" id="id5">gprof</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#python-tools" id="id6">Python Tools</a></p>
+<ul>
+<li><p><a class="reference internal" href="#psutil" id="id7">psutil</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="binutils">
+<h2><a class="toc-backref" href="#id2">binutils</a><a class="headerlink" href="#binutils" title="Permalink to this headline">¶</a></h2>
+<p>The GNU Binutils are a collection of binary tools. The main ones are:</p>
+<ul class="simple">
+<li><p>ld - the GNU linker.</p></li>
+<li><p>as - the GNU assembler.</p></li>
+</ul>
+<p>But they also include:</p>
+<ul class="simple">
+<li><p>addr2line - Converts addresses into filenames and line numbers.</p></li>
+<li><p>ar - A utility for creating, modifying and extracting from archives.</p></li>
+<li><p>c++filt - Filter to demangle encoded C++ symbols.</p></li>
+<li><p>dlltool - Creates files for building and using DLLs.</p></li>
+<li><p>gold - A new, faster, ELF only linker, still in beta test.</p></li>
+<li><p>gprof - Displays profiling information.</p></li>
+<li><p>nlmconv - Converts object code into an NLM.</p></li>
+<li><p>nm - Lists symbols from object files.</p></li>
+<li><p>objcopy - Copies and translates object files.</p></li>
+<li><p>objdump - Displays information from object files.</p></li>
+<li><p>ranlib - Generates an index to the contents of an archive.</p></li>
+<li><p>readelf - Displays information from any ELF format object file.</p></li>
+<li><p>size - Lists the section sizes of an object or archive file.</p></li>
+<li><p>strings - Lists printable strings from files.</p></li>
+<li><p>strip - Discards symbols.</p></li>
+<li><p>windmc - A Windows compatible message compiler.</p></li>
+<li><p>windres - A compiler for Windows resource files.</p></li>
+</ul>
+<div class="section" id="example">
+<h3><a class="toc-backref" href="#id3">example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
 <div class="section" id="linux-tools">
-<h2><a class="toc-backref" href="#id2">Linux Tools</a><a class="headerlink" href="#linux-tools" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">Linux Tools</a><a class="headerlink" href="#linux-tools" title="Permalink to this headline">¶</a></h2>
 <p>seq 生成数字序列
 wc -l 计算行数
 sed
@@ -245,11 +292,17 @@ uniq
    <span class="n">local</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="section" id="gprof">
+<h3><a class="toc-backref" href="#id5">gprof</a><a class="headerlink" href="#gprof" title="Permalink to this headline">¶</a></h3>
+<p>cc -g -c myprog.c utils.c -pg
+cc -o myprog myprog.o utils.o -pg</p>
+<p>refer to <a class="reference external" href="https://sourceware.org/binutils/docs/gprof/index.html">https://sourceware.org/binutils/docs/gprof/index.html</a></p>
+</div>
 </div>
 <div class="section" id="python-tools">
-<h2><a class="toc-backref" href="#id3">Python Tools</a><a class="headerlink" href="#python-tools" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Python Tools</a><a class="headerlink" href="#python-tools" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="psutil">
-<h3><a class="toc-backref" href="#id4">psutil</a><a class="headerlink" href="#psutil" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">psutil</a><a class="headerlink" href="#psutil" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psutil</span>
 
 <span class="c1">#refer to https://psutil.readthedocs.io/en/latest/#processes</span>

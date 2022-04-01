@@ -108,8 +108,21 @@
 <li class="toctree-l2"><a class="reference internal" href="perf.html">Linux Performance tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tcpdump.html">tcpdump</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">wireshark</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools">Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tshark">tshark</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#capinfos">capinfos</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#capturing-rtp-streams">Capturing RTP streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#capturing-turn-rtp-streams">Capturing TURN RTP streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#text2cap">text2cap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#faq">FAQ</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-convert-pcap-to-text">how to convert pcap to text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-convert-text-to-pcap">how to convert text to pcap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-list-interfaces">How to list interfaces</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -207,19 +220,148 @@
 <td><p>v1</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-03-01</p></td>
+<td><p>2022-04-01</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#capturing-rtp-streams" id="id2">Capturing RTP streams</a></p></li>
-<li><p><a class="reference internal" href="#capturing-turn-rtp-streams" id="id3">Capturing TURN RTP streams</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id4">Reference</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id2">Installation</a></p></li>
+<li><p><a class="reference internal" href="#tools" id="id3">Tools</a></p>
+<ul>
+<li><p><a class="reference internal" href="#tshark" id="id4">tshark</a></p>
+<ul>
+<li><p><a class="reference internal" href="#basic-usage" id="id5">Basic Usage</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#capinfos" id="id6">capinfos</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#capturing-rtp-streams" id="id7">Capturing RTP streams</a></p></li>
+<li><p><a class="reference internal" href="#capturing-turn-rtp-streams" id="id8">Capturing TURN RTP streams</a></p></li>
+<li><p><a class="reference internal" href="#text2cap" id="id9">text2cap</a></p></li>
+<li><p><a class="reference internal" href="#faq" id="id10">FAQ</a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-to-convert-pcap-to-text" id="id11">how to convert pcap to text</a></p></li>
+<li><p><a class="reference internal" href="#how-to-convert-text-to-pcap" id="id12">how to convert text to pcap</a></p></li>
+<li><p><a class="reference internal" href="#how-to-list-interfaces" id="id13">How to list interfaces</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id14">Reference</a></p></li>
 </ul>
 </div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id2">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Linux $PkgManager install wireshark   2.6.8 and below</p></li>
+<li><p>Macos brew install –cask wireshark   3.0.2</p></li>
+<li><p>Windows       choco install wireshark</p></li>
+</ul>
+</div>
+<div class="section" id="tools">
+<h2><a class="toc-backref" href="#id3">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>capinfos</p></li>
+<li><p>captype</p></li>
+<li><p>dftest</p></li>
+<li><p>dumpcap</p></li>
+<li><p>editcap</p></li>
+<li><p>extcap</p></li>
+<li><p>idl2wrs</p></li>
+<li><p>mergecap</p></li>
+<li><p>mmdbresolve</p></li>
+<li><p>randpkt</p></li>
+<li><p>rawshark</p></li>
+<li><p>reordercap</p></li>
+<li><p>sharkd</p></li>
+<li><p>text2pcap</p></li>
+<li><p>tshark</p></li>
+</ul>
+<div class="section" id="tshark">
+<h3><a class="toc-backref" href="#id4">tshark</a><a class="headerlink" href="#tshark" title="Permalink to this headline">¶</a></h3>
+<p>tshark is a command line tool of wireshark , we can create a symbol link like below on MacOS</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Wireshark</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">tshark</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tshark</span>
+</pre></div>
+</div>
+<div class="section" id="basic-usage">
+<h4><a class="toc-backref" href="#id5">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h4>
+<p>具体用法参见 <cite>tshark –help</cite></p>
+<p>例如将 pcapng 文件中的前 100 包按以下条件过滤出来，并导出为 json 文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tshark</span> <span class="o">-</span><span class="n">r</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">pcapng</span> <span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="n">Y</span> <span class="s2">&quot;ip.addr == 10.140.202.120 and rtp.p_type == 123&quot;</span> <span class="o">-</span><span class="n">V</span> <span class="o">-</span><span class="n">c</span> <span class="mi">100</span> <span class="o">-</span><span class="n">T</span> <span class="n">json</span> <span class="o">&gt;</span>
+<span class="n">packet_sample</span><span class="o">.</span><span class="n">json</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>输出结果如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//省略 1 ~ 4 层的信息： 1）frame, 2）eth, 3）ip, 4）udp
+&quot;rtp&quot;: {
+  &quot;rtp.setup&quot;: &quot;&quot;,
+  &quot;rtp.setup_tree&quot;: {
+    &quot;rtp.setup-frame&quot;: &quot;1&quot;,
+    &quot;rtp.setup-method&quot;: &quot;HEUR RTP&quot;
+  },
+  &quot;rtp.version&quot;: &quot;2&quot;,
+  &quot;rtp.padding&quot;: &quot;0&quot;,
+  &quot;rtp.ext&quot;: &quot;1&quot;,
+  &quot;rtp.cc&quot;: &quot;0&quot;,
+  &quot;rtp.marker&quot;: &quot;0&quot;,
+  &quot;rtp.p_type&quot;: &quot;123&quot;,
+  &quot;rtp.seq&quot;: &quot;8637&quot;,
+  &quot;rtp.extseq&quot;: &quot;74173&quot;,
+  &quot;rtp.timestamp&quot;: &quot;2709737133&quot;,
+  &quot;rtp.ssrc&quot;: &quot;0xe19bcceb&quot;,
+  &quot;rtp.ext.profile&quot;: &quot;0x0000bede&quot;,
+  &quot;rtp.ext.len&quot;: &quot;2&quot;,
+  &quot;rtp.hdr_exts&quot;: {
+    &quot;RFC 5285 Header Extension (One-Byte Header)&quot;: {
+      &quot;rtp.ext.rfc5285.id&quot;: &quot;2&quot;,
+      &quot;rtp.ext.rfc5285.len&quot;: &quot;3&quot;,
+      &quot;rtp.ext.rfc5285.data&quot;: &quot;e0:9c:ac&quot;
+    },
+    &quot;RFC 5285 Header Extension (One-Byte Header)&quot;: {
+      &quot;rtp.ext.rfc5285.id&quot;: &quot;3&quot;,
+      &quot;rtp.ext.rfc5285.len&quot;: &quot;2&quot;,
+      &quot;rtp.ext.rfc5285.data&quot;: &quot;c4:70&quot;
+    }
+  },
+  &quot;rtp.payload&quot;: &quot;92:00:60:90:80:c6:67:51:61:00:e4:e0:af:bd:4a:7e:12:c0:7a:02:75:eb:ea:aa:91:81:d2:61:f1:07:d4:01:2c:18:b9:d3:4d:58:c5:ce:9a:6a:c6:43:91:03:d6:ea:aa:aa:28:f9:55:55:54:6d:55:55:54:be:48:57:d5:55:40:99:9e:aa:aa:a4:ba:e5:55:5b:ad:33:a0:be:aa:a9:86:bf:ff:ff:e2:02:d1:ba:55:55:34:92:15:f0:2f:aa:a9:7f:5e:e9:b9:84:95:55:5a:35:26:78:3b:cc:df:f2:03:4a:07:46:76:f9:fe:c6:27:a4:a3:38:fe:11:82:d5:54:24:f5:ec:aa:60:d3:52:d8:d1:8d:f9:29:0f:d0:fd:2a:46:41:d4:aa:a3:0d:83:02:47:da:31:9a:5a:4f:13:e4:a9:c2:e2:17:b4:46:be:e0:13:7c:b6:bb:63:20:94:31:8b:dc:ab:07:a2:3d:31:00:00:0e:9c:45:a5:fb:d0:32:cd:2b:f1:76:0f:fe:fa:5c:89:77:77:99:b5:a1:c3:82:77:eb:0b:05:fb:87:a3:e1:92:e2:70:19:da:dd:25:ec:ba:4b:d9:46:c2:22:7c:70:6c:f0:e4:c2:0f:c7:a2:bf:4f:22:2c:81:00:01:29:c3:c2:ac:1f:df:72:fb:3f:86:b9:79:8f:1c:ce:56:1a:db:d7:52:77:57:84:a7:3b:bd:8b:d9:74:97:b2:e9:2f:65:a5:7e:ae:88:0c:0d:80:5e:cb:a1:44:f0:af:87:7a:97:b2:f3:5c:e2:3e:b4:d9:f8:3f:64:9c:a3:bd:4c:59:dd:6e:c3:7d:f9:d3:12:c7:75:54:46:da:4d:e9:54:bd:e7:7f:8c:e5:ef:65:d2:5e:cb:a4:bd:97:49:d6:a2:2c:b2:ba:4b:a5:6b:c4:20:43:92:5e:cb:a4:b8:94:e8:81:55:9d:ec:5e:cb:a4:ef:fd:49:57:fc:a1:28:9b:54:13:21:20:68:83:06:6f:86:8e:7c:ec:3c:09:05:56:74:a5:c9:42:d4:5d:25:ec:ba:4b:c4:f5:ba:42:04:59:74:97:1e:4f:10:94:9c:c4:ad:fa:04:79:85:33:7e:81:1e:44:1e:c5:ec:ba:4b:8a:55:00:00:55:1c:c9:79:4e:bf:01:18:76:5f:ce:70:07:d5:1e:a8:b8:6b:b8:88:88:67:7a:5c:23:7d:60:a0:6b:f9:78:2e:b2:c2:45:72:c4:aa:7e:31:1f:db:1b:04:01:5a:ae:3b:ee:43:9a:88:a3:1b:59:e4:fb:70:87:64:4d:85:c6:ef:87:24:f5:86:a3:9e:70:f0:b5:6d:e7:99:48:53:94:7f:4a:6c:d0:62:6e:33:c3:bd:3c:c9:cc:3d:e6:26:6a:a1:40:75:c8:c5:8c:60:72:17:81:b6:fb:a9:3c:45:b7:bf:b7:a5:88:5c:14:20:47:c9:55:49:18:c4:62:5e:a5:af:a2:d0:62:aa:54:0d:be:9c:5f:5a:70:b6:49:05:d7:ec:78:5c:9c:74:d0:66:4d:b4:0e:50:11:12:2a:c2:c3:55:e2:99:95:db:b9:45:b0:dd:e2:1e:eb:c4:d9:ad:0b:1b:4d:a9:73:20:4a:fa:27:ec:09:7e:c1:57:f6:0e:7e:a7:79:7a:e6:f8:41:c1:43:e0:30:24:e7:92:0d:60:c8:a3:51:b0:c2:16:1f:3d:91:b9:d0:75:b1:2a:f4:2f:68:85:56:50:b5:24:b9:26:ef:fb:6d:c5:f4:e9:3e:11:f7:86:ef:d9:04:10:50:35:28:cc:69:f2:4b:b2:f2:6a:3c:d0:af:9d:85:cc:3b:e8:b8:53:e2:fc:02:64:88:58:82:ee:39:a1:f9:68:16:e4:75:77:7a:51:50:04:b0:e8:1c:8b:d1:22:6c:57:54:70:d7:dc:a5:a5:53:dd:55:37:d5:dd:d5:55:55:47:d5:55:0a:db:8f:aa:aa:21:e2:da:58:0f:2a:8d:aa:aa:aa:9a:4a:aa:aa:a1:12:aa:aa:a5:1b:ea:aa:a7:ba:aa:aa:a8:fa:aa:aa:a9:aa:aa:aa:aa:1a:aa:aa:a9:a8:e5:8e:d4:df:eb:28:28:1c:e8:32:f7:a2:e0:34:bf:81:cc:e6:7c:0c:1f:39:86:3f:d4:a4:80:8b:0e:84:56:83:3d:4d:50:01:bf:20:c6:28:80:9b:01:a7:bf:ee:2a:fc:be:47:01:bb:35:56:85:7a:a2:b6:81:fd:d9:a7:3d:9e:dc:09:d9:75:80:af:e1:73:85:3f:78:1e:01:25:a1:82:4f:96:f5:b4:50:cb:43:12:c5:c5:72:fd:1b:3d:96:7e:f1:e3:ad:9b:3b:b4:42:f7:6e:00:2d:6a:be:34:10:9a:20:22:22:05:98:c6:81:8c:57:33:a6:30:92:b9:33:2a:e7:de:dc:36:45:a5:65:37:b6:5e:c3:07:54:fb:7f:c7:cb:ce:69:a7:9f:33:23:05:81:3a:c2:4a:22:c2:66:ff:aa:48:bf:35:12:bb:e7:69:da:55:01:e2:d5:19:ba:4a:31:80:11:e0:aa:81:4c:33:bf:ce:07:4c:69:8b:91:e6:19:e4:1e:0c:3b:84:54:d5:6a:4e:17:8a:9a:cb:54:01:e5:21:d9:3b:6c:d6:84:1f:b3:a6:6a:59:58:86:60:f4:86:e9:bb:04:fc:c2:02:6d:72:66:38:b9:22:a7:8b:da:5b:d5:d0:19:b0:bf:d1:12:72:95:c3:61:59:1e:11:cc:4d:04:23:92:ee:54:20:b8:7f:0c:b7:fa:05:9e:fc:5c:8a:00:4c:20:22:2a:ae:9e:60:9c:d9:49:20:ec:1c:4e:90:f5&quot;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="capinfos">
+<h3><a class="toc-backref" href="#id6">capinfos</a><a class="headerlink" href="#capinfos" title="Permalink to this headline">¶</a></h3>
+<p>capinfos 2022-03-30-cc.pcapng</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="n">name</span><span class="p">:</span>           <span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">pcapng</span>
+<span class="n">File</span> <span class="nb">type</span><span class="p">:</span>           <span class="n">Wireshark</span><span class="o">/...</span> <span class="o">-</span> <span class="n">pcapng</span>
+<span class="n">File</span> <span class="n">encapsulation</span><span class="p">:</span>  <span class="n">Ethernet</span>
+<span class="n">File</span> <span class="n">timestamp</span> <span class="n">precision</span><span class="p">:</span>  <span class="n">microseconds</span> <span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">Packet</span> <span class="n">size</span> <span class="n">limit</span><span class="p">:</span>   <span class="n">file</span> <span class="n">hdr</span><span class="p">:</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">)</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">packets</span><span class="p">:</span>   <span class="mi">7678</span>
+<span class="n">File</span> <span class="n">size</span><span class="p">:</span>           <span class="mi">3759</span><span class="n">kB</span>
+<span class="n">Data</span> <span class="n">size</span><span class="p">:</span>           <span class="mi">3499</span><span class="n">kB</span>
+<span class="n">Capture</span> <span class="n">duration</span><span class="p">:</span>    <span class="mf">33.521948</span> <span class="n">seconds</span>
+<span class="n">First</span> <span class="n">packet</span> <span class="n">time</span><span class="p">:</span>   <span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">30</span> <span class="mi">10</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mf">27.550761</span>
+<span class="n">Last</span> <span class="n">packet</span> <span class="n">time</span><span class="p">:</span>    <span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">30</span> <span class="mi">10</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mf">01.072709</span>
+<span class="n">Data</span> <span class="n">byte</span> <span class="n">rate</span><span class="p">:</span>      <span class="mi">104</span><span class="n">kBps</span>
+<span class="n">Data</span> <span class="n">bit</span> <span class="n">rate</span><span class="p">:</span>       <span class="mi">835</span><span class="n">kbps</span>
+<span class="n">Average</span> <span class="n">packet</span> <span class="n">size</span><span class="p">:</span> <span class="mf">455.83</span> <span class="nb">bytes</span>
+<span class="n">Average</span> <span class="n">packet</span> <span class="n">rate</span><span class="p">:</span> <span class="mi">229</span> <span class="n">packets</span><span class="o">/</span><span class="n">s</span>
+<span class="n">SHA256</span><span class="p">:</span>              <span class="mi">6</span><span class="n">f9cee42a2be4b704e150643671d679eca1f6c7438f3a98e45602325191a6de4</span>
+<span class="n">RIPEMD160</span><span class="p">:</span>           <span class="n">c1daaf4f78d797c31e6491402a2b32875d44950b</span>
+<span class="n">SHA1</span><span class="p">:</span>                <span class="n">d62393f0fc44e798b572e0f2cbb5ec6d470d647f</span>
+<span class="n">Strict</span> <span class="n">time</span> <span class="n">order</span><span class="p">:</span>   <span class="kc">False</span>
+<span class="n">Capture</span> <span class="n">hardware</span><span class="p">:</span>    <span class="n">Intel</span><span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="n">Core</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="n">i7</span><span class="o">-</span><span class="mi">8650</span><span class="n">U</span> <span class="n">CPU</span> <span class="o">@</span> <span class="mf">1.90</span><span class="n">GHz</span> <span class="p">(</span><span class="k">with</span> <span class="n">SSE4</span><span class="mf">.2</span><span class="p">)</span>
+<span class="n">Capture</span> <span class="n">oper</span><span class="o">-</span><span class="n">sys</span><span class="p">:</span>    <span class="mi">64</span><span class="o">-</span><span class="n">bit</span> <span class="n">Windows</span> <span class="mi">10</span> <span class="p">(</span><span class="mi">2009</span><span class="p">),</span> <span class="n">build</span> <span class="mi">19042</span>
+<span class="n">Capture</span> <span class="n">application</span><span class="p">:</span> <span class="n">Dumpcap</span> <span class="p">(</span><span class="n">Wireshark</span><span class="p">)</span> <span class="mf">3.4.2</span> <span class="p">(</span><span class="n">v3</span><span class="mf">.4.2</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="n">ga889cf1b1bf9</span><span class="p">)</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">interfaces</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span> <span class="mi">1</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="capturing-rtp-streams">
-<h2><a class="toc-backref" href="#id2">Capturing RTP streams</a><a class="headerlink" href="#capturing-rtp-streams" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Capturing RTP streams</a><a class="headerlink" href="#capturing-rtp-streams" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Select the network interface currently used for RTP traffic and start a capture.</p></li>
 <li><p>Right click on any package in the capture view and select Decode as.</p></li>
@@ -242,7 +384,7 @@
 </ol>
 </div>
 <div class="section" id="capturing-turn-rtp-streams">
-<h2><a class="toc-backref" href="#id3">Capturing TURN RTP streams</a><a class="headerlink" href="#capturing-turn-rtp-streams" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Capturing TURN RTP streams</a><a class="headerlink" href="#capturing-turn-rtp-streams" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>First we need to enable the Try to decode RTP outside of conversations option.</p></li>
 </ol>
@@ -259,10 +401,45 @@
 <li><p>Now perform the steps in Capturing RTP streams section but skip the Decode As steps (2-4)</p></li>
 </ol>
 </div>
+<div class="section" id="text2cap">
+<h2><a class="toc-backref" href="#id9">text2cap</a><a class="headerlink" href="#text2cap" title="Permalink to this headline">¶</a></h2>
+<p>Text2pcap understands a hexdump of the form generated by od -Ax -tx1 -v. In other words, each byte is individually displayed, with spaces separating the bytes from each other. Each line begins with an offset describing the position in the packet, each new packet starts with an offset of 0 and there is a space separating the offset from the following bytes. The offset is a hex number (can also be octal or decimal - see -o), of more than two hex digits.</p>
+<p>Here is a sample dump that text2pcap can recognize:</p>
+<p>000000 00 0e b6 00 00 02 00 0e b6 00 00 01 08 00 45 00
+000010 00 28 00 00 00 00 ff 01 37 d1 c0 00 02 01 c0 00
+000020 02 02 08 00 a6 2f 00 01 00 01 48 65 6c 6c 6f 20
+000030 57 6f 72 6c 64 21
+000036</p>
+</div>
+<div class="section" id="faq">
+<h2><a class="toc-backref" href="#id10">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-convert-pcap-to-text">
+<h3><a class="toc-backref" href="#id11">how to convert pcap to text</a><a class="headerlink" href="#how-to-convert-pcap-to-text" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tcpdump</span> <span class="o">-</span><span class="n">r</span> <span class="nb">input</span><span class="o">.</span><span class="n">pcap</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+<span class="c1"># it works for text2pcap of wireshare</span>
+<span class="n">tshark</span> <span class="o">-</span><span class="n">V</span> <span class="o">-</span><span class="n">r</span> <span class="nb">input</span><span class="o">.</span><span class="n">pcap</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-convert-text-to-pcap">
+<h3><a class="toc-backref" href="#id12">how to convert text to pcap</a><a class="headerlink" href="#how-to-convert-text-to-pcap" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tshark</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span> <span class="o">&lt;</span> <span class="s2">&quot;c:</span><span class="se">\f</span><span class="s2">ilename.cap&quot;</span> <span class="o">&gt;</span> <span class="s2">&quot;c:\output.txt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-list-interfaces">
+<h3><a class="toc-backref" href="#id13">How to list interfaces</a><a class="headerlink" href="#how-to-list-interfaces" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tshark</span> <span class="o">-</span><span class="n">D</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="reference">
-<h2><a class="toc-backref" href="#id4">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://webrtc.github.io/webrtc-org/testing/wireshark/">https://webrtc.github.io/webrtc-org/testing/wireshark/</a></p></li>
+<li><p><a class="reference external" href="https://www.wireshark.org/docs/man-pages/text2pcap.html">https://www.wireshark.org/docs/man-pages/text2pcap.html</a></p></li>
+<li><p><a class="reference external" href="https://tshark.dev/edit/text2pcap/">https://tshark.dev/edit/text2pcap/</a></p></li>
 </ul>
 </div>
 </div>

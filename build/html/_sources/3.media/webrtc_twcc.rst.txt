@@ -22,6 +22,29 @@ Transport-wide Congestion Control
 
 概述
 ==================================================
+TWCC 属于 GCC(Google Congestion Control ) 的第二版， 相对于第一版，它做了如下改进
+
+1. 接收端只做反馈，所有的探测和估算逻辑都放在发送端
+2. 将第一版中使用的 Kalman Filter 改为 Trendline Filter
+3. 带宽估算中综合考虑带宽探测的码率，确认收到的流量码率，基于丢包和基于延迟所估算的码率
+
+这样做的好处在于
+
+1) The congestion control algorithms are easier to maintain and improve as there is less synchronization between sender and receiver versions needed.
+
+2) More flexibility in what algorithms are used, as long as they are having most of their logic on the send-side.
+For instance different behavior can be used depending on if the rate produced  is application limited or not.
+
+3) It is a better fit for congestion control as the congestion controller doesn't operate on media streams, but on packet flows.
+
+4) It allows for earlier packet loss detection (and recovery) since a loss in stream A can be detected when a packet from stream B is received, thus we don't have to wait until the next packet of stream A is received.
+
+
+Inter-packet delay variation: d(i) = A(i) - S(i) - (A(i-1) - S(i-1))
+
+扩展
+==================================================
+
 1. Transport wide sequence numbers header extension 
    在 RTP 包中添加一个扩展头，放置传输层面的序号
 

@@ -9,6 +9,7 @@ WebRTC Congestion Control
 ============ ==========================
 **Abstract** WebRTC Congestion Control
 **Authors**  Walter Fan
+**Category** LearningNote
 **Status**   WIP
 **Updated**  |date|
 ============ ==========================
@@ -28,6 +29,26 @@ Overview
 .. _remote_bitrate_estimator: https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator
 .. _congestion_controller: https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller
 
+
+
+发送方从接收方可能会收到以下几种 RTCP 消息
+
+* RTCP Receiver Report
+* RTCP REMB Report
+* RTCP Transport Wide CC Feedback
+
+这样我们可以根据这些 RTCP 消息计算出 RTT, Packet Loss 和 Delay 来估算带宽
+
+估算的比特率有
+
+1) 探测出的带宽
+2）实际的吞吐量
+3）基于延迟的带宽估算：主要考虑 OWDV, 也会参考 RTT
+4）基于丢包的带宽估算
+
+先综合估算一个带宽，再与一个自适应的阈值进行比较，
+再决定是否是 Overuser 或者 Underuser
+再决定如何增加或减少发送速率 (AIMD)
 
 核心接口
 ===============
@@ -166,18 +187,6 @@ sender side congestion controller
      - TBD
 
 
-其依赖项有
-
-* ProbeController : 探测控制器，通过目标码率判断下次是否探测，探测码率大小
-* ProbeBitrateEstimator : 根据feedback计算探测码率，PacingController中会将包按照cluster进行划分，transport-CC报文能得到包所属的cluster以及发送和接收信息，通过发送和接收的数据大小比判断是否到达链路上限从而进行带宽探测
-* AcknowledgedBitrateEstimator : 估算当前的吞吐量
-* BitrateEstimator :使用滑动窗口 + 卡尔曼滤波计算当前发送吞吐量
-* DelayBasedBwe : 基于延迟预估码率
-* TrendlineEstimator : 使用线性回归计算当前网络拥堵情况
-* AimdRateControl : 通过TrendLine预测出来的网络状态对码率进行 AIMD(加增乘减)方式调整
-* SendSideBandwidthEstimation : 基于丢包计算预估码率，结合延迟预估码率，得到最终的目标码率
-* CongestionWindowPushbackController : 基于当前的rtt设置一个时间窗口，同时基于当前的码率设置当前时间窗口下的数据量，通过判断当前窗口的使用量，如果使用量过大的时候，降低编码时使用的目标码率，加速窗口消退，减少延迟
-* AlrDetector : 应用(码率)受限检测，检测当前的发送码率是否和目标码率由于编码器等原因相差过大受限了，受限情况下会触发带宽预测过程的特殊处理
 
 config classes 配置类
 =================================
