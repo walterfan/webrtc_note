@@ -42,8 +42,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="WebRTC Pacer" href="webrtc_pacer.html" />
-    <link rel="prev" title="WebRTC Congestion Control" href="webrtc_thread.html" /> 
+    <link rel="next" title="WebRTC Bandwidth Probe" href="webrtc_bw_probe.html" />
+    <link rel="prev" title="WebRTC Thread Model" href="webrtc_thread.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test suite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Congestion Control</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">核心接口</a><ul>
@@ -124,6 +124,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bw_probe.html">WebRTC Bandwidth Probe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
@@ -216,11 +217,14 @@
 <tr class="row-even"><td><p><strong>Authors</strong></p></td>
 <td><p>Walter Fan</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<tr class="row-odd"><td><p><strong>Category</strong></p></td>
+<td><p>LearningNote</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Status</strong></p></td>
 <td><p>WIP</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-03-01</p></td>
+<tr class="row-odd"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-04-01</p></td>
 </tr>
 </tbody>
 </table>
@@ -263,6 +267,21 @@
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator">remote_bitrate_estimator</a> 基于 REMB 的旧版本，基本已经废弃了，其中几个类在新版本中也有使用</p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller">congestion_controller</a> 基于 Transport Wide CC 的新版本，新旧版本中接收端的估算逻辑移到了发送端，其中的卡尔曼滤波算法也改成了线性回归算法</p></li>
 </ul>
+<p>发送方从接收方可能会收到以下几种 RTCP 消息</p>
+<ul class="simple">
+<li><p>RTCP Receiver Report</p></li>
+<li><p>RTCP REMB Report</p></li>
+<li><p>RTCP Transport Wide CC Feedback</p></li>
+</ul>
+<p>这样我们可以根据这些 RTCP 消息计算出 RTT, Packet Loss 和 Delay 来估算带宽</p>
+<p>估算的比特率有</p>
+<p>1) 探测出的带宽
+2）实际的吞吐量
+3）基于延迟的带宽估算：主要考虑 OWDV, 也会参考 RTT
+4）基于丢包的带宽估算</p>
+<p>先综合估算一个带宽，再与一个自适应的阈值进行比较，
+再决定是否是 Overuser 或者 Underuser
+再决定如何增加或减少发送速率 (AIMD)</p>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id5">核心接口</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
@@ -402,19 +421,6 @@
 </tr>
 </tbody>
 </table>
-<p>其依赖项有</p>
-<ul class="simple">
-<li><p>ProbeController : 探测控制器，通过目标码率判断下次是否探测，探测码率大小</p></li>
-<li><p>ProbeBitrateEstimator : 根据feedback计算探测码率，PacingController中会将包按照cluster进行划分，transport-CC报文能得到包所属的cluster以及发送和接收信息，通过发送和接收的数据大小比判断是否到达链路上限从而进行带宽探测</p></li>
-<li><p>AcknowledgedBitrateEstimator : 估算当前的吞吐量</p></li>
-<li><p>BitrateEstimator :使用滑动窗口 + 卡尔曼滤波计算当前发送吞吐量</p></li>
-<li><p>DelayBasedBwe : 基于延迟预估码率</p></li>
-<li><p>TrendlineEstimator : 使用线性回归计算当前网络拥堵情况</p></li>
-<li><p>AimdRateControl : 通过TrendLine预测出来的网络状态对码率进行 AIMD(加增乘减)方式调整</p></li>
-<li><p>SendSideBandwidthEstimation : 基于丢包计算预估码率，结合延迟预估码率，得到最终的目标码率</p></li>
-<li><p>CongestionWindowPushbackController : 基于当前的rtt设置一个时间窗口，同时基于当前的码率设置当前时间窗口下的数据量，通过判断当前窗口的使用量，如果使用量过大的时候，降低编码时使用的目标码率，加速窗口消退，减少延迟</p></li>
-<li><p>AlrDetector : 应用(码率)受限检测，检测当前的发送码率是否和目标码率由于编码器等原因相差过大受限了，受限情况下会触发带宽预测过程的特殊处理</p></li>
-</ul>
 </div>
 </div>
 <div class="section" id="config-classes">
@@ -666,8 +672,8 @@ Samples which are far from the current estimate or are based on few packets are 
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="webrtc_pacer.html" class="btn btn-neutral float-right" title="WebRTC Pacer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="webrtc_thread.html" class="btn btn-neutral float-left" title="WebRTC Congestion Control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_bw_probe.html" class="btn btn-neutral float-right" title="WebRTC Bandwidth Probe" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="webrtc_thread.html" class="btn btn-neutral float-left" title="WebRTC Thread Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
