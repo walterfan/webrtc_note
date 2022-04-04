@@ -72,15 +72,22 @@ Source code
 
 注意:
 
-1）一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)
-2）为了使用本地安装的 visual studio, 需要先设置一下环境变量 `set DEPOT_TOOLS_WIN_TOOLCHAIN=0`
+* 1) 一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)
+* 2) 为了使用本地安装的 visual studio, 需要先设置一下环境变量 `set DEPOT_TOOLS_WIN_TOOLCHAIN=0`
 
 .. code-block::
 
-   gn gen --ide=vs out\Default
+   gn gen --ide=vs out\Default --args='use_custom_libcxx=false'
 
 然后用 visual studio 打开 out\Default\all.sln
 
+gn 支持的参数很多，例如
+
+* clang_base_path="/usr" 
+* clang_use_chrome_plugins=false 
+* treat_warnings_as_errors=false 
+* rtc_build_ssl=false 
+* rtc_ssl_root="dummy"
 
 构建工具
 ====================

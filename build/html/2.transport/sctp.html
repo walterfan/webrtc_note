@@ -201,7 +201,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-01</p></td>
+<td><p>2022-04-04</p></td>
 </tr>
 </tbody>
 </table>
@@ -217,21 +217,15 @@
 <p>数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。</p>
 <p>SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。</p>
 <p>假设我们通过一个连接传送流媒体以及控制命令，如果通过 TCP , 包丢失了就要重传，乱序了也一样。SCTP 就可以不一样，流媒体的包可以丢失，控制命令的包不能丢失</p>
-<p>SCTP is a reliable transport protocol operating on top of a connectionless packet network such as IP.</p>
-<p>It offers the following services to its users:</p>
-<p>–  acknowledged error-free non-duplicated transfer of user data,</p>
-<p>–  data fragmentation to conform to discovered path MTU size,</p>
-<dl class="simple">
-<dt>–  sequenced delivery of user messages within multiple streams, with</dt><dd><p>an option for order-of-arrival delivery of individual user
-messages,</p>
-</dd>
-<dt>–  optional bundling of multiple user messages into a single SCTP</dt><dd><p>packet, and</p>
-</dd>
-<dt>–  network-level fault tolerance through supporting of multi-homing</dt><dd><p>at either or both ends of an association.</p>
-</dd>
-</dl>
-<p>The design of SCTP includes appropriate congestion avoidance behavior
-and resistance to flooding and masquerade attacks.</p>
+<p>它为用户提供以下服务：</p>
+<ul class="simple">
+<li><p>确认用户数据的无错误非重复传输，</p></li>
+<li><p>数据分段以符合发现的路径 MTU 大小，</p></li>
+<li><p>在多个流中按顺序传递用户消息，使用单个用户的到达顺序交付选项消息，</p></li>
+<li><p>可选地将多个用户消息捆绑到单个 SCTP 数据包，和</p></li>
+<li><p>通过支持多宿主实现网络级容错在关联的一端或两端。</p></li>
+</ul>
+<p>SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的抵抗力。</p>
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id6">基于消息的多流协议</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
