@@ -70,6 +70,20 @@ Python test code:
     print(xor(a, c) == b, xor(b, c) == a)
     #output: (True, True)
 
+FEC/NAC rate
+=========================
+
+FEC 的发送速率可以根据如下因素决定
+
+* 根据 bitrate, packet_loss, reateIndex( width, height, frameRate, bitrate) 来决定 I 帧，P 帧的 fec rate
+* 根据 rtt， 调整 p 帧 fec rate (I 帧不变)
+
+  - rtt < rtt_low(20ms): P帧fec rate=0，只用nack；
+  - rtt > rtt_low && rtt < rtt_high: P帧fec rate不变，同时使用nack、fec
+  - rtt > rtt_high: P帧fec rate不变，不使用nack
+    当前rttHigh为-1，表示永远使用nack
+
+
 ULP FEC
 =========================
 
