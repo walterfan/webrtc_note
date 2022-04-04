@@ -1,8 +1,14 @@
-from fabric import task
-
+import os, sys, subprocess
+import http.server
+import socketserver
+import codecs
 from datetime import date
 from sys import platform
-import os, subprocess
+
+from fabric import task
+from fabric import Connection
+#from m2r import convert
+
 
 BASE_PATH = os.path.dirname(__file__)
 default_hosts = ["localhost"]
@@ -12,7 +18,7 @@ def usage(c):
     print("usage: fab make_note|publish_note|md2rst|rst2md")
 
 
-@task(hosts=default_hosts)
+@task(hosts=['localhost'])
 def md2rst(c, src, dest=None):
     if not dest:
         dest = src[:-3] + ".rst";
