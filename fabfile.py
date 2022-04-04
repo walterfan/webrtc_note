@@ -1,40 +1,46 @@
-from fabric import task
-
+import os, sys, subprocess
+import http.server
+import socketserver
+import codecs
 from datetime import date
 from sys import platform
-import os, subprocess
+
+from fabric import task
+from fabric import Connection
+#from m2r import convert
+
 
 BASE_PATH = os.path.dirname(__file__)
 default_hosts = ["localhost"]
 
-@task
-def usage():
+@task(hosts=['localhost'])
+def usage(c):
     print("usage: fab make_note|publish_note")
 
 
-@task(hosts=default_hosts)
+@task(hosts=['localhost'])
 def md2rst(c, src, dest=None):
     if not dest:
         dest = src[:-3] + ".rst";
     cmd = "pandoc --to RST --reference-links {} > {}".format(src, dest)
     c.local(cmd)
 
-@task
-def rst2md(src, dest=None):
+@task(hosts=['localhost'])
+def rst2md(c, src, dest=None):
     if not dest:
         dest = src[:-4] + ".md";
     cmd = "pandoc {} -f rst -t markdown -o {}".format(src, dest)
-    local(cmd)
+    c.local(cmd)
 
-@task
-def make_note():
+@task(hosts=['localhost'])
+def make_note(c):
     build_cmd = 'make clean html'
-    local(build_cmd)
+    c.local(build_cmd)
 
-@task
-def publish_note():
-    local("touch ./build/html/.nojekyll")
-    local("git add source")
-    local("git add -f build")
-    local('git commit -m "update notes"')
-    local("git subtree push --prefix build/html origin gh-pages")
+@task(hosts=['localhost'])
+def publish_note(c):
+    c.local("touch ./build/html/.nojekyll")
+    c.local("git add source")
+    c.local("git add -f build")
+    c.local('git commit -m "update notes"')
+    c.local("git subtree push --prefix build/html origin gh-pages")
