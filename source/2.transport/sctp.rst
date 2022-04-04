@@ -29,27 +29,15 @@ SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及�
 假设我们通过一个连接传送流媒体以及控制命令，如果通过 TCP , 包丢失了就要重传，乱序了也一样。SCTP 就可以不一样，流媒体的包可以丢失，控制命令的包不能丢失
 
 
+它为用户提供以下服务：
 
-SCTP is a reliable transport protocol operating on top of a connectionless packet network such as IP.  
+- 确认用户数据的无错误非重复传输，
+- 数据分段以符合发现的路径 MTU 大小，
+- 在多个流中按顺序传递用户消息，使用单个用户的到达顺序交付选项消息，
+- 可选地将多个用户消息捆绑到单个 SCTP 数据包，和
+- 通过支持多宿主实现网络级容错在关联的一端或两端。
 
-It offers the following services to its users:
-
---  acknowledged error-free non-duplicated transfer of user data,
-
---  data fragmentation to conform to discovered path MTU size,
-
---  sequenced delivery of user messages within multiple streams, with
-    an option for order-of-arrival delivery of individual user
-    messages,
-
---  optional bundling of multiple user messages into a single SCTP
-    packet, and
-
---  network-level fault tolerance through supporting of multi-homing
-    at either or both ends of an association.
-
-The design of SCTP includes appropriate congestion avoidance behavior
-and resistance to flooding and masquerade attacks.
+SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的抵抗力。
 
 
 

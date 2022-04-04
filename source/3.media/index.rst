@@ -21,3 +21,5 @@
    insertable_stream
    web_codec
    web_transport
+
+   webrtc_svc
