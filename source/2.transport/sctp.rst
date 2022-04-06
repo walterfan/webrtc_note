@@ -1,5 +1,5 @@
 ##################################################
-Stream Control Transmission Protocol (SCTP)
+WebRTC Data Channel
 ##################################################
 
 
@@ -22,7 +22,65 @@ Stream Control Transmission Protocol (SCTP)
 简介
 =======================================
 
+WebRTC 的 Data Channel 被设计用来在两个端点之间传输非音视频之类的媒体流外的数据，例如文本数据，控制命令。
+这样无需经过由服务器的信令通道中转，效率较高。当然，通过服务器中转也没问题。
+
+RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向对等传输。 每个数据通道都与一个 RTCPeerConnection 相关联，每个对等连接理论上最多可以有 65,534 个数据通道（实际限制可能因浏览器而异）。
+
+发起方如果要创建数据通道并要求远程对等方加入您，可调用 `RTCPeerConnection 的 createDataChannel()` 方法。
+应答方会接收到一个数据通道事件（其类型为 RTCDataChannelEvent），以告知其数据通道已添加到连接中。
+
+
+
+示例
+----------------------------------------
+
+.. code-block:: javascript
+
+    // Offerer side
+    var pc = new RTCPeerConnection(options);
+    var channel = pc.createDataChannel("chat");
+    channel.onopen = function(event) {
+      channel.send('Hi you!');
+    }
+    channel.onmessage = function(event) {
+      console.log(event.data);
+    }
+
+    // Answerer side
+    var pc = new RTCPeerConnection(options);
+    pc.ondatachannel = function(event) {
+      var channel = event.channel;
+        channel.onopen = function(event) {
+        channel.send('Hi back!');
+      }
+      channel.onmessage = function(event) {
+        console.log(event.data);
+      }
+    }
+
+
+    //Alternatively, more symmetrical out-of-band negotiation can be used, using an agreed-upon id (0 here):
+
+    // Both sides
+
+    var pc = new RTCPeerConnection(options);
+    var channel = pc.createDataChannel("chat", {negotiated: true, id: 0});
+    channel.onopen = function(event) {
+      channel.send('Hi!');
+    }
+    channel.onmessage = function(event) {
+      console.log(event.data);
+    }
+
+
+
+SCTP
+==========================================
+Data Channel 背后使用的协议是 SCTP
+
 数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。
+
 
 SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。
 
