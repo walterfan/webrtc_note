@@ -208,7 +208,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-01</p></td>
+<td><p>2022-04-04</p></td>
 </tr>
 </tbody>
 </table>
@@ -274,12 +274,28 @@ $ ninja -C out/Default
 </div>
 <p>在 windows 系统上，建议安装 visual studio 和 windows 10 SDK</p>
 <p>注意:</p>
-<p>1）一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)
-2）为了使用本地安装的 visual studio, 需要先设置一下环境变量 <cite>set DEPOT_TOOLS_WIN_TOOLCHAIN=0</cite></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gn</span> <span class="n">gen</span> <span class="o">--</span><span class="n">ide</span><span class="o">=</span><span class="n">vs</span> <span class="n">out</span>\<span class="n">Default</span>
+<ul class="simple">
+<li><ol class="arabic simple">
+<li><p>一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)</p></li>
+</ol>
+</li>
+<li><ol class="arabic simple" start="2">
+<li><p>为了使用本地安装的 visual studio, 需要先设置一下环境变量 <cite>set DEPOT_TOOLS_WIN_TOOLCHAIN=0</cite></p></li>
+</ol>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gn</span> <span class="n">gen</span> <span class="o">--</span><span class="n">ide</span><span class="o">=</span><span class="n">vs</span> <span class="n">out</span>\<span class="n">Default</span> <span class="o">--</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;use_custom_libcxx=false&#39;</span>
 </pre></div>
 </div>
 <p>然后用 visual studio 打开 outDefaultall.sln</p>
+<p>gn 支持的参数很多，例如</p>
+<ul class="simple">
+<li><p>clang_base_path=”/usr”</p></li>
+<li><p>clang_use_chrome_plugins=false</p></li>
+<li><p>treat_warnings_as_errors=false</p></li>
+<li><p>rtc_build_ssl=false</p></li>
+<li><p>rtc_ssl_root=”dummy”</p></li>
+</ul>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id5">构建工具</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
