@@ -175,6 +175,15 @@ If multiple audio channels are used, the audio energy of a sample refers to the 
 如果使用多个音频通道，则样本的音频能量是指任一通道的最高能量。
 
 
+ASA
+=============================
+Active Speaker Arbitration 比较音量大小，挑选出音量较高的几个人（一般是3个）
+
+
+ASN
+=============================
+Active Speaker Notification 将上述挑选出的列表通知给订阅者
+
 
 示例代码
 =============================

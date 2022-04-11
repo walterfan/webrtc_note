@@ -2,6 +2,21 @@
 Jitter Buffer
 #####################
 
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
+
+============ =============
+**Abstract** Opus Codec
+**Authors**  Walter Fan
+**Status**   WIP
+**Updated**  |date|
+============ =============
+
+.. |date| date::
+
+.. contents::
+   :local:
 
 Jitter
 ======================

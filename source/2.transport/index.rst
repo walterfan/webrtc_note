@@ -14,7 +14,8 @@
    ice
 
    quic
-   
+   hls
+
    webrtc_multiplex
    webrtc_transmission
 
