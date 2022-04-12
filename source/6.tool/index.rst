@@ -13,6 +13,7 @@
    scapy
    sox
    ffmpeg
+   gstreamer
 
    vnc
    tc

@@ -18,6 +18,8 @@
    webrtc_spec
 
    webrtc_api
+
+   webrtc_entities
    
    webrtc_flow
 
