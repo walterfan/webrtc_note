@@ -100,7 +100,7 @@ Network adaptation
 WebRTC 有一个网络拥塞和带宽估计的模块, 当检测到网络带宽有变化的(over-use, under-use), 就可以来调整视频的分辨率或帧率
 
 
-.. csv-table:: 分辨率对应的大约带宽 
+.. csv-table:: 分辨率对应的大约带宽
    :header: "bandwidth", "Resolution", "Comments"
    :widths: 30, 30, 30
 

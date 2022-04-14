@@ -24,3 +24,22 @@ Overview
 
 
 GStreamer is a the multi-platform, modular, open-source, media streaming framework.
+
+
+Installation
+===============
+
+MacOS
+---------------
+Download and install gstreamer from https://gstreamer.freedesktop.org/documentation/installing/on-mac-osx.html?gi-language=c
+
+
+Get started
+===============
+
+git clone https://gitlab.freedesktop.org/gstreamer/gst-docs.git
+
+
+Reference
+==============
+https://gitlab.freedesktop.org/gstreamer/gst-docs.git
