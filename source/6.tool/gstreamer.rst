@@ -133,6 +133,13 @@ Documentation
 git clone https://gitlab.freedesktop.org/gstreamer/gst-docs.git
 
 
+
+FAQ
+===============
+
+How to make a gstreamer plugin
+
+
 Reference
 ==============
 https://gitlab.freedesktop.org/gstreamer/gst-docs.git
