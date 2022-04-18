@@ -225,6 +225,66 @@ SCTP applications submit data for transmission in messages (groups of bytes) to 
 The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).
 
 
+example
+--------------------------------
+
+A simple example based on https://github.com/P1sec/pysctp
+
+* server
+
+.. code-block:: python
+
+  import socket
+  import sctp
+
+  host = '192.168.1.10'
+  port = 12345
+
+  sock = sctp.sctpsocket_tcp(socket.AF_INET)
+  sock.bind((host, port))
+  sock.listen(1)
+
+  while True:  
+      # wait for a connection
+      print ('waiting for a connection')
+      connection, client_address = sock.accept()
+
+      try:
+          # show who connected to us
+          print ('connection from', client_address)
+          print connection
+          # receive the data in small chunks and print it
+          while True:
+              data = connection.recv(999)
+              if data:
+                  # output received data
+                  print ("Data: %s" % data)
+                  connection.sendall("Got " + str(len(data)) + ", I'm fine, thank you. And you?")
+              else:
+                  # no more data -- quit the loop
+                  print ("no more data.")
+                  break
+      finally:
+          # Clean up the connection
+          connection.close()
+
+* client
+
+.. code-block:: python
+
+  import socket
+  import sctp
+
+  sk = sctp.sctpsocket_tcp(socket.AF_INET)
+  sk.connect(("192.168.1.10", 12345))
+
+  sk.sctp_send(msg='how are you')
+  sk.shutdown(0)
+
+
+  sk.close()
+
+
 参考资料
 ==================
 * `RFC4960`_ : Stream Control Transmission Protocol
