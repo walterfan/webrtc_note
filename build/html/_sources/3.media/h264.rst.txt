@@ -506,17 +506,7 @@ H.264 相关的 SDP 属性
 
 
 
-   This memo describes an RTP Payload format for the ITU-T
-   Recommendation H.264 video codec and the technically identical
-   ISO/IEC International Standard 14496-10 video codec, excluding the
-   Scalable Video Coding (SVC) extension and the Multiview Video Coding
-   extension, for which the RTP payload formats are defined elsewhere.
-   The RTP payload format allows for packetization of one or more
-   Network Abstraction Layer Units (NALUs), produced by an H.264 video
-   encoder, in each RTP payload.  The payload format has wide
-   applicability, as it supports applications from simple low bitrate
-   conversational usage, to Internet video streaming with interleaved
-   transmission, to high bitrate video-on-demand.
+
 
 
 
@@ -534,6 +524,17 @@ highest level.  Senders MAY use this knowledge to send larger
 pictures at a proportionally lower frame rate than is indicated
 in the signaled highest level.
 
+
+.. csv-table:: 分辨率对应的 max-fs
+   :header: "max-fs", "Resoluwidthtion", "height", "Description"
+   :widths: 20, 20, 20, 40
+
+   3600,	1280, 720, Standard 720p
+   8160,	1920, 1088, Standard 1080p
+   9000,	1920, 1200,	16:10 1080p
+   14400, 2560, 1440, Standard 1440p
+   18225, 2880, 1620, High end laptops
+   32400, 3840, 2160, Standard 4K
 
 
 * microblock: 宏块，H264 将整个图片分为若干个区域，这些区域称为宏块

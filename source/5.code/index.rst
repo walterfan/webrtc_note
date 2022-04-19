@@ -13,10 +13,14 @@
    webrtc_test
    webrtc_issues
 
+
    webrtc_thread
    webrtc_cc
    webrtc_bw_probe
    webrtc_pacer
+
+   webrtc_sctp
+
    overuse_frame_decoder
    remote_bitrate_estimator
 

@@ -93,6 +93,11 @@ Independently from the choice of VAD algorithm, a compromise must be made betwee
 
 
 
+GMM VAD
+-------------------
+
+https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/common_audio/vad/vad_gmm.h
+
 
 Reference
 ===================
@@ -102,3 +107,4 @@ Reference
 * https://colab.research.google.com/github/snakers4/silero-vad/blob/master/silero-vad.ipynb
 * https://chromium.googlesource.com/external/webrtc/+/518c683f3e413523a458a94b533274bd7f29992d/webrtc/modules/audio_processing/vad/voice_activity_detector.h
 * https://www.mathworks.com/matlabcentral/fileexchange/78895-google-webrtc-voice-activity-detection-vad-module
+* https://github.com/cpuimage/WebRTC_VAD
