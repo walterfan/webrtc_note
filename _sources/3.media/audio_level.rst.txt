@@ -98,20 +98,27 @@ SI国际单位制不允许使用分贝与后缀的组合形式如dBm, dBu, dBA�
 
 dBV
 ------------
-dB(VRMS) – voltage relative to 1 volt, regardless of impedance.[3] This is used to measure microphone sensitivity, and also to specify the consumer line-level of −10 dBV, in order to reduce manufacturing costs relative to equipment using a +4 dBu line-level signal.[45]
+dB(VRMS) – voltage relative to 1 volt, regardless of impedance.
 
+dB(VRMS) – 相对于 1 伏的电压，与阻抗无关。
+
+这用于测量麦克风灵敏度，也用于指定 -10 dBV 的消费者线路电平，以降低相对于使用 +4 dBu 线路电平信号的设备的制造成本。
 
 dBm
 ------------
-dB(mW) – power relative to 1 milliwatt. In audio and telephony, dBm is typically referenced relative to a 600 Ω impedance,[56] which corresponds to a voltage level of 0.775 volts or 775 millivolts.
+
+dB(mW) – 相对于 1 毫瓦的功率。 在音频和电话中，dBm 通常以 600 Ω 阻抗为参考，对应于 0.775 伏或 775 毫伏的电压电平。
+
 
 dB SPL
 -------------
 
-dB（声压级，sound pressure level）–在空气或其它气体中的声压，参考值为20微帕斯卡（μPa） = 2×10−5 Pa，这是人能听到的最安静的声音。大致相当于3米外蚊子飞行的声音。经常被缩写为"dB"，这造成了很多误解以为"dB"是个有量纲的绝对单位。对于水声或其它液体，参考值是1 μPa[18]。
+dB（声压级，sound pressure level）–在空气或其它气体中的声压，参考值为20微帕斯卡（μPa） = 2×10−5 Pa。
 
-dB SPL (sound pressure level) – for sound in air and other gases, relative to 20 micropascals (μPa), or 2×10−5 Pa, approximately the quietest sound a human can hear. For sound in water and other liquids, a reference pressure of 1 μPa is used.[51]
-An RMS sound pressure of one pascal corresponds to a level of 94 dB SPL.
+这是人能听到的最安静的声音。大致相当于3米外蚊子飞行的声音。经常被缩写为"dB"，这造成了很多误解以为"dB"是个有量纲的绝对单位。
+对于水声或其它液体，参考值是 1 μPa。
+
+1 帕斯卡的 RMS 声压对应于 94 dB SPL 的水平。
 
 dBov
 -----------
@@ -119,6 +126,8 @@ dBov
 dB（过载，overload）–信号的幅值，参照于设备的最大在限幅（clipping）发生前的最大允许值。
 
 对于人声来说，dBov 是以分贝表示的电平，参考值是人耳所能听到（忍受）的最大的声音。
+
+一般来说， 我们用 0 dBov 来表示声音的最大值，我们所听到的声音是 -xx dBov (-127 < xx < 0), 比如著名的 Audacity 的界面
 
 Audio Level
 ====================
@@ -174,6 +183,15 @@ If multiple audio channels are used, the audio energy of a sample refers to the 
 
 如果使用多个音频通道，则样本的音频能量是指任一通道的最高能量。
 
+
+ASA
+=============================
+Active Speaker Arbitration 比较音量大小，挑选出音量较高的几个人（一般是3个）
+
+
+ASN
+=============================
+Active Speaker Notification 将上述挑选出的列表通知给订阅者
 
 
 示例代码

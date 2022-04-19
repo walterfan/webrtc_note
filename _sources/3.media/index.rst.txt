@@ -22,4 +22,5 @@
    web_codec
    web_transport
 
+   webrtc_simulcast
    webrtc_svc

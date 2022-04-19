@@ -26,7 +26,7 @@ video process
 
 
 * Transcode
-* Composiiting
+* Compositing
 * Transform
 * Inject
 

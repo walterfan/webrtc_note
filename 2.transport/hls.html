@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Stream Control Transmission Protocol (SCTP) &mdash; webrtc_tutorial 1 documentation</title>
+  <title>HTTP Live Streaming &mdash; webrtc_tutorial 1 documentation</title>
   
 
   
@@ -42,8 +42,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="QUIC 协议" href="quic.html" />
-    <link rel="prev" title="Interactive Connectivity Establishment" href="ice.html" /> 
+    <link rel="next" title="WebRTC 传输的多路复用" href="webrtc_multiplex.html" />
+    <link rel="prev" title="QUIC 协议" href="quic.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,16 +96,17 @@
 <li class="toctree-l2"><a class="reference internal" href="websocket.html">WebSocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Stream Control Transmission Protocol (SCTP)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HTTP Live Streaming</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">简介</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">基于消息的多流协议</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">参考资料</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_transmission.html">WebRTC Transport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp.html">WebRTC RTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
 </ul>
 </li>
@@ -164,13 +165,13 @@
         
           <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
         
-      <li>Stream Control Transmission Protocol (SCTP)</li>
+      <li>HTTP Live Streaming</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/2.transport/sctp.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/2.transport/hls.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -183,8 +184,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="stream-control-transmission-protocol-sctp">
-<h1>Stream Control Transmission Protocol (SCTP)<a class="headerlink" href="#stream-control-transmission-protocol-sctp" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="http-live-streaming">
+<h1>HTTP Live Streaming<a class="headerlink" href="#http-live-streaming" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -192,7 +193,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
-<td><p>SCTP protocol</p></td>
+<td><p>HTTP Live Streaming</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Authors</strong></p></td>
 <td><p>Walter Fan</p></td>
@@ -201,41 +202,34 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-04</p></td>
+<td><p>2022-04-19</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id2" id="id5">简介</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id6">基于消息的多流协议</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id7">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id3">简介</a></p></li>
+<li><p><a class="reference internal" href="#performance" id="id4">Performance</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id5">Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id5">简介</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。</p>
-<p>SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。</p>
-<p>假设我们通过一个连接传送流媒体以及控制命令，如果通过 TCP , 包丢失了就要重传，乱序了也一样。SCTP 就可以不一样，流媒体的包可以丢失，控制命令的包不能丢失</p>
-<p>它为用户提供以下服务：</p>
-<ul class="simple">
-<li><p>确认用户数据的无错误非重复传输，</p></li>
-<li><p>数据分段以符合发现的路径 MTU 大小，</p></li>
-<li><p>在多个流中按顺序传递用户消息，使用单个用户的到达顺序交付选项消息，</p></li>
-<li><p>可选地将多个用户消息捆绑到单个 SCTP 数据包，和</p></li>
-<li><p>通过支持多宿主实现网络级容错在关联的一端或两端。</p></li>
-</ul>
-<p>SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的抵抗力。</p>
+<h2><a class="toc-backref" href="#id3">简介</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>HTTP Live Streaming (also known as HLS) is an HTTP-based adaptive bitrate streaming communications protocol developed by Apple Inc. and released in 2009. Support for the protocol is widespread in media players, web browsers, mobile devices, and streaming media servers. As of 2019, an annual video industry survey has consistently found it to be the most popular streaming format.[2]</p>
+<p>HLS resembles MPEG-DASH in that it works by breaking the overall stream into a sequence of small HTTP-based file downloads, each downloading one short chunk of an overall potentially unbounded transport stream. A list of available streams, encoded at different bit rates, is sent to the client using an extended M3U playlist.</p>
+<p>Based on standard HTTP transactions, HTTP Live Streaming can traverse any firewall or proxy server that lets through standard HTTP traffic, unlike UDP-based protocols such as RTP. This also allows content to be offered from conventional HTTP servers and delivered over widely available HTTP-based content delivery networks. The standard also includes a standard encryption mechanism[5] and secure-key distribution using HTTPS, which together provide a simple DRM system. Later versions of the protocol also provide for trick-mode fast-forward and rewind and for integration of subtitle</p>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id6">基于消息的多流协议</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>SCTP applications submit data for transmission in messages (groups of bytes) to the SCTP transport layer. SCTP places messages and control information into separate chunks (data chunks and control chunks), each identified by a chunk header.</p>
-<p>The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).</p>
+<div class="section" id="performance">
+<h2><a class="toc-backref" href="#id4">Performance</a><a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<p>HLS may have 10s above delay, need low latency HLS</p>
 </div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id7">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id5">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4960">https://datatracker.ietf.org/doc/html/rfc4960</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/HTTP_Live_Streaming">https://en.wikipedia.org/wiki/HTTP_Live_Streaming</a></p></li>
+<li><p><a class="reference external" href="https://www.dacast.com/blog/hls-streaming-protocol/">https://www.dacast.com/blog/hls-streaming-protocol/</a></p></li>
+<li><p><a class="reference external" href="https://developer.apple.com/documentation/http_live_streaming/preparing_audio_for_http_live_streaming">https://developer.apple.com/documentation/http_live_streaming/preparing_audio_for_http_live_streaming</a></p></li>
+<li><p>HTTP Live Streaming: <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8216">https://datatracker.ietf.org/doc/html/rfc8216</a></p></li>
 </ul>
 </div>
 </div>
@@ -246,8 +240,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="quic.html" class="btn btn-neutral float-right" title="QUIC 协议" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="ice.html" class="btn btn-neutral float-left" title="Interactive Connectivity Establishment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_multiplex.html" class="btn btn-neutral float-right" title="WebRTC 传输的多路复用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="quic.html" class="btn btn-neutral float-left" title="QUIC 协议" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
