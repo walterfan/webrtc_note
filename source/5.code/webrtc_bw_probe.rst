@@ -14,7 +14,7 @@ WebRTC Bandwidth Probe
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

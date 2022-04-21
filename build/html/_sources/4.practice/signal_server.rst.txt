@@ -13,7 +13,7 @@ Signal Server
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents:: Contents
    :local:

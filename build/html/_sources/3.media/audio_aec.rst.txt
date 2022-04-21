@@ -13,7 +13,7 @@ Acoustic Echo Canceller
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

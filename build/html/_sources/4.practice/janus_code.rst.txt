@@ -14,7 +14,7 @@ Janus Code analysis
 **Updated**  |date|
 ============ =============================
 
-.. |date| date::
+
 
 .. contents::
    :local:

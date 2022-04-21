@@ -14,7 +14,7 @@ SoX
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

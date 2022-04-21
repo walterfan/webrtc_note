@@ -14,7 +14,7 @@ Transport-wide Congestion Control
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

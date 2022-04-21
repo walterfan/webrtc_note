@@ -13,7 +13,7 @@ Audio Level
 **Updated**  |date|
 ============ =============
 
-.. |date| date::
+
 
 .. contents::
    :local:

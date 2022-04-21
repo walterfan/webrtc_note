@@ -14,7 +14,7 @@ Linux Traffic Control
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

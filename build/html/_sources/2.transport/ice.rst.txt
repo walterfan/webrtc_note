@@ -14,7 +14,7 @@ Interactive Connectivity Establishment
 **Updated**  |date|
 ============ =========================================
 
-.. |date| date::
+
 
 .. contents::
    :local:

@@ -14,7 +14,7 @@ WebRTC RTP Header extension
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

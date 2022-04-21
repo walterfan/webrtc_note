@@ -15,7 +15,7 @@ WebRTC SVC
 **Updated**  |date|
 ============ =============================
 
-.. |date| date::
+
 
 .. contents::
    :local:

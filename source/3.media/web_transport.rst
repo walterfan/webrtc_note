@@ -14,7 +14,7 @@ Web Transport
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

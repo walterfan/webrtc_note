@@ -13,7 +13,7 @@ YUV 图像格式
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

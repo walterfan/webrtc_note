@@ -13,7 +13,7 @@ WebRTC API 之 Media Record
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
     :local:

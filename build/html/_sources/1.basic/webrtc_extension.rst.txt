@@ -14,7 +14,7 @@ WebRTC extension
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

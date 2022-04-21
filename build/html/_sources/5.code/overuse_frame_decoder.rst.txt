@@ -15,7 +15,7 @@ WebRTC OveruseFrameDetector
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

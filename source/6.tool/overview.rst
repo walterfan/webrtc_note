@@ -13,7 +13,7 @@ WebRTC 常用工具
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

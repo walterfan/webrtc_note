@@ -15,6 +15,8 @@
 
    coturn
    apprtc
+   aiortc
+
    janus
    janus_code
    mediasoup

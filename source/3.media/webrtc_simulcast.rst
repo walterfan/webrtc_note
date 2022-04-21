@@ -15,7 +15,7 @@ WebRTC Simulcasts
 **Updated**  |date|
 ============ =============================
 
-.. |date| date::
+
 
 .. contents::
    :local:

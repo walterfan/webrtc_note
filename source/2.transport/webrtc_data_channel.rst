@@ -14,7 +14,7 @@ WebRTC Data Channel
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

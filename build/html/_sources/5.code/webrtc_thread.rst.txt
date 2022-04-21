@@ -13,7 +13,7 @@ WebRTC Thread Model
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

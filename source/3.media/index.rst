@@ -13,9 +13,9 @@
    webrtc_video
 
    webrtc_qos
+   webrtc_cc
    webrtc_fec
    webrtc_rtx
-   webrtc_rcc
 
    jitter_buffer
    insertable_stream

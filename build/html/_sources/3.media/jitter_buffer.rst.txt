@@ -13,7 +13,7 @@ Jitter Buffer
 **Updated**  |date|
 ============ =============
 
-.. |date| date::
+
 
 .. contents::
    :local:

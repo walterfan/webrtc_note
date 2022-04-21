@@ -14,7 +14,7 @@ WebRTC 视频
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. toctree::
    :maxdepth: 1

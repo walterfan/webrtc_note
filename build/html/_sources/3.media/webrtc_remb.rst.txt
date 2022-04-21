@@ -14,7 +14,7 @@ Google REMB
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

@@ -14,7 +14,7 @@ VNC vs. RDP
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

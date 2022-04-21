@@ -13,7 +13,7 @@ Media Device
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
     :local:

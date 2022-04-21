@@ -14,7 +14,7 @@ WebRTC Transport
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

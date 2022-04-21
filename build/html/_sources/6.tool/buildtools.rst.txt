@@ -14,7 +14,7 @@ Build Tools
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

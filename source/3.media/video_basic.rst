@@ -13,7 +13,7 @@ Video Basic
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

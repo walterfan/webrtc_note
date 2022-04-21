@@ -6,6 +6,12 @@
 WebRTC 学习笔记
 =======================================
 
+
+.. include:: links.ref
+.. include:: tags.ref
+.. include:: abbrs.ref
+
+
 ============ =============
 **Abstract** WebRTC Primer Tutorial
 **Authors**  Walter Fan
@@ -13,7 +19,7 @@ WebRTC 学习笔记
 **Updated**  |date|
 ============ =============
 
-.. |date| date::
+
 
 .. toctree::
    :maxdepth: 2

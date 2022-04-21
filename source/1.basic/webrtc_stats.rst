@@ -14,7 +14,7 @@ WebRTC stats
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

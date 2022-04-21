@@ -14,7 +14,7 @@ Web Codecs
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

@@ -6,6 +6,17 @@ WebRTC QoS
 .. include:: ../tags.ref
 .. include:: ../abbrs.ref
 
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 方法
+
+   webrtc_cc
+   webrtc_fec
+   webrtc_rtx
+   webrtc_metrics
+   webrtc_e2e_delay
+
 ============ ==========================
 **Abstract** WebRTC QoS
 **Authors**  Walter Fan
@@ -13,7 +24,7 @@ WebRTC QoS
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:
