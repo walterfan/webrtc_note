@@ -13,7 +13,7 @@ Automatic Gain Control
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

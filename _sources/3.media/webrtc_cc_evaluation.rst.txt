@@ -15,7 +15,7 @@ Congeston Control Evaluation
 **Updated**  |date|
 ============ =============================
 
-.. |date| date::
+
 
 .. contents::
    :local:

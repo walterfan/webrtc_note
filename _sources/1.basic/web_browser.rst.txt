@@ -14,7 +14,7 @@ Web Browser for RTC
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

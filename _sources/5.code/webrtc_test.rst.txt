@@ -13,7 +13,7 @@ WebRTC test suite
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

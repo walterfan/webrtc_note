@@ -14,7 +14,7 @@ WebRTC FEC
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

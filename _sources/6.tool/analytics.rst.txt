@@ -14,7 +14,7 @@ Data Analytics
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

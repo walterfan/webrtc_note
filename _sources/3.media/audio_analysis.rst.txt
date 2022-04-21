@@ -13,7 +13,7 @@ Audio Analysis
 **Updated**  |date|
 ============ =============
 
-.. |date| date::
+
 
 .. contents::
    :local:

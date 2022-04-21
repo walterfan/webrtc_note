@@ -13,7 +13,7 @@ Audio Quality
 **Updated**  |date|
 ============ =============
 
-.. |date| date::
+
 
 .. contents::
    :local:

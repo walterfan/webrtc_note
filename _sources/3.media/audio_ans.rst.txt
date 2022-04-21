@@ -13,7 +13,7 @@ Automatic Noise Suppression
 **Updated**  |date|
 ============ ==============================
 
-.. |date| date::
+
 
 .. contents::
    :local:

@@ -13,7 +13,7 @@ video adaptation
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

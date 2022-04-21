@@ -13,7 +13,7 @@ Audio Process pipeline
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

@@ -14,7 +14,7 @@ HTTP Live Streaming
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

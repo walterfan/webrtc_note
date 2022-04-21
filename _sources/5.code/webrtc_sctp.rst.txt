@@ -14,7 +14,7 @@ WebRTC SCTP library
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

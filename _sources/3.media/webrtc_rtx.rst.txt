@@ -14,7 +14,7 @@ WebRTC RTX
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

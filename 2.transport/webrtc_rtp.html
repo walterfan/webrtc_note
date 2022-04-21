@@ -36,6 +36,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -213,7 +214,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-19</p></td>
+<td><p>2022-04-21</p></td>
 </tr>
 </tbody>
 </table>
@@ -530,26 +531,27 @@ received) 上一次发送者报告接收的延迟</p>
 </div>
 <div class="section" id="jitter">
 <h3><a class="toc-backref" href="#id31">2) 抖动Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h3>
-<p>在理想情况下, RTP数据包到达的间隔是固定的,
-比如IP电话中最常用的编码g.711, 每个包的荷载长度为20毫秒,
-每秒应该有50个数据包, 但是实际上网络并不总能稳定传输的,
+<p>在理想情况下, RTP数据包到达的间隔是固定的, 比如IP电话中最常用的编码g.711, 每个包的荷载长度为20毫秒, 每秒应该有50个数据包, 但是实际上网络并不总能稳定传输的,
 阻塞,拥塞是常有的事, Jitter 抖动即指数据到达间隔的变化,如图所示:</p>
-<p>抖动的计算要稍微麻烦一点, 为避免偶发的波动造成抖动的计算偏差, 它被定义为
-RTP 数据包到达间隔时间的统计方差。</p>
-<p>首先计算数据包接收与发送时间间隔的差别，也就是两个 packet
-传输延时的差异，此时所计算的 jitter 时只用到相邻两个 packet 的 delta，
+<p>抖动的计算要稍微麻烦一点, 为避免偶发的波动造成抖动的计算偏差, 它被定义为 RTP 数据包到达间隔时间的统计方差。</p>
+<p>首先计算数据包接收与发送时间间隔的差别，也就是两个 packet 传输延时的差异，此时所计算的 jitter 时只用到相邻两个 packet 的 delta，
 反映的是某一时刻网络延迟的变化情况</p>
 <img alt="https://upload-images.jianshu.io/upload_images/1598924-2ad99cb7671ff297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-2ad99cb7671ff297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
-<p>而如下的到达间隔抖动 J
-定义为差值的平均偏差（平滑后的绝对值）。之所以要除以 16
-是为了减少大的随机变化的影响。
+<p>而如下的到达间隔抖动 J 定义为差值的平均偏差（平滑后的绝对值）。之所以要除以 16 是为了减少大的随机变化的影响。
 所以到达间隔时间的变化需要重复几次才能显著地影响抖动的估计</p>
 <img alt="https://upload-images.jianshu.io/upload_images/1598924-e8513998b1b91ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-e8513998b1b91ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
-<p>抖动是不可避免的, 在合理区间的抖动是可以接受, 通常采用抖动缓冲 Jitter
-Buffer 来解决抖动的问题, 数据包接收之后并不马上解码, 而是先放在缓冲区中.
-假设缓冲区深度是60ms,
-那么解码总是等到缓冲区中的若干数据包总长度达到60ms时才取出解码, 在60ms
-之内的抖动自然没有任何影响.</p>
+<p>抖动是不可避免的, 在合理区间的抖动是可以接受, 通常采用抖动缓冲 Jitter Buffer 来解决抖动的问题, 数据包接收之后并不马上解码, 而是先放在缓冲区中.
+假设缓冲区深度是60ms, 那么解码总是等到缓冲区中的若干数据包总长度达到60ms时才取出解码, 在 60ms 之内的抖动自然没有任何影响.</p>
+<p>RFC3550 中有具体算法</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}:name: delta of jitter\\   D = (rec_i - rec_{i-1}) - ( sent_i - sent_{i-1})\\   D = (rec_i - sent_i) - ( rec_{i-1} - sent_{i-1})\\下面的 `s-&gt;transit` 就是指上次计算出的  :math:`rec_{i-1} - sent_{i-1}`, 注意 RTP 包时的时间戳要转换成与接收时间相同的时间单位\end{aligned}\end{align} \]</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">transit</span> <span class="o">=</span> <span class="n">arrival</span> <span class="o">-</span> <span class="n">r</span><span class="o">-&gt;</span><span class="n">ts</span><span class="p">;</span>
+<span class="nb">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">transit</span> <span class="o">-</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">transit</span><span class="p">;</span>
+<span class="n">s</span><span class="o">-&gt;</span><span class="n">transit</span> <span class="o">=</span> <span class="n">transit</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="n">d</span><span class="p">;</span>
+<span class="n">s</span><span class="o">-&gt;</span><span class="n">jitter</span> <span class="o">+=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">16.</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">double</span><span class="p">)</span><span class="n">d</span> <span class="o">-</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">jitter</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="packet-loss">
 <h3><a class="toc-backref" href="#id32">3) 丢包 Packet loss</a><a class="headerlink" href="#packet-loss" title="Permalink to this headline">¶</a></h3>
