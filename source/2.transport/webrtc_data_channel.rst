@@ -287,6 +287,8 @@ A simple example based on https://github.com/P1sec/pysctp
 
 参考资料
 ==================
+* Data channel tutorial: https://www.html5rocks.com/en/tutorials/webrtc/datachannels/
+
 * `RFC4960`_ : Stream Control Transmission Protocol
 * `RFC6525`_ : Stream Control Transmission Protocol (SCTP) Stream Reconfiguration
 * `RFC8831`_ : WebRTC Data Channels
