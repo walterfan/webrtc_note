@@ -43,9 +43,20 @@ Chrome testing
 
 * enable logging::
   
+.. code-block:: 
+   
    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=1
    
    /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary  --enable-logging --v=1
+
+
+* disable SRTP
+
+
+.. code-block:: 
+
+    cd /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/
+    ./Google\ Chrome\ Canary --disable-webrtc-encryption
 
 
 Load local vide file as a virtual camear
