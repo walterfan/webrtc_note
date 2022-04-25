@@ -42,11 +42,10 @@ Chrome testing
 
 
 * enable logging::
-  
-.. code-block:: 
-   
+
+
    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=1
-   
+
    /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary  --enable-logging --v=1
 
 

@@ -16,6 +16,10 @@
    quic
    hls
 
+   dtls
+   sctp
+   srtp
+
    webrtc_multiplex
    webrtc_transmission
 
