@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>SCTP 协议 &mdash; webrtc_tutorial 1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>SCTP 协议</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/2.transport/sctp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sctp">
+<h1>SCTP 协议<a class="headerlink" href="#sctp" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>SCTP protocol</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP as draft</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-04-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#what" id="id4">What</a></p>
+<ul>
+<li><p><a class="reference internal" href="#sctp-packet-format" id="id5">SCTP packet format</a></p></li>
+<li><p><a class="reference internal" href="#sctp-common-header-format" id="id6">SCTP Common Header Format</a></p></li>
+<li><p><a class="reference internal" href="#sctp-chunk-fields" id="id7">SCTP Chunk fields</a></p></li>
+<li><p><a class="reference internal" href="#sctp-chunk-data-definition" id="id8">SCTP Chunk data definition</a></p>
+<ul>
+<li><p><a class="reference internal" href="#payload-data-data-0" id="id9">1. Payload Data (DATA) (0)</a></p></li>
+<li><p><a class="reference internal" href="#initiation-init-1" id="id10">2.  Initiation (INIT) (1)</a></p></li>
+<li><p><a class="reference internal" href="#initiation-acknowledgement-init-ack-2" id="id11">3.  Initiation Acknowledgement (INIT ACK) (2)</a></p></li>
+<li><p><a class="reference internal" href="#selective-acknowledgement-sack-3" id="id12">4.  Selective Acknowledgement (SACK) (3)</a></p></li>
+<li><p><a class="reference internal" href="#heartbeat-request-heartbeat-4" id="id13">5.  Heartbeat Request (HEARTBEAT) (4)</a></p></li>
+<li><p><a class="reference internal" href="#heartbeat-acknowledgement-heartbeat-ack-5" id="id14">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a></p></li>
+<li><p><a class="reference internal" href="#abort-association-abort-6" id="id15">7.  Abort Association (ABORT) (6)</a></p></li>
+<li><p><a class="reference internal" href="#shutdown-association-shutdown-7" id="id16">8.  Shutdown Association (SHUTDOWN) (7)</a></p></li>
+<li><p><a class="reference internal" href="#shutdown-acknowledgement-shutdown-ack-8" id="id17">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a></p></li>
+<li><p><a class="reference internal" href="#operation-error-error-9" id="id18">10.  Operation Error (ERROR) (9)</a></p></li>
+<li><p><a class="reference internal" href="#cookie-echo-cookie-echo-10" id="id19">1.   Cookie Echo (COOKIE ECHO) (10)</a></p></li>
+<li><p><a class="reference internal" href="#cookie-acknowledgement-cookie-ack-11" id="id20">1.   Cookie Acknowledgement (COOKIE ACK) (11)</a></p></li>
+<li><p><a class="reference internal" href="#shutdown-complete-shutdown-complete-14" id="id21">1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#sctp-association-state-diagram" id="id22">SCTP Association State Diagram</a></p></li>
+<li><p><a class="reference internal" href="#sctp-over-dtls" id="id23">SCTP over DTLS</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#why" id="id24">Why</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id25">SCTP over DTLS</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#how" id="id26">How</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id27">SDP</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#example" id="id28">Example</a></p></li>
+<li><p><a class="reference internal" href="#conclusion" id="id29">Conclusion</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id30">Reference</a></p></li>
+</ul>
+</div>
+<div class="section" id="what">
+<h2><a class="toc-backref" href="#id4">What</a><a class="headerlink" href="#what" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sctp-packet-format">
+<h3><a class="toc-backref" href="#id5">SCTP packet format</a><a class="headerlink" href="#sctp-packet-format" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                        <span class="n">Common</span> <span class="n">Header</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                          <span class="n">Chunk</span> <span class="c1">#1                             |</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                           <span class="o">...</span>                                 <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                          <span class="n">Chunk</span> <span class="c1">#n                             |</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sctp-common-header-format">
+<h3><a class="toc-backref" href="#id6">SCTP Common Header Format</a><a class="headerlink" href="#sctp-common-header-format" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>     <span class="n">Source</span> <span class="n">Port</span> <span class="n">Number</span>        <span class="o">|</span>     <span class="n">Destination</span> <span class="n">Port</span> <span class="n">Number</span>   <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                      <span class="n">Verification</span> <span class="n">Tag</span>                         <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                           <span class="n">Checksum</span>                            <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sctp-chunk-fields">
+<h3><a class="toc-backref" href="#id7">SCTP Chunk fields</a><a class="headerlink" href="#sctp-chunk-fields" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Chunk</span> <span class="n">Type</span>  <span class="o">|</span> <span class="n">Chunk</span>  <span class="n">Flags</span>  <span class="o">|</span>        <span class="n">Chunk</span> <span class="n">Length</span>           <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>                          <span class="n">Chunk</span> <span class="n">Value</span>                          <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Chunk Type: 8 bits (unsigned integer)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ID</span> <span class="n">Value</span>    <span class="n">Chunk</span> <span class="n">Type</span>
+<span class="o">-----</span>       <span class="o">----------</span>
+<span class="mi">0</span>          <span class="o">-</span> <span class="n">Payload</span> <span class="n">Data</span> <span class="p">(</span><span class="n">DATA</span><span class="p">)</span>
+<span class="mi">1</span>          <span class="o">-</span> <span class="n">Initiation</span> <span class="p">(</span><span class="n">INIT</span><span class="p">)</span>
+<span class="mi">2</span>          <span class="o">-</span> <span class="n">Initiation</span> <span class="n">Acknowledgement</span> <span class="p">(</span><span class="n">INIT</span> <span class="n">ACK</span><span class="p">)</span>
+<span class="mi">3</span>          <span class="o">-</span> <span class="n">Selective</span> <span class="n">Acknowledgement</span> <span class="p">(</span><span class="n">SACK</span><span class="p">)</span>
+<span class="mi">4</span>          <span class="o">-</span> <span class="n">Heartbeat</span> <span class="n">Request</span> <span class="p">(</span><span class="n">HEARTBEAT</span><span class="p">)</span>
+<span class="mi">5</span>          <span class="o">-</span> <span class="n">Heartbeat</span> <span class="n">Acknowledgement</span> <span class="p">(</span><span class="n">HEARTBEAT</span> <span class="n">ACK</span><span class="p">)</span>
+<span class="mi">6</span>          <span class="o">-</span> <span class="n">Abort</span> <span class="p">(</span><span class="n">ABORT</span><span class="p">)</span>
+<span class="mi">7</span>          <span class="o">-</span> <span class="n">Shutdown</span> <span class="p">(</span><span class="n">SHUTDOWN</span><span class="p">)</span>
+<span class="mi">8</span>          <span class="o">-</span> <span class="n">Shutdown</span> <span class="n">Acknowledgement</span> <span class="p">(</span><span class="n">SHUTDOWN</span> <span class="n">ACK</span><span class="p">)</span>
+<span class="mi">9</span>          <span class="o">-</span> <span class="n">Operation</span> <span class="n">Error</span> <span class="p">(</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="mi">10</span>         <span class="o">-</span> <span class="n">State</span> <span class="n">Cookie</span> <span class="p">(</span><span class="n">COOKIE</span> <span class="n">ECHO</span><span class="p">)</span>
+<span class="mi">11</span>         <span class="o">-</span> <span class="n">Cookie</span> <span class="n">Acknowledgement</span> <span class="p">(</span><span class="n">COOKIE</span> <span class="n">ACK</span><span class="p">)</span>
+<span class="mi">12</span>         <span class="o">-</span> <span class="n">Reserved</span> <span class="k">for</span> <span class="n">Explicit</span> <span class="n">Congestion</span> <span class="n">Notification</span> <span class="n">Echo</span>   <span class="p">(</span><span class="n">ECNE</span><span class="p">)</span>
+<span class="mi">13</span>         <span class="o">-</span> <span class="n">Reserved</span> <span class="k">for</span> <span class="n">Congestion</span> <span class="n">Window</span> <span class="n">Reduced</span> <span class="p">(</span><span class="n">CWR</span><span class="p">)</span>
+<span class="mi">14</span>         <span class="o">-</span> <span class="n">Shutdown</span> <span class="n">Complete</span> <span class="p">(</span><span class="n">SHUTDOWN</span> <span class="n">COMPLETE</span><span class="p">)</span>
+<span class="mi">15</span> <span class="n">to</span> <span class="mi">62</span>   <span class="o">-</span> <span class="n">available</span>
+<span class="mi">63</span>         <span class="o">-</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">IETF</span><span class="o">-</span><span class="n">defined</span> <span class="n">Chunk</span> <span class="n">Extensions</span>
+<span class="mi">64</span> <span class="n">to</span> <span class="mi">126</span>  <span class="o">-</span> <span class="n">available</span>
+<span class="mi">127</span>        <span class="o">-</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">IETF</span><span class="o">-</span><span class="n">defined</span> <span class="n">Chunk</span> <span class="n">Extensions</span>
+<span class="mi">128</span> <span class="n">to</span> <span class="mi">190</span> <span class="o">-</span> <span class="n">available</span>
+<span class="mi">191</span>        <span class="o">-</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">IETF</span><span class="o">-</span><span class="n">defined</span> <span class="n">Chunk</span> <span class="n">Extensions</span>
+<span class="mi">192</span> <span class="n">to</span> <span class="mi">254</span> <span class="o">-</span> <span class="n">available</span>
+<span class="mi">255</span>        <span class="o">-</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">IETF</span><span class="o">-</span><span class="n">defined</span> <span class="n">Chunk</span> <span class="n">Extensions</span>
+</pre></div>
+</div>
+<p>Chunk Types are encoded such that the highest-order 2 bits specify the action that must be taken
+if the processing endpoint does not recognize the Chunk Type.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">00</span> <span class="o">-</span>  <span class="n">Stop</span> <span class="n">processing</span> <span class="n">this</span> <span class="n">SCTP</span> <span class="n">packet</span> <span class="ow">and</span> <span class="n">discard</span> <span class="n">it</span><span class="p">,</span> <span class="n">do</span> <span class="ow">not</span>
+          <span class="n">process</span> <span class="nb">any</span> <span class="n">further</span> <span class="n">chunks</span> <span class="n">within</span> <span class="n">it</span><span class="o">.</span>
+
+    <span class="mi">01</span> <span class="o">-</span>  <span class="n">Stop</span> <span class="n">processing</span> <span class="n">this</span> <span class="n">SCTP</span> <span class="n">packet</span> <span class="ow">and</span> <span class="n">discard</span> <span class="n">it</span><span class="p">,</span> <span class="n">do</span> <span class="ow">not</span>
+          <span class="n">process</span> <span class="nb">any</span> <span class="n">further</span> <span class="n">chunks</span> <span class="n">within</span> <span class="n">it</span><span class="p">,</span> <span class="ow">and</span> <span class="n">report</span> <span class="n">the</span>
+          <span class="n">unrecognized</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">an</span> <span class="s1">&#39;Unrecognized Chunk Type&#39;</span><span class="o">.</span>
+
+    <span class="mi">10</span> <span class="o">-</span>  <span class="n">Skip</span> <span class="n">this</span> <span class="n">chunk</span> <span class="ow">and</span> <span class="k">continue</span> <span class="n">processing</span><span class="o">.</span>
+
+    <span class="mi">11</span> <span class="o">-</span>  <span class="n">Skip</span> <span class="n">this</span> <span class="n">chunk</span> <span class="ow">and</span> <span class="k">continue</span> <span class="n">processing</span><span class="p">,</span> <span class="n">but</span> <span class="n">report</span> <span class="ow">in</span> <span class="n">an</span>
+          <span class="n">ERROR</span> <span class="n">chunk</span> <span class="n">using</span> <span class="n">the</span> <span class="s1">&#39;Unrecognized Chunk Type&#39;</span> <span class="n">cause</span> <span class="n">of</span>
+          <span class="n">error</span><span class="o">.</span>
+
+<span class="o">-</span> <span class="n">Optional</span><span class="o">/</span><span class="n">Variable</span><span class="o">-</span><span class="n">Length</span> <span class="n">Parameter</span> <span class="n">Format</span>
+</pre></div>
+</div>
+<p>Chunk values of SCTP control chunks consist of a chunk-type-specific header of required fields, followed by zero or more parameters.</p>
+<p>The optional and variable-length parameters contained in a chunk are defined in a Type-Length-Value format as shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>          <span class="n">Parameter</span> <span class="n">Type</span>       <span class="o">|</span>       <span class="n">Parameter</span> <span class="n">Length</span>        <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>                       <span class="n">Parameter</span> <span class="n">Value</span>                         <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sctp-chunk-data-definition">
+<h3><a class="toc-backref" href="#id8">SCTP Chunk data definition</a><a class="headerlink" href="#sctp-chunk-data-definition" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="payload-data-data-0">
+<h4><a class="toc-backref" href="#id9">1. Payload Data (DATA) (0)</a><a class="headerlink" href="#payload-data-data-0" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">0</span>    <span class="o">|</span> <span class="n">Reserved</span><span class="o">|</span><span class="n">U</span><span class="o">|</span><span class="n">B</span><span class="o">|</span><span class="n">E</span><span class="o">|</span>    <span class="n">Length</span>                     <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                              <span class="n">TSN</span>                              <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>      <span class="n">Stream</span> <span class="n">Identifier</span> <span class="n">S</span>      <span class="o">|</span>   <span class="n">Stream</span> <span class="n">Sequence</span> <span class="n">Number</span> <span class="n">n</span>    <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                  <span class="n">Payload</span> <span class="n">Protocol</span> <span class="n">Identifier</span>                  <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>                 <span class="n">User</span> <span class="n">Data</span> <span class="p">(</span><span class="n">seq</span> <span class="n">n</span> <span class="n">of</span> <span class="n">Stream</span> <span class="n">S</span><span class="p">)</span>                 <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initiation-init-1">
+<h4><a class="toc-backref" href="#id10">2.  Initiation (INIT) (1)</a><a class="headerlink" href="#initiation-init-1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">1</span>    <span class="o">|</span>  <span class="n">Chunk</span> <span class="n">Flags</span>  <span class="o">|</span>      <span class="n">Chunk</span> <span class="n">Length</span>             <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                         <span class="n">Initiate</span> <span class="n">Tag</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>           <span class="n">Advertised</span> <span class="n">Receiver</span> <span class="n">Window</span> <span class="n">Credit</span> <span class="p">(</span><span class="n">a_rwnd</span><span class="p">)</span>          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>  <span class="n">Number</span> <span class="n">of</span> <span class="n">Outbound</span> <span class="n">Streams</span>   <span class="o">|</span>  <span class="n">Number</span> <span class="n">of</span> <span class="n">Inbound</span> <span class="n">Streams</span>    <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                          <span class="n">Initial</span> <span class="n">TSN</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>              <span class="n">Optional</span><span class="o">/</span><span class="n">Variable</span><span class="o">-</span><span class="n">Length</span> <span class="n">Parameters</span>              <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initiation-acknowledgement-init-ack-2">
+<h4><a class="toc-backref" href="#id11">3.  Initiation Acknowledgement (INIT ACK) (2)</a><a class="headerlink" href="#initiation-acknowledgement-init-ack-2" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">2</span>    <span class="o">|</span>  <span class="n">Chunk</span> <span class="n">Flags</span>  <span class="o">|</span>      <span class="n">Chunk</span> <span class="n">Length</span>             <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                         <span class="n">Initiate</span> <span class="n">Tag</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>              <span class="n">Advertised</span> <span class="n">Receiver</span> <span class="n">Window</span> <span class="n">Credit</span>                <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>  <span class="n">Number</span> <span class="n">of</span> <span class="n">Outbound</span> <span class="n">Streams</span>   <span class="o">|</span>  <span class="n">Number</span> <span class="n">of</span> <span class="n">Inbound</span> <span class="n">Streams</span>    <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                          <span class="n">Initial</span> <span class="n">TSN</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>              <span class="n">Optional</span><span class="o">/</span><span class="n">Variable</span><span class="o">-</span><span class="n">Length</span> <span class="n">Parameters</span>              <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="selective-acknowledgement-sack-3">
+<h4><a class="toc-backref" href="#id12">4.  Selective Acknowledgement (SACK) (3)</a><a class="headerlink" href="#selective-acknowledgement-sack-3" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">3</span>    <span class="o">|</span><span class="n">Chunk</span>  <span class="n">Flags</span>   <span class="o">|</span>      <span class="n">Chunk</span> <span class="n">Length</span>             <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                      <span class="n">Cumulative</span> <span class="n">TSN</span> <span class="n">Ack</span>                       <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>          <span class="n">Advertised</span> <span class="n">Receiver</span> <span class="n">Window</span> <span class="n">Credit</span> <span class="p">(</span><span class="n">a_rwnd</span><span class="p">)</span>           <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">Gap</span> <span class="n">Ack</span> <span class="n">Blocks</span> <span class="o">=</span> <span class="n">N</span>  <span class="o">|</span>  <span class="n">Number</span> <span class="n">of</span> <span class="n">Duplicate</span> <span class="n">TSNs</span> <span class="o">=</span> <span class="n">X</span> <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>  <span class="n">Gap</span> <span class="n">Ack</span> <span class="n">Block</span> <span class="c1">#1 Start       |   Gap Ack Block #1 End        |</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">/</span>                                                               <span class="o">/</span>
+\                              <span class="o">...</span>                              \
+<span class="o">/</span>                                                               <span class="o">/</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Gap</span> <span class="n">Ack</span> <span class="n">Block</span> <span class="c1">#N Start      |  Gap Ack Block #N End         |</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                       <span class="n">Duplicate</span> <span class="n">TSN</span> <span class="mi">1</span>                         <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">/</span>                                                               <span class="o">/</span>
+\                              <span class="o">...</span>                              \
+<span class="o">/</span>                                                               <span class="o">/</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                       <span class="n">Duplicate</span> <span class="n">TSN</span> <span class="n">X</span>                         <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="heartbeat-request-heartbeat-4">
+<h4><a class="toc-backref" href="#id13">5.  Heartbeat Request (HEARTBEAT) (4)</a><a class="headerlink" href="#heartbeat-request-heartbeat-4" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">4</span>    <span class="o">|</span> <span class="n">Chunk</span>  <span class="n">Flags</span>  <span class="o">|</span>      <span class="n">Heartbeat</span> <span class="n">Length</span>         <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>            <span class="n">Heartbeat</span> <span class="n">Information</span> <span class="n">TLV</span> <span class="p">(</span><span class="n">Variable</span><span class="o">-</span><span class="n">Length</span><span class="p">)</span>        <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="heartbeat-acknowledgement-heartbeat-ack-5">
+<h4><a class="toc-backref" href="#id14">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a><a class="headerlink" href="#heartbeat-acknowledgement-heartbeat-ack-5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">5</span>    <span class="o">|</span> <span class="n">Chunk</span>  <span class="n">Flags</span>  <span class="o">|</span>    <span class="n">Heartbeat</span> <span class="n">Ack</span> <span class="n">Length</span>       <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>            <span class="n">Heartbeat</span> <span class="n">Information</span> <span class="n">TLV</span> <span class="p">(</span><span class="n">Variable</span><span class="o">-</span><span class="n">Length</span><span class="p">)</span>        <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="abort-association-abort-6">
+<h4><a class="toc-backref" href="#id15">7.  Abort Association (ABORT) (6)</a><a class="headerlink" href="#abort-association-abort-6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">6</span>    <span class="o">|</span><span class="n">Reserved</span>     <span class="o">|</span><span class="n">T</span><span class="o">|</span>           <span class="n">Length</span>              <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>                   <span class="n">zero</span> <span class="ow">or</span> <span class="n">more</span> <span class="n">Error</span> <span class="n">Causes</span>                   <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shutdown-association-shutdown-7">
+<h4><a class="toc-backref" href="#id16">8.  Shutdown Association (SHUTDOWN) (7)</a><a class="headerlink" href="#shutdown-association-shutdown-7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">7</span>    <span class="o">|</span> <span class="n">Chunk</span>  <span class="n">Flags</span>  <span class="o">|</span>      <span class="n">Length</span> <span class="o">=</span> <span class="mi">8</span>               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                      <span class="n">Cumulative</span> <span class="n">TSN</span> <span class="n">Ack</span>                       <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shutdown-acknowledgement-shutdown-ack-8">
+<h4><a class="toc-backref" href="#id17">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a><a class="headerlink" href="#shutdown-acknowledgement-shutdown-ack-8" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">8</span>    <span class="o">|</span><span class="n">Chunk</span>  <span class="n">Flags</span>   <span class="o">|</span>      <span class="n">Length</span> <span class="o">=</span> <span class="mi">4</span>               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operation-error-error-9">
+<h4><a class="toc-backref" href="#id18">10.  Operation Error (ERROR) (9)</a><a class="headerlink" href="#operation-error-error-9" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">9</span>    <span class="o">|</span> <span class="n">Chunk</span>  <span class="n">Flags</span>  <span class="o">|</span>           <span class="n">Length</span>              <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+\                                                               \
+<span class="o">/</span>                    <span class="n">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="n">Error</span> <span class="n">Causes</span>                   <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Cause Code: 16 bits (unsigned integer)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Defines</span> <span class="n">the</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">error</span> <span class="n">conditions</span> <span class="n">being</span> <span class="n">reported</span><span class="o">.</span>
+
+   <span class="n">Cause</span> <span class="n">Code</span>
+   <span class="n">Value</span>           <span class="n">Cause</span> <span class="n">Code</span>
+   <span class="o">---------</span>      <span class="o">----------------</span>
+    <span class="mi">1</span>              <span class="n">Invalid</span> <span class="n">Stream</span> <span class="n">Identifier</span>
+    <span class="mi">2</span>              <span class="n">Missing</span> <span class="n">Mandatory</span> <span class="n">Parameter</span>
+    <span class="mi">3</span>              <span class="n">Stale</span> <span class="n">Cookie</span> <span class="n">Error</span>
+    <span class="mi">4</span>              <span class="n">Out</span> <span class="n">of</span> <span class="n">Resource</span>
+    <span class="mi">5</span>              <span class="n">Unresolvable</span> <span class="n">Address</span>
+    <span class="mi">6</span>              <span class="n">Unrecognized</span> <span class="n">Chunk</span> <span class="n">Type</span>
+    <span class="mi">7</span>              <span class="n">Invalid</span> <span class="n">Mandatory</span> <span class="n">Parameter</span>
+    <span class="mi">8</span>              <span class="n">Unrecognized</span> <span class="n">Parameters</span>
+    <span class="mi">9</span>              <span class="n">No</span> <span class="n">User</span> <span class="n">Data</span>
+   <span class="mi">10</span>              <span class="n">Cookie</span> <span class="n">Received</span> <span class="n">While</span> <span class="n">Shutting</span> <span class="n">Down</span>
+   <span class="mi">11</span>              <span class="n">Restart</span> <span class="n">of</span> <span class="n">an</span> <span class="n">Association</span> <span class="k">with</span> <span class="n">New</span> <span class="n">Addresses</span>
+   <span class="mi">12</span>              <span class="n">User</span> <span class="n">Initiated</span> <span class="n">Abort</span>
+   <span class="mi">13</span>              <span class="n">Protocol</span> <span class="n">Violation</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Restart of an Association with New Addresses (11)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>         <span class="n">Cause</span> <span class="n">Code</span><span class="o">=</span><span class="mi">11</span>         <span class="o">|</span>      <span class="n">Cause</span> <span class="n">Length</span><span class="o">=</span><span class="n">Variable</span>    <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">/</span>                       <span class="n">New</span> <span class="n">Address</span> <span class="n">TLVs</span>                        <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>User-Initiated Abort (12)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>         <span class="n">Cause</span> <span class="n">Code</span><span class="o">=</span><span class="mi">12</span>         <span class="o">|</span>      <span class="n">Cause</span> <span class="n">Length</span><span class="o">=</span><span class="n">Variable</span>    <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">/</span>                    <span class="n">Upper</span> <span class="n">Layer</span> <span class="n">Abort</span> <span class="n">Reason</span>                   <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cookie-echo-cookie-echo-10">
+<h4><a class="toc-backref" href="#id19">1.   Cookie Echo (COOKIE ECHO) (10)</a><a class="headerlink" href="#cookie-echo-cookie-echo-10" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">10</span>   <span class="o">|</span><span class="n">Chunk</span>  <span class="n">Flags</span>   <span class="o">|</span>         <span class="n">Length</span>                <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">/</span>                     <span class="n">Cookie</span>                                    <span class="o">/</span>
+\                                                               \
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cookie-acknowledgement-cookie-ack-11">
+<h4><a class="toc-backref" href="#id20">1.   Cookie Acknowledgement (COOKIE ACK) (11)</a><a class="headerlink" href="#cookie-acknowledgement-cookie-ack-11" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">11</span>   <span class="o">|</span><span class="n">Chunk</span>  <span class="n">Flags</span>   <span class="o">|</span>     <span class="n">Length</span> <span class="o">=</span> <span class="mi">4</span>                <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shutdown-complete-shutdown-complete-14">
+<h4><a class="toc-backref" href="#id21">1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a><a class="headerlink" href="#shutdown-complete-shutdown-complete-14" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>   <span class="n">Type</span> <span class="o">=</span> <span class="mi">14</span>   <span class="o">|</span><span class="n">Reserved</span>     <span class="o">|</span><span class="n">T</span><span class="o">|</span>      <span class="n">Length</span> <span class="o">=</span> <span class="mi">4</span>               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sctp-association-state-diagram">
+<h3><a class="toc-backref" href="#id22">SCTP Association State Diagram</a><a class="headerlink" href="#sctp-association-state-diagram" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                   <span class="o">-----</span>          <span class="o">--------</span> <span class="p">(</span><span class="kn">from</span> <span class="nn">any</span> <span class="n">state</span><span class="p">)</span>
+                 <span class="o">/</span>       \      <span class="o">/</span>  <span class="n">rcv</span> <span class="n">ABORT</span>      <span class="p">[</span><span class="n">ABORT</span><span class="p">]</span>
+<span class="n">rcv</span> <span class="n">INIT</span>        <span class="o">|</span>         <span class="o">|</span>    <span class="o">|</span>   <span class="o">----------</span>  <span class="ow">or</span> <span class="o">----------</span>
+<span class="o">---------------</span> <span class="o">|</span>         <span class="n">v</span>    <span class="n">v</span>   <span class="n">delete</span> <span class="n">TCB</span>     <span class="n">snd</span> <span class="n">ABORT</span>
+<span class="n">generate</span> <span class="n">Cookie</span>  \    <span class="o">+---------+</span>                 <span class="n">delete</span> <span class="n">TCB</span>
+<span class="n">snd</span> <span class="n">INIT</span> <span class="n">ACK</span>       <span class="o">---|</span>  <span class="n">CLOSED</span> <span class="o">|</span>
+                      <span class="o">+---------+</span>
+                       <span class="o">/</span>      \      <span class="p">[</span><span class="n">ASSOCIATE</span><span class="p">]</span>
+                      <span class="o">/</span>        \     <span class="o">---------------</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">create</span> <span class="n">TCB</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">snd</span> <span class="n">INIT</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">strt</span> <span class="n">init</span> <span class="n">timer</span>
+      <span class="n">rcv</span> <span class="n">valid</span>      <span class="o">|</span>          <span class="o">|</span>
+    <span class="n">COOKIE</span>  <span class="n">ECHO</span>     <span class="o">|</span>          <span class="n">v</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">----------------</span> <span class="o">|</span>      <span class="o">+------------+</span>
+    <span class="n">create</span> <span class="n">TCB</span>       <span class="o">|</span>      <span class="o">|</span> <span class="n">COOKIE</span><span class="o">-</span><span class="n">WAIT</span><span class="o">|</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">snd</span> <span class="n">COOKIE</span> <span class="n">ACK</span>   <span class="o">|</span>      <span class="o">+------------+</span>
+                     <span class="o">|</span>          <span class="o">|</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">rcv</span> <span class="n">INIT</span> <span class="n">ACK</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="o">-----------------</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">snd</span> <span class="n">COOKIE</span> <span class="n">ECHO</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">stop</span> <span class="n">init</span> <span class="n">timer</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">strt</span> <span class="n">cookie</span> <span class="n">timer</span>
+                     <span class="o">|</span>          <span class="n">v</span>
+                     <span class="o">|</span>      <span class="o">+--------------+</span>
+                     <span class="o">|</span>      <span class="o">|</span> <span class="n">COOKIE</span><span class="o">-</span><span class="n">ECHOED</span><span class="o">|</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                     <span class="o">|</span>      <span class="o">+--------------+</span>
+                     <span class="o">|</span>          <span class="o">|</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">rcv</span> <span class="n">COOKIE</span> <span class="n">ACK</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="o">-----------------</span>
+                     <span class="o">|</span>          <span class="o">|</span>    <span class="n">stop</span> <span class="n">cookie</span> <span class="n">timer</span>
+                     <span class="n">v</span>          <span class="n">v</span>
+                   <span class="o">+---------------+</span>
+                   <span class="o">|</span>  <span class="n">ESTABLISHED</span>  <span class="o">|</span>
+                   <span class="o">+---------------+</span>
+                               <span class="o">|</span>
+                               <span class="o">|</span>
+                      <span class="o">/--------+--------</span>\
+  <span class="p">[</span><span class="n">SHUTDOWN</span><span class="p">]</span>         <span class="o">/</span>                   \
+  <span class="o">-------------------|</span>                   <span class="o">|</span>
+  <span class="n">check</span> <span class="n">outstanding</span>  <span class="o">|</span>                   <span class="o">|</span>
+  <span class="n">DATA</span> <span class="n">chunks</span>        <span class="o">|</span>                   <span class="o">|</span>
+                     <span class="n">v</span>                   <span class="o">|</span>
+                <span class="o">+---------+</span>              <span class="o">|</span>
+                <span class="o">|</span><span class="n">SHUTDOWN</span><span class="o">-|</span>              <span class="o">|</span> <span class="n">rcv</span> <span class="n">SHUTDOWN</span>
+                <span class="o">|</span><span class="n">PENDING</span>  <span class="o">|</span>              <span class="o">|------------------</span>
+                <span class="o">+---------+</span>              <span class="o">|</span> <span class="n">check</span> <span class="n">outstanding</span>
+                     <span class="o">|</span>                   <span class="o">|</span> <span class="n">DATA</span> <span class="n">chunks</span>
+<span class="n">No</span> <span class="n">more</span> <span class="n">outstanding</span>  <span class="o">|</span>                   <span class="o">|</span>
+<span class="o">---------------------|</span>                   <span class="o">|</span>
+<span class="n">snd</span> <span class="n">SHUTDOWN</span>         <span class="o">|</span>                   <span class="o">|</span>
+<span class="n">strt</span> <span class="n">shutdown</span> <span class="n">timer</span>  <span class="o">|</span>                   <span class="o">|</span>
+                     <span class="n">v</span>                   <span class="n">v</span>
+                <span class="o">+---------+</span>        <span class="o">+-----------+</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">|</span><span class="n">SHUTDOWN</span><span class="o">-|</span>        <span class="o">|</span> <span class="n">SHUTDOWN</span><span class="o">-</span> <span class="o">|</span>  <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+                <span class="o">|</span><span class="n">SENT</span>     <span class="o">|</span>        <span class="o">|</span> <span class="n">RECEIVED</span>  <span class="o">|</span>
+                <span class="o">+---------+</span>        <span class="o">+-----------+</span>
+                     <span class="o">|</span>  \                <span class="o">|</span>
+<span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="n">rcv</span> <span class="n">SHUTDOWN</span> <span class="n">ACK</span>  <span class="o">|</span>   \               <span class="o">|</span>
+<span class="o">----------------------|</span>    \              <span class="o">|</span>
+<span class="n">stop</span> <span class="n">shutdown</span> <span class="n">timer</span>   <span class="o">|</span>     \<span class="n">rcv</span><span class="p">:</span><span class="n">SHUTDOWN</span> <span class="o">|</span>
+<span class="n">send</span> <span class="n">SHUTDOWN</span> <span class="n">COMPLETE</span><span class="o">|</span>      \  <span class="p">(</span><span class="n">B</span><span class="p">)</span>       <span class="o">|</span>
+<span class="n">delete</span> <span class="n">TCB</span>            <span class="o">|</span>       \           <span class="o">|</span>
+                      <span class="o">|</span>        \          <span class="o">|</span> <span class="n">No</span> <span class="n">more</span> <span class="n">outstanding</span>
+                      <span class="o">|</span>         \         <span class="o">|-----------------</span>
+                      <span class="o">|</span>          \        <span class="o">|</span> <span class="n">send</span> <span class="n">SHUTDOWN</span> <span class="n">ACK</span>
+<span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="n">rcv</span> <span class="n">SHUTDOWN</span>       <span class="o">|</span>           \       <span class="o">|</span> <span class="n">strt</span> <span class="n">shutdown</span> <span class="n">timer</span>
+<span class="o">----------------------|</span>            \      <span class="o">|</span>
+<span class="n">send</span> <span class="n">SHUTDOWN</span> <span class="n">ACK</span>     <span class="o">|</span>             \     <span class="o">|</span>
+<span class="n">start</span> <span class="n">shutdown</span> <span class="n">timer</span>  <span class="o">|</span>              \    <span class="o">|</span>
+<span class="n">move</span> <span class="n">to</span> <span class="n">SHUTDOWN</span><span class="o">-</span>     <span class="o">|</span>               \   <span class="o">|</span>
+<span class="n">ACK</span><span class="o">-</span><span class="n">SENT</span>              <span class="o">|</span>                <span class="o">|</span>  <span class="o">|</span>
+                      <span class="o">|</span>                <span class="n">v</span>  <span class="o">|</span>
+                      <span class="o">|</span>             <span class="o">+-----------+</span>
+                      <span class="o">|</span>             <span class="o">|</span> <span class="n">SHUTDOWN</span><span class="o">-</span> <span class="o">|</span> <span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+                      <span class="o">|</span>             <span class="o">|</span> <span class="n">ACK</span><span class="o">-</span><span class="n">SENT</span>  <span class="o">|</span>
+                      <span class="o">|</span>             <span class="o">+----------+-</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="n">rcv</span> <span class="n">SHUTDOWN</span> <span class="n">COMPLETE</span>
+                      <span class="o">|</span>                   <span class="o">|-----------------</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="n">stop</span> <span class="n">shutdown</span> <span class="n">timer</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="n">delete</span> <span class="n">TCB</span>
+                      <span class="o">|</span>                   <span class="o">|</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="n">rcv</span> <span class="n">SHUTDOWN</span> <span class="n">ACK</span>
+                      <span class="o">|</span>                   <span class="o">|--------------</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="n">stop</span> <span class="n">shutdown</span> <span class="n">timer</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="n">send</span> <span class="n">SHUTDOWN</span> <span class="n">COMPLETE</span>
+                      <span class="o">|</span>                   <span class="o">|</span> <span class="n">delete</span> <span class="n">TCB</span>
+                      <span class="o">|</span>                   <span class="o">|</span>
+                      \    <span class="o">+---------+</span>    <span class="o">/</span>
+                       \<span class="o">--&gt;|</span> <span class="n">CLOSED</span>  <span class="o">|&lt;--/</span>
+                           <span class="o">+---------+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sctp-over-dtls">
+<h3><a class="toc-backref" href="#id23">SCTP over DTLS</a><a class="headerlink" href="#sctp-over-dtls" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>         <span class="o">+----------+</span>
+         <span class="o">|</span>   <span class="n">SCTP</span>   <span class="o">|</span>
+         <span class="o">+----------+</span>
+         <span class="o">|</span>   <span class="n">DTLS</span>   <span class="o">|</span>
+         <span class="o">+----------+</span>
+         <span class="o">|</span> <span class="n">ICE</span><span class="o">/</span><span class="n">UDP</span>  <span class="o">|</span>
+         <span class="o">+----------+</span>
+
+<span class="n">Figure</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Basic</span> <span class="n">Stack</span> <span class="n">Diagram</span>
+</pre></div>
+</div>
+<p>This document uses SCTP [RFC4960] with the following restrictions, which are required to reflect that the lower layer is DTLS
+instead of IPv4 and IPv6 and that SCTP does not deal with the IP addresses or the transport protocol used below DTLS:</p>
+<p>o  A DTLS connection MUST be established before an SCTP association can be set up.</p>
+<p>o  Multiple SCTP associations MAY be multiplexed over a single DTLS connection.</p>
+<p>The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.</p>
+<p>o  All SCTP associations are single-homed, because DTLS does not expose any address management to its upper layer.</p>
+<p>Therefore, it is RECOMMENDED to set the SCTP parameter path.max.retrans to association.max.retrans.</p>
+<p>o  The INIT and INIT-ACK chunk MUST NOT contain any IPv4 Address or IPv6 Address parameters.</p>
+<p>The INIT chunk MUST NOT contain the Supported Address Types parameter.</p>
+<dl>
+<dt>o  The implementation MUST NOT rely on processing ICMP or ICMPv6 packets, since the SCTP layer most likely is unable to access the</dt><dd><p>SCTP common header in the plain text of the packet, which triggered the sending of the ICMP or ICMPv6 packet.</p>
+<p>This applies in particular to path MTU discovery when performed by SCTP.</p>
+</dd>
+</dl>
+<p>Tuexen, et al.               Standards Track                    [Page 5]</p>
+<p>RFC 8261                     SCTP over DTLS                November 2017</p>
+<blockquote>
+<div><dl class="simple">
+<dt>o  If the SCTP layer is notified about a path change by its lower</dt><dd><p>layers, SCTP SHOULD retest the path MTU and reset the congestion
+state to the initial state.  The window-based congestion control
+method specified in [RFC4960] resets the congestion window and
+slow-start threshold to their initial values.</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="why">
+<h2><a class="toc-backref" href="#id24">Why</a><a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id25">SCTP over DTLS</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>DTLS/SCTP supports:</p>
+<ul class="simple">
+<li><p>preservation of message boundaries.</p></li>
+<li><p>a large number of unidirectional and bidirectional streams.</p></li>
+<li><p>ordered and unordered delivery of SCTP user messages.</p></li>
+<li><p>the partial reliability extension as defined in [RFC3758].</p></li>
+<li><p>the dynamic address reconfiguration extension as defined in [RFC5061].</p></li>
+</ul>
+<p>However, the following limitations still apply:</p>
+<ul class="simple">
+<li><p>The maximum user message size is 2^14 bytes, which is the DTLS limit.</p></li>
+<li><p>The DTLS user cannot perform the SCTP-AUTH key management because  this is done by the DTLS layer.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="how">
+<h2><a class="toc-backref" href="#id26">How</a><a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id27">SDP</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">application</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">DTLS</span><span class="o">/</span><span class="n">SCTP</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">datachannel</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">4</span>
+<span class="n">a</span><span class="o">=</span><span class="n">sctp</span><span class="o">-</span><span class="n">port</span><span class="p">:</span><span class="mi">5000</span>
+<span class="n">a</span><span class="o">=</span><span class="nb">max</span><span class="o">-</span><span class="n">message</span><span class="o">-</span><span class="n">size</span><span class="p">:</span><span class="mi">262144</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="example">
+<h2><a class="toc-backref" href="#id28">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#id29">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id30">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p>RFC4960: Stream Control Transmission Protocol</p>
+<p>RFC6083: Datagram Transport Layer Security (DTLS) for Stream Control Transmission Protocol (SCTP)</p>
+<p>RFC8261: Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets
+RFC8841: Session Description Protocol (SDP) Offer/Answer Procedures for Stream Control Transmission Protocol (SCTP) over Datagram Transport Layer Security (DTLS) Transport
+RFC8831: WebRTC Data Channels”, RFC 8831
+RFC8832: WebRTC Data Channel Establishment Protocol
+RFC8864: Negotiation Data Channels Using the Session Description Protocol (SDP)</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
