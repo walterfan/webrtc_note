@@ -13,7 +13,7 @@ WebRTC API 之 Screen Capture
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
     :local:

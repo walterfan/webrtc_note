@@ -13,7 +13,7 @@ JavaScript Can Do More
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

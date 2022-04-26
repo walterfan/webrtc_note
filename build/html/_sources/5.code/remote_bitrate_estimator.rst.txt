@@ -15,7 +15,7 @@ Remote Bitrate Estimator
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

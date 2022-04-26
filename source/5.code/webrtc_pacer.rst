@@ -13,7 +13,7 @@ WebRTC Pacer
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

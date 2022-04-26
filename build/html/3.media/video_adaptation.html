@@ -112,13 +112,15 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_qos.html">WebRTC QoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_rcc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcasts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
@@ -214,7 +216,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-04</p></td>
+<td><p>2022-04-25</p></td>
 </tr>
 </tbody>
 </table>
@@ -237,7 +239,11 @@
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>用于 WebRTC 应用的设备往往参差不齐，有高大上的 macbook pro, 也有老掉牙的老笔记本或台式机，或者轻便小巧的平板。多媒体特别是视频的编解码是很耗费资源的, 这时候，需要根据设备的资源消耗情况，实时调整编码质量，如分辨率，帧率等，避免对系统资源主要是 CPU 的使用宜占用过多。</p>
+<p>video 的编码或传输质量会受到网络带宽和设备能力的影响。</p>
+<p>网络质量不佳，带宽受限，如果还要发送高质量的视频会很困难，因为质量越高，码率越大，所以我们需要降低传送的码率。
+如果用户可以接受低质量的视频，那么这时候可以降低分辨率。如果用户不接受低质量视频，那么就需要忍受延迟，降低帧率或者有些丢帧。</p>
+<p>另一方面，用于 WebRTC 应用的设备往往参差不齐，有高大上的 macbook pro, 也有老掉牙的老笔记本或台式机，或者轻便小巧的平板。
+多媒体特别是视频的编解码是很耗费资源的, 这时候，需要根据设备的资源消耗情况，实时调整编码质量，如分辨率，帧率等，避免对系统资源主要是 CPU 的占用率过大。</p>
 <p>对于视频的调整, 主要是调帧率和分辨率, 策略有 3 种</p>
 <ul class="simple">
 <li><p>MAINTAIN_FRAMERATE：保帧率，降分辨率，该模式的使用场景为视频模式。</p></li>
@@ -325,7 +331,7 @@ It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to
 </tr>
 <tr class="row-even"><td><p>4mbps</p></td>
 <td><p>1080p</p></td>
-<td><p>1920 x 1080, may more than 4mbps</p></td>
+<td><p>1920 x 1080, may more than 4mbps, 2mbps at least</p></td>
 </tr>
 <tr class="row-odd"><td><p>12mbps</p></td>
 <td><p>2K</p></td>

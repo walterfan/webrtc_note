@@ -10,9 +10,9 @@ WebRTC 拥塞控制
 
 .. toctree::
    :maxdepth: 1
-   :caption: Sections
+   :caption: 控制方法
 
-   
+
    webrtc_gcc
    webrtc_remb
    webrtc_twcc
@@ -25,7 +25,7 @@ WebRTC 拥塞控制
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents:: Contents
    :local:

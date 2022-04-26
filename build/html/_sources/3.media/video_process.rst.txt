@@ -13,7 +13,7 @@ video process
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:
@@ -26,7 +26,7 @@ video process
 
 
 * Transcode
-* Composiiting
+* Compositing
 * Transform
 * Inject
 

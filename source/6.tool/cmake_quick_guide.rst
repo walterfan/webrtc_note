@@ -16,7 +16,7 @@ CMake Quick Guide
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

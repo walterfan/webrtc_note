@@ -14,7 +14,7 @@ Janus Gateway
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

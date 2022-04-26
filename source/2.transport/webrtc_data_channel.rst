@@ -14,7 +14,7 @@ WebRTC Data Channel
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:
@@ -31,10 +31,8 @@ RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向�
 应答方会接收到一个数据通道事件（其类型为 RTCDataChannelEvent），以告知其数据通道已添加到连接中。
 
 
-Non-media data is handled by using the Stream Control Transmission Protocol (SCTP) `RFC4960`_ encapsulated in DTLS.  
-DTLS 1.0 is defined in `RFC4347`_; the present latest version,  DTLS 1.2, is defined in `RFC6347`_; 
-and an upcoming version, DTLS 1.3, is defined in `DTLS1.3`_.
-
+WebRTC 的 data channel 定义主要在 RFC8831 - "WebRTC Data Channels" 进行了详细阐述
+具体用到的协议 在 RFC8261 - "Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets" 中有详述
 
 .. code-block::
 
@@ -49,14 +47,35 @@ and an upcoming version, DTLS 1.3, is defined in `DTLS1.3`_.
       Figure 1: Basic Stack Diagram
 
 
-Data Channel Establishment Protocol 
+整个 WebRTC 所用到的协议栈如下, 一个 trasport 上会传输 STUN, SRTP, DTLS and SCTP 协议。 
+
+
+.. code-block::
+
+                  +------+------+------+
+                  | DCEP | UTF-8|Binary|
+                  |      | Data | Data |
+                  +------+------+------+
+                  |        SCTP        |
+    +----------------------------------+
+    | STUN | SRTP |        DTLS        |
+    +----------------------------------+
+    |                ICE               |
+    +----------------------------------+
+    | UDP1 | UDP2 | UDP3 | ...         |
+    +----------------------------------+
+
+
+
+
+Data Channel Establishment Protocol
 ================================================
 
 The Data Channel Establishment Protocol is a simple, low-overhead way to establish bidirectional data channels over an SCTP association with a consistent set of properties.
 
 The set of consistent properties includes:
 
-*  reliable or unreliable message transmission.  
+*  reliable or unreliable message transmission.
    In case of unreliable transmissions, the same level of unreliability is used.
 
 *  in-order or out-of-order message delivery.
@@ -68,6 +87,27 @@ The set of consistent properties includes:
 *  an optional protocol for the data channel.
 
 *  the streams.
+
+SDP
+===============================================
+it is a sdp example that use sctp over dtls
+
+
+.. code-block::
+
+    m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+    c=IN IP4 0.0.0.0
+    a=ice-ufrag:u8aT
+    a=ice-pwd:nTH+98fL7o+XacAd//X7uStI
+    a=ice-options:trickle
+    a=fingerprint:sha-256 6E:FD:8F:7C:E7:6B:DF:2B:6F:D6:32:B6:A6:00:62:D5:7E:4E:11:91:91:37:95:BE:2C:00:3F:B2:67:6F:DF:3C
+    a=setup:actpass
+    a=mid:4
+    a=sctp-port:5000
+    a=max-message-size:262144
+
+
+Multiple SCTP associations MAY be multiplexed over a single DTLS connection. The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
 
 
 DATA_CHANNEL_OPEN Message
@@ -124,7 +164,7 @@ This message is initially sent using the data channel on the stream used for use
 
 * Channel Type: 1 byte (unsigned integer)
 
-.. code-block:: 
+.. code-block::
 
     +================================================+======+===========+
     | Name                                           | Type | Reference |
@@ -225,8 +265,70 @@ SCTP applications submit data for transmission in messages (groups of bytes) to 
 The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).
 
 
+example
+--------------------------------
+
+A simple example based on https://github.com/P1sec/pysctp
+
+* server
+
+.. code-block:: python
+
+  import socket
+  import sctp
+
+  host = '192.168.1.10'
+  port = 12345
+
+  sock = sctp.sctpsocket_tcp(socket.AF_INET)
+  sock.bind((host, port))
+  sock.listen(1)
+
+  while True:  
+      # wait for a connection
+      print ('waiting for a connection')
+      connection, client_address = sock.accept()
+
+      try:
+          # show who connected to us
+          print ('connection from', client_address)
+          print connection
+          # receive the data in small chunks and print it
+          while True:
+              data = connection.recv(999)
+              if data:
+                  # output received data
+                  print ("Data: %s" % data)
+                  connection.sendall("Got " + str(len(data)) + ", I'm fine, thank you. And you?")
+              else:
+                  # no more data -- quit the loop
+                  print ("no more data.")
+                  break
+      finally:
+          # Clean up the connection
+          connection.close()
+
+* client
+
+.. code-block:: python
+
+  import socket
+  import sctp
+
+  sk = sctp.sctpsocket_tcp(socket.AF_INET)
+  sk.connect(("192.168.1.10", 12345))
+
+  sk.sctp_send(msg='how are you')
+  sk.shutdown(0)
+
+
+  sk.close()
+
+
 参考资料
 ==================
+* Data channel tutorial: https://www.html5rocks.com/en/tutorials/webrtc/datachannels/
+
 * `RFC4960`_ : Stream Control Transmission Protocol
 * `RFC6525`_ : Stream Control Transmission Protocol (SCTP) Stream Reconfiguration
 * `RFC8831`_ : WebRTC Data Channels

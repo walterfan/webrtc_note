@@ -14,7 +14,7 @@ WebRTC 标准，协议和规范
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

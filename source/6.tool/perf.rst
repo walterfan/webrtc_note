@@ -15,7 +15,7 @@ Linux Performance tools
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

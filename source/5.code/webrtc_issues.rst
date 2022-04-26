@@ -13,7 +13,7 @@ WebRTC issues
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

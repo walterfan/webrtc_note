@@ -14,7 +14,7 @@ Insertable Stream
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

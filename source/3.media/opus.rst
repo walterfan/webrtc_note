@@ -13,7 +13,7 @@ Opus Codec
 **Updated**  |date|
 ============ =============
 
-.. |date| date::
+
 
 .. contents::
    :local:

@@ -15,7 +15,7 @@ Network Simulator
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

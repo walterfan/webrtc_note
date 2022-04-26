@@ -17,7 +17,7 @@ Google Congestion Control v1
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

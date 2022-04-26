@@ -14,7 +14,7 @@ WebRTC extension
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:
@@ -23,7 +23,8 @@ WebRTC extension
 Overview
 =========================
 
-refer to 
+根据 `RFC3550`_ 和 `RFC8285`_, 我们可以定义若干 RTP 扩展头, 用于各种不同的用途。
+
 
 
 

@@ -13,7 +13,7 @@ WebRTC 源码构建
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents:: Contents
    :local:
@@ -81,13 +81,78 @@ Source code
 
 然后用 visual studio 打开 out\Default\all.sln
 
+
+GN 编译选项
+--------------------------------
 gn 支持的参数很多，例如
 
 * clang_base_path="/usr" 
-* clang_use_chrome_plugins=false 
+* clang_use_chrome_plugins=false
 * treat_warnings_as_errors=false 
-* rtc_build_ssl=false 
+* rtc_build_ssl=false
 * rtc_ssl_root="dummy"
+
+
+在 ARM 平台上的编译
+
+.. code-block::
+
+   gn gen  out/mac --args='target_os="mac" is_debug=false target_cpu="arm64" rtc_include_tests=false rtc_build_tools=false rtc_build_examples=false'
+
+
+   gn gen out/linux --args='use_custom_libcxx=false clang_base_path="/usr" clang_use_chrome_plugins=false treat_warnings_as_errors=false rtc_build_ssl=false rtc_ssl_root="dummy"'
+
+
+配置文件
+================================
+
+webrtc.gni
+-------------------------------
+
+这个文件由其他  BUILD.gn 所包含，它包括了很多特性开关选项和模板, 例如
+
+.. code-block::
+
+   rtc_enable_bwe_test_logging = false
+
+
+Build.gn
+--------------------------------
+* src/BUILD.gn
+
+we can change the build configuration file to add some target
+
+
+.. code-block::
+
+   rtc_static_library("xxx") {
+   # Only the root target and the test should depend on this.
+   visibility = [
+      "//:default",
+   ]
+   sources = []
+   complete_static_lib = true
+   suppressed_configs += [ "//build/config/compiler:thin_archive" ]
+   deps = [
+      "rtc_base",
+      "..."
+   ]
+
+* src/build/config/compiler/BUILD.gn
+
+
+e.g.
+
+.. code-block::
+
+   cflags_cc += [ "-std=gnu++2a" ]
+   cflags += [ "-fdebug-compilation-dir=." ]
+   #"-Wno-psabi"
+   #"-Wno-unused-but-set-parameter",
+   #"-Wno-unused-but-set-variable",
+
+   #cflags += [ "-Wmax-tokens" ]
+   #"-fuse-ctor-homing"
 
 构建工具
 ====================

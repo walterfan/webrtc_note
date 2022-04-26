@@ -13,12 +13,19 @@
    turn
    ice
 
-   sctp
    quic
-   
+   hls
+
+   dtls
+   sctp
+   srtp
+
    webrtc_multiplex
    webrtc_transmission
+
    webrtc_rtp
+   webrtc_data_channel
+   
    rtp_header_extension
    
 

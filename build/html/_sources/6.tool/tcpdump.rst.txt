@@ -14,7 +14,7 @@ tcpdump
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

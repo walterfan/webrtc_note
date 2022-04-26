@@ -14,7 +14,7 @@ QUIC 协议
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

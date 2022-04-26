@@ -1,5 +1,5 @@
 ####################
-WebRTC test suite
+WebRTC test
 ####################
 
 .. include:: ../links.ref
@@ -7,13 +7,13 @@ WebRTC test suite
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC test suite
+**Abstract** WebRTC test 
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:
@@ -42,10 +42,20 @@ Chrome testing
 
 
 * enable logging::
-  
+
+
    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=1
-   
+
    /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary  --enable-logging --v=1
+
+
+* disable SRTP
+
+
+.. code-block:: 
+
+    cd /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/
+    ./Google\ Chrome\ Canary --disable-webrtc-encryption
 
 
 Load local vide file as a virtual camear

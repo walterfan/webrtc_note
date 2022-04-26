@@ -14,7 +14,7 @@ Matlab 科学计算
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

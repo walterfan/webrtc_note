@@ -14,7 +14,7 @@ FFmpeg
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

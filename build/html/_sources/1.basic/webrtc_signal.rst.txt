@@ -13,7 +13,7 @@ WebRTC 的信令
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 
 .. contents::

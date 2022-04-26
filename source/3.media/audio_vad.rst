@@ -14,7 +14,7 @@ Voice Activity Detector
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

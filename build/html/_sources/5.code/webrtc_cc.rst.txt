@@ -14,7 +14,7 @@ WebRTC Congestion Control
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

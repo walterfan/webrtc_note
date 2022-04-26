@@ -13,7 +13,7 @@ WebRTC 源码概览
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents:: Contents
    :local:

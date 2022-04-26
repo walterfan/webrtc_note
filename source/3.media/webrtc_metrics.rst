@@ -1,20 +1,21 @@
-########################
-WebRTC metrics
-########################
+################################
+WebRTC Metrics
+################################
 
 
 .. include:: ../links.ref
 .. include:: ../tags.ref
 .. include:: ../abbrs.ref
 
-============ ==========================
+============ =============================
 **Abstract** WebRTC Metrics
+**Category** Learning note
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   WIP
 **Updated**  |date|
-============ ==========================
+============ =============================
 
-.. |date| date::
+
 
 .. contents::
    :local:

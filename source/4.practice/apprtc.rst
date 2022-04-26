@@ -10,11 +10,12 @@ AppRTC
 ============ ==========================
 **Abstract** AppRTC
 **Authors**  Walter Fan
+**Category** LearningNote
 **Status**   WIP
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:

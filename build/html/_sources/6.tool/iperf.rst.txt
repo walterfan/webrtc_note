@@ -15,7 +15,7 @@ iPerf
 **Updated**  |date|
 ============ ==========================
 
-.. |date| date::
+
 
 .. contents::
    :local:
