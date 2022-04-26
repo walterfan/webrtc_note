@@ -23,3 +23,4 @@
    web_transport
 
    webrtc_svc
+   webrtc_metrics
