@@ -39,7 +39,7 @@ WebRTC 通过 mid 来标识 MediaStream, 通过 rid 来标识 MediaStreamTrack.
 回顾一下 RTP 包 和 RTCP 包的格式
 
 * RTP
-  
+
 .. code-block::
 
 
