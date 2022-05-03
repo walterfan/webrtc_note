@@ -1,74 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>WebRTC PeerConnection Example &mdash; webrtc_tutorial 1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Janus Code analysis 1" href="janus_code_1.html" />
     <link rel="prev" title="Remote Bitrate Estimator" href="remote_bitrate_estimator.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> webrtc_tutorial
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
@@ -97,7 +47,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC Congestion Control</a></li>
@@ -133,74 +83,32 @@
 <li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">webrtc_tutorial</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
-        
       <li>WebRTC PeerConnection Example</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/5.code/webrtc_pc_example.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="webrtc-peerconnection-example">
+             
+  <section id="webrtc-peerconnection-example">
 <h1>WebRTC PeerConnection Example<a class="headerlink" href="#webrtc-peerconnection-example" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -218,7 +126,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-25</p></td>
+<td><p>2022-05-02</p></td>
 </tr>
 </tbody>
 </table>
@@ -246,7 +154,7 @@
 </li>
 </ul>
 </div>
-<div class="section" id="overview">
+<section id="overview">
 <h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>在 windows 平台上编译 webrtc library 后会生成一些例子程序,其中的例子 peerconnection client and server 用来研究 WebRTC 源码, 是一份绝佳的餐前开味小菜</p>
 <p>测试步骤:</p>
@@ -258,11 +166,11 @@
 <li><p>Bob click “connect” to localhost:8888</p></li>
 <li><p>Alice select the peer of Bob, and connect</p></li>
 </ol>
-</div>
-<div class="section" id="peerconnection-server">
+</section>
+<section id="peerconnection-server">
 <h2><a class="toc-backref" href="#id5">PeerConnection Server</a><a class="headerlink" href="#peerconnection-server" title="Permalink to this headline">¶</a></h2>
 <p>It is a signal server that listen port 8888</p>
-<div class="section" id="main-class">
+<section id="main-class">
 <h3><a class="toc-backref" href="#id6">main class</a><a class="headerlink" href="#main-class" title="Permalink to this headline">¶</a></h3>
 <table class="colwidths-given docutils align-default" id="id2">
 <caption><span class="caption-text">CRCC Cards</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
@@ -303,8 +211,8 @@ for each new connection</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="main-flow">
+</section>
+<section id="main-flow">
 <h3><a class="toc-backref" href="#id7">main flow</a><a class="headerlink" href="#main-flow" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>listen port 8888</p></li>
@@ -314,11 +222,11 @@ for each new connection</p></td>
 <li><p>if it is a new peer, call AddMember</p></li>
 <li><p>if it is a existed peer, lookup and forward message to that peer</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="peerconnection-client">
+</section>
+</section>
+<section id="peerconnection-client">
 <h2><a class="toc-backref" href="#id8">PeerConnection Client</a><a class="headerlink" href="#peerconnection-client" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="main-class-of-pc-client">
+<section id="main-class-of-pc-client">
 <h3><a class="toc-backref" href="#id9">main class of pc client</a><a class="headerlink" href="#main-class-of-pc-client" title="Permalink to this headline">¶</a></h3>
 <table class="colwidths-given docutils align-default" id="id3">
 <caption><span class="caption-text">CRCC Cards</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
@@ -390,8 +298,8 @@ for each new connection</p></td>
 </pre></div>
 </div>
 </div></blockquote>
-</div>
-<div class="section" id="main-flow-of-pc-client">
+</section>
+<section id="main-flow-of-pc-client">
 <h3><a class="toc-backref" href="#id10">main flow of pc client</a><a class="headerlink" href="#main-flow-of-pc-client" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>conect the signal server - peerconnection server</p></li>
@@ -403,11 +311,11 @@ for each new connection</p></td>
 <li><p>send local media stream via the peer connection</p></li>
 <li><p>got remote media stream and render</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="faq">
+</section>
+</section>
+<section id="faq">
 <h2><a class="toc-backref" href="#id11">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="what-s-physicalsocketserver">
+<section id="what-s-physicalsocketserver">
 <h3><a class="toc-backref" href="#id12">What’s PhysicalSocketServer</a><a class="headerlink" href="#what-s-physicalsocketserver" title="Permalink to this headline">¶</a></h3>
 <p>PhysicalSocketServer is A socket server that provides the real sockets of the underlying OS.</p>
 <p>It may contains  select(), epoll() or WSAWaitForMultipleEvents loop</p>
@@ -415,8 +323,8 @@ for each new connection</p></td>
 <p>The Thread class provides a nice wrapper on a socket server.</p>
 <p>The server is also a socket factory.</p>
 <p>The sockets it creates will be notified of asynchronous I/O from this server’s Wait method.</p>
-</div>
-<div class="section" id="what-s-autosocketserverthread">
+</section>
+<section id="what-s-autosocketserverthread">
 <h3><a class="toc-backref" href="#id13">What’s AutoSocketServerThread</a><a class="headerlink" href="#what-s-autosocketserverthread" title="Permalink to this headline">¶</a></h3>
 <p>AutoSocketServerThread automatically installs itself at construction and uninstalls at destruction. If a Thread object is already associated with the current OS thread,
 it is temporarily disassociated and restored by the destructor.</p>
@@ -425,60 +333,43 @@ it is temporarily disassociated and restored by the destructor.</p>
 that they’re executedin FIFO order and that tasks never overlap.</p>
 <p>Tasks may always execute on the same worker thread and they may not.</p>
 <p>To DCHECK that tasks are executing on a known task queue, use IsCurrent().</p>
-</div>
-<div class="section" id="what-is-the-difference-between-wwinmain-and-winmain">
+</section>
+<section id="what-is-the-difference-between-wwinmain-and-winmain">
 <h3><a class="toc-backref" href="#id14">What is the difference between wWinMain and WinMain?</a><a class="headerlink" href="#what-is-the-difference-between-wwinmain-and-winmain" title="Permalink to this headline">¶</a></h3>
 <p>The only difference between WinMain and wWinMain is the command line string and you should use wWinMain in Unicode applications (and all applications created these days should use Unicode). You can of course manually call GetCommandLineW() in WinMain and parse it yourself if you really want to.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="janus_code_1.html" class="btn btn-neutral float-right" title="Janus Code analysis 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="remote_bitrate_estimator.html" class="btn btn-neutral float-left" title="Remote Bitrate Estimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="janus_code_1.html" class="btn btn-neutral float-right" title="Janus Code analysis 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
-
-    </p>
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
-  
  <script type="text/javascript">
     $(document).ready(function() {
         $(".toggle > *").hide();

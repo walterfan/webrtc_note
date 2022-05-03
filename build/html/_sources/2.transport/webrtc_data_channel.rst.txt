@@ -31,10 +31,8 @@ RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向�
 应答方会接收到一个数据通道事件（其类型为 RTCDataChannelEvent），以告知其数据通道已添加到连接中。
 
 
-Non-media data is handled by using the Stream Control Transmission Protocol (SCTP) `RFC4960`_ encapsulated in DTLS.  
-DTLS 1.0 is defined in `RFC4347`_; the present latest version,  DTLS 1.2, is defined in `RFC6347`_; 
-and an upcoming version, DTLS 1.3, is defined in `DTLS1.3`_.
-
+WebRTC 的 data channel 定义主要在 RFC8831 - "WebRTC Data Channels" 进行了详细阐述
+具体用到的协议 在 RFC8261 - "Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets" 中有详述
 
 .. code-block::
 
@@ -49,14 +47,35 @@ and an upcoming version, DTLS 1.3, is defined in `DTLS1.3`_.
       Figure 1: Basic Stack Diagram
 
 
-Data Channel Establishment Protocol 
+整个 WebRTC 所用到的协议栈如下, 一个 trasport 上会传输 STUN, SRTP, DTLS and SCTP 协议。 
+
+
+.. code-block::
+
+                  +------+------+------+
+                  | DCEP | UTF-8|Binary|
+                  |      | Data | Data |
+                  +------+------+------+
+                  |        SCTP        |
+    +----------------------------------+
+    | STUN | SRTP |        DTLS        |
+    +----------------------------------+
+    |                ICE               |
+    +----------------------------------+
+    | UDP1 | UDP2 | UDP3 | ...         |
+    +----------------------------------+
+
+
+
+
+Data Channel Establishment Protocol
 ================================================
 
 The Data Channel Establishment Protocol is a simple, low-overhead way to establish bidirectional data channels over an SCTP association with a consistent set of properties.
 
 The set of consistent properties includes:
 
-*  reliable or unreliable message transmission.  
+*  reliable or unreliable message transmission.
    In case of unreliable transmissions, the same level of unreliability is used.
 
 *  in-order or out-of-order message delivery.
@@ -68,6 +87,27 @@ The set of consistent properties includes:
 *  an optional protocol for the data channel.
 
 *  the streams.
+
+SDP
+===============================================
+it is a sdp example that use sctp over dtls
+
+
+.. code-block::
+
+    m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+    c=IN IP4 0.0.0.0
+    a=ice-ufrag:u8aT
+    a=ice-pwd:nTH+98fL7o+XacAd//X7uStI
+    a=ice-options:trickle
+    a=fingerprint:sha-256 6E:FD:8F:7C:E7:6B:DF:2B:6F:D6:32:B6:A6:00:62:D5:7E:4E:11:91:91:37:95:BE:2C:00:3F:B2:67:6F:DF:3C
+    a=setup:actpass
+    a=mid:4
+    a=sctp-port:5000
+    a=max-message-size:262144
+
+
+Multiple SCTP associations MAY be multiplexed over a single DTLS connection. The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
 
 
 DATA_CHANNEL_OPEN Message
@@ -124,7 +164,7 @@ This message is initially sent using the data channel on the stream used for use
 
 * Channel Type: 1 byte (unsigned integer)
 
-.. code-block:: 
+.. code-block::
 
     +================================================+======+===========+
     | Name                                           | Type | Reference |

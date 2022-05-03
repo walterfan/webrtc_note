@@ -12,12 +12,14 @@ WebRTC 学习笔记
 .. include:: abbrs.ref
 
 
-============ =============
-**Abstract** WebRTC Primer Tutorial
-**Authors**  Walter Fan
-**Status**   WIP
-**Updated**  |date|
-============ =============
+============= =============
+**Abstract**  WebRTC Learning Notes
+**Authors**   Walter Fan
+**Category**  learning note
+**Status**    WIP
+**Updated**   |date|
+**License**   |CC-BY-NC-ND|
+============= =============
 
 
 
