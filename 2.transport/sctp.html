@@ -50,7 +50,8 @@
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SCTP 协议</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#what">What</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sctp-overview">SCTP Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">基于消息的多流协议</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#sctp-packet-format">SCTP packet format</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sctp-common-header-format">SCTP Common Header Format</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sctp-chunk-fields">SCTP Chunk fields</a></li>
@@ -60,15 +61,14 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#why">Why</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">SCTP over DTLS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">SCTP over DTLS</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#how">How</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">SDP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">SDP</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -130,57 +130,75 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-02</p></td>
+<td><p>2022-05-03</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#what" id="id4">What</a></p>
+<li><p><a class="reference internal" href="#sctp-overview" id="id5">SCTP Overview</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id6">基于消息的多流协议</a></p>
 <ul>
-<li><p><a class="reference internal" href="#sctp-packet-format" id="id5">SCTP packet format</a></p></li>
-<li><p><a class="reference internal" href="#sctp-common-header-format" id="id6">SCTP Common Header Format</a></p></li>
-<li><p><a class="reference internal" href="#sctp-chunk-fields" id="id7">SCTP Chunk fields</a></p></li>
-<li><p><a class="reference internal" href="#sctp-chunk-data-definition" id="id8">SCTP Chunk data definition</a></p>
+<li><p><a class="reference internal" href="#sctp-packet-format" id="id7">SCTP packet format</a></p></li>
+<li><p><a class="reference internal" href="#sctp-common-header-format" id="id8">SCTP Common Header Format</a></p></li>
+<li><p><a class="reference internal" href="#sctp-chunk-fields" id="id9">SCTP Chunk fields</a></p></li>
+<li><p><a class="reference internal" href="#sctp-chunk-data-definition" id="id10">SCTP Chunk data definition</a></p>
 <ul>
-<li><p><a class="reference internal" href="#payload-data-data-0" id="id9">1. Payload Data (DATA) (0)</a></p></li>
-<li><p><a class="reference internal" href="#initiation-init-1" id="id10">2.  Initiation (INIT) (1)</a></p></li>
-<li><p><a class="reference internal" href="#initiation-acknowledgement-init-ack-2" id="id11">3.  Initiation Acknowledgement (INIT ACK) (2)</a></p></li>
-<li><p><a class="reference internal" href="#selective-acknowledgement-sack-3" id="id12">4.  Selective Acknowledgement (SACK) (3)</a></p></li>
-<li><p><a class="reference internal" href="#heartbeat-request-heartbeat-4" id="id13">5.  Heartbeat Request (HEARTBEAT) (4)</a></p></li>
-<li><p><a class="reference internal" href="#heartbeat-acknowledgement-heartbeat-ack-5" id="id14">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a></p></li>
-<li><p><a class="reference internal" href="#abort-association-abort-6" id="id15">7.  Abort Association (ABORT) (6)</a></p></li>
-<li><p><a class="reference internal" href="#shutdown-association-shutdown-7" id="id16">8.  Shutdown Association (SHUTDOWN) (7)</a></p></li>
-<li><p><a class="reference internal" href="#shutdown-acknowledgement-shutdown-ack-8" id="id17">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a></p></li>
-<li><p><a class="reference internal" href="#operation-error-error-9" id="id18">10.  Operation Error (ERROR) (9)</a></p></li>
-<li><p><a class="reference internal" href="#cookie-echo-cookie-echo-10" id="id19">1.   Cookie Echo (COOKIE ECHO) (10)</a></p></li>
-<li><p><a class="reference internal" href="#cookie-acknowledgement-cookie-ack-11" id="id20">1.   Cookie Acknowledgement (COOKIE ACK) (11)</a></p></li>
-<li><p><a class="reference internal" href="#shutdown-complete-shutdown-complete-14" id="id21">1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a></p></li>
+<li><p><a class="reference internal" href="#payload-data-data-0" id="id11">1. Payload Data (DATA) (0)</a></p></li>
+<li><p><a class="reference internal" href="#initiation-init-1" id="id12">2.  Initiation (INIT) (1)</a></p></li>
+<li><p><a class="reference internal" href="#initiation-acknowledgement-init-ack-2" id="id13">3.  Initiation Acknowledgement (INIT ACK) (2)</a></p></li>
+<li><p><a class="reference internal" href="#selective-acknowledgement-sack-3" id="id14">4.  Selective Acknowledgement (SACK) (3)</a></p></li>
+<li><p><a class="reference internal" href="#heartbeat-request-heartbeat-4" id="id15">5.  Heartbeat Request (HEARTBEAT) (4)</a></p></li>
+<li><p><a class="reference internal" href="#heartbeat-acknowledgement-heartbeat-ack-5" id="id16">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a></p></li>
+<li><p><a class="reference internal" href="#abort-association-abort-6" id="id17">7.  Abort Association (ABORT) (6)</a></p></li>
+<li><p><a class="reference internal" href="#shutdown-association-shutdown-7" id="id18">8.  Shutdown Association (SHUTDOWN) (7)</a></p></li>
+<li><p><a class="reference internal" href="#shutdown-acknowledgement-shutdown-ack-8" id="id19">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a></p></li>
+<li><p><a class="reference internal" href="#operation-error-error-9" id="id20">10.  Operation Error (ERROR) (9)</a></p></li>
+<li><p><a class="reference internal" href="#cookie-echo-cookie-echo-10" id="id21">1.   Cookie Echo (COOKIE ECHO) (10)</a></p></li>
+<li><p><a class="reference internal" href="#cookie-acknowledgement-cookie-ack-11" id="id22">1.   Cookie Acknowledgement (COOKIE ACK) (11)</a></p></li>
+<li><p><a class="reference internal" href="#shutdown-complete-shutdown-complete-14" id="id23">1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#sctp-association-state-diagram" id="id22">SCTP Association State Diagram</a></p></li>
-<li><p><a class="reference internal" href="#sctp-over-dtls" id="id23">SCTP over DTLS</a></p></li>
+<li><p><a class="reference internal" href="#sctp-association-state-diagram" id="id24">SCTP Association State Diagram</a></p></li>
+<li><p><a class="reference internal" href="#sctp-over-dtls" id="id25">SCTP over DTLS</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#why" id="id24">Why</a></p>
+<li><p><a class="reference internal" href="#why" id="id26">Why</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id2" id="id25">SCTP over DTLS</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id27">SCTP over DTLS</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#how" id="id26">How</a></p>
+<li><p><a class="reference internal" href="#how" id="id28">How</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id3" id="id27">SDP</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id29">SDP</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#example" id="id28">Example</a></p></li>
-<li><p><a class="reference internal" href="#conclusion" id="id29">Conclusion</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id30">Reference</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id30">Example</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id31">Reference</a></p></li>
 </ul>
 </div>
-<section id="what">
-<h2><a class="toc-backref" href="#id4">What</a><a class="headerlink" href="#what" title="Permalink to this headline">¶</a></h2>
+<section id="sctp-overview">
+<h2><a class="toc-backref" href="#id5">SCTP Overview</a><a class="headerlink" href="#sctp-overview" title="Permalink to this headline">¶</a></h2>
+<p>Data Channel 背后使用的协议是 SCTP</p>
+<p>数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。</p>
+<p>SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。</p>
+<p>假设我们通过一个连接传送流媒体以及控制命令，如果通过 TCP , 包丢失了就要重传，乱序了也一样。SCTP 就可以不一样，流媒体的包可以丢失，控制命令的包不能丢失</p>
+<p>它为用户提供以下服务：</p>
+<ul class="simple">
+<li><p>确认用户数据的无错误非重复传输，</p></li>
+<li><p>数据分段以符合发现的路径 MTU 大小，</p></li>
+<li><p>在多个流中按顺序传递用户消息，使用单个用户的到达顺序交付选项消息，</p></li>
+<li><p>可选地将多个用户消息捆绑到单个 SCTP 数据包，和</p></li>
+<li><p>通过支持多宿主实现网络级容错在关联的一端或两端。</p></li>
+</ul>
+<p>SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的抵抗力。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id6">基于消息的多流协议</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>SCTP applications submit data for transmission in messages (groups of bytes) to the SCTP transport layer. SCTP places messages and control information into separate chunks (data chunks and control chunks), each identified by a chunk header.</p>
+<p>The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).</p>
 <section id="sctp-packet-format">
-<h3><a class="toc-backref" href="#id5">SCTP packet format</a><a class="headerlink" href="#sctp-packet-format" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">SCTP packet format</a><a class="headerlink" href="#sctp-packet-format" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -196,7 +214,7 @@
 </div>
 </section>
 <section id="sctp-common-header-format">
-<h3><a class="toc-backref" href="#id6">SCTP Common Header Format</a><a class="headerlink" href="#sctp-common-header-format" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">SCTP Common Header Format</a><a class="headerlink" href="#sctp-common-header-format" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -210,7 +228,7 @@
 </div>
 </section>
 <section id="sctp-chunk-fields">
-<h3><a class="toc-backref" href="#id7">SCTP Chunk fields</a><a class="headerlink" href="#sctp-chunk-fields" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">SCTP Chunk fields</a><a class="headerlink" href="#sctp-chunk-fields" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -285,9 +303,9 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="sctp-chunk-data-definition">
-<h3><a class="toc-backref" href="#id8">SCTP Chunk data definition</a><a class="headerlink" href="#sctp-chunk-data-definition" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">SCTP Chunk data definition</a><a class="headerlink" href="#sctp-chunk-data-definition" title="Permalink to this headline">¶</a></h3>
 <section id="payload-data-data-0">
-<h4><a class="toc-backref" href="#id9">1. Payload Data (DATA) (0)</a><a class="headerlink" href="#payload-data-data-0" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id11">1. Payload Data (DATA) (0)</a><a class="headerlink" href="#payload-data-data-0" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -307,7 +325,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="initiation-init-1">
-<h4><a class="toc-backref" href="#id10">2.  Initiation (INIT) (1)</a><a class="headerlink" href="#initiation-init-1" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id12">2.  Initiation (INIT) (1)</a><a class="headerlink" href="#initiation-init-1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -329,7 +347,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="initiation-acknowledgement-init-ack-2">
-<h4><a class="toc-backref" href="#id11">3.  Initiation Acknowledgement (INIT ACK) (2)</a><a class="headerlink" href="#initiation-acknowledgement-init-ack-2" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id13">3.  Initiation Acknowledgement (INIT ACK) (2)</a><a class="headerlink" href="#initiation-acknowledgement-init-ack-2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -351,7 +369,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="selective-acknowledgement-sack-3">
-<h4><a class="toc-backref" href="#id12">4.  Selective Acknowledgement (SACK) (3)</a><a class="headerlink" href="#selective-acknowledgement-sack-3" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id14">4.  Selective Acknowledgement (SACK) (3)</a><a class="headerlink" href="#selective-acknowledgement-sack-3" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -383,7 +401,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="heartbeat-request-heartbeat-4">
-<h4><a class="toc-backref" href="#id13">5.  Heartbeat Request (HEARTBEAT) (4)</a><a class="headerlink" href="#heartbeat-request-heartbeat-4" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id15">5.  Heartbeat Request (HEARTBEAT) (4)</a><a class="headerlink" href="#heartbeat-request-heartbeat-4" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -397,7 +415,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="heartbeat-acknowledgement-heartbeat-ack-5">
-<h4><a class="toc-backref" href="#id14">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a><a class="headerlink" href="#heartbeat-acknowledgement-heartbeat-ack-5" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id16">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a><a class="headerlink" href="#heartbeat-acknowledgement-heartbeat-ack-5" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -411,7 +429,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="abort-association-abort-6">
-<h4><a class="toc-backref" href="#id15">7.  Abort Association (ABORT) (6)</a><a class="headerlink" href="#abort-association-abort-6" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id17">7.  Abort Association (ABORT) (6)</a><a class="headerlink" href="#abort-association-abort-6" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -425,7 +443,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="shutdown-association-shutdown-7">
-<h4><a class="toc-backref" href="#id16">8.  Shutdown Association (SHUTDOWN) (7)</a><a class="headerlink" href="#shutdown-association-shutdown-7" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id18">8.  Shutdown Association (SHUTDOWN) (7)</a><a class="headerlink" href="#shutdown-association-shutdown-7" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -437,7 +455,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="shutdown-acknowledgement-shutdown-ack-8">
-<h4><a class="toc-backref" href="#id17">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a><a class="headerlink" href="#shutdown-acknowledgement-shutdown-ack-8" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id19">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a><a class="headerlink" href="#shutdown-acknowledgement-shutdown-ack-8" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -447,7 +465,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="operation-error-error-9">
-<h4><a class="toc-backref" href="#id18">10.  Operation Error (ERROR) (9)</a><a class="headerlink" href="#operation-error-error-9" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id20">10.  Operation Error (ERROR) (9)</a><a class="headerlink" href="#operation-error-error-9" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -510,7 +528,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="cookie-echo-cookie-echo-10">
-<h4><a class="toc-backref" href="#id19">1.   Cookie Echo (COOKIE ECHO) (10)</a><a class="headerlink" href="#cookie-echo-cookie-echo-10" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21">1.   Cookie Echo (COOKIE ECHO) (10)</a><a class="headerlink" href="#cookie-echo-cookie-echo-10" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -523,7 +541,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="cookie-acknowledgement-cookie-ack-11">
-<h4><a class="toc-backref" href="#id20">1.   Cookie Acknowledgement (COOKIE ACK) (11)</a><a class="headerlink" href="#cookie-acknowledgement-cookie-ack-11" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id22">1.   Cookie Acknowledgement (COOKIE ACK) (11)</a><a class="headerlink" href="#cookie-acknowledgement-cookie-ack-11" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -533,7 +551,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="shutdown-complete-shutdown-complete-14">
-<h4><a class="toc-backref" href="#id21">1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a><a class="headerlink" href="#shutdown-complete-shutdown-complete-14" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id23">1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a><a class="headerlink" href="#shutdown-complete-shutdown-complete-14" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -544,7 +562,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </section>
 </section>
 <section id="sctp-association-state-diagram">
-<h3><a class="toc-backref" href="#id22">SCTP Association State Diagram</a><a class="headerlink" href="#sctp-association-state-diagram" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">SCTP Association State Diagram</a><a class="headerlink" href="#sctp-association-state-diagram" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                   <span class="o">-----</span>          <span class="o">--------</span> <span class="p">(</span><span class="kn">from</span> <span class="nn">any</span> <span class="n">state</span><span class="p">)</span>
                  <span class="o">/</span>       \      <span class="o">/</span>  <span class="n">rcv</span> <span class="n">ABORT</span>      <span class="p">[</span><span class="n">ABORT</span><span class="p">]</span>
 <span class="n">rcv</span> <span class="n">INIT</span>        <span class="o">|</span>         <span class="o">|</span>    <span class="o">|</span>   <span class="o">----------</span>  <span class="ow">or</span> <span class="o">----------</span>
@@ -640,7 +658,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="sctp-over-dtls">
-<h3><a class="toc-backref" href="#id23">SCTP over DTLS</a><a class="headerlink" href="#sctp-over-dtls" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">SCTP over DTLS</a><a class="headerlink" href="#sctp-over-dtls" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>         <span class="o">+----------+</span>
          <span class="o">|</span>   <span class="n">SCTP</span>   <span class="o">|</span>
          <span class="o">+----------+</span>
@@ -680,9 +698,9 @@ slow-start threshold to their initial values.</p>
 </section>
 </section>
 <section id="why">
-<h2><a class="toc-backref" href="#id24">Why</a><a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
-<section id="id2">
-<h3><a class="toc-backref" href="#id25">SCTP over DTLS</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id26">Why</a><a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id27">SCTP over DTLS</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>DTLS/SCTP supports:</p>
 <ul class="simple">
 <li><p>preservation of message boundaries.</p></li>
@@ -699,9 +717,9 @@ slow-start threshold to their initial values.</p>
 </section>
 </section>
 <section id="how">
-<h2><a class="toc-backref" href="#id26">How</a><a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
-<section id="id3">
-<h3><a class="toc-backref" href="#id27">SDP</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id28">How</a><a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
+<section id="id4">
+<h3><a class="toc-backref" href="#id29">SDP</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">application</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">DTLS</span><span class="o">/</span><span class="n">SCTP</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">datachannel</span>
 <span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
 <span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
@@ -717,13 +735,65 @@ slow-start threshold to their initial values.</p>
 </section>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id28">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="conclusion">
-<h2><a class="toc-backref" href="#id29">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id30">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>A simple example based on <a class="reference external" href="https://github.com/P1sec/pysctp">https://github.com/P1sec/pysctp</a></p>
+<ul class="simple">
+<li><p>server</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sctp</span>
+
+<span class="n">host</span> <span class="o">=</span> <span class="s1">&#39;192.168.1.10&#39;</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">12345</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">sctp</span><span class="o">.</span><span class="n">sctpsocket_tcp</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># wait for a connection</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;waiting for a connection&#39;</span><span class="p">)</span>
+    <span class="n">connection</span><span class="p">,</span> <span class="n">client_address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># show who connected to us</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;connection from&#39;</span><span class="p">,</span> <span class="n">client_address</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="n">connection</span>
+        <span class="c1"># receive the data in small chunks and print it</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">999</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                <span class="c1"># output received data</span>
+                <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Data: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
+                <span class="n">connection</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="s2">&quot;Got &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;, I&#39;m fine, thank you. And you?&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># no more data -- quit the loop</span>
+                <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;no more data.&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up the connection</span>
+        <span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>client</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sctp</span>
+
+<span class="n">sk</span> <span class="o">=</span> <span class="n">sctp</span><span class="o">.</span><span class="n">sctpsocket_tcp</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">)</span>
+<span class="n">sk</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&quot;192.168.1.10&quot;</span><span class="p">,</span> <span class="mi">12345</span><span class="p">))</span>
+
+<span class="n">sk</span><span class="o">.</span><span class="n">sctp_send</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;how are you&#39;</span><span class="p">)</span>
+<span class="n">sk</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+<span class="n">sk</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id30">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id31">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <p>RFC4960: Stream Control Transmission Protocol</p>
 <p>RFC6083: Datagram Transport Layer Security (DTLS) for Stream Control Transmission Protocol (SCTP)</p>
 <p>RFC8261: Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets
