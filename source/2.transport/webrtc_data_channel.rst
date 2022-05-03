@@ -65,10 +65,48 @@ WebRTC 的 data channel 定义主要在 RFC8831 - "WebRTC Data Channels" 进行�
     | UDP1 | UDP2 | UDP3 | ...         |
     +----------------------------------+
 
+SCTP
+================================================
+
+WebRTC 采用 SCTP 作为数据通道，在于它拥有这些重要的特性
+
+
+*  Usage of TCP-friendly congestion control.
+*  modifiable congestion control for integration with the SRTP media stream congestion control.
+*  Support of multiple unidirectional streams, each providing its own notion of ordered message delivery.
+*  Support of ordered and out-of-order message delivery.
+*  Support of arbitrarily large user messages by providing fragmentation and reassembly.
+*  Support of PMTU discovery.
+*  Support of reliable or partially reliable message transport.
+
+
+six already registered SCTP Payload Protocol Identifiers (PPIDs)
+
+.. code-block::
+
+       +======================+===========+===========+============+
+       | Value                | SCTP PPID | Reference | Date       |
+       +======================+===========+===========+============+
+       | WebRTC String        | 51        | RFC 8831  | 2013-09-20 |
+       +----------------------+-----------+-----------+------------+
+       | WebRTC Binary        | 52        | RFC 8831  | 2013-09-20 |
+       | Partial (deprecated) |           |           |            |
+       +----------------------+-----------+-----------+------------+
+       | WebRTC Binary        | 53        | RFC 8831  | 2013-09-20 |
+       +----------------------+-----------+-----------+------------+
+       | WebRTC String        | 54        | RFC 8831  | 2013-09-20 |
+       | Partial (deprecated) |           |           |            |
+       +----------------------+-----------+-----------+------------+
+       | WebRTC String Empty  | 56        | RFC 8831  | 2014-08-22 |
+       +----------------------+-----------+-----------+------------+
+       | WebRTC Binary Empty  | 57        | RFC 8831  | 2014-08-22 |
+       +----------------------+-----------+-----------+------------+
 
 
 
-Data Channel Establishment Protocol
+
+
+Data Channel Establishment Protocol (DCEP)
 ================================================
 
 The Data Channel Establishment Protocol is a simple, low-overhead way to establish bidirectional data channels over an SCTP association with a consistent set of properties.
@@ -76,6 +114,7 @@ The Data Channel Establishment Protocol is a simple, low-overhead way to establi
 The set of consistent properties includes:
 
 *  reliable or unreliable message transmission.
+
    In case of unreliable transmissions, the same level of unreliability is used.
 
 *  in-order or out-of-order message delivery.
@@ -88,32 +127,78 @@ The set of consistent properties includes:
 
 *  the streams.
 
-SDP
-===============================================
-it is a sdp example that use sctp over dtls
 
+
+IANA has updated the PPID name from "WebRTC Control" to "WebRTC DCEP"
 
 .. code-block::
 
-    m=application 9 UDP/DTLS/SCTP webrtc-datachannel
-    c=IN IP4 0.0.0.0
-    a=ice-ufrag:u8aT
-    a=ice-pwd:nTH+98fL7o+XacAd//X7uStI
-    a=ice-options:trickle
-    a=fingerprint:sha-256 6E:FD:8F:7C:E7:6B:DF:2B:6F:D6:32:B6:A6:00:62:D5:7E:4E:11:91:91:37:95:BE:2C:00:3F:B2:67:6F:DF:3C
-    a=setup:actpass
-    a=mid:4
-    a=sctp-port:5000
-    a=max-message-size:262144
+          +=============+===========+===========+============+
+           | Value       | SCTP PPID | Reference | Date       |
+           +=============+===========+===========+============+
+           | WebRTC DCEP | 50        | RFC 8832  | 2013-09-20 |
+           +-------------+-----------+-----------+------------+
 
 
-Multiple SCTP associations MAY be multiplexed over a single DTLS connection. The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
+New Message Type Registry
+-----------------------------
 
+.. code-block::
+
+               +===================+===========+===========+
+               | Name              | Type      | Reference |
+               +===================+===========+===========+
+               | Reserved          | 0x00      | RFC 8832  |
+               +-------------------+-----------+-----------+
+               | Reserved          | 0x01      | RFC 8832  |
+               +-------------------+-----------+-----------+
+               | DATA_CHANNEL_ACK  | 0x02      | RFC 8832  |
+               +-------------------+-----------+-----------+
+               | DATA_CHANNEL_OPEN | 0x03      | RFC 8832  |
+               +-------------------+-----------+-----------+
+               | Unassigned        | 0x04-0xfe |           |
+               +-------------------+-----------+-----------+
+               | Reserved          | 0xff      | RFC 8832  |
+               +-------------------+-----------+-----------+
+
+
+New Channel Type Registry
+-----------------------------
+
+.. code-block::
+
+   +================================================+======+===========+
+   | Name                                           | Type | Reference |
+   +================================================+======+===========+
+   | DATA_CHANNEL_RELIABLE                          | 0x00 | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | DATA_CHANNEL_RELIABLE_UNORDERED                | 0x80 | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | DATA_CHANNEL_PARTIAL_RELIABLE_REXMIT           | 0x01 | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | DATA_CHANNEL_PARTIAL_RELIABLE_REXMIT_UNORDERED | 0x81 | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | DATA_CHANNEL_PARTIAL_RELIABLE_TIMED            | 0x02 | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | DATA_CHANNEL_PARTIAL_RELIABLE_TIMED_UNORDERED  | 0x82 | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | Reserved                                       | 0x7f | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | Reserved                                       | 0xff | RFC 8832  |
+   +------------------------------------------------+------+-----------+
+   | Unassigned                                     | rest |           |
+   +------------------------------------------------+------+-----------+
+
+
+
+
+Message Formats
+-----------------------
 
 DATA_CHANNEL_OPEN Message
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This message is initially sent using the data channel on the stream used for user messages.
+   This message is initially sent using the data channel on the stream used for user messages.
 
 .. code-block::
 
@@ -136,57 +221,76 @@ This message is initially sent using the data channel on the stream used for use
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
+* channel type
 
-* Message Type: 1 byte (unsigned integer)
- 
-  This field holds the IANA-defined message type for the DATA_CHANNEL_OPEN message.  
-  The value of this field is 0x03, as specified in Section 8.2.1 of `RFC8832`_
-
-
-.. code-block:: 
-
-    +===================+===========+===========+
-    | Name              | Type      | Reference |
-    +===================+===========+===========+
-    | Reserved          | 0x00      | RFC 8832  |
-    +-------------------+-----------+-----------+
-    | Reserved          | 0x01      | RFC 8832  |
-    +-------------------+-----------+-----------+
-    | DATA_CHANNEL_ACK  | 0x02      | RFC 8832  |
-    +-------------------+-----------+-----------+
-    | DATA_CHANNEL_OPEN | 0x03      | RFC 8832  |
-    +-------------------+-----------+-----------+
-    | Unassigned        | 0x04-0xfe |           |
-    +-------------------+-----------+-----------+
-    | Reserved          | 0xff      | RFC 8832  |
-    +-------------------+-----------+-----------+
-
-
-* Channel Type: 1 byte (unsigned integer)
 
 .. code-block::
 
-    +================================================+======+===========+
-    | Name                                           | Type | Reference |
-    +================================================+======+===========+
-    | DATA_CHANNEL_RELIABLE                          | 0x00 | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | DATA_CHANNEL_RELIABLE_UNORDERED                | 0x80 | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | DATA_CHANNEL_PARTIAL_RELIABLE_REXMIT           | 0x01 | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | DATA_CHANNEL_PARTIAL_RELIABLE_REXMIT_UNORDERED | 0x81 | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | DATA_CHANNEL_PARTIAL_RELIABLE_TIMED            | 0x02 | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | DATA_CHANNEL_PARTIAL_RELIABLE_TIMED_UNORDERED  | 0x82 | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | Reserved                                       | 0x7f | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | Reserved                                       | 0xff | RFC 8832  |
-    +------------------------------------------------+------+-----------+
-    | Unassigned                                     | rest |           |
-    +------------------------------------------------+------+-----------+
+     +================================================+=============+
+     | Channel Type                                   | Reliability |
+     |                                                |  Parameter  |
+     +================================================+=============+
+     | DATA_CHANNEL_RELIABLE                          |   Ignored   |
+     +------------------------------------------------+-------------+
+     | DATA_CHANNEL_RELIABLE_UNORDERED                |   Ignored   |
+     +------------------------------------------------+-------------+
+     | DATA_CHANNEL_PARTIAL_RELIABLE_REXMIT           |  Number of  |
+     |                                                |     RTX     |
+     +------------------------------------------------+-------------+
+     | DATA_CHANNEL_PARTIAL_RELIABLE_REXMIT_UNORDERED |  Number of  |
+     |                                                |     RTX     |
+     +------------------------------------------------+-------------+
+     | DATA_CHANNEL_PARTIAL_RELIABLE_TIMED            | Lifetime in |
+     |                                                |      ms     |
+     +------------------------------------------------+-------------+
+     | DATA_CHANNEL_PARTIAL_RELIABLE_TIMED_UNORDERED  | Lifetime in |
+     |                                                |      ms     |
+     +------------------------------------------------+-------------+
+
+
+DATA_CHANNEL_ACK Message
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   This message is sent in response to a DATA_CHANNEL_OPEN_RESPONSE
+   message.  It is sent on the stream used for user messages using the
+   data channel.  Reception of this message tells the opener that the
+   data channel setup handshake is complete.
+
+.. code-block::
+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  Message Type |
+     +-+-+-+-+-+-+-+-+
+
+   Message Type: 1 byte (unsigned integer)
+
+      This field holds the IANA-defined message type for the DATA_CHANNEL_ACK message.
+      The value of this field is 0x02
+
+
+SDP
+===============================================
+it is a sdp example that use sctp over dtls
+
+
+.. code-block::
+
+    m=application 9 UDP/DTLS/SCTP webrtc-datachannel
+    c=IN IP4 0.0.0.0
+    a=ice-ufrag:u8aT
+    a=ice-pwd:nTH+98fL7o+XacAd//X7uStI
+    a=ice-options:trickle
+    a=fingerprint:sha-256 6E:FD:8F:7C:E7:6B:DF:2B:6F:D6:32:B6:A6:00:62:D5:7E:4E:11:91:91:37:95:BE:2C:00:3F:B2:67:6F:DF:3C
+    a=setup:actpass
+    a=mid:4
+    a=sctp-port:5000
+    a=max-message-size:262144
+
+
+Multiple SCTP associations MAY be multiplexed over a single DTLS connection. The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
+
 
 
 
@@ -233,96 +337,6 @@ This message is initially sent using the data channel on the stream used for use
 
 
 
-SCTP
-==========================================
-Data Channel 背后使用的协议是 SCTP
-
-数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。
-
-
-SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。
-
-假设我们通过一个连接传送流媒体以及控制命令，如果通过 TCP , 包丢失了就要重传，乱序了也一样。SCTP 就可以不一样，流媒体的包可以丢失，控制命令的包不能丢失
-
-
-它为用户提供以下服务：
-
-- 确认用户数据的无错误非重复传输，
-- 数据分段以符合发现的路径 MTU 大小，
-- 在多个流中按顺序传递用户消息，使用单个用户的到达顺序交付选项消息，
-- 可选地将多个用户消息捆绑到单个 SCTP 数据包，和
-- 通过支持多宿主实现网络级容错在关联的一端或两端。
-
-SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的抵抗力。
-
-
-
-基于消息的多流协议
-===============================
-
-SCTP applications submit data for transmission in messages (groups of bytes) to the SCTP transport layer. SCTP places messages and control information into separate chunks (data chunks and control chunks), each identified by a chunk header. 
-
-The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).
-
-
-example
---------------------------------
-
-A simple example based on https://github.com/P1sec/pysctp
-
-* server
-
-.. code-block:: python
-
-  import socket
-  import sctp
-
-  host = '192.168.1.10'
-  port = 12345
-
-  sock = sctp.sctpsocket_tcp(socket.AF_INET)
-  sock.bind((host, port))
-  sock.listen(1)
-
-  while True:  
-      # wait for a connection
-      print ('waiting for a connection')
-      connection, client_address = sock.accept()
-
-      try:
-          # show who connected to us
-          print ('connection from', client_address)
-          print connection
-          # receive the data in small chunks and print it
-          while True:
-              data = connection.recv(999)
-              if data:
-                  # output received data
-                  print ("Data: %s" % data)
-                  connection.sendall("Got " + str(len(data)) + ", I'm fine, thank you. And you?")
-              else:
-                  # no more data -- quit the loop
-                  print ("no more data.")
-                  break
-      finally:
-          # Clean up the connection
-          connection.close()
-
-* client
-
-.. code-block:: python
-
-  import socket
-  import sctp
-
-  sk = sctp.sctpsocket_tcp(socket.AF_INET)
-  sk.connect(("192.168.1.10", 12345))
-
-  sk.sctp_send(msg='how are you')
-  sk.shutdown(0)
-
-
-  sk.close()
 
 
 参考资料

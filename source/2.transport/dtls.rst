@@ -88,21 +88,154 @@ DTLS 消息，包含 SRTP 密钥的传输及用于 Datat Channel 的 SCTP 消息
 基本流程
 =======================
 
-1. 握手
+握手
 -----------------------
 
+* Message Flights for Full Handshake
+
+.. code-block::
+
+
+      Client                                          Server
+      ------                                          ------
+
+      ClientHello             -------->                           Flight 1
+
+                              <-------    HelloVerifyRequest      Flight 2
+
+      ClientHello             -------->                           Flight 3
+
+                                                ServerHello    \
+                                                Certificate*     \
+                                          ServerKeyExchange*      Flight 4
+                                          CertificateRequest*     /
+                              <--------      ServerHelloDone    /
+
+      Certificate*                                              \
+      ClientKeyExchange                                          \
+      CertificateVerify*                                          Flight 5
+      [ChangeCipherSpec]                                         /
+      Finished                -------->                         /
+
+                                          [ChangeCipherSpec]    \ Flight 6
+                              <--------             Finished    /
+
+
+
+* Message Flights for Session-Resuming Handshake (No Cookie Exchange)
+
+.. code-block::
+
+      Client                                           Server
+      ------                                           ------
+
+      ClientHello             -------->                          Flight 1
+
+                                                ServerHello    \
+                                          [ChangeCipherSpec]     Flight 2
+                              <--------             Finished    /
+
+      [ChangeCipherSpec]                                         \Flight 3
+      Finished                 -------->                         /
 
 
 
 
-How
-=======================
+
+丢包的处理
+-----------------------
+
+DTLS uses a simple retransmission timer to handle packet loss.
+
+The following figure demonstrates the basic concept, using the first phase of the DTLS handshake:
+
+
+.. code-block::
+
+         Client                                   Server
+         ------                                   ------
+         ClientHello           ------>
+
+                                 X<-- HelloVerifyRequest
+                                                  (lost)
+
+         [Timer Expires]
+
+         ClientHello           ------>
+         (retransmit)
+
+
+
+DTLS Timeout and Retransmission State Machine
+----------------------------------------------------------
+
+.. code-block::
+
+                      +-----------+
+                      | PREPARING |
+                +---> |           | <--------------------+
+                |     |           |                      |
+                |     +-----------+                      |
+                |           |                            |
+                |           | Buffer next flight         |
+                |           |                            |
+                |          \|/                           |
+                |     +-----------+                      |
+                |     |           |                      |
+                |     |  SENDING  |<------------------+  |
+                |     |           |                   |  | Send
+                |     +-----------+                   |  | HelloRequest
+        Receive |           |                         |  |
+           next |           | Send flight             |  | or
+         flight |  +--------+                         |  |
+                |  |        | Set retransmit timer    |  | Receive
+                |  |       \|/                        |  | HelloRequest
+                |  |  +-----------+                   |  | Send
+                |  |  |           |                   |  | ClientHello
+                +--)--|  WAITING  |-------------------+  |
+                |  |  |           |   Timer expires   |  |
+                |  |  +-----------+                   |  |
+                |  |         |                        |  |
+                |  |         |                        |  |
+                |  |         +------------------------+  |
+                |  |                Read retransmit      |
+        Receive |  |                                     |
+           last |  |                                     |
+         flight |  |                                     |
+                |  |                                     |
+               \|/\|/                                    |
+                                                         |
+            +-----------+                                |
+            |           |                                |
+            | FINISHED  | -------------------------------+
+            |           |
+            +-----------+
+                 |  /|\
+                 |   |
+                 |   |
+                 +---+
+
+              Read retransmit
+           Retransmit last flight
+
+
 
 
 Example
 =======================
 
+.. code-block::
 
+      // Generate a certificate
+      openssl ecparam -out key.pem -name prime256v1 -genkey
+      openssl req -new -sha256 -key key.pem -out server.csr
+      openssl x509 -req -sha256 -days 365 -in server.csr -signkey key.pem -out cert.pem
+
+      // Use with examples/dial/selfsign/main.go
+      openssl s_server -dtls1_2 -cert cert.pem -key key.pem -accept 4444
+
+      // Use with examples/listen/selfsign/main.go
+      openssl s_client -dtls1_2 -connect 127.0.0.1:4444 -debug -cert cert.pem -key key.pem
 
 Conclusion
 =======================
