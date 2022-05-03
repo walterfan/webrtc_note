@@ -1,5 +1,5 @@
 ####################
-WebRTC test suite
+WebRTC test
 ####################
 
 .. include:: ../links.ref
@@ -7,7 +7,7 @@ WebRTC test suite
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC test suite
+**Abstract** WebRTC test 
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|

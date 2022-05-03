@@ -1,74 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>WebRTC Data Channel &mdash; webrtc_tutorial 1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="WebRTC RTP Header extension" href="rtp_header_extension.html" />
     <link rel="prev" title="WebRTC RTP" href="webrtc_rtp.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> webrtc_tutorial
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,18 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
@@ -106,17 +56,18 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp.html">WebRTC RTP</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Data Channel</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">简介</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#data-channel-establishment-protocol">Data Channel Establishment Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-channel-establishment-protocol">Data Channel Establishment Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">SDP</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#data-channel-open-message">DATA_CHANNEL_OPEN Message</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">示例</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sctp">SCTP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">基于消息的多流协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">基于消息的多流协议</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example">example</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">参考资料</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">参考资料</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
@@ -129,74 +80,32 @@
 <li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">webrtc_tutorial</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
-        
       <li>WebRTC Data Channel</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/2.transport/webrtc_data_channel.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="webrtc-data-channel">
+             
+  <section id="webrtc-data-channel">
 <h1>WebRTC Data Channel<a class="headerlink" href="#webrtc-data-channel" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -214,38 +123,38 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-04-25</p></td>
+<td><p>2022-05-02</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id2" id="id6">简介</a></p></li>
-<li><p><a class="reference internal" href="#data-channel-establishment-protocol" id="id7">Data Channel Establishment Protocol</a></p>
+<li><p><a class="reference internal" href="#id2" id="id7">简介</a></p></li>
+<li><p><a class="reference internal" href="#data-channel-establishment-protocol" id="id8">Data Channel Establishment Protocol</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">SDP</a></p>
 <ul>
-<li><p><a class="reference internal" href="#data-channel-open-message" id="id8">DATA_CHANNEL_OPEN Message</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id9">示例</a></p></li>
+<li><p><a class="reference internal" href="#data-channel-open-message" id="id10">DATA_CHANNEL_OPEN Message</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id11">示例</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#sctp" id="id10">SCTP</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id11">基于消息的多流协议</a></p>
+<li><p><a class="reference internal" href="#sctp" id="id12">SCTP</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id13">基于消息的多流协议</a></p>
 <ul>
-<li><p><a class="reference internal" href="#example" id="id12">example</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id14">example</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id5" id="id13">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id15">参考资料</a></p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">简介</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h2><a class="toc-backref" href="#id7">简介</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>WebRTC 的 Data Channel 被设计用来在两个端点之间传输非音视频之类的媒体流外的数据，例如文本数据，控制命令。
 这样无需经过由服务器的信令通道中转，效率较高。当然，通过服务器中转也没问题。</p>
 <p>RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向对等传输。 每个数据通道都与一个 RTCPeerConnection 相关联，每个对等连接理论上最多可以有 65,534 个数据通道（实际限制可能因浏览器而异）。</p>
 <p>发起方如果要创建数据通道并要求远程对等方加入您，可调用 <cite>RTCPeerConnection 的 createDataChannel()</cite> 方法。
 应答方会接收到一个数据通道事件（其类型为 RTCDataChannelEvent），以告知其数据通道已添加到连接中。</p>
-<p>Non-media data is handled by using the Stream Control Transmission Protocol (SCTP) <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4960">RFC4960</a> encapsulated in DTLS.
-DTLS 1.0 is defined in <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4347">RFC4347</a>; the present latest version,  DTLS 1.2, is defined in <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6347">RFC6347</a>;
-and an upcoming version, DTLS 1.3, is defined in <a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-dtls13-43">DTLS1.3</a>.</p>
+<p>WebRTC 的 data channel 定义主要在 RFC8831 - “WebRTC Data Channels” 进行了详细阐述
+具体用到的协议 在 RFC8261 - “Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets” 中有详述</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="o">+----------+</span>
         <span class="o">|</span>   <span class="n">SCTP</span>   <span class="o">|</span>
         <span class="o">+----------+</span>
@@ -257,9 +166,24 @@ and an upcoming version, DTLS 1.3, is defined in <a class="reference external" h
 <span class="n">Figure</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Basic</span> <span class="n">Stack</span> <span class="n">Diagram</span>
 </pre></div>
 </div>
+<p>整个 WebRTC 所用到的协议栈如下, 一个 trasport 上会传输 STUN, SRTP, DTLS and SCTP 协议。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              <span class="o">+------+------+------+</span>
+              <span class="o">|</span> <span class="n">DCEP</span> <span class="o">|</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span><span class="o">|</span><span class="n">Binary</span><span class="o">|</span>
+              <span class="o">|</span>      <span class="o">|</span> <span class="n">Data</span> <span class="o">|</span> <span class="n">Data</span> <span class="o">|</span>
+              <span class="o">+------+------+------+</span>
+              <span class="o">|</span>        <span class="n">SCTP</span>        <span class="o">|</span>
+<span class="o">+----------------------------------+</span>
+<span class="o">|</span> <span class="n">STUN</span> <span class="o">|</span> <span class="n">SRTP</span> <span class="o">|</span>        <span class="n">DTLS</span>        <span class="o">|</span>
+<span class="o">+----------------------------------+</span>
+<span class="o">|</span>                <span class="n">ICE</span>               <span class="o">|</span>
+<span class="o">+----------------------------------+</span>
+<span class="o">|</span> <span class="n">UDP1</span> <span class="o">|</span> <span class="n">UDP2</span> <span class="o">|</span> <span class="n">UDP3</span> <span class="o">|</span> <span class="o">...</span>         <span class="o">|</span>
+<span class="o">+----------------------------------+</span>
+</pre></div>
 </div>
-<div class="section" id="data-channel-establishment-protocol">
-<h2><a class="toc-backref" href="#id7">Data Channel Establishment Protocol</a><a class="headerlink" href="#data-channel-establishment-protocol" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="data-channel-establishment-protocol">
+<h2><a class="toc-backref" href="#id8">Data Channel Establishment Protocol</a><a class="headerlink" href="#data-channel-establishment-protocol" title="Permalink to this headline">¶</a></h2>
 <p>The Data Channel Establishment Protocol is a simple, low-overhead way to establish bidirectional data channels over an SCTP association with a consistent set of properties.</p>
 <p>The set of consistent properties includes:</p>
 <ul class="simple">
@@ -271,8 +195,25 @@ In case of unreliable transmissions, the same level of unreliability is used.</p
 <li><p>an optional protocol for the data channel.</p></li>
 <li><p>the streams.</p></li>
 </ul>
-<div class="section" id="data-channel-open-message">
-<h3><a class="toc-backref" href="#id8">DATA_CHANNEL_OPEN Message</a><a class="headerlink" href="#data-channel-open-message" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9">SDP</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>it is a sdp example that use sctp over dtls</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">application</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">DTLS</span><span class="o">/</span><span class="n">SCTP</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">datachannel</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">4</span>
+<span class="n">a</span><span class="o">=</span><span class="n">sctp</span><span class="o">-</span><span class="n">port</span><span class="p">:</span><span class="mi">5000</span>
+<span class="n">a</span><span class="o">=</span><span class="nb">max</span><span class="o">-</span><span class="n">message</span><span class="o">-</span><span class="n">size</span><span class="p">:</span><span class="mi">262144</span>
+</pre></div>
+</div>
+<p>Multiple SCTP associations MAY be multiplexed over a single DTLS connection. The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.</p>
+<section id="data-channel-open-message">
+<h3><a class="toc-backref" href="#id10">DATA_CHANNEL_OPEN Message</a><a class="headerlink" href="#data-channel-open-message" title="Permalink to this headline">¶</a></h3>
 <p>This message is initially sent using the data channel on the stream used for user messages.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
@@ -342,11 +283,11 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 <span class="o">+------------------------------------------------+------+-----------+</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id3">
-<h3><a class="toc-backref" href="#id9">示例</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id11">示例</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Offerer side</span>
-<span class="kd">var</span> <span class="nx">pc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">pc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">channel</span> <span class="o">=</span> <span class="nx">pc</span><span class="p">.</span><span class="nx">createDataChannel</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">);</span>
 <span class="nx">channel</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">channel</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hi you!&#39;</span><span class="p">);</span>
@@ -356,7 +297,7 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 <span class="p">}</span>
 
 <span class="c1">// Answerer side</span>
-<span class="kd">var</span> <span class="nx">pc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">pc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 <span class="nx">pc</span><span class="p">.</span><span class="nx">ondatachannel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">channel</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">channel</span><span class="p">;</span>
     <span class="nx">channel</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
@@ -372,7 +313,7 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 
 <span class="c1">// Both sides</span>
 
-<span class="kd">var</span> <span class="nx">pc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">pc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">channel</span> <span class="o">=</span> <span class="nx">pc</span><span class="p">.</span><span class="nx">createDataChannel</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">negotiated</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span> <span class="mf">0</span><span class="p">});</span>
 <span class="nx">channel</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">channel</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hi!&#39;</span><span class="p">);</span>
@@ -382,10 +323,10 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="sctp">
-<h2><a class="toc-backref" href="#id10">SCTP</a><a class="headerlink" href="#sctp" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="sctp">
+<h2><a class="toc-backref" href="#id12">SCTP</a><a class="headerlink" href="#sctp" title="Permalink to this headline">¶</a></h2>
 <p>Data Channel 背后使用的协议是 SCTP</p>
 <p>数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。</p>
 <p>SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。</p>
@@ -399,13 +340,13 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 <li><p>通过支持多宿主实现网络级容错在关联的一端或两端。</p></li>
 </ul>
 <p>SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的抵抗力。</p>
-</div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id11">基于消息的多流协议</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id13">基于消息的多流协议</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>SCTP applications submit data for transmission in messages (groups of bytes) to the SCTP transport layer. SCTP places messages and control information into separate chunks (data chunks and control chunks), each identified by a chunk header.</p>
 <p>The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).</p>
-<div class="section" id="example">
-<h3><a class="toc-backref" href="#id12">example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<section id="example">
+<h3><a class="toc-backref" href="#id14">example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <p>A simple example based on <a class="reference external" href="https://github.com/P1sec/pysctp">https://github.com/P1sec/pysctp</a></p>
 <ul class="simple">
 <li><p>server</p></li>
@@ -461,10 +402,10 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 <span class="n">sk</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id13">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id15">参考资料</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Data channel tutorial: <a class="reference external" href="https://www.html5rocks.com/en/tutorials/webrtc/datachannels/">https://www.html5rocks.com/en/tutorials/webrtc/datachannels/</a></p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4960">RFC4960</a> : Stream Control Transmission Protocol</p></li>
@@ -476,55 +417,38 @@ The value of this field is 0x03, as specified in Section 8.2.1 of <a class="refe
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3758">RFC3758</a> : Stream Control Transmission Protocol (SCTP) Partial Reliability Extension</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc7496">RFC7496</a> : Additional Policies for the Partially Reliable Stream Control Transmission Protocol Extension</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="rtp_header_extension.html" class="btn btn-neutral float-right" title="WebRTC RTP Header extension" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="webrtc_rtp.html" class="btn btn-neutral float-left" title="WebRTC RTP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rtp_header_extension.html" class="btn btn-neutral float-right" title="WebRTC RTP Header extension" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
-
-    </p>
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-
-  
-  
-    
-  
  <script type="text/javascript">
     $(document).ready(function() {
         $(".toggle > *").hide();
