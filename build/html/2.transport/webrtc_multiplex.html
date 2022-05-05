@@ -52,7 +52,9 @@
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC 传输的多路复用</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">简介</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">多路复用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stun-dtls-rtp">1. 区分 STUN, DTLS 和 RTP 包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rtp-rtcp">2. 区分 RTP 和 RTCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3. 区分不同的媒体流</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">参考资料</a></li>
 </ul>
 </li>
@@ -120,26 +122,89 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id2" id="id5">简介</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id6">多路复用</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id7">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#stun-dtls-rtp" id="id6">1. 区分 STUN, DTLS 和 RTP 包</a></p></li>
+<li><p><a class="reference internal" href="#rtp-rtcp" id="id7">2. 区分 RTP 和 RTCP</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id8">3. 区分不同的媒体流</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">参考资料</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id5">简介</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>传统上，一个传输通道只传输一路媒体流，其 RTP 包 的 SSRC 也用来标识这路媒体流。 RTCP 会使用一个单独的传输
+<p>传统上，一个传输通道只传输一路媒体流，其 RTP 包 的 SSRC 也用来标识这路媒体流。 RTCP 会使用一个单独的传输.
 媒体协商的 SDP 中的一个 m-line 也只包含一路或者一对(包括重传 RTX 的媒体流 )媒体流。</p>
-<p>WebRTC 中为避免过多地使用 NAT 技术来穿透防火墙，可用多路复用技术在一个传输通道中传输多路媒体，包括RTCP, 重传的媒体流。
-一个传输通道（五元组: protocol, srcHost, srcPort, destHost, destPort）中包含多路媒体流，也就是有多个 m-line。
-而一个 m-line 中也可包含多个 ssrc, 即通过联播 Simulcast 技术让 MediaStream 包含多个 MediaStreamTrack（分辨率或码率不同）。</p>
-<p>那么如何辨别这些 MediaStream 和 MediaStreamTrack 呢？ SSRC 和 Payload Type 显然不够，因为 SSRC 会变化，Payload Type 会重复。
-WebRTC 通过 mid 来标识 MediaStream, 通过 rid 来标识 MediaStreamTrack.</p>
+<p>WebRTC 中为避免过多地使用 NAT 技术来穿透防火墙，可用多路复用技术在一个传输通道中传输多路媒体，包括RTCP, 重传的媒体流的 RTP 包。
+在这个通道上还会传输 STUN 和 DTLS 包</p>
+<p>回顾一下这张经典的图</p>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-a0b7b8dd85776b92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-a0b7b8dd85776b92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<p>我改了一下 audio 和 video 的 codec, 现在 Opus 和 H.264 用的比较多
+Web API 中最主要的就是  MediaStream, RTCPeerConnection 和  DataChannel.</p>
+<p>在两个端点之间所传输的消息有这样几种</p>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-305ba0be176396bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-305ba0be176396bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<p>媒体数据一般都是优先走 UDP</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>           <span class="n">Source</span> <span class="n">Port</span>          <span class="o">|</span>        <span class="n">Destination</span> <span class="n">port</span>      <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>               <span class="n">Length</span>           <span class="o">|</span>        <span class="n">Checksum</span>              <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">|</span>                        <span class="n">data</span> <span class="n">octets</span> <span class="o">...</span>                        <span class="o">|</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id6">多路复用</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>传统方法是一个端口传输 RTP, 另一个端口传输 RTCP 包，然后通过 payload type 来区分不同的包的用途。</p>
-<p>回顾一下 RTP 包 和 RTCP 包的格式</p>
+</div>
+<div class="section" id="stun-dtls-rtp">
+<h2><a class="toc-backref" href="#id6">1. 区分 STUN, DTLS 和 RTP 包</a><a class="headerlink" href="#stun-dtls-rtp" title="Permalink to this headline">¶</a></h2>
+<p>注: 这里提到的 RTP 包括 RTP, RTCP, SRTP, SRTCP</p>
+<p>在 UDP 传输通道上会跑 STUN, DTLS 和 RTP(SRTP) 的数据，我们首先要区分这几种数据</p>
 <ul class="simple">
-<li><p>RTP</p></li>
+<li><p>STUN 消息头如下</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span><span class="mi">0</span> <span class="mi">0</span><span class="o">|</span>     <span class="n">STUN</span> <span class="n">Message</span> <span class="n">Type</span>     <span class="o">|</span>         <span class="n">Message</span> <span class="n">Length</span>        <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                         <span class="n">Magic</span> <span class="n">Cookie</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">|</span>                     <span class="n">Transaction</span> <span class="n">ID</span> <span class="p">(</span><span class="mi">96</span> <span class="n">bits</span><span class="p">)</span>                  <span class="o">|</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>DTLS 消息，包含 SRTP 密钥的传输及用于 Datat Channel 的 SCTP 消息</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="p">{</span>
+       <span class="n">ContentType</span> <span class="nb">type</span><span class="p">;</span>
+       <span class="n">ProtocolVersion</span> <span class="n">version</span><span class="p">;</span>
+       <span class="n">uint16</span> <span class="n">epoch</span><span class="p">;</span>                                     <span class="o">//</span> <span class="n">New</span> <span class="n">field</span>
+       <span class="n">uint48</span> <span class="n">sequence_number</span><span class="p">;</span>                           <span class="o">//</span> <span class="n">New</span> <span class="n">field</span>
+       <span class="n">uint16</span> <span class="n">length</span><span class="p">;</span>
+       <span class="n">opaque</span> <span class="n">fragment</span><span class="p">[</span><span class="n">DTLSPlaintext</span><span class="o">.</span><span class="n">length</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">DTLSPlaintext</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span> <span class="n">ContentType</span> <span class="o">|</span>        <span class="n">Version</span>     <span class="o">|</span>        <span class="n">epoch</span>               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                         <span class="n">sequence_number</span>                       <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>    <span class="n">sequence_number</span>              <span class="o">|</span>         <span class="n">length</span>              <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">|</span>                     <span class="n">opaque</span> <span class="n">fragment</span>                           <span class="o">|</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>RTP 消息，包含音频或视频的媒体数据, SRTP 的头与 RTP 头是相同的</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
@@ -156,7 +221,7 @@ WebRTC 通过 mid 来标识 MediaStream, 通过 rid 来标识 MediaStreamTrack.<
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>RTCP</p></li>
+<li><p>RTCP 包括各种报告和反馈消息， SRTCP 的头与 RTCP 头是相同的</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
@@ -167,24 +232,167 @@ WebRTC 通过 mid 来标识 MediaStream, 通过 rid 来标识 MediaStreamTrack.<
 <span class="o">|</span>                              <span class="o">...</span>                              <span class="o">|</span>
 </pre></div>
 </div>
+<p>我们从包头的第一个字节就能够区分</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>            <span class="o">+----------------+</span>
+            <span class="o">|</span> <span class="mi">127</span> <span class="o">&lt;</span> <span class="n">B</span> <span class="o">&lt;</span> <span class="mi">192</span> <span class="o">-+--&gt;</span> <span class="n">forward</span> <span class="n">to</span> <span class="n">RTP</span>
+            <span class="o">|</span>                <span class="o">|</span>
+<span class="n">packet</span> <span class="o">--&gt;</span>  <span class="o">|</span>  <span class="mi">19</span> <span class="o">&lt;</span> <span class="n">B</span> <span class="o">&lt;</span> <span class="mi">64</span>  <span class="o">-+--&gt;</span> <span class="n">forward</span> <span class="n">to</span> <span class="n">DTLS</span>
+            <span class="o">|</span>                <span class="o">|</span>
+            <span class="o">|</span>       <span class="n">B</span> <span class="o">&lt;</span> <span class="mi">2</span>   <span class="o">-+--&gt;</span> <span class="n">forward</span> <span class="n">to</span> <span class="n">STUN</span>
+            <span class="o">+----------------+</span>
+</pre></div>
+</div>
+<p>代码示例如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">((</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span>
+     <span class="k">return</span> <span class="n">stun</span><span class="p">;</span> <span class="o">//</span> <span class="n">STUN</span> <span class="n">packet</span>
+
+<span class="k">if</span><span class="p">((</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">128</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;=</span><span class="mi">191</span><span class="p">))</span>
+     <span class="k">return</span> <span class="n">rtp</span><span class="p">;</span> <span class="o">//</span> <span class="n">RTP</span> <span class="n">packet</span>
+
+<span class="k">if</span><span class="p">((</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">20</span><span class="p">)</span>  <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;=</span><span class="mi">64</span><span class="p">))</span>
+     <span class="k">return</span> <span class="n">dtls</span><span class="p">;</span> <span class="o">//</span> <span class="n">DTLS</span> <span class="n">packet</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rtp-rtcp">
+<h2><a class="toc-backref" href="#id7">2. 区分 RTP 和 RTCP</a><a class="headerlink" href="#rtp-rtcp" title="Permalink to this headline">¶</a></h2>
 <p>在一个端口上传输 RTP 和 RTCP 包会面临 payload 冲突的问题。RTCP 头的第二个字节是 payload type, RTP 头的第二个字节的低 7 位是 payload type, RFC 5761 总结了一下，有如下冲突</p>
 <ul class="simple">
-<li><p>RTP payload types 64-65 conflict with the (obsolete) RTCP FIR and NACK packets defined in the original “RTP Payload Format for H.261 Video Streams” [3] (which was obsoleted by [17]).</p></li>
-<li><p>RTP payload types 72-76 conflict with the RTCP SR, RR, SDES, BYE,and APP packets defined in the RTP specification [1].</p></li>
-<li><p>RTP payload types 77-78 conflict with the RTCP RTPFB and PSFB packets defined in the RTP/AVPF profile [4].</p></li>
-<li><p>RTP payload type 79 conflicts with RTCP Extended Report (XR) [5] packets.</p></li>
-<li><p>RTP payload type 80 conflicts with Receiver Summary Information (RSI) packets defined in “RTCP Extensions for Single-Source Multicast Sessions with Unicast Feedback” [6].</p></li>
+<li><p>RTP 有效载荷类型 64-65 与原始“H.261 视频流的 RTP 有效载荷格式”（由 RFC 2032 定义，由 RFC 4587 废弃）中定义的（过时的）RTCP FIR 和 NACK 数据包冲突。</p></li>
+<li><p>RTP 有效载荷类型 72-76 与 RTP 规范 (RFC3550) 中定义的 RTCP SR、RR、SDES、BYE 和 APP 数据包冲突。</p></li>
+<li><p>RTP 有效负载类型 77-78 与 RTP/AVPF 配置文件 (RFC 4585) 中定义的 RTCP RTPFB 和 PSFB 数据包冲突。</p></li>
+<li><p>RTP 负载类型 79 与 RTCP 扩展报告 (XR) (RFC 3611) 数据包冲突。</p></li>
+<li><p>RTP 有效负载类型 80 与“具有单播反馈的单源多播会话的 RTCP 扩展”(RFC 5760) 中定义的接收器摘要信息 (RSI) 数据包冲突。</p></li>
 </ul>
 <p>也就是 RTP payload type 64 ~ 95 会和 RTCP 有冲突，所以根据 RFC3551 RTP/AVP profile 的规定，RFC 5761 建议 RTP payload 64 ~ 95 不要再使用， RTP 的动态 payload type 的选择最好在 96 ~ 127 之间</p>
 </div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id8">3. 区分不同的媒体流</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>传统上，一个传输通道只传输一路媒体流，其 RTP 包 的 SSRC 也用来标识这路媒体流。 RTCP 会使用一个单独的传输
+媒体协商的 SDP 中的一个 m-line 也只包含一路或者一对(包括重传 RTX 的媒体流 )媒体流。</p>
+<p>WebRTC 中为避免过多地使用 NAT 技术来穿透防火墙，可用多路复用技术在一个传输通道中传输多路媒体，包括RTCP, 重传的媒体流。</p>
+<p>一个传输通道（五元组: protocol, srcHost, srcPort, destHost, destPort）中包含多路媒体流，也就是有多个 m-line。而一个 m-line 中也可包含多个 ssrc, 即通过联播 Simulcast 技术让 MediaStream 包含多个 MediaStreamTrack（分辨率或码率不同）。</p>
+<p>那么如何辨别这些 MediaStream 和 MediaStreamTrack 呢？ SSRC 和 Payload Type 显然不够，因为 SSRC 会变化，Payload Type 会重复。</p>
+<p>WebRTC 将这些媒体流放在一个 bundle group 中， 通过 mid 来标识媒体流 MediaStream, 通过 rid 来标识媒体流中不同的 MediaStreamTrack, 例如来自相同源的不同质量，分辨率或帧率的流</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">o</span><span class="o">=-</span> <span class="mi">708564895714429943</span> <span class="mi">2</span> <span class="n">IN</span> <span class="n">IP4</span> <span class="mf">127.0.0.1</span>
+<span class="n">s</span><span class="o">=-</span>
+<span class="n">t</span><span class="o">=</span><span class="mi">0</span> <span class="mi">0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">group</span><span class="p">:</span><span class="n">BUNDLE</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span>
+<span class="n">a</span><span class="o">=</span><span class="n">extmap</span><span class="o">-</span><span class="n">allow</span><span class="o">-</span><span class="n">mixed</span>
+<span class="n">a</span><span class="o">=</span><span class="n">msid</span><span class="o">-</span><span class="n">semantic</span><span class="p">:</span> <span class="n">WMS</span> <span class="n">rb3Uanb7CQq8HfZe0gexpjwoNCQai0AbUoQB</span>
+<span class="n">m</span><span class="o">=</span><span class="n">audio</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">TLS</span><span class="o">/</span><span class="n">RTP</span><span class="o">/</span><span class="n">SAVPF</span> <span class="mi">111</span> <span class="mi">63</span> <span class="mi">103</span> <span class="mi">104</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">8</span> <span class="mi">106</span> <span class="mi">105</span> <span class="mi">13</span> <span class="mi">110</span> <span class="mi">112</span> <span class="mi">113</span> <span class="mi">126</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="p">:</span><span class="mi">9</span> <span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">0</span>
+<span class="o">//...</span><span class="n">省略若干属性</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">104648773</span> <span class="n">cname</span><span class="p">:</span><span class="n">XQRmiLwREWI1CiN0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">104648773</span> <span class="n">msid</span><span class="p">:</span><span class="n">rb3Uanb7CQq8HfZe0gexpjwoNCQai0AbUoQB</span> <span class="n">fc805128</span><span class="o">-</span><span class="n">e98d</span><span class="o">-</span><span class="mi">47</span><span class="n">d2</span><span class="o">-</span><span class="n">a9a6</span><span class="o">-</span><span class="n">b8976c91a404</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">104648773</span> <span class="n">mslabel</span><span class="p">:</span><span class="n">rb3Uanb7CQq8HfZe0gexpjwoNCQai0AbUoQB</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">104648773</span> <span class="n">label</span><span class="p">:</span><span class="n">fc805128</span><span class="o">-</span><span class="n">e98d</span><span class="o">-</span><span class="mi">47</span><span class="n">d2</span><span class="o">-</span><span class="n">a9a6</span><span class="o">-</span><span class="n">b8976c91a404</span>
+
+<span class="n">m</span><span class="o">=</span><span class="n">video</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">TLS</span><span class="o">/</span><span class="n">RTP</span><span class="o">/</span><span class="n">SAVPF</span> <span class="mi">96</span> <span class="mi">97</span> <span class="mi">98</span> <span class="mi">99</span> <span class="mi">100</span> <span class="mi">101</span> <span class="mi">127</span> <span class="mi">121</span> <span class="mi">125</span> <span class="mi">107</span> <span class="mi">108</span> <span class="mi">109</span> <span class="mi">124</span> <span class="mi">120</span> <span class="mi">123</span> <span class="mi">119</span> <span class="mi">35</span> <span class="mi">36</span> <span class="mi">41</span> <span class="mi">42</span> <span class="mi">114</span> <span class="mi">115</span> <span class="mi">116</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="p">:</span><span class="mi">9</span> <span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">1</span>
+<span class="o">//...</span><span class="n">省略若干属性</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="o">-</span><span class="n">mux</span>
+<span class="o">//...</span><span class="n">省略若干属性</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rid</span><span class="p">:</span><span class="n">high</span> <span class="n">send</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rid</span><span class="p">:</span><span class="n">middle</span> <span class="n">send</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rid</span><span class="p">:</span><span class="n">low</span> <span class="n">send</span>
+<span class="n">a</span><span class="o">=</span><span class="n">simulcast</span><span class="p">:</span><span class="n">send</span> <span class="n">high</span><span class="p">;</span><span class="n">middle</span><span class="p">;</span><span class="n">low</span>
+
+<span class="n">m</span><span class="o">=</span><span class="n">audio</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">TLS</span><span class="o">/</span><span class="n">RTP</span><span class="o">/</span><span class="n">SAVPF</span> <span class="mi">111</span> <span class="mi">63</span> <span class="mi">103</span> <span class="mi">104</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">8</span> <span class="mi">106</span> <span class="mi">105</span> <span class="mi">13</span> <span class="mi">110</span> <span class="mi">112</span> <span class="mi">113</span> <span class="mi">126</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="p">:</span><span class="mi">9</span> <span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">2</span>
+<span class="o">//...</span><span class="n">省略若干属性</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="o">-</span><span class="n">mux</span>
+
+<span class="o">//...</span><span class="n">省略若干属性</span>
+
+<span class="n">m</span><span class="o">=</span><span class="n">video</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">TLS</span><span class="o">/</span><span class="n">RTP</span><span class="o">/</span><span class="n">SAVPF</span> <span class="mi">96</span> <span class="mi">97</span> <span class="mi">98</span> <span class="mi">99</span> <span class="mi">100</span> <span class="mi">101</span> <span class="mi">102</span> <span class="mi">122</span> <span class="mi">127</span> <span class="mi">121</span> <span class="mi">125</span> <span class="mi">107</span> <span class="mi">108</span> <span class="mi">109</span> <span class="mi">124</span> <span class="mi">120</span> <span class="mi">123</span> <span class="mi">119</span> <span class="mi">35</span> <span class="mi">36</span> <span class="mi">37</span> <span class="mi">38</span> <span class="mi">39</span> <span class="mi">40</span> <span class="mi">41</span> <span class="mi">42</span> <span class="mi">114</span> <span class="mi">115</span> <span class="mi">116</span> <span class="mi">43</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="p">:</span><span class="mi">9</span> <span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">3</span>
+<span class="o">//...</span><span class="n">省略若干属性</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="o">-</span><span class="n">mux</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="o">-</span><span class="n">rsize</span>
+<span class="o">//...</span><span class="n">省略若干属性</span>
+
+<span class="n">m</span><span class="o">=</span><span class="n">application</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">DTLS</span><span class="o">/</span><span class="n">SCTP</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">datachannel</span>
+<span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">pwd</span><span class="p">:</span><span class="n">nTH</span><span class="o">+</span><span class="mi">98</span><span class="n">fL7o</span><span class="o">+</span><span class="n">XacAd</span><span class="o">//</span><span class="n">X7uStI</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">options</span><span class="p">:</span><span class="n">trickle</span>
+<span class="n">a</span><span class="o">=</span><span class="n">fingerprint</span><span class="p">:</span><span class="n">sha</span><span class="o">-</span><span class="mi">256</span> <span class="mi">6</span><span class="n">E</span><span class="p">:</span><span class="n">FD</span><span class="p">:</span><span class="mi">8</span><span class="n">F</span><span class="p">:</span><span class="mi">7</span><span class="n">C</span><span class="p">:</span><span class="n">E7</span><span class="p">:</span><span class="mi">6</span><span class="n">B</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">2</span><span class="n">B</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">D6</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="n">B6</span><span class="p">:</span><span class="n">A6</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">62</span><span class="p">:</span><span class="n">D5</span><span class="p">:</span><span class="mi">7</span><span class="n">E</span><span class="p">:</span><span class="mi">4</span><span class="n">E</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">91</span><span class="p">:</span><span class="mi">37</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="n">BE</span><span class="p">:</span><span class="mi">2</span><span class="n">C</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">3</span><span class="n">F</span><span class="p">:</span><span class="n">B2</span><span class="p">:</span><span class="mi">67</span><span class="p">:</span><span class="mi">6</span><span class="n">F</span><span class="p">:</span><span class="n">DF</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span>
+<span class="n">a</span><span class="o">=</span><span class="n">setup</span><span class="p">:</span><span class="n">actpass</span>
+<span class="n">a</span><span class="o">=</span><span class="n">mid</span><span class="p">:</span><span class="mi">4</span>
+<span class="n">a</span><span class="o">=</span><span class="n">sctp</span><span class="o">-</span><span class="n">port</span><span class="p">:</span><span class="mi">5000</span>
+<span class="n">a</span><span class="o">=</span><span class="nb">max</span><span class="o">-</span><span class="n">message</span><span class="o">-</span><span class="n">size</span><span class="p">:</span><span class="mi">262144</span>
+</pre></div>
+</div>
+<p>RTP 包 会带上 mid 和 rid 的扩展头</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>       <span class="mh">0xBE</span>    <span class="o">|</span>    <span class="mh">0xDE</span>       <span class="o">|</span>           <span class="n">length</span><span class="o">=</span><span class="mi">3</span>            <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>  <span class="n">ID</span>   <span class="o">|</span> <span class="n">L</span><span class="o">=</span><span class="mi">0</span>   <span class="o">|</span>     <span class="n">mid</span>       <span class="o">|</span>  <span class="n">ID</span>   <span class="o">|</span>  <span class="n">L</span><span class="o">=</span><span class="mi">1</span>  <span class="o">|</span>   <span class="n">rid</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+      <span class="o">...</span><span class="n">data</span>   <span class="o">|</span>    <span class="mi">0</span> <span class="p">(</span><span class="n">pad</span><span class="p">)</span>    <span class="o">|</span>    <span class="mi">0</span> <span class="p">(</span><span class="n">pad</span><span class="p">)</span>    <span class="o">|</span>  <span class="n">ID</span>   <span class="o">|</span> <span class="n">L</span><span class="o">=</span><span class="mi">3</span>   <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                          <span class="n">other</span> <span class="n">extension</span>                      <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<p>这样我们就能够通过 mid 和 rid 来区分不同的媒体流</p>
+<p>注意:</p>
+<ol class="arabic simple">
+<li><p>mid 通常用来区分不同的媒体源（麦克风，摄像头或共享屏幕），而 rid 通常用来区分来自一个媒体源所发送的不同质量的媒体流</p></li>
+<li><p>mid 和 rid 并不会始终附加在 RTP 包中，通常只会在开头一直到收到第一个 RTCP RR 包</p></li>
+</ol>
+</div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id7">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5761">RFC5761</a>： Multiplexing RTP Data and Control Packets on a Single Port</p></li>
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8843">RFC8843</a>： Negotiating Media Multiplexing Using the Session Description Protocol (SDP)</p></li>
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8858">RFC8858</a>：Indicating Exclusive Support of RTP and RTP Control Protocol (RTCP) Multiplexing Using the Session Description Protocol (SDP)</p></li>
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8860">RFC8860</a>： Sending Multiple Types of Media in a Single RTP Session</p></li>
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8872">RFC8872</a>： Guidelines for Using the Multiplexing Features of RTP to Support Multiple Media Streams</p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc3550">RFC 3550</a>: RTP 核心协议</p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc3711">RFC 3711</a>: SRTP 安全的 RTP</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc5761.html">RFC 5761</a>:  Multiplexing RTP Data and Control Packets on a Single Port</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc7941.html">RFC 7941</a>: RTP Header Extension for the RTP Control Protocol (RTCP) Source Description Items - 旧版为 draft-ietf-avtext-sdes-hdr-ext-07</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8843.html">RFC 8843</a>: Negotiating Media Multiplexing Using the Session Description Protocol(SDP)</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8851.html">RFC 8851</a>:  RTP Payload Format Restrictions - 旧版为 draft-ietf-mmusic-rid-15</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8852.html">RFC 8852</a>: RTP Stream Identifier Source Description (SDES) draft-ietf-avtext-rid-09</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8853.html">RFC 8853</a>: Using Simulcast in Session Description Protocol (SDP) and RTP Sessions</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8858.html">RFC 8858</a>: Indicating Exclusive Support of RTP and RTP Control Protocol (RTCP) Multiplexing Using the Session Description Protocol (SDP)</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8860.html">RFC 8860</a>:  Sending Multiple Types of Media in a Single RTP Session</p></li>
+<li><p><a class="reference external" href="https://www.rfc-editor.org/rfc/rfc8872.html">RFC 8872</a>:  Guidelines for Using the Multiplexing Features of RTP to Support Multiple Media Streams</p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc8834">RFC 8834</a>: Media Transport and Use of RTP in WebRTC</p></li>
+<li><p><a class="reference external" href="http://tools.ietf.org/html/rfc5245">RFC 5245</a>: Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc8445">RFC 8445</a>: Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal</p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc8489">RFC 8489</a>: Session Traversal Utilities for NAT (STUN)</p></li>
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc5766">RFC 5766</a>: Traversal Using Relays around NAT (TURN):Relay Extensions to Session Traversal Utilities for NAT (STUN)</p></li>
 </ul>
 </div>
 </div>

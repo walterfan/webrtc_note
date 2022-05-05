@@ -323,33 +323,6 @@ SDP Example
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-术语
-==================
-
-*  CNAME: Canonical Endpoint Identifier, defined in [RFC3550]
-
-*  MID: Media Identification, defined in [RFC8843]
-
-*  MSID: MediaStream Identification, defined in [RFC8830]
-
-*  RTCP: Real-time Transport Control Protocol, defined in [RFC3550]
-
-*  RTP: Real-time Transport Protocol, defined in [RFC3550]
-
-*  SDES: Source Description, defined in [RFC3550]
-
-*  SSRC: Synchronization Source, defined in [RFC3550]
-
-传输控制
-==================
-
-* Bandwidth estimation
-* Send control
-* Loas concealment
-* AV sync
-
-.. image:: ../_static/webrtc_flow.png
-   :alt: webrtc_flow
 
 
 参考资料
