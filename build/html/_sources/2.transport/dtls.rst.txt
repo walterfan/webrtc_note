@@ -32,7 +32,7 @@ DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥�
 
 
 
-DTLS 消息，包含 SRTP 密钥的传输及用于 Datat Channel 的 SCTP 消息
+在 WebRTC 中，DTLS 主要用来传输 SRTP 密钥， 以及传输用于 Datat Channel 的 SCTP 消息
 
 
 * UDP packet
@@ -224,7 +224,9 @@ DTLS Timeout and Retransmission State Machine
 Example
 =======================
 
-.. code-block::
+* openssl example
+
+.. code-block:: bash
 
       // Generate a certificate
       openssl ecparam -out key.pem -name prime256v1 -genkey
@@ -237,10 +239,27 @@ Example
       // Use with examples/listen/selfsign/main.go
       openssl s_client -dtls1_2 -connect 127.0.0.1:4444 -debug -cert cert.pem -key key.pem
 
-Conclusion
-=======================
+
+* pion go example
+
+.. code-block:: go
+
+   git clone git@github.com:pion/dtls.git
+   cd dtls
+
+   tcpdump -n port 4444 -i lo0 -Xvnp -s0 -w /tmp/dtls_record.pcap
+
+   # For a DTLS 1.2 Server that listens on 127.0.0.1:4444
+   go run examples/listen/selfsign/main.go
+
+   # For a DTLS 1.2 Client that connects to 127.0.0.1:4444
+   go run examples/dial/selfsign/main.go
+
+
 
 
 
 Reference
 ========================
+* `RFC6347`_: Datagram Transport Layer Security Version 1.2
+* `RFC9147`_: The Datagram Transport Layer Security (DTLS) Protocol Version 1.3

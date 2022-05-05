@@ -65,5 +65,13 @@ To capture 10 - 5 M files for discovery services:
 
 -S will not convert the port number to the most commonly used assignment  (this means the host/dest will display as 10.18.11.20.995 instead of 10.18.11.20.pop3s)
 
-Here is a good primer on TCPDump usage.  https://danielmiessler.com/study/tcpdump/
 
+
+Reference
+====================
+* `TCPDump Primer`_
+* `TCPDump Manual`_
+
+
+.. _TCPDump Primer:  https://danielmiessler.com/study/tcpdump/
+.. _TCPDump Manual: https://www.tcpdump.org/manpages/tcpdump.1.html
