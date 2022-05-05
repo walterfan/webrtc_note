@@ -68,6 +68,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#sdp-example">SDP Example</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#using-ssrc-with-webrtc-simulcast">Using SSRC with WebRTC Simulcast</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">参考资料</a></li>
 </ul>
 </li>
@@ -127,7 +128,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-05</p></td>
+<td><p>2022-05-06</p></td>
 </tr>
 </tbody>
 </table>
@@ -152,7 +153,8 @@
 <li><p><a class="reference internal" href="#sdp-example" id="id14">SDP Example</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id4" id="id15">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#using-ssrc-with-webrtc-simulcast" id="id15">Using SSRC with WebRTC Simulcast</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id16">参考资料</a></p></li>
 </ul>
 </div>
 <div class="section" id="id2">
@@ -409,8 +411,26 @@
 </div>
 </div>
 </div>
+<div class="section" id="using-ssrc-with-webrtc-simulcast">
+<h2><a class="toc-backref" href="#id15">Using SSRC with WebRTC Simulcast</a><a class="headerlink" href="#using-ssrc-with-webrtc-simulcast" title="Permalink to this headline">¶</a></h2>
+<p>it is “draft-alvestrand-mmusic-simulcast-ssrc-01” now , which define “Semantics: Simulcast group”
+(refer to <a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-alvestrand-mmusic-simulcast-ssrc-01">https://datatracker.ietf.org/doc/html/draft-alvestrand-mmusic-simulcast-ssrc-01</a>)</p>
+<p>It describes a convention for sending “a=ssrc” attributes in SDP together with “a=simulcast” attributes.
+This allows SFUs that need SSRC information to have this info easily accessible.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">video</span>
+<span class="n">a</span><span class="o">=</span><span class="n">simulcast</span><span class="p">:</span><span class="n">send</span> <span class="n">hi</span><span class="p">,</span><span class="n">mid</span><span class="p">,</span><span class="n">low</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rid</span><span class="p">:</span><span class="n">hi</span> <span class="n">send</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rid</span><span class="p">:</span><span class="n">mid</span> <span class="n">send</span>
+<span class="n">a</span><span class="o">=</span><span class="n">rid</span><span class="p">:</span><span class="n">low</span> <span class="n">send</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="o">-</span><span class="n">group</span><span class="p">:</span><span class="n">SIM</span> <span class="mi">123</span> <span class="mi">456</span> <span class="mi">789</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">123</span> <span class="n">cname</span><span class="p">:</span><span class="n">foo</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">456</span> <span class="n">cname</span><span class="p">:</span><span class="n">foo</span>
+<span class="n">a</span><span class="o">=</span><span class="n">ssrc</span><span class="p">:</span><span class="mi">789</span> <span class="n">cname</span><span class="p">:</span><span class="n">foo</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id15">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5576">RFC5576</a>: Source-Specific Media Attributes in SDP</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8843">RFC8843</a>: Negotiating Media Multiplexing Using the Session Description Protocol(SDP)</p></li>

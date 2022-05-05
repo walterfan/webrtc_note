@@ -323,6 +323,25 @@ SDP Example
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
+Using SSRC with WebRTC Simulcast
+=========================================
+it is "draft-alvestrand-mmusic-simulcast-ssrc-01" now , which define "Semantics: Simulcast group"
+(refer to https://datatracker.ietf.org/doc/html/draft-alvestrand-mmusic-simulcast-ssrc-01)
+
+It describes a convention for sending "a=ssrc" attributes in SDP together with "a=simulcast" attributes.
+This allows SFUs that need SSRC information to have this info easily accessible.
+
+.. code-block::
+
+   m=video
+   a=simulcast:send hi,mid,low
+   a=rid:hi send
+   a=rid:mid send
+   a=rid:low send
+   a=ssrc-group:SIM 123 456 789
+   a=ssrc:123 cname:foo
+   a=ssrc:456 cname:foo
+   a=ssrc:789 cname:foo
 
 
 参考资料
