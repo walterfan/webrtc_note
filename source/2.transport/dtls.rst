@@ -242,7 +242,7 @@ Example
 
 * pion go example
 
-.. code-block:: go
+.. code-block::
 
    git clone git@github.com:pion/dtls.git
    cd dtls

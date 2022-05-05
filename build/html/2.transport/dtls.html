@@ -340,16 +340,16 @@ openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug 
 <ul class="simple">
 <li><p>pion go example</p></li>
 </ul>
-<div class="highlight-go notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:pion/dtls.git
-cd dtls
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">pion</span><span class="o">/</span><span class="n">dtls</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">dtls</span>
 
-tcpdump -n port 4444 -i lo0 -Xvnp -s0 -w /tmp/dtls_record.pcap
+<span class="n">tcpdump</span> <span class="o">-</span><span class="n">n</span> <span class="n">port</span> <span class="mi">4444</span> <span class="o">-</span><span class="n">i</span> <span class="n">lo0</span> <span class="o">-</span><span class="n">Xvnp</span> <span class="o">-</span><span class="n">s0</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">dtls_record</span><span class="o">.</span><span class="n">pcap</span>
 
-# For a DTLS 1.2 Server that listens on 127.0.0.1:4444
-go run examples/listen/selfsign/main.go
+<span class="c1"># For a DTLS 1.2 Server that listens on 127.0.0.1:4444</span>
+<span class="n">go</span> <span class="n">run</span> <span class="n">examples</span><span class="o">/</span><span class="n">listen</span><span class="o">/</span><span class="n">selfsign</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">go</span>
 
-# For a DTLS 1.2 Client that connects to 127.0.0.1:4444
-go run examples/dial/selfsign/main.go
+<span class="c1"># For a DTLS 1.2 Client that connects to 127.0.0.1:4444</span>
+<span class="n">go</span> <span class="n">run</span> <span class="n">examples</span><span class="o">/</span><span class="n">dial</span><span class="o">/</span><span class="n">selfsign</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">go</span>
 </pre></div>
 </div>
 </div>
