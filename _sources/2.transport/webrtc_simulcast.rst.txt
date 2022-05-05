@@ -327,12 +327,8 @@ SDP Example
 
 参考资料
 ====================
-* `Understanding the Dynamic Behaviour of the Google Congestion Control for RTCWeb`_
-* `GCC Analysis <https://www.aitrans.online/static/paper/Gcc-analysis.pdf>`_
-* `RTP Extensions for Transport-wide Congestion Control`_
-* `A Google Congestion Control Algorithm for Real-Time Communication`_
-
-.. _RTP Extensions for Transport-wide Congestion Control: https://tools.ietf.org/html/draft-holmer-rmcat-transport-wide-cc-extensions-01
-.. _A Google Congestion Control Algorithm for Real-Time Communication:  https://tools.ietf.org/html/draft-ietf-rmcat-gcc-02
-
-.. _Understanding the Dynamic Behaviour of the Google Congestion Control for RTCWeb: https://ieeexplore.ieee.org/document/6691458
+* `RFC5576`_\ : Source-Specific Media Attributes in SDP
+* `RFC8843`_\ : Negotiating Media Multiplexing Using the Session Description Protocol(SDP)
+* `RFC8852`_\ : RTP Stream Identifier Source Description (SDES)
+* `RFC7941`_\ : RTP Header Extension for the RTP Control Protocol (RTCP) Source Description Items
+* `RFC8853`_\ : Using Simulcast in Session Description Protocol (SDP) and RTP Sessions
