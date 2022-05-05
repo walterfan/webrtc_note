@@ -31,6 +31,23 @@ RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向�
 应答方会接收到一个数据通道事件（其类型为 RTCDataChannelEvent），以告知其数据通道已添加到连接中。
 
 
+.. code-block:: javascript
+
+    var pc = new RTCPeerConnection();
+    var dc = pc.createDataChannel("my channel");
+
+    dc.onmessage = function (event) {
+      console.log("received: " + event.data);
+    };
+
+    dc.onopen = function () {
+      console.log("datachannel open");
+    };
+
+    dc.onclose = function () {
+      console.log("datachannel close");
+    };
+
 WebRTC 的 data channel 定义主要在 RFC8831 - "WebRTC Data Channels" 进行了详细阐述
 具体用到的协议 在 RFC8261 - "Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets" 中有详述
 

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Audio Analysis &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -79,7 +78,6 @@
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcasts</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
@@ -114,7 +112,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="audio-analysis">
+  <div class="section" id="audio-analysis">
 <h1>Audio Analysis<a class="headerlink" href="#audio-analysis" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -132,7 +130,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-03</p></td>
+<td><p>2022-05-05</p></td>
 </tr>
 </tbody>
 </table>
@@ -143,7 +141,7 @@
 <li><p><a class="reference internal" href="#id4" id="id7">加窗处理</a></p></li>
 </ul>
 </div>
-<section id="id2">
+<div class="section" id="id2">
 <h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>对于语音文件或流的分析主要包括时域分析和频域分析</p>
 <ol class="arabic simple">
@@ -158,13 +156,13 @@
 <li><p>语谱图 spectrogram</p></li>
 </ol>
 <p>横坐标表示时间，纵坐标表示频率，每个像素的灰度值大小反映相应时刻和相应频率的能量</p>
-</section>
-<section id="id3">
+</div>
+<div class="section" id="id3">
 <h2><a class="toc-backref" href="#id6">分帧</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>语音信号在10 ~ 30ms 范围之内是比较平稳的, 一般分帧就可能取值此在 20ms 左右</p>
 <p>语音是连续的,如果我们将帧起点之前以及之后的信号幅度都设为零, 在进行傅立叶变换时,就会发生 Gibbs phenomenon 吉布斯现象,在不连续点处产生高频分量,导致傅立叶变换后的频谱出现局部峰值. 此外,由于周期信号在分帧过程中被截断,会导致频谱在整个频带内发生拖尾现象,这被称为 spectral leakage 频谱泄漏.</p>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h2><a class="toc-backref" href="#id7">加窗处理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>加窗就是将一帧信号的每个值乘以不同的权重, 将较大的权重赋予靠近窗中心的信号, 将接近零的权重赋予靠近窗边缘的信号,减轻分帧时造成的信号的不连续性.</p>
 <p>常见的窗函数有:</p>
@@ -173,8 +171,8 @@
 <li><p>Hanning window</p></li>
 <li><p>Hamming window</p></li>
 </ol>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

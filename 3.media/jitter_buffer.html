@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jitter Buffer &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -73,7 +72,6 @@
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcasts</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
@@ -107,7 +105,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="jitter-buffer">
+  <div class="section" id="jitter-buffer">
 <h1>Jitter Buffer<a class="headerlink" href="#jitter-buffer" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -125,7 +123,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-03</p></td>
+<td><p>2022-05-05</p></td>
 </tr>
 </tbody>
 </table>
@@ -151,12 +149,12 @@
 </li>
 </ul>
 </div>
-<section id="jitter">
+<div class="section" id="jitter">
 <h2><a class="toc-backref" href="#id3">Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h2>
 <p>抖动是由网络路径上的排队、争用和序列化效应引起的数据包传输延迟的变化。</p>
 <p>一般而言，在慢速或严重拥塞的链路上更可能发生更高级别的抖动。</p>
-</section>
-<section id="audio-quality">
+</div>
+<div class="section" id="audio-quality">
 <h2><a class="toc-backref" href="#id4">Audio Quality</a><a class="headerlink" href="#audio-quality" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>语音的连续性</p></li>
@@ -169,7 +167,7 @@ For example: mute, repeat last packet</p>
 </ul>
 <p>A one-way latency of up to 200 ms is considered acceptable</p>
 <p>Voice overlap becomes a concern when the one-way latency is more than 200 ms</p>
-<section id="id2">
+<div class="section" id="id2">
 <h3><a class="toc-backref" href="#id5">Jitter 分类</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ol class="lowerroman simple">
 <li><p>Type A – constant jitter. This is a roughly constant level of packet to packet delay variation.</p></li>
@@ -189,9 +187,9 @@ For example: mute, repeat last packet</p>
 </ol>
 <p>特点是延迟的增加持续了一定数量的数据包，并且可能伴随着数据包到数据包延迟变化的增加。</p>
 <p>C 类抖动通常与拥塞和路由变化有关。</p>
-</section>
-</section>
-<section id="jitter-buffer-overview">
+</div>
+</div>
+<div class="section" id="jitter-buffer-overview">
 <h2><a class="toc-backref" href="#id6">Jitter buffer Overview</a><a class="headerlink" href="#jitter-buffer-overview" title="Permalink to this headline">¶</a></h2>
 <p>The network delivers RTP packets asynchronously, with variable delays.</p>
 <p>To be able to play the audio stream with reasonable quality, the receiving endpoint needs to turn the variable delays into constant delays.</p>
@@ -206,7 +204,7 @@ For example: mute, repeat last packet</p>
 <li><p>place incoming audio frames to the buffer</p></li>
 <li><p>start the playout when the buffer has at least 40ms data (delay = 40ms)</p></li>
 </ul>
-<section id="how-long-jb-is-better">
+<div class="section" id="how-long-jb-is-better">
 <h3><a class="toc-backref" href="#id7">How long JB is better?</a><a class="headerlink" href="#how-long-jb-is-better" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Latency/delay 设置得比较小，声音虽然及时了，但就有更大几率会出现 packet loss，导致音质不好</p></li>
@@ -215,9 +213,9 @@ For example: mute, repeat last packet</p>
 <p>At the sending side, packets are sent in a continuous stream with the packets spaced evenly apart. Due to network congestion, improper queuing, or configuration errors, this steady stream can become lumpy, or the delay between each packet can vary instead of remaining constant.</p>
 <p>When a router receives a Real-Time Protocol (RTP) audio stream for Voice over IP (VoIP), it must compensate for the jitter that is encountered. The mechanism that handles this function is the playout delay buffer. The playout delay buffer must buffer these packets and then play them out in a steady stream to the digital signal processors (DSPs) to be converted back to an analog audio stream. The playout delay buffer is  referred to as the Jitter Buffer.</p>
 <p>If the jitter is so large that it causes packets to be received out of the range of this buffer, the out-of-range packets are discarded and dropouts are heard in the audio. For losses as small as one packet, the DSP interpolates what it thinks the audio should be and no problem is audible. When jitter exceeds what the DSP can do to make up for the missing packets, audio problems are heard.</p>
-</section>
-</section>
-<section id="jitter-buffer-purpose">
+</div>
+</div>
+<div class="section" id="jitter-buffer-purpose">
 <h2><a class="toc-backref" href="#id8">Jitter Buffer Purpose</a><a class="headerlink" href="#jitter-buffer-purpose" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Absorb packet arrival variability to a decoder interface
@@ -229,10 +227,10 @@ Delays a stream to match the playout of another: lip sync is an example</p></li>
 <li><p>Re-order the arrived packets</p></li>
 <li><p>Determine packet loss</p></li>
 </ul>
-</section>
-<section id="jitter-buffer-types">
+</div>
+<div class="section" id="jitter-buffer-types">
 <h2><a class="toc-backref" href="#id9">Jitter Buffer types</a><a class="headerlink" href="#jitter-buffer-types" title="Permalink to this headline">¶</a></h2>
-<section id="fixed-jitter-buffer">
+<div class="section" id="fixed-jitter-buffer">
 <h3><a class="toc-backref" href="#id10">Fixed Jitter Buffer</a><a class="headerlink" href="#fixed-jitter-buffer" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Latency is fixed</p></li>
@@ -240,8 +238,8 @@ Delays a stream to match the playout of another: lip sync is an example</p></li>
 <li><p>Easy to implement.</p></li>
 <li><p>Voice quality will be not good if jitter has large changes.</p></li>
 </ul>
-</section>
-<section id="adaptive-jitter-buffer">
+</div>
+<div class="section" id="adaptive-jitter-buffer">
 <h3><a class="toc-backref" href="#id11">Adaptive Jitter Buffer</a><a class="headerlink" href="#adaptive-jitter-buffer" title="Permalink to this headline">¶</a></h3>
 <p>trait：</p>
 <ul class="simple">
@@ -255,9 +253,9 @@ Delays a stream to match the playout of another: lip sync is an example</p></li>
 <li><p>Not easy to implement.</p></li>
 <li><p>By using good time scaling algorithms, voice quality may not be impacted by large changes of jitter.</p></li>
 </ul>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
