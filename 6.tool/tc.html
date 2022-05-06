@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Linux Traffic Control &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -120,7 +121,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="linux-traffic-control">
+  <section id="linux-traffic-control">
 <h1>Linux Traffic Control<a class="headerlink" href="#linux-traffic-control" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -255,11 +256,11 @@
 <li><p><a class="reference internal" href="#id10" id="id86">参考资料</a></p></li>
 </ul>
 </div>
-<div class="section" id="id2">
+<section id="id2">
 <h2><a class="toc-backref" href="#id11">简介</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题</p>
-</div>
-<div class="section" id="tc">
+</section>
+<section id="tc">
 <h2><a class="toc-backref" href="#id12">TC 中的基本概念</a><a class="headerlink" href="#tc" title="Permalink to this headline">¶</a></h2>
 <p>Tc 用于在 Linux 内核中配置流量控制。流量控制包括以下内容：</p>
 <ul class="simple">
@@ -308,7 +309,7 @@
 <p>如果 minor 为0，则此参数将对象明确标识为qdisc。任何其他值将对象标识为 class。所有共享 parent 的 clas 都必须具有唯一的次要编号。</p>
 <p>特殊 handle - ffff:0 为 ingress qdisc 保留。</p>
 <p>handle 在 tc filter 语句的 classid 和 flowid 短语中用作目标。这些 handle 是对象的外部标识符，可供用户级应用程序使用。内核维护每个对象的内部标识符。</p>
-<div class="section" id="qdiscs">
+<section id="qdiscs">
 <h3><a class="toc-backref" href="#id13">QDISCS</a><a class="headerlink" href="#qdiscs" title="Permalink to this headline">¶</a></h3>
 <p>qdisc 是 “queueing discipline”（排队规则）的缩写，它是理解流量控制的基础。
 每当内核需要向接口发送数据包时，它就会被放入为该接口配置的 qdisc 队列中。
@@ -322,25 +323,25 @@
 <p>用于入口的流量控制的为 ingress qdisc, 它有一定的限制，不允许创建子类，仅仅作为可以附加 filter 的对象存在。
 一个 ingress qdisc 只能支持一个 policer 以限制其接收的流量</p>
 <p>简而言之， 我们可以使用 egress qdisc 做更多的控制，因为它包含真正全功能的 qdisc</p>
-<div class="section" id="classful-qdiscs">
+<section id="classful-qdiscs">
 <h4><a class="toc-backref" href="#id14">classful qdiscs</a><a class="headerlink" href="#classful-qdiscs" title="Permalink to this headline">¶</a></h4>
 <p>classful qdiscs 可以包含 class，并提供一个 handle 来附加 filter。</p>
 <p>classful qdiscs 当然也可以不包含 class，尽管这样做没有任何好处，只是空转并消耗系统资源。</p>
-</div>
-<div class="section" id="classless-qdiscs">
+</section>
+<section id="classless-qdiscs">
 <h4><a class="toc-backref" href="#id15">classless qdiscs</a><a class="headerlink" href="#classless-qdiscs" title="Permalink to this headline">¶</a></h4>
 <p>classless qdiscs 不能包含任何 class, 也不能附着任何 filter， 因为 classless qdiscs 不包含任何类型的子类，所以称之为无类的 qdisc</p>
-</div>
-</div>
-<div class="section" id="classes">
+</section>
+</section>
+<section id="classes">
 <h3><a class="toc-backref" href="#id16">CLASSES</a><a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
 <p>classful qdisc 可以包含类，这些类可包含更多的 qdiscs - 然后流量可以在任何内部 qdisc 中排队，这些内部 qdisc 在类中。
 当内核试图从这样一个有类的 qdisc 队列中取出一个数据包时，它可以来自任何类。</p>
 <p>例如，一个 qdisc 可以通过尝试在其他类之前从某些类中出列来对某些类型的流量进行优先级排序。</p>
 <p>任意的 class 也可以附加任意数量的 filter ，这允许选择子类或使用 filter 重新分类或丢弃进入特定类的流量。</p>
 <p>叶类 leaf class 是 qdisc 中的终端类。 它包含一个 qdisc（默认 FIFO）并且永远不会包含子类。 任何包含子类的类都是内部类（或根类），而不是叶类。</p>
-</div>
-<div class="section" id="filters">
+</section>
+<section id="filters">
 <h3><a class="toc-backref" href="#id17">FILTERS 过滤器</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
 <p>过滤器 filter 是Linux流量控制系统中最复杂的组件。 过滤器提供了一种方便的机制，可以将流量控制的几个关键元素粘合在一起。</p>
 <p>过滤器最简单、最明显的作用是对数据包进行分类。 Linux 过滤器允许用户使用几个不同的过滤器或单个过滤器将数据包分类到一个输出队列中。</p>
@@ -350,48 +351,48 @@
 <p>附加到该类的所有过滤器都会被调用，直到其中一个过滤器返回结果。 如果没有作出裁决，则可能有其他标准可用。 这因 qdisc 的不同而不同。</p>
 <p>重要的是要注意过滤器驻留在 qdiscs 中——它们从属于 qdisc，是从属者而非掌控者。</p>
 <p>可用的过滤器有:</p>
-<div class="section" id="basic">
+<section id="basic">
 <h4><a class="toc-backref" href="#id18">basic</a><a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h4>
 <p>Filter packets based on an ematch expression. See tc-ematch(8) for details.</p>
-</div>
-<div class="section" id="bpf">
+</section>
+<section id="bpf">
 <h4><a class="toc-backref" href="#id19">bpf</a><a class="headerlink" href="#bpf" title="Permalink to this headline">¶</a></h4>
 <p>Filter packets using (e)BPF, see tc-bpf(8) for details.</p>
-</div>
-<div class="section" id="cgroup">
+</section>
+<section id="cgroup">
 <h4><a class="toc-backref" href="#id20">cgroup</a><a class="headerlink" href="#cgroup" title="Permalink to this headline">¶</a></h4>
 <p>Filter packets based on the control group of their process. See tc-cgroup(8) for details.</p>
-</div>
-<div class="section" id="flow-flower">
+</section>
+<section id="flow-flower">
 <h4><a class="toc-backref" href="#id21">flow, flower</a><a class="headerlink" href="#flow-flower" title="Permalink to this headline">¶</a></h4>
 <p>Flow-based classifiers, filtering packets based on their flow (identified by selectable keys). See tc-flow(8) and tc-flower(8) for details.</p>
-</div>
-<div class="section" id="fw">
+</section>
+<section id="fw">
 <h4><a class="toc-backref" href="#id22">fw</a><a class="headerlink" href="#fw" title="Permalink to this headline">¶</a></h4>
 <p>Filter based on fwmark. Directly maps fwmark value to traffic class. See tc-fw(8).</p>
-</div>
-<div class="section" id="route">
+</section>
+<section id="route">
 <h4><a class="toc-backref" href="#id23">route</a><a class="headerlink" href="#route" title="Permalink to this headline">¶</a></h4>
 <p>Filter packets based on routing table. See tc-route(8) for  details.</p>
-</div>
-<div class="section" id="rsvp">
+</section>
+<section id="rsvp">
 <h4><a class="toc-backref" href="#id24">rsvp</a><a class="headerlink" href="#rsvp" title="Permalink to this headline">¶</a></h4>
 <p>Match Resource Reservation Protocol (RSVP) packets.</p>
-</div>
-<div class="section" id="tcindex">
+</section>
+<section id="tcindex">
 <h4><a class="toc-backref" href="#id25">tcindex</a><a class="headerlink" href="#tcindex" title="Permalink to this headline">¶</a></h4>
 <p>Filter packets based on traffic control index. See tc-tcindex(8).</p>
-</div>
-<div class="section" id="u32">
+</section>
+<section id="u32">
 <h4><a class="toc-backref" href="#id26">u32</a><a class="headerlink" href="#u32" title="Permalink to this headline">¶</a></h4>
 <p>Generic filtering on arbitrary packet data, assisted by syntax to abstract common operations. See tc-u32(8) for details.</p>
-</div>
-<div class="section" id="matchall">
+</section>
+<section id="matchall">
 <h4><a class="toc-backref" href="#id27">matchall</a><a class="headerlink" href="#matchall" title="Permalink to this headline">¶</a></h4>
 <p>Traffic control filter that matches every packet. See tc-matchall(8) for details.</p>
-</div>
-</div>
-<div class="section" id="qevents">
+</section>
+</section>
+<section id="qevents">
 <h3><a class="toc-backref" href="#id28">QEVENTS</a><a class="headerlink" href="#qevents" title="Permalink to this headline">¶</a></h3>
 <p>当 qdisc 中发生某些有趣的事件时，Qdisc 可能会调用用户配置的操作。 每个 qevent 可以不使用，也可以附加一个块。 然后使用 <cite>tc block BLOCK_IDX</cite> 语法将过滤器附加到该块。</p>
 <p>当与连接点关联的 qevent 发生时，执行该块。 例如，数据包可能会被丢弃或延迟等，具体取决于所讨论的 qdisc 和 qevent。</p>
@@ -403,35 +404,35 @@
 <span class="n">mirror</span> <span class="n">dev</span> <span class="n">eth1</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="classless-qdiscs-qdiscs">
+</section>
+<section id="classless-qdiscs-qdiscs">
 <h3><a class="toc-backref" href="#id29">CLASSLESS QDISCS 不可分类 QDISCS</a><a class="headerlink" href="#classless-qdiscs-qdiscs" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="choke">
+<section id="choke">
 <h4><a class="toc-backref" href="#id30">choke</a><a class="headerlink" href="#choke" title="Permalink to this headline">¶</a></h4>
 <p>CHOKe (CHOose and Keep for responsive flows, CHOose and
 Kill for unresponsive flows) is a classless qdisc designed
 to both identify and penalize flows that monopolize the
 queue. CHOKe is a variation of RED, and the configuration
 is similar to RED.</p>
-</div>
-<div class="section" id="codel">
+</section>
+<section id="codel">
 <h4><a class="toc-backref" href="#id31">codel</a><a class="headerlink" href="#codel" title="Permalink to this headline">¶</a></h4>
 <p>CoDel (pronounced “coddle”) is an adaptive “no-knobs”
 active queue management algorithm (AQM) scheme that was
 developed to address the shortcomings of RED and its
 variants.</p>
-</div>
-<div class="section" id="p-b-fifo">
+</section>
+<section id="p-b-fifo">
 <h4><a class="toc-backref" href="#id32">[p|b]fifo</a><a class="headerlink" href="#p-b-fifo" title="Permalink to this headline">¶</a></h4>
 <p>Simplest usable qdisc, pure First In, First Out behaviour.
 Limited in packets or in bytes.</p>
-</div>
-<div class="section" id="fq">
+</section>
+<section id="fq">
 <h4><a class="toc-backref" href="#id33">fq</a><a class="headerlink" href="#fq" title="Permalink to this headline">¶</a></h4>
 <p>Fair Queue Scheduler realises TCP pacing and scales to
 millions of concurrent flows per qdisc.</p>
-</div>
-<div class="section" id="fq-codel">
+</section>
+<section id="fq-codel">
 <h4><a class="toc-backref" href="#id34">fq_codel</a><a class="headerlink" href="#fq-codel" title="Permalink to this headline">¶</a></h4>
 <p>Fair Queuing Controlled Delay is queuing discipline that
 combines Fair Queuing with the CoDel AQM scheme. FQ_Codel
@@ -441,8 +442,8 @@ bandwidth to all the flows using the queue. Each such flow
 is managed by the CoDel queuing discipline. Reordering
 within a flow is avoided since Codel internally uses a
 FIFO queue.</p>
-</div>
-<div class="section" id="fq-pie">
+</section>
+<section id="fq-pie">
 <h4><a class="toc-backref" href="#id35">fq_pie</a><a class="headerlink" href="#fq-pie" title="Permalink to this headline">¶</a></h4>
 <p>FQ-PIE (Flow Queuing with Proportional Integral controller
 Enhanced) is a queuing discipline that combines Flow
@@ -451,28 +452,28 @@ hash function to classify incoming packets into different
 flows and is used to provide a fair share of the bandwidth
 to all the flows using the qdisc. Each such flow is
 managed by the PIE algorithm.</p>
-</div>
-<div class="section" id="gred">
+</section>
+<section id="gred">
 <h4><a class="toc-backref" href="#id36">gred</a><a class="headerlink" href="#gred" title="Permalink to this headline">¶</a></h4>
 <p>Generalized Random Early Detection combines multiple RED
 queues in order to achieve multiple drop priorities. This
 is required to realize Assured Forwarding (RFC 2597).</p>
-</div>
-<div class="section" id="hhf">
+</section>
+<section id="hhf">
 <h4><a class="toc-backref" href="#id37">hhf</a><a class="headerlink" href="#hhf" title="Permalink to this headline">¶</a></h4>
 <p>Heavy-Hitter Filter differentiates between small flows and
 the opposite, heavy-hitters. The goal is to catch the
 heavy-hitters and move them to a separate queue with less
 priority so that bulk traffic does not affect the latency
 of critical traffic.</p>
-</div>
-<div class="section" id="ingress">
+</section>
+<section id="ingress">
 <h4><a class="toc-backref" href="#id38">ingress</a><a class="headerlink" href="#ingress" title="Permalink to this headline">¶</a></h4>
 <p>This is a special qdisc as it applies to incoming traffic
 on an interface, allowing for it to be filtered and
 policed.</p>
-</div>
-<div class="section" id="mqprio">
+</section>
+<section id="mqprio">
 <h4><a class="toc-backref" href="#id39">mqprio</a><a class="headerlink" href="#mqprio" title="Permalink to this headline">¶</a></h4>
 <p>The Multiqueue Priority Qdisc is a simple queuing
 discipline that allows mapping traffic flows to hardware
@@ -480,49 +481,49 @@ queue ranges using priorities and a configurable priority
 to traffic class mapping. A traffic class in this context
 is a set of contiguous qdisc classes which map 1:1 to a
 set of hardware exposed queues.</p>
-</div>
-<div class="section" id="multiq">
+</section>
+<section id="multiq">
 <h4><a class="toc-backref" href="#id40">multiq</a><a class="headerlink" href="#multiq" title="Permalink to this headline">¶</a></h4>
 <p>Multiqueue is a qdisc optimized for devices with multiple
 Tx queues. It has been added for hardware that wishes to
 avoid head-of-line blocking.  It will cycle though the
 bands and verify that the hardware queue associated with
 the band is not stopped prior to dequeuing a packet.</p>
-</div>
-<div class="section" id="netem">
+</section>
+<section id="netem">
 <h4><a class="toc-backref" href="#id41"><strong>netem</strong></a><a class="headerlink" href="#netem" title="Permalink to this headline">¶</a></h4>
 <p>Network Emulator is an enhancement of the Linux traffic
 control facilities that allow to add delay, packet loss,
 duplication and more other characteristics to packets
 outgoing from a selected network interface.</p>
-</div>
-<div class="section" id="pfifo-fast">
+</section>
+<section id="pfifo-fast">
 <h4><a class="toc-backref" href="#id42">pfifo_fast</a><a class="headerlink" href="#pfifo-fast" title="Permalink to this headline">¶</a></h4>
 <p>Standard qdisc for ‘Advanced Router’ enabled kernels.
 Consists of a three-band queue which honors Type of
 Service flags, as well as the priority that may be
 assigned to a packet.</p>
-</div>
-<div class="section" id="pie">
+</section>
+<section id="pie">
 <h4><a class="toc-backref" href="#id43">pie</a><a class="headerlink" href="#pie" title="Permalink to this headline">¶</a></h4>
 <p>Proportional Integral controller-Enhanced (PIE) is a
 control theoretic active queue management scheme. It is
 based on the proportional integral controller but aims to
 control delay.</p>
-</div>
-<div class="section" id="red">
+</section>
+<section id="red">
 <h4><a class="toc-backref" href="#id44">red</a><a class="headerlink" href="#red" title="Permalink to this headline">¶</a></h4>
 <p>Random Early Detection simulates physical congestion by
 randomly dropping packets when nearing configured
 bandwidth allocation. Well suited to very large bandwidth
 applications.</p>
-</div>
-<div class="section" id="rr">
+</section>
+<section id="rr">
 <h4><a class="toc-backref" href="#id45">rr</a><a class="headerlink" href="#rr" title="Permalink to this headline">¶</a></h4>
 <p>Round-Robin qdisc with support for multiqueue network
 devices. Removed from Linux since kernel version 2.6.27.</p>
-</div>
-<div class="section" id="sfb">
+</section>
+<section id="sfb">
 <h4><a class="toc-backref" href="#id46">sfb</a><a class="headerlink" href="#sfb" title="Permalink to this headline">¶</a></h4>
 <p>Stochastic Fair Blue is a classless qdisc to manage
 congestion based on packet loss and link utilization
@@ -532,20 +533,20 @@ packets) from impacting performance of responsive flows.
 Unlike RED, where the marking probability has to be
 configured, BLUE tries to determine the ideal marking
 probability automatically.</p>
-</div>
-<div class="section" id="sfq">
+</section>
+<section id="sfq">
 <h4><a class="toc-backref" href="#id47">sfq</a><a class="headerlink" href="#sfq" title="Permalink to this headline">¶</a></h4>
 <p>Stochastic Fairness Queueing reorders queued traffic so
 each ‘session’ gets to send a packet in turn.</p>
-</div>
-<div class="section" id="tbf">
+</section>
+<section id="tbf">
 <h4><a class="toc-backref" href="#id48">tbf</a><a class="headerlink" href="#tbf" title="Permalink to this headline">¶</a></h4>
 <p>The Token Bucket Filter is suited for slowing traffic down
 to a precisely configured rate. Scales well to large
 bandwidths.</p>
-</div>
-</div>
-<div class="section" id="id3">
+</section>
+</section>
+<section id="id3">
 <h3><a class="toc-backref" href="#id49">配置 CLASSLESS QDISCS</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>In the absence of classful qdiscs, classless qdiscs can only be
 attached at the root of a device. Full syntax:</p>
@@ -557,112 +558,112 @@ attached at the root of a device. Full syntax:</p>
 </pre></div>
 </div>
 <p>The pfifo_fast qdisc is the automatic default in the absence of a configured qdisc.</p>
-</div>
-<div class="section" id="classful-qdiscs-qdiscs">
+</section>
+<section id="classful-qdiscs-qdiscs">
 <h3><a class="toc-backref" href="#id50">CLASSFUL QDISCS 可分类 QDISCS</a><a class="headerlink" href="#classful-qdiscs-qdiscs" title="Permalink to this headline">¶</a></h3>
 <p>可分类的 qdiscs 有:</p>
-<div class="section" id="atm">
+<section id="atm">
 <h4><a class="toc-backref" href="#id51">ATM</a><a class="headerlink" href="#atm" title="Permalink to this headline">¶</a></h4>
 <p>Map flows to virtual circuits of an underlying asynchronous transfer mode device.</p>
-</div>
-<div class="section" id="cbq">
+</section>
+<section id="cbq">
 <h4><a class="toc-backref" href="#id52">CBQ</a><a class="headerlink" href="#cbq" title="Permalink to this headline">¶</a></h4>
 <p>Class Based Queueing implements a rich linksharing hierarchy of classes.
 It contains shaping elements as well as prioritizing capabilities.</p>
 <p>Shaping is performed using link idle time calculations based on average packet size and underlying link bandwidth.</p>
 <p>The latter may be ill-defined for some interfaces.</p>
-</div>
-<div class="section" id="drr">
+</section>
+<section id="drr">
 <h4><a class="toc-backref" href="#id53">DRR</a><a class="headerlink" href="#drr" title="Permalink to this headline">¶</a></h4>
 <p>The Deficit Round Robin Scheduler is a more flexible replacement for Stochastic Fairness Queuing.</p>
 <p>Unlike SFQ,there are no built-in queues – you need to add classes and then set up filters to classify packets accordingly.
 This can be useful e.g. for using RED qdiscs with different settings for particular traffic.</p>
 <p>There is no default class – if a packet cannot be classified, it is dropped.</p>
-</div>
-<div class="section" id="dsmark">
+</section>
+<section id="dsmark">
 <h4><a class="toc-backref" href="#id54">DSMARK</a><a class="headerlink" href="#dsmark" title="Permalink to this headline">¶</a></h4>
 <p>Classify packets based on TOS field, change TOS field of  packets based on classification.</p>
-</div>
-<div class="section" id="ets">
+</section>
+<section id="ets">
 <h4><a class="toc-backref" href="#id55">ETS</a><a class="headerlink" href="#ets" title="Permalink to this headline">¶</a></h4>
 <p>The ETS qdisc is a queuing discipline that merges functionality of PRIO and DRR qdiscs in one scheduler.</p>
 <p>ETS makes it easy to configure a set of strict and bandwidth-sharing bands to implement the transmission selection described in 802.1Qaz.</p>
-</div>
-<div class="section" id="hfsc">
+</section>
+<section id="hfsc">
 <h4><a class="toc-backref" href="#id56">HFSC</a><a class="headerlink" href="#hfsc" title="Permalink to this headline">¶</a></h4>
 <p>Hierarchical Fair Service Curve guarantees precise bandwidth and delay allocation for leaf classes and
 allocates excess bandwidth fairly.</p>
 <p>Unlike HTB, it makes use of packet dropping to achieve low delays which interactive sessions benefit from.</p>
-</div>
-<div class="section" id="htb">
+</section>
+<section id="htb">
 <h4><a class="toc-backref" href="#id57">HTB</a><a class="headerlink" href="#htb" title="Permalink to this headline">¶</a></h4>
 <p>The Hierarchy Token Bucket implements a rich linksharing hierarchy of classes with an emphasis on conforming to existing practices.</p>
 <p>HTB facilitates guaranteeing bandwidth to classes, while also allowing specification of upper limits to inter-class sharing.</p>
 <p>It contains shaping elements, based on TBF and can prioritize classes.</p>
-</div>
-<div class="section" id="prio">
+</section>
+<section id="prio">
 <h4><a class="toc-backref" href="#id58">PRIO</a><a class="headerlink" href="#prio" title="Permalink to this headline">¶</a></h4>
 <p>The PRIO qdisc is a non-shaping container for a configurable number of classes which are dequeued in        order.</p>
 <p>This allows for easy prioritization of traffic, where lower classes are only able to send if higher ones        have no packets available.</p>
 <p>To facilitate configuration, Type Of Service bits are honored by default.</p>
-</div>
-<div class="section" id="qfq">
+</section>
+<section id="qfq">
 <h4><a class="toc-backref" href="#id59">QFQ</a><a class="headerlink" href="#qfq" title="Permalink to this headline">¶</a></h4>
 <p>Quick Fair Queueing is an O(1) scheduler that provides near-optimal guarantees, and is the first to achieve that goal with a constant cost also with respect to the number of groups and the packet length.</p>
 <p>The QFQ algorithm has no loops, and uses very simple instructions and data structures that lend themselves very well to a hardware implementation.</p>
-</div>
-</div>
-</div>
-<div class="section" id="id4">
+</section>
+</section>
+</section>
+<section id="id4">
 <h2><a class="toc-backref" href="#id60">TC 用法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id5">
+<section id="id5">
 <h3><a class="toc-backref" href="#id61">命令</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="add">
+<section id="add">
 <h4><a class="toc-backref" href="#id62">add</a><a class="headerlink" href="#add" title="Permalink to this headline">¶</a></h4>
 <p>Add a qdisc, class or filter to a node. For all entities,
 a parent must be passed, either by passing its ID or by
 attaching directly to the root of a device.  When creating
 a qdisc or a filter, it can be named with the handle
 parameter. A class is named with the classid parameter.</p>
-</div>
-<div class="section" id="delete">
+</section>
+<section id="delete">
 <h4><a class="toc-backref" href="#id63">delete</a><a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h4>
 <p>A qdisc can be deleted by specifying its handle, which may
 also be ‘root’. All subclasses and their leaf qdiscs are
 automatically deleted, as well as any filters attached to
 them.</p>
-</div>
-<div class="section" id="change">
+</section>
+<section id="change">
 <h4><a class="toc-backref" href="#id64">change</a><a class="headerlink" href="#change" title="Permalink to this headline">¶</a></h4>
 <p>Some entities can be modified ‘in place’. Shares the
 syntax of ‘add’, with the exception that the handle cannot
 be changed and neither can the parent. In other words,
 change cannot move a node.</p>
-</div>
-<div class="section" id="replace">
+</section>
+<section id="replace">
 <h4><a class="toc-backref" href="#id65">replace</a><a class="headerlink" href="#replace" title="Permalink to this headline">¶</a></h4>
 <p>Performs a nearly atomic remove/add on an existing node
 id. If the node does not exist yet it is created.</p>
-</div>
-<div class="section" id="get">
+</section>
+<section id="get">
 <h4><a class="toc-backref" href="#id66">get</a><a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h4>
 <p>Displays a single filter given the interface DEV, qdisc-
 id, priority, protocol and filter-id.</p>
-</div>
-<div class="section" id="show">
+</section>
+<section id="show">
 <h4><a class="toc-backref" href="#id67">show</a><a class="headerlink" href="#show" title="Permalink to this headline">¶</a></h4>
 <p>Displays all filters attached to the given interface. A
 valid parent ID must be passed.</p>
-</div>
-<div class="section" id="link">
+</section>
+<section id="link">
 <h4><a class="toc-backref" href="#id68">link</a><a class="headerlink" href="#link" title="Permalink to this headline">¶</a></h4>
 <p>Only available for qdiscs and performs a replace where the
 node must exist already.</p>
-</div>
-</div>
-<div class="section" id="id6">
+</section>
+</section>
+<section id="id6">
 <h3><a class="toc-backref" href="#id69">TC 命令实例</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="usage">
+<section id="usage">
 <h4><a class="toc-backref" href="#id70">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Usage: tc [ OPTIONS ] OBJECT { COMMAND | help }
 where  OBJECT := { qdisc | class | filter }
@@ -689,8 +690,8 @@ tc filter add dev enp0s3 parent <span class="m">1</span>:0 protocol ip prio <spa
 tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m">2</span>: netem delay 1500ms  loss <span class="m">1</span>%
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-1">
+</section>
+<section id="example-1">
 <h4><a class="toc-backref" href="#id71">Example 1</a><a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc qdisc add    \ (1)</span>
 <span class="o">&gt;</span>    <span class="n">dev</span> <span class="n">eth0</span>     \ <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -705,8 +706,8 @@ tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m
 <span class="o">-</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">queuing</span> <span class="n">discipline</span> <span class="n">to</span> <span class="n">attach</span><span class="p">,</span> <span class="n">HTB</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">example</span><span class="o">.</span> <span class="n">Queuing</span> <span class="n">discipline</span> <span class="n">specific</span> <span class="n">parameters</span> <span class="n">will</span> <span class="n">follow</span> <span class="n">this</span><span class="o">.</span> <span class="n">In</span> <span class="n">the</span> <span class="n">example</span> <span class="n">here</span><span class="p">,</span> <span class="n">we</span> <span class="n">add</span> <span class="n">no</span> <span class="n">qdisc</span><span class="o">-</span><span class="n">specific</span> <span class="n">parameters</span><span class="o">.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-3">
+</section>
+<section id="example-3">
 <h4><a class="toc-backref" href="#id72">Example 3</a><a class="headerlink" href="#example-3" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc class add    \ (1)</span>
 <span class="o">&gt;</span>    <span class="n">dev</span> <span class="n">eth0</span>     \ <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -724,8 +725,8 @@ tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m
 <span class="o">-</span> <span class="p">(</span><span class="mi">6</span><span class="p">)(</span><span class="mi">7</span><span class="p">)</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="k">class</span> <span class="nc">specific</span> <span class="n">parameter</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-4">
+</section>
+<section id="example-4">
 <h4><a class="toc-backref" href="#id73">Example 4</a><a class="headerlink" href="#example-4" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># tc filter add               \ (1)
 &gt;    dev eth0                 \ (2)
@@ -757,10 +758,10 @@ tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m
 - (14) The action indicates what should be done if the rate based on the attributes of the policer. The first word specifies the action to take if the policer has been exceeded. The second word specifies action to take otherwise.
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="tc-tbf">
+</section>
+</section>
+</section>
+<section id="tc-tbf">
 <h2><a class="toc-backref" href="#id74">tc-tbf</a><a class="headerlink" href="#tc-tbf" title="Permalink to this headline">¶</a></h2>
 <p>tbf 即 Token Bucket Filter 令牌桶过滤器，参见 <a class="reference external" href="https://man7.org/linux/man-pages/man8/tc-tbf.8.html">tc-tbf</a></p>
 <p>令牌桶过滤器是一种分类队列规则，可用于使用 tc(8) 命令进行流量控制。</p>
@@ -777,7 +778,7 @@ tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m
 <span class="n">minburst</span><span class="o">.</span>
 </pre></div>
 </div>
-<div class="section" id="id8">
+<section id="id8">
 <h3><a class="toc-backref" href="#id75">实例</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>附加一个持续最大速率为 0.5 mbit/s, 峰值速率为 1.0 mbit/s, 5 KB 缓冲区的 TBF, 计算了预存储桶队列大小限制, 因此 TBF 导致最多 70 毫秒的延迟，具有完美的峰值速率行为， 命令如下：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc qdisc add dev eth0 handle <span class="m">10</span>: root tbf rate <span class="m">0</span>.5mbit <span class="se">\</span>
@@ -790,9 +791,9 @@ minburst <span class="m">1540</span>
 </pre></div>
 </div>
 <p>没有内部 qdisc TBF 队列充当 bfifo。 如果更改了内部 qdisc，则限制/延迟不再有效。</p>
-</div>
-</div>
-<div class="section" id="tc-netem">
+</section>
+</section>
+<section id="tc-netem">
 <h2><a class="toc-backref" href="#id76">tc-netem</a><a class="headerlink" href="#tc-netem" title="Permalink to this headline">¶</a></h2>
 <p>NetEm 即 Network Emulator 网络模拟器， 参见 <a class="reference external" href="https://man7.org/linux/man-pages/man8/tc-netem.8.html">tc-netem</a></p>
 <p>NetEm 是 Linux 流量控制工具的增强版，它允许为从选定网络接口传出的数据包添加延迟、数据包丢失、重复和更多其他特征。
@@ -831,11 +832,11 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc qdisc add dev eth0 root netem rate 5kbit <span class="m">20</span> <span class="m">100</span> <span class="m">5</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="netimpair">
+</section>
+<section id="netimpair">
 <h2><a class="toc-backref" href="#id77">netimpair</a><a class="headerlink" href="#netimpair" title="Permalink to this headline">¶</a></h2>
 <p>tc 实在太强大，也太复杂了，netimpair 是对 tc 命令进行封装的一个 python 脚本</p>
-<div class="section" id="features">
+<section id="features">
 <h3><a class="toc-backref" href="#id78">Features</a><a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <p>netimpair.py can do the following things:</p>
 <ul class="simple">
@@ -845,43 +846,43 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 <li><p>Automatically cleans up any impairment on exit or Ctrl-C</p></li>
 </ul>
 <p>netimpair.py supports both Python 2 and 3.</p>
-<div class="section" id="jitter">
+<section id="jitter">
 <h4><a class="toc-backref" href="#id79">Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 200ms jitter</span>
 sudo ./netimpair.py -n eth0 netem --jitter <span class="m">200</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="delay">
+</section>
+<section id="delay">
 <h4><a class="toc-backref" href="#id80">Delay</a><a class="headerlink" href="#delay" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 200ms delay</span>
 sudo ./netimpair.py -n eth0 netem --delay <span class="m">200</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="loss">
+</section>
+<section id="loss">
 <h4><a class="toc-backref" href="#id81">Loss</a><a class="headerlink" href="#loss" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 5% loss</span>
 sudo ./netimpair.py -n eth0 netem --loss_ratio <span class="m">5</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="rate-control">
+</section>
+<section id="rate-control">
 <h4><a class="toc-backref" href="#id82">Rate Control</a><a class="headerlink" href="#rate-control" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Limit rate to 1mbit</span>
 sudo ./netimpair.py -n eth0 rate --limit <span class="m">1000</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="impair-inbound-traffic">
+</section>
+<section id="impair-inbound-traffic">
 <h4><a class="toc-backref" href="#id83">Impair inbound traffic</a><a class="headerlink" href="#impair-inbound-traffic" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Append --inbound flag before the impairment keyword to apply inbound impairment</span>
 <span class="c1"># For example, this applies 5% loss on inbound eth0</span>
 sudo ./netimpair.py -n eth0 --inbound netem --loss_ratio <span class="m">5</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="selectively-impair-certain-traffic">
+</section>
+<section id="selectively-impair-certain-traffic">
 <h4><a class="toc-backref" href="#id84">Selectively impair certain traffic</a><a class="headerlink" href="#selectively-impair-certain-traffic" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 5% loss on packets with source IP of 10.194.247.50 and destination port 9001</span>
 <span class="c1"># NOTE: Specifying include flag overrides the default include, which impairs everything</span>
@@ -894,8 +895,8 @@ sudo ./netimpair.py -n eth0 --exclude <span class="nv">dport</span><span class="
 sudo ./netimpair.py -n eth0 --exclude <span class="nv">src</span><span class="o">=</span><span class="m">10</span>.194.247.50 netem --loss_ratio <span class="m">5</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="additional-parameters-can-be-found-with-the-help-option">
+</section>
+<section id="additional-parameters-can-be-found-with-the-help-option">
 <h4><a class="toc-backref" href="#id85">Additional parameters can be found with the help option</a><a class="headerlink" href="#additional-parameters-can-be-found-with-the-help-option" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic help</span>
 ./netimpair.py -h
@@ -905,18 +906,18 @@ sudo ./netimpair.py -n eth0 --exclude <span class="nv">src</span><span class="o"
 ./netimpair.py rate -h
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="id10">
+</section>
+</section>
+</section>
+<section id="id10">
 <h2><a class="toc-backref" href="#id86">参考资料</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://netbeez.net/blog/how-to-use-the-linux-traffic-control/">https://netbeez.net/blog/how-to-use-the-linux-traffic-control/</a></p></li>
 <li><p><a class="reference external" href="https://man7.org/linux/man-pages/man8/tc.8.html">https://man7.org/linux/man-pages/man8/tc.8.html</a></p></li>
 <li><p><a class="reference external" href="https://www.cs.unm.edu/~crandall/netsfall13/TCtutorial.pdf">https://www.cs.unm.edu/~crandall/netsfall13/TCtutorial.pdf</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

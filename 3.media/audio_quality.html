@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Audio Quality &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -115,7 +116,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="audio-quality">
+  <section id="audio-quality">
 <h1>Audio Quality<a class="headerlink" href="#audio-quality" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -159,7 +160,7 @@
 <li><p><a class="reference internal" href="#reference" id="id15">Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="id2">
+<section id="id2">
 <h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>There are four types of impairments that a QoS tester should focus on:</p>
 <ul class="simple">
@@ -168,8 +169,8 @@
 <li><p>Packet Jitter</p></li>
 <li><p>Packet Delay</p></li>
 </ul>
-</div>
-<div class="section" id="standard">
+</section>
+<section id="standard">
 <h2><a class="toc-backref" href="#id5">Standard</a><a class="headerlink" href="#standard" title="Permalink to this headline">¶</a></h2>
 <p>There are Six Major International Standards:</p>
 <ul class="simple">
@@ -180,7 +181,7 @@
 <li><p>PEVQ (2008)</p></li>
 <li><p>POLQA (2010)</p></li>
 </ul>
-<div class="section" id="polqa">
+<section id="polqa">
 <h3><a class="toc-backref" href="#id6">POLQA</a><a class="headerlink" href="#polqa" title="Permalink to this headline">¶</a></h3>
 <p>POLQA is the next-generation mobile voice quality testing standard P.863 ” the successor of PESQ</p>
 <ul class="simple">
@@ -199,25 +200,25 @@
 <li><p>Speech level and filtering effects</p></li>
 <li><p>Standards Conformance</p></li>
 </ul>
-</div>
-<div class="section" id="bandwidth-limiting">
+</section>
+<section id="bandwidth-limiting">
 <h3><a class="toc-backref" href="#id7">Bandwidth Limiting</a><a class="headerlink" href="#bandwidth-limiting" title="Permalink to this headline">¶</a></h3>
 <p>Bandwidth Limiting sets the maximum amount of network packets that can be sent through the network.  The bandwidth limiting sets the theoretical maximum bandwidth for the connection.  Therefore, the actual amount of data that can be sent through the channel will be less than the limit because of network overhead.  It is adjusted in kilobits per second (Kbps).  Ex. 1000 Kbps = 1 megabit.</p>
-</div>
-<div class="section" id="packet-loss">
+</section>
+<section id="packet-loss">
 <h3><a class="toc-backref" href="#id8">Packet Loss</a><a class="headerlink" href="#packet-loss" title="Permalink to this headline">¶</a></h3>
 <p>Packet loss sets the percentage of total packets that will be lost in transit from the sender to receiver.  It is adjusted in percentage of total packets from 0 - 100%.</p>
-</div>
-<div class="section" id="packet-jitter">
+</section>
+<section id="packet-jitter">
 <h3><a class="toc-backref" href="#id9">Packet Jitter</a><a class="headerlink" href="#packet-jitter" title="Permalink to this headline">¶</a></h3>
 <p>Packet jitter is the time between when each packet is received.  The time is adjusted in milliseconds, and the impairment tool adds a random amount of time between the packets between 0 and the number entered, so that the time interval between two packets is random.</p>
-</div>
-<div class="section" id="packet-delay">
+</section>
+<section id="packet-delay">
 <h3><a class="toc-backref" href="#id10">Packet Delay</a><a class="headerlink" href="#packet-delay" title="Permalink to this headline">¶</a></h3>
 <p>Packet delay is the amount of time it takes for each packet to arrive to the sender.  The time is adjusted in milliseconds.</p>
-</div>
-</div>
-<div class="section" id="mos">
+</section>
+</section>
+<section id="mos">
 <h2><a class="toc-backref" href="#id11">MOS</a><a class="headerlink" href="#mos" title="Permalink to this headline">¶</a></h2>
 <p>A Mean Opinion Score (MOS) is a numerical measure of the human-judged overall quality of an event or experience.  In telecommunications, a Mean Opinion Score is a ranking of the quality of voice and video sessions.</p>
 <p>Most often judged on a scale of 1 (bad) to 5 (excellent), Mean Opinion Scores are the average of a number of other human-scored individual parameters.  Although originally Mean Opinion Scores were derived from surveys of expert observers, today a MOS is often produced by an Objective Measurement Method approximating a human ranking.</p>
@@ -230,27 +231,27 @@
 <li><p>2 Poor</p></li>
 <li><p>1 Bad</p></li>
 </ul>
-</div>
-<div class="section" id="audio-distortion">
+</section>
+<section id="audio-distortion">
 <h2><a class="toc-backref" href="#id12">Audio distortion</a><a class="headerlink" href="#audio-distortion" title="Permalink to this headline">¶</a></h2>
 <p>refer to <a class="reference external" href="https://audiojudgement.com/measure-distortion-audio-systems/">https://audiojudgement.com/measure-distortion-audio-systems/</a></p>
-</div>
-<div class="section" id="tools">
+</section>
+<section id="tools">
 <h2><a class="toc-backref" href="#id13">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="visqol">
+<section id="visqol">
 <h3><a class="reference external" href="https://github.com/google/visqol">visqol</a><a class="headerlink" href="#visqol" title="Permalink to this headline">¶</a></h3>
 <p>ViSQOL(Virtual Speech Quality Objective Listener)虚拟语音质量目标监听器是感知音频质量的客观、完整的参考指标。</p>
 <p>它使用参考和测试语音信号之间相似性的空间-时间(spectro-temporal)度量来产生 MOS-LQO（平均意见分数 - 听力质量目标）分数。</p>
 <p>MOS-LQO 分数范围从 1（最差）到 5（最好）。</p>
-</div>
-</div>
-<div class="section" id="reference">
+</section>
+</section>
+<section id="reference">
 <h2><a class="toc-backref" href="#id15">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="#mos">MOS</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

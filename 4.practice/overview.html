@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 应用实践要点 &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -97,7 +98,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="webrtc">
+  <section id="webrtc">
 <h1>WebRTC 应用实践要点<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -112,7 +113,7 @@
 <li><p><a class="reference internal" href="#id3" id="id9">服务器中需要维护领域对象</a></p></li>
 </ul>
 </div>
-<div class="section" id="id1">
+<section id="id1">
 <h2><a class="toc-backref" href="#id4">WebRTC 服务器</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>WebRTC 的服务器大体分为信令服务器和媒体服务器</p>
 <p>WebRTC 信令服务器是主要功能是为 WebRTC 通讯搭建一个了解彼此能力的通道, 交换信息, 同步改动.</p>
@@ -128,10 +129,10 @@
 <li><p>Non-Symmetric Mixer/Translators 非对称的 mixer/translator</p></li>
 <li><p>Combining Topologies 混合拓扑</p></li>
 </ol>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h2><a class="toc-backref" href="#id5">服务器的主要功能</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="p2p">
+<section id="p2p">
 <h3><a class="toc-backref" href="#id6">P2P</a><a class="headerlink" href="#p2p" title="Permalink to this headline">¶</a></h3>
 <p>如果是两个人之间的端到端 (P2P) 的通信, 信令服务器的功能很简单</p>
 <ol class="arabic simple">
@@ -140,8 +141,8 @@
 </ol>
 <p>而由于是点对点的通信，媒体服务器也就不需要了。</p>
 <img alt="../_images/webrtc_p2p.png" src="../_images/webrtc_p2p.png" />
-</div>
-<div class="section" id="sfu">
+</section>
+<section id="sfu">
 <h3><a class="toc-backref" href="#id7">SFU</a><a class="headerlink" href="#sfu" title="Permalink to this headline">¶</a></h3>
 <p>如果是 SFU(Selective Forward Unit), 那么它的信令服务器除了上述的 SDP 媒体参数协商， ICE 连接地址交换，还有参加 RTP 会话的参加者信息的同步。</p>
 <img alt="../_images/webrtc_sfu.webp" src="../_images/webrtc_sfu.webp" />
@@ -194,14 +195,14 @@
                     <span class="o">|--</span> <span class="n">user</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="mcu">
+</section>
+<section id="mcu">
 <h3><a class="toc-backref" href="#id8">MCU</a><a class="headerlink" href="#mcu" title="Permalink to this headline">¶</a></h3>
 <p>Multiple Control Unit 多点控制单元相比 SFU, 它有着对于媒体流的 Mix 和 translate 功能，可以很好地适配传统的通信设备，在实际应用中，一般我们会以 SFU 为主， MCU 为辅，共同形成一个服务器集群。</p>
 <img alt="../_images/webrtc_mcu.png" src="../_images/webrtc_mcu.png" />
-</div>
-</div>
-<div class="section" id="id3">
+</section>
+</section>
+<section id="id3">
 <h2><a class="toc-backref" href="#id9">服务器中需要维护领域对象</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>在 WebRTC 服务器上，我们一般会维护如下的领域对象</p>
 <ul class="simple">
@@ -239,8 +240,8 @@
 <li><p>RaiseHand</p></li>
 <li><p>等等</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
