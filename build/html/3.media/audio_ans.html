@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Automatic Noise Suppression &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -112,7 +113,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="automatic-noise-suppression">
+  <section id="automatic-noise-suppression">
 <h1>Automatic Noise Suppression<a class="headerlink" href="#automatic-noise-suppression" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -146,27 +147,27 @@
 </li>
 </ul>
 </div>
-<div class="section" id="id2">
+<section id="id2">
 <h2><a class="toc-backref" href="#id3">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>背景噪声抑制（ANS）指的是将声音中的背景噪声识别并进行消除的处理。</p>
 <p>背景噪声分为平衡噪声和瞬时噪声两类，平稳噪声的频谱稳定，瞬时噪声的频谱能量方差小，利用噪声的特点，对音频数据添加反向波形处理，即可消除噪声。</p>
-</div>
-<div class="section" id="background-noise-removal">
+</section>
+<section id="background-noise-removal">
 <h2><a class="toc-backref" href="#id4">Background noise removal</a><a class="headerlink" href="#background-noise-removal" title="Permalink to this headline">¶</a></h2>
 <p>保留人的说话声音，而将身边的噪声，例如风扇声，吃东西的声音消除, 主要依据是人声的频率和噪声的频率和能量不同</p>
-</div>
-<div class="section" id="single-talk-and-multiple-talker">
+</section>
+<section id="single-talk-and-multiple-talker">
 <h2><a class="toc-backref" href="#id5">Single Talk and Multiple talker</a><a class="headerlink" href="#single-talk-and-multiple-talker" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="single-talker">
+<section id="single-talker">
 <h3><a class="toc-backref" href="#id6">Single talker</a><a class="headerlink" href="#single-talker" title="Permalink to this headline">¶</a></h3>
 <p>在家或者办公室开会， 你在说话，不想让身边人的声音传进去， 主要方法是将近端的声音(能量较大)放大或保留，将远端的声音(能量较小)减小或消除</p>
-</div>
-<div class="section" id="multiple-talker">
+</section>
+<section id="multiple-talker">
 <h3><a class="toc-backref" href="#id7">Multiple talker</a><a class="headerlink" href="#multiple-talker" title="Permalink to this headline">¶</a></h3>
 <p>在会议室开会， 你在说话，也想让身边人的声音传进去，无论近端或远端的声音就保留，并做出一些必要的 AGC</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

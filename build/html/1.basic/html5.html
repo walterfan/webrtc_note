@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HTML5 for WebRTC &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -111,7 +112,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="html5-for-webrtc">
+  <section id="html5-for-webrtc">
 <h1>HTML5 for WebRTC<a class="headerlink" href="#html5-for-webrtc" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -137,29 +138,29 @@
 <li><p><a class="reference internal" href="#web-worker" id="id12">Web Worker</a></p></li>
 </ul>
 </div>
-<div class="section" id="audio-element">
+<section id="audio-element">
 <h2><a class="toc-backref" href="#id2">Audio Element</a><a class="headerlink" href="#audio-element" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">audio</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;xxx.mp3&quot;</span> <span class="na">controls</span> <span class="na">autoplay</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">audio</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<div class="section" id="audio-api">
+<section id="audio-api">
 <h3><a class="toc-backref" href="#id3">Audio API</a><a class="headerlink" href="#audio-api" title="Permalink to this headline">¶</a></h3>
 <p>refer to <a class="reference external" href="audio_api.html">Audio API</a></p>
-</div>
-</div>
-<div class="section" id="video-element">
+</section>
+</section>
+<section id="video-element">
 <h2><a class="toc-backref" href="#id4">Video Element</a><a class="headerlink" href="#video-element" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;xxx.mp4&quot;</span> <span class="na">controls</span> <span class="na">autoplay</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;400&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;300&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<div class="section" id="methods">
+<section id="methods">
 <h3><a class="toc-backref" href="#id5">methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>play</p></li>
 <li><p>pause</p></li>
 </ul>
-</div>
-<div class="section" id="property">
+</section>
+<section id="property">
 <h3><a class="toc-backref" href="#id6">property</a><a class="headerlink" href="#property" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>playbackRate</p></li>
@@ -167,8 +168,8 @@
 <li><p>duration</p></li>
 <li><p>srcObject</p></li>
 </ul>
-</div>
-<div class="section" id="file-format-and-codec">
+</section>
+<section id="file-format-and-codec">
 <h3><a class="toc-backref" href="#id7">File format and codec</a><a class="headerlink" href="#file-format-and-codec" title="Permalink to this headline">¶</a></h3>
 <table class="colwidths-given docutils align-default">
 <colgroup>
@@ -217,25 +218,25 @@
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="canvas">
+</section>
+</section>
+<section id="canvas">
 <h2><a class="toc-backref" href="#id8">Canvas</a><a class="headerlink" href="#canvas" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;myCanvas&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;640&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;480&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<div class="section" id="canvas-context">
+<section id="canvas-context">
 <h3><a class="toc-backref" href="#id9">Canvas Context</a><a class="headerlink" href="#canvas-context" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="mf">10</span><span class="p">;</span>
-<span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">&quot;#3366ff&quot;</span><span class="p">;</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"></span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;#3366ff&quot;</span><span class="p">;</span><span class="w"></span>
 
-<span class="nx">context</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span> <span class="mf">10</span><span class="p">);</span>
-<span class="nx">context</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="mf">10</span><span class="p">);</span>
-<span class="nx">context</span><span class="p">.</span><span class="nx">lineCap</span> <span class="o">=</span> <span class="s2">&quot;butt&quot;</span><span class="p">;</span>
-<span class="nx">context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span><span class="w"></span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="mf">10</span><span class="p">);</span><span class="w"></span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">lineCap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;butt&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Canvas library:</p>
@@ -243,30 +244,30 @@
 <li><p>Fabric.js</p></li>
 <li><p>KineticJS</p></li>
 </ul>
-</div>
-<div class="section" id="canvas-data">
+</section>
+<section id="canvas-data">
 <h3><a class="toc-backref" href="#id10">Canvas data</a><a class="headerlink" href="#canvas-data" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="canvas-and-image">
+</section>
+<section id="canvas-and-image">
 <h3><a class="toc-backref" href="#id11">Canvas and image</a><a class="headerlink" href="#canvas-and-image" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
-<span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">&quot;smile.png&quot;</span><span class="p">;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Image</span><span class="p">();</span><span class="w"></span>
+<span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;smile.png&quot;</span><span class="p">;</span><span class="w"></span>
 
-<span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="mf">10</span><span class="p">,</span> <span class="mf">10</span><span class="p">,</span> <span class="mf">200</span><span class="p">,</span> <span class="mf">2000</span><span class="p">);</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">font</span> <span class="o">=</span> <span class="s2">&quot;20px Arial&quot;</span><span class="p">;</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">textBaseline</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span><span class="p">;</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">;</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">&quot;I&#39;m happy on web&quot;</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="nx">img</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">font</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;20px Arial&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">textBaseline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;top&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">&quot;I&#39;m happy on web&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="web-worker">
+</section>
+</section>
+<section id="web-worker">
 <h2><a class="toc-backref" href="#id12">Web Worker</a><a class="headerlink" href="#web-worker" title="Permalink to this headline">¶</a></h2>
 <p>Web worker 实现了 Web JS 中的多线程支持</p>
 <ol class="arabic simple">
@@ -279,8 +280,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">myWorker</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Worker</span><span class="p">(</span><span class="n">aUrl</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

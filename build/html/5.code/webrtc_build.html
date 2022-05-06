@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 源码构建 &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -106,7 +107,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="webrtc">
+  <section id="webrtc">
 <h1>WebRTC 源码构建<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -156,7 +157,7 @@
 <li><p><a class="reference internal" href="#reference" id="id16">Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="source-code">
+<section id="source-code">
 <h2><a class="toc-backref" href="#id6">Source code</a><a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>按照 <a class="reference external" href="https://webrtc.github.io/webrtc-org/native-code/development">https://webrtc.github.io/webrtc-org/native-code/development</a>， 可以在 windows, mac 或 linux 上构建 webrtc library.</p>
 <p>前提是你要能连接上 webrtc 的仓库，有些地方需要翻墙。</p>
@@ -214,7 +215,7 @@ $ ninja -C out/Default
 </pre></div>
 </div>
 <p>然后用 visual studio 打开 outDefaultall.sln</p>
-<div class="section" id="gn">
+<section id="gn">
 <h3><a class="toc-backref" href="#id7">GN 编译选项</a><a class="headerlink" href="#gn" title="Permalink to this headline">¶</a></h3>
 <p>gn 支持的参数很多，例如</p>
 <ul class="simple">
@@ -231,18 +232,18 @@ $ ninja -C out/Default
 <span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="o">/</span><span class="n">linux</span> <span class="o">--</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;use_custom_libcxx=false clang_base_path=&quot;/usr&quot; clang_use_chrome_plugins=false treat_warnings_as_errors=false rtc_build_ssl=false rtc_ssl_root=&quot;dummy&quot;&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id2">
+</section>
+</section>
+<section id="id2">
 <h2><a class="toc-backref" href="#id8">配置文件</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="webrtc-gni">
+<section id="webrtc-gni">
 <h3><a class="toc-backref" href="#id9">webrtc.gni</a><a class="headerlink" href="#webrtc-gni" title="Permalink to this headline">¶</a></h3>
 <p>这个文件由其他  BUILD.gn 所包含，它包括了很多特性开关选项和模板, 例如</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rtc_enable_bwe_test_logging</span> <span class="o">=</span> <span class="n">false</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="build-gn">
+</section>
+<section id="build-gn">
 <h3><a class="toc-backref" href="#id10">Build.gn</a><a class="headerlink" href="#build-gn" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>src/BUILD.gn</p></li>
@@ -276,32 +277,32 @@ $ ninja -C out/Default
 <span class="c1">#&quot;-fuse-ctor-homing&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="id3">
+</section>
+</section>
+<section id="id3">
 <h2><a class="toc-backref" href="#id11">构建工具</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="ninja">
+<section id="ninja">
 <h3><a class="toc-backref" href="#id12">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h3>
 <p>Ninja is yet another build system. It takes as input the interdependencies of files (typically source code and output executables) and orchestrates building them, quickly.</p>
 <p>Run ninja. By default, it looks for a file named build.ninja in the current directory and builds all out-of-date targets. You can specify which targets (files) to build as command line arguments.</p>
 <p>There is also a special syntax target^ for specifying a target as the first output of some rule containing the source you put in the command line, if one exists. For example, if you specify target as foo.c^ then foo.o will get built (assuming you have those targets in your build files).</p>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3><a class="toc-backref" href="#id13">gn</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>The meta-build system used to generate build files for Google Chrome and related projects (v8, node.js), as well as Google Fuchsia. gn can generate Ninja files for all platforms supported by Chrome.</p>
-<div class="section" id="id5">
+<section id="id5">
 <h4><a class="toc-backref" href="#id14">.gn</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <p>.gn 文件是 GN build 的 “源文件”，在这里可以做各种条件判断和配置，gn 会根据这些配置生成特定的 ninja 文件。</p>
 <p>.gn 文件中可以使用预定义的参数，比如 is_debug ， target_os ， rtc_use_h264 等。</p>
 <p>.gn 中可以 import .gni 文件。</p>
-</div>
-</div>
-<div class="section" id="cmake">
+</section>
+</section>
+<section id="cmake">
 <h3><a class="toc-backref" href="#id15">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
 <p>A widely used meta-build system that can generate Ninja files on Linux as of CMake version 2.8.8. Newer versions of CMake support generating Ninja files on Windows and Mac OS X too.</p>
-</div>
-</div>
-<div class="section" id="reference">
+</section>
+</section>
+<section id="reference">
 <h2><a class="toc-backref" href="#id16">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src">Chromium Code Search</a></p></li>
@@ -310,8 +311,8 @@ $ ninja -C out/Default
 <li><p><a class="reference external" href="https://ninja-build.org/manual.html">Ninja manual</a></p></li>
 <li><p><a class="reference external" href="https://ninja-build.org/">ninja tool</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

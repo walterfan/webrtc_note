@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Audio Level &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -119,7 +120,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="audio-level">
+  <section id="audio-level">
 <h1>Audio Level<a class="headerlink" href="#audio-level" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -175,18 +176,18 @@
 <li><p><a class="reference internal" href="#reference" id="id26">Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="id2">
+<section id="id2">
 <h2><a class="toc-backref" href="#id9">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>音频电平 Audio Level 就是指声音的高低，它主要是指声波的振幅，我们先了解几个概念</p>
-<div class="section" id="id3">
+<section id="id3">
 <h3><a class="toc-backref" href="#id10">声压</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>有效声压</p></li>
 </ul>
 <div class="math notranslate nohighlight" id="id4">
 <span id="equation"></span><span class="eqno">(1)<a class="headerlink" href="#id4" title="Permalink to this equation">¶</a></span>\[ \begin{align}\begin{aligned}p_x = \sqrt{ \frac{1}{T}  \sum_{n=1}^N x^2 \Delta t}\\    = \sqrt{ \frac{1}{N\Delta t}  \sum_{n=1}^N x^2 \Delta t}\\    = \sqrt{ \frac{1}{N}  \sum_{n=1}^N x^2}\end{aligned}\end{align} \]</div>
-</div>
-<div class="section" id="spl-sound-press-level">
+</section>
+<section id="spl-sound-press-level">
 <h3><a class="toc-backref" href="#id11">声压级 SPL (Sound Press Level)</a><a class="headerlink" href="#spl-sound-press-level" title="Permalink to this headline">¶</a></h3>
 <p>声音的有效声压与基准声压之比，取以10 为底的对数，再乘以 20， 即为声压级，基准声压为人耳所能听到的最小声音（20 <span class="math notranslate nohighlight">\(\mu P_a\)</span> ）</p>
 <ul class="simple">
@@ -222,9 +223,9 @@
 <li><p>175.8分贝：250英尺（约75米）外1吨TNT炸药爆炸</p></li>
 <li><p>192.8-194.7分贝：地球大气压理论上能传播的最大强度声音</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="id6">
+</section>
+</section>
+<section id="id6">
 <h2><a class="toc-backref" href="#id12">度量单位</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>分贝（dB）是十分之一贝尔（B）：1B = 10dB。1贝尔的两个功率量的比值是10:1，1贝尔的两个场量的比值是{displaystyle {sqrt {10}}:1}{sqrt {10}}:1[1]。</p>
 <p>使用分贝有很多便利之处：</p>
@@ -236,48 +237,48 @@
 <p>dB与后缀的组合，指出计算比值时的参考值。例如dBm指示功率值与1毫瓦的比值的分贝数。</p>
 <p>如果计算分贝时的参考值明确、确切地给出，那么分贝数值可以作为绝对量，如同被测量的功率量或者场量。例如，20dBm即为100毫瓦。</p>
 <p>SI国际单位制不允许使用分贝与后缀的组合形式如dBm, dBu, dBA，等等[13]。但这种不遵从SI单位制的表示却广泛应用于很多场合。</p>
-<div class="section" id="dbv">
+<section id="dbv">
 <h3><a class="toc-backref" href="#id13">dBV</a><a class="headerlink" href="#dbv" title="Permalink to this headline">¶</a></h3>
 <p>dB(VRMS) – voltage relative to 1 volt, regardless of impedance.</p>
 <p>dB(VRMS) – 相对于 1 伏的电压，与阻抗无关。</p>
 <p>这用于测量麦克风灵敏度，也用于指定 -10 dBV 的消费者线路电平，以降低相对于使用 +4 dBu 线路电平信号的设备的制造成本。</p>
-</div>
-<div class="section" id="dbm">
+</section>
+<section id="dbm">
 <h3><a class="toc-backref" href="#id14">dBm</a><a class="headerlink" href="#dbm" title="Permalink to this headline">¶</a></h3>
 <p>dB(mW) – 相对于 1 毫瓦的功率。 在音频和电话中，dBm 通常以 600 Ω 阻抗为参考，对应于 0.775 伏或 775 毫伏的电压电平。</p>
-</div>
-<div class="section" id="db-spl">
+</section>
+<section id="db-spl">
 <h3><a class="toc-backref" href="#id15">dB SPL</a><a class="headerlink" href="#db-spl" title="Permalink to this headline">¶</a></h3>
 <p>dB（声压级，sound pressure level）–在空气或其它气体中的声压，参考值为20微帕斯卡（μPa） = 2×10−5 Pa。</p>
 <p>这是人能听到的最安静的声音。大致相当于3米外蚊子飞行的声音。经常被缩写为”dB”，这造成了很多误解以为”dB”是个有量纲的绝对单位。
 对于水声或其它液体，参考值是 1 μPa。</p>
 <p>1 帕斯卡的 RMS 声压对应于 94 dB SPL 的水平。</p>
-</div>
-<div class="section" id="dbov">
+</section>
+<section id="dbov">
 <h3><a class="toc-backref" href="#id16">dBov</a><a class="headerlink" href="#dbov" title="Permalink to this headline">¶</a></h3>
 <p>dB（过载，overload）–信号的幅值，参照于设备的最大在限幅（clipping）发生前的最大允许值。</p>
 <p>对于人声来说，dBov 是以分贝表示的电平，参考值是人耳所能听到（忍受）的最大的声音。</p>
 <p>一般来说， 我们用 0 dBov 来表示声音的最大值，我们所听到的声音是 -xx dBov (-127 &lt; xx &lt; 0), 比如著名的 Audacity 的界面</p>
-</div>
-</div>
-<div class="section" id="id7">
+</section>
+</section>
+<section id="id7">
 <h2><a class="toc-backref" href="#id17">Audio Level</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>RFC6464 中规定声音电平 audio level 以一字节扩展头的最低 7 个比特来表示，此字节的最高一位是一个标志位 “V”。</p>
 <ul class="simple">
 <li><p>最低7位比特：表示 audio level 单位是 -dBov，其值从 0（最大声） 到 127（静音） ，代表着 dBov 的 0（最大声） 到 -127（静音）</p></li>
 <li><p>最高1位比特：表示这个包否包含语音(voice activity), 如果在 SDP 协商中没有启用 “vad”(Voice Activity Detection) 语音活动检测，就忽略这个比特</p></li>
 </ul>
-</div>
-<div class="section" id="metrics">
+</section>
+<section id="metrics">
 <h2><a class="toc-backref" href="#id18">Metrics</a><a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="audiolevel">
+<section id="audiolevel">
 <h3><a class="toc-backref" href="#id19">audioLevel</a><a class="headerlink" href="#audiolevel" title="Permalink to this headline">¶</a></h3>
 <p>type: double</p>
 <p>Only exists for audio. Represents the audio level of the receiving track. For audio levels of tracks attached locally, see RTCAudioSourceStats instead.</p>
 <p>The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure level from 0 dBov.</p>
 <p>The audioLevel is averaged over some small interval, using the algorithm described under totalAudioEnergy. The interval used is implementation dependent.</p>
-</div>
-<div class="section" id="totalaudioenergy">
+</section>
+<section id="totalaudioenergy">
 <h3><a class="toc-backref" href="#id20">totalAudioEnergy</a><a class="headerlink" href="#totalaudioenergy" title="Permalink to this headline">¶</a></h3>
 <p>type: double</p>
 <p>Only exists for audio. Represents the audio energy of the receiving track. For audio energy of tracks attached locally, see RTCAudioSourceStats instead.</p>
@@ -294,24 +295,24 @@
 <p>这可用于获得与 audioLevel 使用相同单位的均方根 (RMS) 值，如 [RFC6464] 中所定义。可以使用公式 Math.sqrt(totalAudioEnergy/totalSamplesDuration) 将其转换为这些单位。也可以使用两个不同 getStats() 调用的值之间的差异来执行此计算，以便计算任何所需时间间隔内的平均音频电平。换句话说，做 Math.sqrt((energy2 - energy1)/(duration2 - duration1))。</p>
 <p>例如，如果生成一个 10 毫秒的音频数据包，其 RMS 为 0.5（超出 1.0），则应将 0.5 * 0.5 * 0.01 = 0.0025 添加到 totalAudioEnergy。如果接收到另一个 RMS 为 0.1 的 10ms 数据包，这应该类似地将 0.0001 添加到 totalAudioEnergy。然后，Math.sqrt(totalAudioEnergy/totalSamplesDuration) 变为 Math.sqrt(0.0026/0.02) = 0.36，这与通过对连续 20 毫秒音频段进行 RMS 计算获得的值相同。</p>
 <p>如果使用多个音频通道，则样本的音频能量是指任一通道的最高能量。</p>
-</div>
-</div>
-<div class="section" id="asa">
+</section>
+</section>
+<section id="asa">
 <h2><a class="toc-backref" href="#id21">ASA</a><a class="headerlink" href="#asa" title="Permalink to this headline">¶</a></h2>
 <p>Active Speaker Arbitration 比较音量大小，挑选出音量较高的几个人（一般是3个）</p>
-</div>
-<div class="section" id="asn">
+</section>
+<section id="asn">
 <h2><a class="toc-backref" href="#id22">ASN</a><a class="headerlink" href="#asn" title="Permalink to this headline">¶</a></h2>
 <p>Active Speaker Notification 将上述挑选出的列表通知给订阅者</p>
-</div>
-<div class="section" id="id8">
+</section>
+<section id="id8">
 <h2><a class="toc-backref" href="#id23">示例代码</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6464">RFC6464</a> 中有计算 Audio Level 的 java 代码</p>
 <div class="toggle docutils container">
 <div class="header docutils container">
 <p><strong>显示/隐藏代码</strong></p>
 </div>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span>     <span class="cm">/*</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="w">     </span><span class="cm">/*</span>
 <span class="linenos">  2</span><span class="cm">     Copyright (c) 2011 IETF Trust and the persons identified</span>
 <span class="linenos">  3</span><span class="cm">     as authors of the code.  All rights reserved.</span>
 <span class="linenos">  4</span>
@@ -320,16 +321,16 @@
 <span class="linenos">  7</span><span class="cm">     to the license terms contained in, the Simplified BSD License</span>
 <span class="linenos">  8</span><span class="cm">     set forth in Section 4.c of the IETF Trust&#39;s Legal Provisions</span>
 <span class="linenos">  9</span><span class="cm">     Relating to IETF Documents (http://trustee.ietf.org/license-info).</span>
-<span class="linenos"> 10</span><span class="cm"> */</span>
+<span class="linenos"> 10</span><span class="cm"> */</span><span class="w"></span>
 <span class="linenos"> 11</span>
-<span class="linenos"> 12</span> <span class="cm">/**</span>
+<span class="linenos"> 12</span><span class="w"> </span><span class="cm">/**</span>
 <span class="linenos"> 13</span><span class="cm">     * Calculates the audio level of specific samples of a signal</span>
 <span class="linenos"> 14</span><span class="cm">     * relative to overload.</span>
-<span class="linenos"> 15</span><span class="cm">     */</span>
-<span class="linenos"> 16</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AudioLevelCalculator</span>
-<span class="linenos"> 17</span> <span class="p">{</span>
+<span class="linenos"> 15</span><span class="cm">     */</span><span class="w"></span>
+<span class="linenos"> 16</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AudioLevelCalculator</span><span class="w"></span>
+<span class="linenos"> 17</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="linenos"> 18</span>
-<span class="linenos"> 19</span>     <span class="cm">/**</span>
+<span class="linenos"> 19</span><span class="w">     </span><span class="cm">/**</span>
 <span class="linenos"> 20</span><span class="cm">         * Calculates the audio level of a signal with specific</span>
 <span class="linenos"> 21</span><span class="cm">         * &lt;tt&gt;samples&lt;/tt&gt;.</span>
 <span class="linenos"> 22</span><span class="cm">         *</span>
@@ -355,91 +356,91 @@
 <span class="linenos"> 42</span><span class="cm">         * 16-bit signed samples.</span>
 <span class="linenos"> 43</span><span class="cm">         *</span>
 <span class="linenos"> 44</span><span class="cm">         * @return  the audio level of the specified signal.</span>
-<span class="linenos"> 45</span><span class="cm">         */</span>
-<span class="linenos"> 46</span>     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculateAudioLevel</span><span class="p">(</span>
-<span class="linenos"> 47</span>         <span class="kt">int</span><span class="o">[]</span> <span class="n">samples</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">,</span>
-<span class="linenos"> 48</span>         <span class="kt">int</span> <span class="n">overload</span><span class="p">)</span>
-<span class="linenos"> 49</span>     <span class="p">{</span>
-<span class="linenos"> 50</span>         <span class="cm">/*</span>
+<span class="linenos"> 45</span><span class="cm">         */</span><span class="w"></span>
+<span class="linenos"> 46</span><span class="w">     </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">calculateAudioLevel</span><span class="p">(</span><span class="w"></span>
+<span class="linenos"> 47</span><span class="w">         </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"></span>
+<span class="linenos"> 48</span><span class="w">         </span><span class="kt">int</span><span class="w"> </span><span class="n">overload</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 49</span><span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 50</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 51</span><span class="cm">             * Calculate the root mean square (RMS) of the signal.</span>
-<span class="linenos"> 52</span><span class="cm">             */</span>
-<span class="linenos"> 53</span>         <span class="kt">double</span> <span class="n">rms</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 52</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 53</span><span class="w">         </span><span class="kt">double</span><span class="w"> </span><span class="n">rms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 54</span>
-<span class="linenos"> 55</span>         <span class="k">for</span> <span class="p">(;</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
-<span class="linenos"> 56</span>         <span class="p">{</span>
-<span class="linenos"> 57</span>             <span class="kt">double</span> <span class="n">sample</span> <span class="o">=</span> <span class="n">samples</span><span class="o">[</span><span class="n">offset</span><span class="o">]</span><span class="p">;</span>
+<span class="linenos"> 55</span><span class="w">         </span><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">length</span><span class="p">;</span><span class="w"> </span><span class="n">offset</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 56</span><span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 57</span><span class="w">             </span><span class="kt">double</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">samples</span><span class="o">[</span><span class="n">offset</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 58</span>
-<span class="linenos"> 59</span>             <span class="n">sample</span> <span class="o">/=</span> <span class="n">overload</span><span class="p">;</span>
-<span class="linenos"> 60</span>             <span class="n">rms</span> <span class="o">+=</span> <span class="n">sample</span> <span class="o">*</span> <span class="n">sample</span><span class="p">;</span>
-<span class="linenos"> 61</span>         <span class="p">}</span>
-<span class="linenos"> 62</span>         <span class="n">rms</span> <span class="o">=</span> <span class="p">(</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">Math</span><span class="p">.</span><span class="na">sqrt</span><span class="p">(</span><span class="n">rms</span> <span class="o">/</span> <span class="n">length</span><span class="p">);</span>
+<span class="linenos"> 59</span><span class="w">             </span><span class="n">sample</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">overload</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 60</span><span class="w">             </span><span class="n">rms</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sample</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 61</span><span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="linenos"> 62</span><span class="w">         </span><span class="n">rms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sqrt</span><span class="p">(</span><span class="n">rms</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">length</span><span class="p">);</span><span class="w"></span>
 <span class="linenos"> 63</span>
-<span class="linenos"> 64</span>         <span class="cm">/*</span>
+<span class="linenos"> 64</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 65</span><span class="cm">             * The audio level is a logarithmic measure of the</span>
 <span class="linenos"> 66</span><span class="cm">             * rms level of an audio sample relative to a reference</span>
 <span class="linenos"> 67</span><span class="cm">             * value and is measured in decibels.</span>
-<span class="linenos"> 68</span><span class="cm">             */</span>
-<span class="linenos"> 69</span>         <span class="kt">double</span> <span class="n">db</span><span class="p">;</span>
+<span class="linenos"> 68</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 69</span><span class="w">         </span><span class="kt">double</span><span class="w"> </span><span class="n">db</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 70</span>
-<span class="linenos"> 71</span>         <span class="cm">/*</span>
+<span class="linenos"> 71</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 72</span><span class="cm">             * The minimum audio level permitted.</span>
-<span class="linenos"> 73</span><span class="cm">             */</span>
-<span class="linenos"> 74</span>         <span class="kd">final</span> <span class="kt">double</span> <span class="n">MIN_AUDIO_LEVEL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">127</span><span class="p">;</span>
+<span class="linenos"> 73</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 74</span><span class="w">         </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">127</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 75</span>
-<span class="linenos"> 76</span>         <span class="cm">/*</span>
+<span class="linenos"> 76</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 77</span><span class="cm">             * The maximum audio level permitted.</span>
-<span class="linenos"> 78</span><span class="cm">             */</span>
-<span class="linenos"> 79</span>         <span class="kd">final</span> <span class="kt">double</span> <span class="n">MAX_AUDIO_LEVEL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 78</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 79</span><span class="w">         </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">MAX_AUDIO_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 80</span>
-<span class="linenos"> 81</span>         <span class="k">if</span> <span class="p">(</span><span class="n">rms</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<span class="linenos"> 82</span>         <span class="p">{</span>
-<span class="linenos"> 83</span>             <span class="cm">/*</span>
+<span class="linenos"> 81</span><span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rms</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 82</span><span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 83</span><span class="w">             </span><span class="cm">/*</span>
 <span class="linenos"> 84</span><span class="cm">                 * The &quot;zero&quot; reference level is the overload level,</span>
 <span class="linenos"> 85</span><span class="cm">                 * which corresponds to 1.0 in this calculation, because</span>
 <span class="linenos"> 86</span><span class="cm">                 * the samples are normalized in calculating the RMS.</span>
-<span class="linenos"> 87</span><span class="cm">                 */</span>
-<span class="linenos"> 88</span>             <span class="n">db</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">Math</span><span class="p">.</span><span class="na">log10</span><span class="p">(</span><span class="n">rms</span><span class="p">);</span>
+<span class="linenos"> 87</span><span class="cm">                 */</span><span class="w"></span>
+<span class="linenos"> 88</span><span class="w">             </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">log10</span><span class="p">(</span><span class="n">rms</span><span class="p">);</span><span class="w"></span>
 <span class="linenos"> 89</span>
-<span class="linenos"> 90</span>             <span class="cm">/*</span>
+<span class="linenos"> 90</span><span class="w">             </span><span class="cm">/*</span>
 <span class="linenos"> 91</span><span class="cm">                 * Ensure that the calculated level is within the minimum</span>
 <span class="linenos"> 92</span><span class="cm">                 * and maximum range permitted.</span>
-<span class="linenos"> 93</span><span class="cm">                 */</span>
-<span class="linenos"> 94</span>             <span class="k">if</span> <span class="p">(</span><span class="n">db</span> <span class="o">&lt;</span> <span class="n">MIN_AUDIO_LEVEL</span><span class="p">)</span>
-<span class="linenos"> 95</span>                 <span class="n">db</span> <span class="o">=</span> <span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span>
-<span class="linenos"> 96</span>             <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">db</span> <span class="o">&gt;</span> <span class="n">MAX_AUDIO_LEVEL</span><span class="p">)</span>
-<span class="linenos"> 97</span>                 <span class="n">db</span> <span class="o">=</span> <span class="n">MAX_AUDIO_LEVEL</span><span class="p">;</span>
-<span class="linenos"> 98</span>         <span class="p">}</span>
-<span class="linenos"> 99</span>         <span class="k">else</span>
-<span class="linenos">100</span>         <span class="p">{</span>
-<span class="linenos">101</span>             <span class="n">db</span> <span class="o">=</span> <span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span>
-<span class="linenos">102</span>         <span class="p">}</span>
+<span class="linenos"> 93</span><span class="cm">                 */</span><span class="w"></span>
+<span class="linenos"> 94</span><span class="w">             </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">db</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 95</span><span class="w">                 </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 96</span><span class="w">             </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">db</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MAX_AUDIO_LEVEL</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 97</span><span class="w">                 </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MAX_AUDIO_LEVEL</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 98</span><span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="linenos"> 99</span><span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="linenos">100</span><span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">101</span><span class="w">             </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">102</span><span class="w">         </span><span class="p">}</span><span class="w"></span>
 <span class="linenos">103</span>
-<span class="linenos">104</span>         <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="na">round</span><span class="p">(</span><span class="n">db</span><span class="p">);</span>
-<span class="linenos">105</span>     <span class="p">}</span>
-<span class="linenos">106</span> <span class="p">}</span>
+<span class="linenos">104</span><span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="na">round</span><span class="p">(</span><span class="n">db</span><span class="p">);</span><span class="w"></span>
+<span class="linenos">105</span><span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">106</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="faq">
+</section>
+<section id="faq">
 <h2><a class="toc-backref" href="#id24">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="gain-volume">
+<section id="gain-volume">
 <h3><a class="toc-backref" href="#id25">Gain 和 Volume 的区别</a><a class="headerlink" href="#gain-volume" title="Permalink to this headline">¶</a></h3>
 <p>Gain是指针对输入的声音信号的增益调节放大倍数，Volume是指针对输出的音量大小。</p>
 <ul class="simple">
 <li><p>Gain指增益：增益就是用来增强输入进音箱电路的信号的。增益的作用就是放大信号。将输入的信号放大一定的倍数，而单位通常是我们熟悉的分贝</p></li>
 <li><p>Volume指音量：就是声音的响度，指音量的大小，也就是最终输出的声音大小。</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="reference">
+</section>
+</section>
+<section id="reference">
 <h2><a class="toc-backref" href="#id26">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6464">RFC6464</a>: A Real-time Transport Protocol (RTP) Header Extension for Client-to-Mixer Audio Level Indication</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6465">RFC6465</a>: A Real-time Transport Protocol (RTP) Header Extension for Mixer-to-Client Audio Level Indication</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
