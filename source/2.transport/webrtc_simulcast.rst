@@ -52,12 +52,11 @@ WebRTC Simulcast
    })();
 
 
-参见
+参见:
 
-* https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpEncodingParameters
-* https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpEncodingParameters/maxBitrate
-* https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpEncodingParameters/scaleResolutionDownBy
-* https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addTransceiver
+* `RTCRtpTransceiver <https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpTransceiver>`_, we can get mid(Media Stream ID)
+* `RTCRtpEncodingParameters <https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpEncodingParameters>`_, we can set rid(RTP stream ID)
+* `RTCPeerConnection.addTransceiver <https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/addTransceiver>`_
 
 
 
@@ -240,7 +239,7 @@ Example
   a=extmap:1 urn:ietf:params:rtp-hdrext:sdes:mid
 
 
-Using Simulcast in Session Description Protocol (SDP) and RTP Sessions
+Using Simulcast in SDP and RTP Sessions
 ===============================================================================
 
 RTP 会话中会包含多路的媒体流 media stream，每一路流由 ssrc 这个 RTP 头域来标识。不过，SSRC 和媒体流的关联并不是恒定的.

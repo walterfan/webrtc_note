@@ -37,6 +37,85 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
 * Port-restricted cone（端口限制型锥型）
 * Symmetric（对称型）
 
+TCP Candidates with Interactive Connectivity Establishment (ICE)
+===========================================================================
+
+
+ICE defines a mechanism for  NAT traversal for multimedia communication protocols based on the offer/answer model of session negotiation.
+
+The ICE Candidate can also be TCP-based , refer to RFC6544 and RFC4571
+
+.. code-block::
+
+                       +----------+
+                       |          |
+                       |    App   |
+            +----------+----------+     +----------+----------+
+            |          |          |     |          |          |
+            |   STUN   |  (D)TLS  |     |   STUN   |    App   |
+            +----------+----------+     +----------+----------+
+            |                     |     |                     |
+            |      RFC 4571       |     |      RFC 4571       |
+            +---------------------+     +---------------------+
+            |                     |     |                     |
+            |         TCP         |     |         TCP         |
+            +---------------------+     +---------------------+
+            |                     |     |                     |
+            |         IP          |     |         IP          |
+            +---------------------+     +---------------------+
+
+              Figure 1: ICE TCP Stack with and without (D)TLS
+
+
+Framing RTP and RTCP Packets over TCP
+============================================================
+
+参见 RFC4571
+
+* The Framing Method
+
+.. code-block::
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    ---------------------------------------------------------------
+   |             LENGTH            |  RTP or RTCP packet ...       |
+    ---------------------------------------------------------------
+
+        Figure 1: The bit field definition of the framing method
+
+
+The session descriptions in Figures 3 and 4 define a TCP RTP/AVP  session.
+
+
+.. code-block::
+
+   v=0
+   o=first 2520644554 2838152170 IN IP4 first.example.net
+   s=Example
+   t=0 0
+   c=IN IP4 192.0.2.105
+   m=audio 9 TCP/RTP/AVP 11
+   a=setup:active
+   a=connection:new
+
+          Figure 3: TCP session description for the first participant
+
+
+.. code-block::
+
+   v=0
+   o=second 2520644554 2838152170 IN IP4 second.example.net
+   s=Example
+   t=0 0
+   c=IN IP4 192.0.2.94
+   m=audio 16112 TCP/RTP/AVP 10 11
+   a=setup:passive
+   a=connection:new
+
+          Figure 4: TCP session description for the second participant
+
+
 
 Reference
 ================
