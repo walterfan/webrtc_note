@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Transport-wide Congestion Control &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -53,67 +52,69 @@
 <li class="toctree-l4"><a class="reference internal" href="webrtc_remb.html">Google REMB</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Transport-wide Congestion Control</a></li>
 <li class="toctree-l4"><a class="reference internal" href="webrtc_cc_evaluation.html">Congeston Control Evaluation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id2">简介</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id5">基本架构</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id6">术语</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id7">交互式实时媒体的拥塞控制的需求</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id10">标准化组织及其发布的文档</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id11">标准化状况和存在的问题</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id16">常用方法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id17">拥塞控制算法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id21">对于拥塞控制算法的评估和验证</a></li>
-<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id24">参考资料</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id3">简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id6">基本架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id7">术语</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id8">交互式实时媒体的拥塞控制的需求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id11">标准化组织及其发布的文档</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id12">标准化状况和存在的问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id17">常用方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id18">拥塞控制算法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id22">对于拥塞控制算法的评估和验证</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webrtc_cc.html#id25">参考资料</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id2">概述</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id3">流畅与清晰的平衡</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id3">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id4">流畅与清晰的平衡</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#metrics">Metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#glossary">Glossary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id7">测试工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id8">实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id8">测试工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id9">实例</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#faq">FAQ</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id13">参考资料</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_qos.html#id14">参考资料</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="webrtc_gcc.html">Google Congestion Control v1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_remb.html">Google REMB</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Transport-wide Congestion Control</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">概述</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">扩展</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">扩展</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#transport-wide-sequence-number">Transport-wide Sequence Number</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#transport-wide-rtcp-feedback-message">Transport-wide RTCP Feedback Message</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#receive-delta">Receive Delta</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">基于延迟的发送端拥塞控制</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">其他算法细节</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">参考资料</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">基于延迟的发送端拥塞控制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">其他算法细节</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">参考资料</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_cc_evaluation.html">Congeston Control Evaluation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id2">简介</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id5">基本架构</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id6">术语</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id7">交互式实时媒体的拥塞控制的需求</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id10">标准化组织及其发布的文档</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id11">标准化状况和存在的问题</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id16">常用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id17">拥塞控制算法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id21">对于拥塞控制算法的评估和验证</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id24">参考资料</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id3">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id6">基本架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id7">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id8">交互式实时媒体的拥塞控制的需求</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id11">标准化组织及其发布的文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id12">标准化状况和存在的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id17">常用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id18">拥塞控制算法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id22">对于拥塞控制算法的评估和验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_cc.html#id25">参考资料</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
@@ -149,7 +150,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="transport-wide-congestion-control">
+  <div class="section" id="transport-wide-congestion-control">
 <h1>Transport-wide Congestion Control<a class="headerlink" href="#transport-wide-congestion-control" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -167,48 +168,48 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-06</p></td>
+<td><p>2022-05-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id2" id="id13">概述</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id14">扩展</a></p></li>
-<li><p><a class="reference internal" href="#transport-wide-sequence-number" id="id15">Transport-wide Sequence Number</a></p></li>
-<li><p><a class="reference internal" href="#transport-wide-rtcp-feedback-message" id="id16">Transport-wide RTCP Feedback Message</a></p>
+<li><p><a class="reference internal" href="#id3" id="id14">概述</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id15">扩展</a></p></li>
+<li><p><a class="reference internal" href="#transport-wide-sequence-number" id="id16">Transport-wide Sequence Number</a></p></li>
+<li><p><a class="reference internal" href="#transport-wide-rtcp-feedback-message" id="id17">Transport-wide RTCP Feedback Message</a></p>
 <ul>
-<li><p><a class="reference internal" href="#rtp-packet-status" id="id17">Rtp Packet Status</a></p></li>
-<li><p><a class="reference internal" href="#packet-chunk" id="id18">Packet chunk</a></p>
+<li><p><a class="reference internal" href="#rtp-packet-status" id="id18">Rtp Packet Status</a></p></li>
+<li><p><a class="reference internal" href="#packet-chunk" id="id19">Packet chunk</a></p>
 <ul>
-<li><p><a class="reference internal" href="#run-length-chunk" id="id19">Run Length Chunk</a></p></li>
-<li><p><a class="reference internal" href="#status-vector-chunk" id="id20">Status Vector Chunk</a></p></li>
+<li><p><a class="reference internal" href="#run-length-chunk" id="id20">Run Length Chunk</a></p></li>
+<li><p><a class="reference internal" href="#status-vector-chunk" id="id21">Status Vector Chunk</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#receive-delta" id="id21">Receive Delta</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id22">基于延迟的发送端拥塞控制</a></p>
+<li><p><a class="reference internal" href="#receive-delta" id="id22">Receive Delta</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id23">基于延迟的发送端拥塞控制</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id5" id="id23">基本方法</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id24">基本方法</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id6" id="id24">其他算法细节</a></p>
+<li><p><a class="reference internal" href="#id7" id="id25">其他算法细节</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id7" id="id25">动态阈值的生成</a></p></li>
-<li><p><a class="reference internal" href="#id8" id="id26">指数平滑算法和最小二乘法</a></p>
+<li><p><a class="reference internal" href="#id8" id="id26">动态阈值的生成</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id27">指数平滑算法和最小二乘法</a></p>
 <ul>
-<li><p><a class="reference internal" href="#ewma-exponentially-weighted-moving-average" id="id27">EWMA（Exponentially Weighted Moving Average ）</a></p></li>
-<li><p><a class="reference internal" href="#least-squars-method" id="id28">最小二乘法(Least Squars Method)</a></p></li>
+<li><p><a class="reference internal" href="#ewma-exponentially-weighted-moving-average" id="id28">EWMA（Exponentially Weighted Moving Average ）</a></p></li>
+<li><p><a class="reference internal" href="#least-squars-method" id="id29">最小二乘法(Least Squars Method)</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id10" id="id29">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id30">参考资料</a></p></li>
 </ul>
 </div>
-<section id="id2">
-<h2><a class="toc-backref" href="#id13">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id14">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>TWCC 属于 GCC(Google Congestion Control ) 的第二版， 相对于第一版，它做了如下改进</p>
 <ol class="arabic simple">
 <li><p>接收端只做反馈，所有的探测和估算逻辑都放在发送端</p></li>
@@ -226,9 +227,9 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p>It allows for earlier packet loss detection (and recovery) since a loss in stream A can be detected when a packet from stream B is received, thus we don’t have to wait until the next packet of stream A is received.</p></li>
 </ol>
 <p>Inter-packet delay variation: d(i) = A(i) - S(i) - (A(i-1) - S(i-1))</p>
-</section>
-<section id="id3">
-<h2><a class="toc-backref" href="#id14">扩展</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id15">扩展</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Transport wide sequence numbers header extension
 在 RTP 包中添加一个扩展头，放置传输层面的序号</p></li>
@@ -244,9 +245,9 @@ For instance different behavior can be used depending on if the rate produced  i
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">rtcp</span><span class="o">-</span><span class="n">fb</span><span class="p">:</span><span class="mi">100</span> <span class="n">transport</span><span class="o">-</span><span class="n">cc</span>
 </pre></div>
 </div>
-</section>
-<section id="transport-wide-sequence-number">
-<h2><a class="toc-backref" href="#id15">Transport-wide Sequence Number</a><a class="headerlink" href="#transport-wide-sequence-number" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="transport-wide-sequence-number">
+<h2><a class="toc-backref" href="#id16">Transport-wide Sequence Number</a><a class="headerlink" href="#transport-wide-sequence-number" title="Permalink to this headline">¶</a></h2>
 <p>在每个要发送的 RTP 包中添加一个扩展头，包含 16 bits 的序号 sequence number.  在同一个传输通道中，每发一个 RTP 包，这个序号就加一</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
@@ -257,9 +258,9 @@ For instance different behavior can be used depending on if the rate produced  i
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
 </pre></div>
 </div>
-</section>
-<section id="transport-wide-rtcp-feedback-message">
-<h2><a class="toc-backref" href="#id16">Transport-wide RTCP Feedback Message</a><a class="headerlink" href="#transport-wide-rtcp-feedback-message" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="transport-wide-rtcp-feedback-message">
+<h2><a class="toc-backref" href="#id17">Transport-wide RTCP Feedback Message</a><a class="headerlink" href="#transport-wide-rtcp-feedback-message" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -301,8 +302,8 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p><strong>packet chunk</strong>: 16 bits A list of packet status chunks. These indicate  the status of a number of packets starting with the one identified  by base sequence number. See below for details. ** -   描述 rtp 包 4 种状态（见：4.2），有 Run Length Chunk 和 Status Vector Chunk 两种格式**</p></li>
 <li><p><strong>recv delta</strong>: 8 bits For each &quot;packet received&quot; status, in the  packet status chunks, a receive delta block will follow. See details   below. <strong>-   当 rtp 包的状态为 Packet received，通过 recv delta 记录其与前一个 rtp 包到达的时间间隔。</strong></p></li>
 </ul>
-<section id="rtp-packet-status">
-<h3><a class="toc-backref" href="#id17">Rtp Packet Status</a><a class="headerlink" href="#rtp-packet-status" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="rtp-packet-status">
+<h3><a class="toc-backref" href="#id18">Rtp Packet Status</a><a class="headerlink" href="#rtp-packet-status" title="Permalink to this headline">¶</a></h3>
 <p>包的状态 (Packet Status) 表示为 2 个比特的符号：</p>
 <ul class="simple">
 <li><p>00 Packet not received （包未收到）</p></li>
@@ -310,9 +311,9 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p>10 Packet received, large or negative delta（ 包收到，间隔时间很大或者为负数）</p></li>
 <li><p>11 [Reserved], packet received, w/o recv delta (包收到了，但是没有间隔时间)</p></li>
 </ul>
-</section>
-<section id="packet-chunk">
-<h3><a class="toc-backref" href="#id18">Packet chunk</a><a class="headerlink" href="#packet-chunk" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="packet-chunk">
+<h3><a class="toc-backref" href="#id19">Packet chunk</a><a class="headerlink" href="#packet-chunk" title="Permalink to this headline">¶</a></h3>
 <p>packet  chunk 对 rtp 的到达状态进行描述，它有两种类型</p>
 <ul class="simple">
 <li><p>Run Length Chunk</p></li>
@@ -323,8 +324,8 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p>0 ：Run Length Chunk</p></li>
 <li><p>1 ：Status Vector Chunk</p></li>
 </ul>
-<section id="run-length-chunk">
-<h4><a class="toc-backref" href="#id19">Run Length Chunk</a><a class="headerlink" href="#run-length-chunk" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="run-length-chunk">
+<h4><a class="toc-backref" href="#id20">Run Length Chunk</a><a class="headerlink" href="#run-length-chunk" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -332,7 +333,7 @@ For instance different behavior can be used depending on if the rate produced  i
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
 </pre></div>
 </div>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">行程编码</p>
 <p>编码原理是把数据看成一个线性序列，而这些数据序列组织方式分成两种情况：
 1) 连续的重复数据块，
@@ -343,7 +344,7 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p>压缩前：A-A-A-A-A-B-B-C-D（0x41-0x41-0x41-0x41-0x41-0x42-0x42-0x43-0x44）</p></li>
 <li><p>压缩后： 5-A-2-B-1-C-1-D（0x05-0x41-0x02-0x42-0x01-0x43-0x01-0x44）</p></li>
 </ul>
-</aside>
+</div>
 <p>字段含义如下</p>
 <ul class="simple">
 <li><p>T (1 bit) : chunk type，当为 Run Length Chunk ，此时值为 0。</p></li>
@@ -370,9 +371,9 @@ For instance different behavior can be used depending on if the rate produced  i
 11 代表 &quot;packet received, w/o recv delta&quot; ，共有 24 个包，不过没有间隔时间数据
 </pre></div>
 </div>
-</section>
-<section id="status-vector-chunk">
-<h4><a class="toc-backref" href="#id20">Status Vector Chunk</a><a class="headerlink" href="#status-vector-chunk" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="status-vector-chunk">
+<h4><a class="toc-backref" href="#id21">Status Vector Chunk</a><a class="headerlink" href="#status-vector-chunk" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -407,11 +408,11 @@ For instance different behavior can be used depending on if the rate produced  i
 <span class="mi">2</span><span class="n">x</span> <span class="s2">&quot;packet not received&quot;</span>
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="receive-delta">
-<h2><a class="toc-backref" href="#id21">Receive Delta</a><a class="headerlink" href="#receive-delta" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="section" id="receive-delta">
+<h2><a class="toc-backref" href="#id22">Receive Delta</a><a class="headerlink" href="#receive-delta" title="Permalink to this headline">¶</a></h2>
 <p>Receive Delta 长度为一个字节或两个字节, 记录每个包与之前收到的包的间隔时间, 它是 250us 的倍数
 因为 reference_time 是当前包组第一个 packet 到达的时间,, 所以:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="n">st</span> <span class="n">arrive_time</span> <span class="o">=</span> <span class="n">reference_time</span> <span class="o">+</span> <span class="n">receive_delta</span>
@@ -425,9 +426,9 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p>当状态是 “Packet received, large or negative delta”，用 16-bit signed 存储 delta，附加在 packet status list 之后, 此时 delta 取值为 <cite>[-32767, 32768] * 250</cite>, 表示范围为 [-8192.0, 8191.75] ms.</p></li>
 <li><p>如果间隔时间太大,就需要启用使用新的 RTCP feedback 包了，不过一般也不会有这么大的延迟，除非网络中断了。</p></li>
 </ul>
-</section>
-<section id="id4">
-<h2><a class="toc-backref" href="#id22">基于延迟的发送端拥塞控制</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id23">基于延迟的发送端拥塞控制</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>发送端带宽估计的基本框架和之前版本的接收端的框架类似</p>
 <ol class="arabic simple">
 <li><p>Pre-filtering: 过滤掉当网络发生中断或一些突发情况</p></li>
@@ -436,8 +437,8 @@ For instance different behavior can be used depending on if the rate produced  i
 <li><p>Rate control : 进行发送速率的调整, 可采用 TCP 中使用的 AIMD(加增乘减法)</p></li>
 </ol>
 <img alt="../_images/gcc_flow.png" src="../_images/gcc_flow.png" />
-<section id="id5">
-<h3><a class="toc-backref" href="#id23">基本方法</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id24">基本方法</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>发送端为每个 RTP 包添加 transport wide sequence number 扩展头, 它是一个传输通道范围的序号</p></li>
 <li><p>发送端保存这个序号和相应的发送时间 send_time</p></li>
@@ -478,21 +479,17 @@ y 轴为 smoothed_delay_ms_i, 即上而算出的平滑累计延迟变化</p>
 <p>当 <span class="math notranslate nohighlight">\(m(t_i) &gt; \gamma\)</span> 时，算法通过增加帧间隔时间 <span class="math notranslate nohighlight">\(\Delta T\)</span> 的变量 <span class="math notranslate nohighlight">\(t_{OU}\)</span> 来跟踪在这种情况下花费的时间。
 当 <span class="math notranslate nohighlight">\(t_{OU}\)</span> 达到 <span class="math notranslate nohighlight">\(\bar{t}_{OU}=100ms\)</span> 且 <span class="math notranslate nohighlight">\(m(t_i) &gt; m(t_{i-1})\)</span> 时，产生过度使用信号。</p>
 <p>另一方面，如果 <span class="math notranslate nohighlight">\(m(t_i)\)</span> 减小到 <span class="math notranslate nohighlight">\(\gamma\)</span> 以下，则产生未充分利用信号，而当 <span class="math notranslate nohighlight">\(-\gamma \leq m(t_i) \leq \gamma\)</span> 时触发正常信号。</p>
-<figure class="align-center" id="id11">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../_images/rate-controller-fsm.gif"><img alt="remote rate controller finite state machine" src="../_images/rate-controller-fsm.gif" style="width: 495.0px; height: 142.20000000000002px;" /></a>
-<figcaption>
-<p><span class="caption-text">remote rate controller finite state machine</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<p class="caption"><span class="caption-text">remote rate controller finite state machine</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
 <ul class="simple">
 <li><p>算法: Over-use Detector pseudo-code 过度使用检测器的伪代码</p></li>
 </ul>
-<figure class="align-center" id="id12">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../_images/over-use-detector-pseudo-code.gif"><img alt="over-use detector pseudo code" src="../_images/over-use-detector-pseudo-code.gif" style="width: 438.3px; height: 495.0px;" /></a>
-<figcaption>
-<p><span class="caption-text">over-use detector pseudo code</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<p class="caption"><span class="caption-text">over-use detector pseudo code</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
 <ol class="arabic simple" start="8">
 <li><p>根据以上的检测结果, 调整发送速率, GCC 采用 AIMD 算法</p></li>
 </ol>
@@ -519,12 +516,12 @@ y 轴为 smoothed_delay_ms_i, 即上而算出的平滑累计延迟变化</p>
 <span class="o">+-------------+-----------+------------+--------+</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id6">
-<h2><a class="toc-backref" href="#id24">其他算法细节</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<section id="id7">
-<h3><a class="toc-backref" href="#id25">动态阈值的生成</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id25">其他算法细节</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id26">动态阈值的生成</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>为避免路由队列过小或由于并发的TCP flow 竞争所造成的饥饿, 这个阈值的设置很关键.
 阈值如果太小会对于网络的瞬时干扰过于敏感, 如果太大则会反应太迟钝, 很难设置一个合适的值.
 GCC v2 采用了一种在 GCC v1 中定义的自适应的阈值  Adaptive threshold</p>
@@ -540,34 +537,34 @@ GCC v2 采用了一种在 GCC v1 中定义的自适应的阈值  Adaptive thresh
   &amp; \text{ k_u if } otherwise
 \end{cases}\end{split}\]</div>
 <p>在 GCC 草案中 <span class="math notranslate nohighlight">\(k_d\)</span> 取值为 0.00018, <span class="math notranslate nohighlight">\(k_u\)</span> 取值为 0.01</p>
-</section>
-<section id="id8">
-<h3><a class="toc-backref" href="#id26">指数平滑算法和最小二乘法</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id27">指数平滑算法和最小二乘法</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>通过对接收和发送的延迟的变化，计算拥塞延迟的变化趋势的斜率 (slope), 用到了指数平滑算法和最小二乘法</p>
-<section id="ewma-exponentially-weighted-moving-average">
-<h4><a class="toc-backref" href="#id27">EWMA（Exponentially Weighted Moving Average ）</a><a class="headerlink" href="#ewma-exponentially-weighted-moving-average" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="ewma-exponentially-weighted-moving-average">
+<h4><a class="toc-backref" href="#id28">EWMA（Exponentially Weighted Moving Average ）</a><a class="headerlink" href="#ewma-exponentially-weighted-moving-average" title="Permalink to this headline">¶</a></h4>
 <p>EWMA 指数加权移动平滑法（Exponential Smoothing） 是在移动平均法基础上发展起来的一种时间序列分析预测法.</p>
 <p>具体解释参见 <a class="reference external" href="https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc431.htm">https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc431.htm</a></p>
 <div class="math notranslate nohighlight">
 \[S_t = \alpha y_{t-1} + (1-\alpha)S_{t-1} \,\,\,\,\,\,\, 0 &lt; \alpha \le 1 \,\,\,\,\,\,\, t \ge 3 \, .\]</div>
-</section>
-<section id="least-squars-method">
-<h4><a class="toc-backref" href="#id28">最小二乘法(Least Squars Method)</a><a class="headerlink" href="#least-squars-method" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="least-squars-method">
+<h4><a class="toc-backref" href="#id29">最小二乘法(Least Squars Method)</a><a class="headerlink" href="#least-squars-method" title="Permalink to this headline">¶</a></h4>
 <img alt="../_images/lsm.png" src="../_images/lsm.png" />
 <div class="math notranslate nohighlight">
 \[k = \sum (x_i-x_{avg})(y_i-y_{avg}) / \sum (x_i-x_{avg})^2\]</div>
 <p>更多代码分析参见 <a class="reference external" href="../5.code/webrtc_cc.html">GCC 拥塞控制的实现</a></p>
-</section>
-</section>
-</section>
-<section id="id10">
-<h2><a class="toc-backref" href="#id29">参考资料</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id30">参考资料</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-holmer-rmcat-transport-wide-cc-extensions-01">RTP Extensions for Transport-wide Congestion Control (draft-holmer-rmcat-transport-wide-cc-extensions-01)</a></p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/draft-ietf-rmcat-gcc-02">A Google Congestion Control Algorithm for Real-Time Communication</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

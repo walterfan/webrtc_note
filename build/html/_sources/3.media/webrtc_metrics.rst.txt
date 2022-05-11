@@ -39,3 +39,18 @@ WebRTC 提供了 `webrtc_stats`_, 包含了诸多层面的指标, 浏览器提�
 
 
 .. _webrtc_stats: ../1.basic/webrtc_stats.html
+
+
+
+Considerations for Selecting RTCP Extended Report (XR) Metrics for the WebRTC Statistics API
+===============================================================================================
+
+* network impact metrics,
+* application impact metrics, and
+* recovery metrics
+
+
+* RFC3611 RTP Control Protocol Extended Reports (RTCP XR)
+* rfc6958 burst/gap loss metric reporting
+* rfc7003 burst/gap discard metric reporting
+* rfc6776 Measurement Identity and Information Reporting Using a SDES Item and an RTCP Extended Report (XR) Block

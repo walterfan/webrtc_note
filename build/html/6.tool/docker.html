@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docker &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lal" href="lal.html" />
+    <link rel="prev" title="Build Tools" href="buildtools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 工具</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 常用工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Devtools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netcat.html">netcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scapy.html">scapy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sox.html">SoX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ffmpeg.html">FFmpeg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html">GStreamer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vnc.html">VNC vs. RDP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tc.html">Linux Traffic Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iperf.html">iPerf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf.html">Linux Performance tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcpdump.html">tcpdump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wireshark.html">wireshark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_simulator.html">Network Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analytics.html">Data Analytics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">快速上手</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-image">Docker image</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dockerfile-image">用 Dockerfile 构建image</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-hub">Docker Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-container">Docker Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-data-volume">Docker data volume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tips">Tips</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker-centos">运行 docker centos 容器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#docker-busybox-echo-command">## 运行 docker busybox 容器  并执行 ‘echo’ command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#docker-nginx-80-host-8000">运行 docker nginx 容器, 映射容器内部端口80到外部 host 端口8000</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 工具</a> &raquo;</li>
+      <li>Docker</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/6.tool/docker.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="docker">
+<h1>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>Docker</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Category</strong></p></td>
+<td><p>LearningNote</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-05-11</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id6">Overview</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id7">快速上手</a></p></li>
+<li><p><a class="reference internal" href="#docker-image" id="id8">Docker image</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dockerfile-image" id="id9">用 Dockerfile 构建image</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#docker-hub" id="id10">Docker Hub</a></p></li>
+<li><p><a class="reference internal" href="#docker-container" id="id11">Docker Container</a></p></li>
+<li><p><a class="reference internal" href="#docker-data-volume" id="id12">Docker data volume</a></p></li>
+<li><p><a class="reference internal" href="#tips" id="id13">Tips</a></p>
+<ul>
+<li><p><a class="reference internal" href="#docker-centos" id="id14">运行 docker centos 容器</a></p></li>
+<li><p><a class="reference internal" href="#docker-busybox-echo-command" id="id15">## 运行 docker busybox 容器  并执行 ‘echo’ command</a></p></li>
+<li><p><a class="reference internal" href="#docker-nginx-80-host-8000" id="id16">运行 docker nginx 容器, 映射容器内部端口80到外部 host 端口8000</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id17">参考资料</a></p></li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id6">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/docker_mindmap.webp" src="../_images/docker_mindmap.webp" />
+<img alt="../_images/docker_theory.png" src="../_images/docker_theory.png" />
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id7">快速上手</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>docker 的命令很多, 可以用 docker help command 来获取详细帮助</p>
+<table class="colwidths-given docutils align-default" id="id5">
+<caption><span class="caption-text">docker usage</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>操作</p></th>
+<th class="head"><p>用法</p></th>
+<th class="head"><p>例子</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>拉取 docker 镜像</p></td>
+<td><p>docker pull [options] image_name[:tag]</p></td>
+<td><p>docker pull ubuntu:latest</p></td>
+</tr>
+<tr class="row-odd"><td><p>运行docker 实例</p></td>
+<td><p>docker run [options] image_name [command] [args…]</p></td>
+<td><p>docker run -i -t –name mydocker ubuntu:latest /bin/bash</p></td>
+</tr>
+<tr class="row-even"><td><p>获取 docker 镜像</p></td>
+<td><p>docker images [options] image_name</p></td>
+<td><p>docker images</p></td>
+</tr>
+<tr class="row-odd"><td><p>Docker 实例更名</p></td>
+<td><p>docker rename &lt;old_container_name&gt; &lt;new_container_name&gt;</p></td>
+<td><p>docker rename tomcat tomcat7</p></td>
+</tr>
+<tr class="row-even"><td><p>Docker 中命令的执行</p></td>
+<td><p>docker exec [OPTIONS] CONTAINER COMMAND [ARG…]</p></td>
+<td><p>docker exec -it tomcat /bin/bash</p></td>
+</tr>
+<tr class="row-odd"><td><p>拷贝文件到 Docker 中</p></td>
+<td><p>docker cp [OPTIONS] SRC_PATH CONTAINER:DEST_PATH</p></td>
+<td><p>docker cp ./examples/guestbook/target/guestbook.war tomcat:/usr/local/tomcat/webapps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="docker-image">
+<h2><a class="toc-backref" href="#id8">Docker image</a><a class="headerlink" href="#docker-image" title="Permalink to this headline">¶</a></h2>
+<p>先试着运行一下 HelloWorld</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+
+<span class="n">Unable</span> <span class="n">to</span> <span class="n">find</span> <span class="n">image</span> <span class="s1">&#39;hello-world:latest&#39;</span> <span class="n">locally</span>
+<span class="n">latest</span><span class="p">:</span> <span class="n">Pulling</span> <span class="kn">from</span> <span class="nn">library</span><span class="o">/</span><span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+</pre></div>
+</div>
+<p>这样会启动一个匿名的 docker 容器, 基于的镜像是 hello-world, 本地如果没有这个 image, 会到 github 上拉取</p>
+<p>docker container 基于 image 启动, 镜像 Image 是由文件系统叠加起来的, 最底层是bootfs
+当一个容器启动后, 它将会被移到内存中, 随即会 unmount bootfs</p>
+<p>第二层是rootfs, 它可以是多种操作系统, unbuntu or centos, rootfs是只读状态的</p>
+<p>docker 利用 union mount 技术会在 rootfs 上加载更多的只读文件系统, 各层文件系统叠加到一起, 最终的文件系统看起来象一个文件系统, 最终的文件系统叠加到一起, 最终的文件系统会包含所有的底层的文件和目录, 这样的文件系统就是 image</p>
+<p>当容器启动时, 初始的读写层是空的, 当文件系统发生变化时, 该文件会从只读层复制读写层 (copy on write)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              693bce725149        9 days ago          967 B
+centos              latest              904d6c400333        2 weeks ago         196.8 MB
+nginx               latest              0d409d33b27e        2 weeks ago         182.8 MB
+busybox             latest              47bcc53f74dc        3 months ago        1.113 MB
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>列出 image</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>拉取 image</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">jenkins</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>启动 image (pull if it does not exist in local)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">i</span> <span class="o">--</span><span class="n">name</span> <span class="n">my_jenkins</span> <span class="n">jenkins</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>查找image</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">search</span> <span class="n">jenkins</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>创建 image</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">commit</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">new_image_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>删除 image</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rmi</span> <span class="o">&lt;</span><span class="n">image_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>删除所有的退出的容器</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Exit</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39; &#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">rm</span>
+</pre></div>
+</div>
+<div class="section" id="dockerfile-image">
+<h3><a class="toc-backref" href="#id9">用 Dockerfile 构建image</a><a class="headerlink" href="#dockerfile-image" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>create project folder</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">guestbook</span>
+<span class="n">cd</span> <span class="n">guestbook</span>
+<span class="n">touch</span> <span class="n">Dockerfile</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Create Dockerfile 创建 Dockerfile</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">centos</span><span class="p">:</span><span class="mf">6.7</span>
+<span class="n">MAINTAINER</span> <span class="n">Walter</span> <span class="n">Fan</span> <span class="s2">&quot;walter.fan@gmail.com&quot;</span>
+<span class="n">RUN</span> <span class="n">yum</span> <span class="n">update</span>
+<span class="n">RUN</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">nginx</span>
+<span class="n">RUN</span> <span class="n">echo</span> <span class="s2">&quot;&lt;html&gt;&lt;body&gt;Hello World&lt;/body&gt;&lt;/html&gt;&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+<span class="n">EXPOSE</span> <span class="mi">80</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Build dockerfile 根据 Dockerfile 来创建镜像</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span><span class="o">=</span><span class="s2">&quot;walterfan/hfkb:v1&quot;</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="docker-hub">
+<h2><a class="toc-backref" href="#id10">Docker Hub</a><a class="headerlink" href="#docker-hub" title="Permalink to this headline">¶</a></h2>
+<p>docker hub 类似于 maven 仓库, 持有各种 docker image
+在 <a class="reference external" href="https://hub.docker.com">https://hub.docker.com</a> 上创建 docker hub 帐号, 然后就可以上传自己的 Image 了</p>
+<img alt="../_images/docker_hub.png" src="../_images/docker_hub.png" />
+</div>
+<div class="section" id="docker-container">
+<h2><a class="toc-backref" href="#id11">Docker Container</a><a class="headerlink" href="#docker-container" title="Permalink to this headline">¶</a></h2>
+<p>镜像是静态的文件系统, 容器是动态的运行实例</p>
+<ul class="simple">
+<li><p>创建容器</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># -i open standard input</span>
+<span class="c1"># -t open pseudo tty</span>
+<span class="c1"># -d dameon 在后台运行</span>
+<span class="n">docker</span> <span class="n">create</span> <span class="o">-</span><span class="n">it</span> <span class="n">centos</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>查看 container 信息</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>查看 container 运行情况</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<ul>
+<li><p>运行 container</p>
+<ul>
+<li><p>–name 指定container 名字</p></li>
+<li><dl class="option-list">
+<dt><kbd><span class="option">-i</span></kbd></dt>
+<dd><p>开启 stdin</p>
+</dd>
+</dl>
+</li>
+<li><dl class="option-list">
+<dt><kbd><span class="option">-t</span></kbd></dt>
+<dd><p>分配一个伪 tty 终端</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">centos</span><span class="p">:</span><span class="n">latest</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>停止 container</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">stop</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>进入 container</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">attach</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>执行 container 中的命令</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>重新启动 docker 容器</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">start</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>附着到 docker 容器</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">attache</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>启动和停止守护式容器</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>  <span class="o">-</span><span class="n">d</span> <span class="n">centos</span>
+<span class="n">docker</span> <span class="n">stop</span> <span class="n">wf_container</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>-d 守护方式 daemon 在后台运行 docker container</p></li>
+<li><p>查看容器内部运行的进程</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">top</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+<span class="n">docker</span> <span class="n">ps</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>查看容器内部信息</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">inspect</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在容器内部运行进程</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">d</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>  <span class="n">touch</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">rh</span><span class="o">/</span><span class="n">readme</span><span class="o">.</span><span class="n">md</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>与容器创建一个base会话</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">i</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>  <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p>删除一个容器</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">rm</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>删除 container</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># -f 强制终止并删除</span>
+<span class="c1"># -l 删除容器的连接</span>
+<span class="c1"># -v 删除所挂载的数据卷</span>
+<span class="n">docker</span> <span class="n">rm</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>导出 container</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">export</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">xxx</span><span class="o">.</span><span class="n">tar</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>导入 container</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">xxx</span><span class="o">.</span><span class="n">tar</span><span class="o">|</span><span class="n">docker</span> <span class="kn">import</span> <span class="o">-</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;/</span><span class="n">centos</span><span class="p">:</span><span class="n">v1</span><span class="mf">.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker-data-volume">
+<h2><a class="toc-backref" href="#id12">Docker data volume</a><a class="headerlink" href="#docker-data-volume" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>运行 container, image=centos, name=ccp, 映射本地目录到/opt/workspace</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">idt</span> <span class="o">-</span><span class="n">P</span> <span class="o">--</span><span class="n">name</span> <span class="n">ccp</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">walter</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">workspace</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">workspace</span> <span class="n">centos</span>
+
+<span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="o">&lt;</span><span class="n">container_id</span><span class="o">&gt;</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+
+<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">gcc</span><span class="o">-</span><span class="n">c</span><span class="o">++</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">make</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">automake</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tips">
+<h2><a class="toc-backref" href="#id13">Tips</a><a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="docker-centos">
+<h3><a class="toc-backref" href="#id14">运行 docker centos 容器</a><a class="headerlink" href="#docker-centos" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">idt</span> <span class="o">-</span><span class="n">P</span> <span class="o">--</span><span class="n">name</span> <span class="n">ccp</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">walter</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">workspace</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">workspace</span> <span class="n">centos</span>
+<span class="n">docker</span> <span class="n">attache</span> <span class="n">ccp</span>
+</pre></div>
+</div>
+<p>在 shell 环境中可以安装所需软件</p>
+<blockquote>
+<div><p>$ yum install vim</p>
+</div></blockquote>
+<p>如果 exit 退出则停止了 docker container, 可以用 docker start cpp 再启动起来</p>
+</div>
+<div class="section" id="docker-busybox-echo-command">
+<h3><a class="toc-backref" href="#id15">## 运行 docker busybox 容器  并执行 ‘echo’ command</a><a class="headerlink" href="#docker-busybox-echo-command" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>$ docker run busybox echo hello world</p>
+</div></blockquote>
+</div>
+<div class="section" id="docker-nginx-80-host-8000">
+<h3><a class="toc-backref" href="#id16">运行 docker nginx 容器, 映射容器内部端口80到外部 host 端口8000</a><a class="headerlink" href="#docker-nginx-80-host-8000" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>$ docker run -d -p 8000:80 nginx</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id17">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.docker.com">https://docs.docker.com</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="buildtools.html" class="btn btn-neutral float-left" title="Build Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lal.html" class="btn btn-neutral float-right" title="lal" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

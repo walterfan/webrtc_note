@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GStreamer &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -55,11 +54,11 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">GStreamer</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="gstreamer_dev.html">GStreamer Development</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">多平台</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">强大的核心库</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">智能的插件架构</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">多媒体技术的广泛覆盖</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">可扩展的开发工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">多平台</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">强大的核心库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">智能的插件架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">多媒体技术的广泛覆盖</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">可扩展的开发工具</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a><ul>
@@ -70,7 +69,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#tools">Tools</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">基本概念</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">基本概念</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#pipeline">PIPELINE 流水线</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#elements">Elements 元素</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#bins">Bins 箱子</a></li>
@@ -79,7 +78,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#properties">Properties 属性</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">PIPELINE 示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">PIPELINE 示例</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#audio-playback">Audio playback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#format-conversion">Format conversion</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#video">Video</a></li>
@@ -106,6 +105,8 @@
 <li class="toctree-l2"><a class="reference internal" href="analytics.html">Data Analytics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a></li>
 <li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
@@ -136,7 +137,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="gstreamer">
+  <div class="section" id="gstreamer">
 <h1>GStreamer<a class="headerlink" href="#gstreamer" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Sections</span></p>
@@ -163,117 +164,117 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-06</p></td>
+<td><p>2022-05-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id9">Overview</a></p>
+<li><p><a class="reference internal" href="#overview" id="id10">Overview</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id2" id="id10">多平台</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id11">强大的核心库</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id12">智能的插件架构</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id13">多媒体技术的广泛覆盖</a></p></li>
-<li><p><a class="reference internal" href="#id6" id="id14">可扩展的开发工具</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id11">多平台</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id12">强大的核心库</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id13">智能的插件架构</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id14">多媒体技术的广泛覆盖</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id15">可扩展的开发工具</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#installation" id="id15">Installation</a></p>
+<li><p><a class="reference internal" href="#installation" id="id16">Installation</a></p>
 <ul>
-<li><p><a class="reference internal" href="#macos" id="id16">MacOS</a></p></li>
+<li><p><a class="reference internal" href="#macos" id="id17">MacOS</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#get-started" id="id17">Get started</a></p>
+<li><p><a class="reference internal" href="#get-started" id="id18">Get started</a></p>
 <ul>
-<li><p><a class="reference internal" href="#tools" id="id18">Tools</a></p>
+<li><p><a class="reference internal" href="#tools" id="id19">Tools</a></p>
 <ul>
-<li><p><a class="reference internal" href="#gst-launch" id="id19">gst-launch</a></p></li>
-<li><p><a class="reference internal" href="#gst-inspect" id="id20">gst-inspect</a></p></li>
-<li><p><a class="reference internal" href="#gst-discoverer" id="id21">gst-discoverer</a></p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#id7" id="id22">基本概念</a></p>
-<ul>
-<li><p><a class="reference internal" href="#pipeline" id="id23">PIPELINE 流水线</a></p></li>
-<li><p><a class="reference internal" href="#elements" id="id24">Elements 元素</a></p></li>
-<li><p><a class="reference internal" href="#bins" id="id25">Bins 箱子</a></p></li>
-<li><p><a class="reference internal" href="#links" id="id26">Links 连接</a></p></li>
-<li><p><a class="reference internal" href="#caps" id="id27">Caps 能力</a></p></li>
-<li><p><a class="reference internal" href="#properties" id="id28">Properties 属性</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#id8" id="id29">PIPELINE 示例</a></p>
-<ul>
-<li><p><a class="reference internal" href="#audio-playback" id="id30">Audio playback</a></p>
-<ul>
-<li><p><a class="reference internal" href="#play-the-mp3-music-file-music-mp3-using-a-libmpg123-based-plug-in-and-output-to-an-pulseaudio-device" id="id31">Play the mp3 music file “music.mp3” using a libmpg123-based plug-in and output to an Pulseaudio device</a></p></li>
-<li><p><a class="reference internal" href="#play-an-ogg-vorbis-format-file" id="id32">Play an Ogg Vorbis format file</a></p></li>
-<li><p><a class="reference internal" href="#play-an-mp3-file-or-an-http-stream-using-gio" id="id33">Play an mp3 file or an http stream using GIO</a></p></li>
-<li><p><a class="reference internal" href="#use-gio-to-play-an-mp3-file-located-on-an-smb-server" id="id34">Use GIO to play an mp3 file located on an SMB server</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#format-conversion" id="id35">Format conversion</a></p>
-<ul>
-<li><p><a class="reference internal" href="#convert-an-mp3-music-file-to-an-ogg-vorbis-file" id="id36">Convert an mp3 music file to an Ogg Vorbis file</a></p></li>
-<li><p><a class="reference internal" href="#convert-to-the-flac-format" id="id37">Convert to the FLAC format</a></p></li>
-<li><p><a class="reference internal" href="#plays-a-wav-file-that-contains-raw-audio-data-pcm" id="id38">Plays a .WAV file that contains raw audio data (PCM).</a></p></li>
-<li><p><a class="reference internal" href="#convert-a-wav-file-containing-raw-audio-data-into-an-ogg-vorbis-or-mp3-file" id="id39">Convert a .WAV file containing raw audio data into an Ogg Vorbis or mp3 file</a></p></li>
-<li><p><a class="reference internal" href="#rips-all-tracks-from-compact-disc-and-convert-them-into-a-single-mp3-file" id="id40">Rips all tracks from compact disc and convert them into a single mp3 file</a></p></li>
-<li><p><a class="reference internal" href="#rips-track-5-from-the-cd-and-converts-it-into-a-single-mp3-file" id="id41">Rips track 5 from the CD and converts it into a single mp3 file</a></p></li>
-<li><p><a class="reference internal" href="#records-sound-from-your-audio-input-and-encodes-it-into-an-ogg-file" id="id42">Records sound from your audio input and encodes it into an ogg file</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#video" id="id43">Video</a></p>
-<ul>
-<li><p><a class="reference internal" href="#display-only-the-video-portion-of-an-mpeg-1-video-file-outputting-to-an-x-display-window" id="id44">Display only the video portion of an MPEG-1 video file, outputting to an X display window</a></p></li>
-<li><p><a class="reference internal" href="#display-the-video-portion-of-a-vob-file-used-on-dvds-outputting-to-an-sdl-window" id="id45">Display the video portion of a .vob file (used on DVDs), outputting to an SDL window</a></p></li>
-<li><p><a class="reference internal" href="#play-both-video-and-audio-portions-of-an-mpeg-movie" id="id46">Play both video and audio portions of an MPEG movie</a></p></li>
-<li><p><a class="reference internal" href="#play-an-avi-movie-with-an-external-text-subtitle-stream" id="id47">Play an AVI movie with an external text subtitle stream</a></p></li>
-<li><p><a class="reference internal" href="#play-an-avi-movie-with-an-external-text-subtitle-stream-using-playbin" id="id48">Play an AVI movie with an external text subtitle stream using playbin</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#network-streaming" id="id49">Network streaming</a></p>
-<ul>
-<li><p><a class="reference internal" href="#stream-video-using-rtp-and-network-elements" id="id50">Stream video using RTP and network elements.</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#diagnostic" id="id51">Diagnostic</a></p>
-<ul>
-<li><p><a class="reference internal" href="#generate-a-null-stream-and-ignore-it-and-print-out-details" id="id52">Generate a null stream and ignore it (and print out details).</a></p></li>
-<li><p><a class="reference internal" href="#generate-a-pure-sine-tone-to-test-the-audio-output" id="id53">Generate a pure sine tone to test the audio output</a></p></li>
-<li><p><a class="reference internal" href="#generate-a-familiar-test-pattern-to-test-the-video-output" id="id54">Generate a familiar test pattern to test the video output</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#automatic-linking" id="id55">Automatic linking</a></p>
-<ul>
-<li><p><a class="reference internal" href="#play-any-supported-audio-format" id="id56">Play any supported audio format</a></p></li>
-<li><p><a class="reference internal" href="#play-any-supported-video-format-with-video-and-audio-output" id="id57">Play any supported video format with video and audio output.</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#filtered-connections" id="id58">Filtered connections</a></p>
-<ul>
-<li><p><a class="reference internal" href="#show-a-test-image-and-use-the-yuy2-or-yv12-video-format-for-this" id="id59">Show a test image and use the YUY2 or YV12 video format for this.</a></p></li>
-<li><p><a class="reference internal" href="#record-audio-and-write-it-to-a-wav-file" id="id60">Record audio and write it to a .wav file.</a></p></li>
+<li><p><a class="reference internal" href="#gst-launch" id="id20">gst-launch</a></p></li>
+<li><p><a class="reference internal" href="#gst-inspect" id="id21">gst-inspect</a></p></li>
+<li><p><a class="reference internal" href="#gst-discoverer" id="id22">gst-discoverer</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#faq" id="id61">FAQ</a></p>
+<li><p><a class="reference internal" href="#id8" id="id23">基本概念</a></p>
 <ul>
-<li><p><a class="reference internal" href="#how-to-make-a-gstreamer-plugin" id="id62">How to make a gstreamer plugin</a></p></li>
+<li><p><a class="reference internal" href="#pipeline" id="id24">PIPELINE 流水线</a></p></li>
+<li><p><a class="reference internal" href="#elements" id="id25">Elements 元素</a></p></li>
+<li><p><a class="reference internal" href="#bins" id="id26">Bins 箱子</a></p></li>
+<li><p><a class="reference internal" href="#links" id="id27">Links 连接</a></p></li>
+<li><p><a class="reference internal" href="#caps" id="id28">Caps 能力</a></p></li>
+<li><p><a class="reference internal" href="#properties" id="id29">Properties 属性</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#reference" id="id63">Reference</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id30">PIPELINE 示例</a></p>
+<ul>
+<li><p><a class="reference internal" href="#audio-playback" id="id31">Audio playback</a></p>
+<ul>
+<li><p><a class="reference internal" href="#play-the-mp3-music-file-music-mp3-using-a-libmpg123-based-plug-in-and-output-to-an-pulseaudio-device" id="id32">Play the mp3 music file “music.mp3” using a libmpg123-based plug-in and output to an Pulseaudio device</a></p></li>
+<li><p><a class="reference internal" href="#play-an-ogg-vorbis-format-file" id="id33">Play an Ogg Vorbis format file</a></p></li>
+<li><p><a class="reference internal" href="#play-an-mp3-file-or-an-http-stream-using-gio" id="id34">Play an mp3 file or an http stream using GIO</a></p></li>
+<li><p><a class="reference internal" href="#use-gio-to-play-an-mp3-file-located-on-an-smb-server" id="id35">Use GIO to play an mp3 file located on an SMB server</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#format-conversion" id="id36">Format conversion</a></p>
+<ul>
+<li><p><a class="reference internal" href="#convert-an-mp3-music-file-to-an-ogg-vorbis-file" id="id37">Convert an mp3 music file to an Ogg Vorbis file</a></p></li>
+<li><p><a class="reference internal" href="#convert-to-the-flac-format" id="id38">Convert to the FLAC format</a></p></li>
+<li><p><a class="reference internal" href="#plays-a-wav-file-that-contains-raw-audio-data-pcm" id="id39">Plays a .WAV file that contains raw audio data (PCM).</a></p></li>
+<li><p><a class="reference internal" href="#convert-a-wav-file-containing-raw-audio-data-into-an-ogg-vorbis-or-mp3-file" id="id40">Convert a .WAV file containing raw audio data into an Ogg Vorbis or mp3 file</a></p></li>
+<li><p><a class="reference internal" href="#rips-all-tracks-from-compact-disc-and-convert-them-into-a-single-mp3-file" id="id41">Rips all tracks from compact disc and convert them into a single mp3 file</a></p></li>
+<li><p><a class="reference internal" href="#rips-track-5-from-the-cd-and-converts-it-into-a-single-mp3-file" id="id42">Rips track 5 from the CD and converts it into a single mp3 file</a></p></li>
+<li><p><a class="reference internal" href="#records-sound-from-your-audio-input-and-encodes-it-into-an-ogg-file" id="id43">Records sound from your audio input and encodes it into an ogg file</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#video" id="id44">Video</a></p>
+<ul>
+<li><p><a class="reference internal" href="#display-only-the-video-portion-of-an-mpeg-1-video-file-outputting-to-an-x-display-window" id="id45">Display only the video portion of an MPEG-1 video file, outputting to an X display window</a></p></li>
+<li><p><a class="reference internal" href="#display-the-video-portion-of-a-vob-file-used-on-dvds-outputting-to-an-sdl-window" id="id46">Display the video portion of a .vob file (used on DVDs), outputting to an SDL window</a></p></li>
+<li><p><a class="reference internal" href="#play-both-video-and-audio-portions-of-an-mpeg-movie" id="id47">Play both video and audio portions of an MPEG movie</a></p></li>
+<li><p><a class="reference internal" href="#play-an-avi-movie-with-an-external-text-subtitle-stream" id="id48">Play an AVI movie with an external text subtitle stream</a></p></li>
+<li><p><a class="reference internal" href="#play-an-avi-movie-with-an-external-text-subtitle-stream-using-playbin" id="id49">Play an AVI movie with an external text subtitle stream using playbin</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#network-streaming" id="id50">Network streaming</a></p>
+<ul>
+<li><p><a class="reference internal" href="#stream-video-using-rtp-and-network-elements" id="id51">Stream video using RTP and network elements.</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#diagnostic" id="id52">Diagnostic</a></p>
+<ul>
+<li><p><a class="reference internal" href="#generate-a-null-stream-and-ignore-it-and-print-out-details" id="id53">Generate a null stream and ignore it (and print out details).</a></p></li>
+<li><p><a class="reference internal" href="#generate-a-pure-sine-tone-to-test-the-audio-output" id="id54">Generate a pure sine tone to test the audio output</a></p></li>
+<li><p><a class="reference internal" href="#generate-a-familiar-test-pattern-to-test-the-video-output" id="id55">Generate a familiar test pattern to test the video output</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#automatic-linking" id="id56">Automatic linking</a></p>
+<ul>
+<li><p><a class="reference internal" href="#play-any-supported-audio-format" id="id57">Play any supported audio format</a></p></li>
+<li><p><a class="reference internal" href="#play-any-supported-video-format-with-video-and-audio-output" id="id58">Play any supported video format with video and audio output.</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#filtered-connections" id="id59">Filtered connections</a></p>
+<ul>
+<li><p><a class="reference internal" href="#show-a-test-image-and-use-the-yuy2-or-yv12-video-format-for-this" id="id60">Show a test image and use the YUY2 or YV12 video format for this.</a></p></li>
+<li><p><a class="reference internal" href="#record-audio-and-write-it-to-a-wav-file" id="id61">Record audio and write it to a .wav file.</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#faq" id="id62">FAQ</a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-to-make-a-gstreamer-plugin" id="id63">How to make a gstreamer plugin</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id64">Reference</a></p></li>
 </ul>
 </div>
-<section id="overview">
-<h2><a class="toc-backref" href="#id9">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id10">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>GStreamer is a the multi-platform, modular, open-source, media streaming framework.</p>
 <p>它是一个跨多平台，模块化的开源媒体流处理框架，功能强大。</p>
-<section id="id2">
-<h3><a class="toc-backref" href="#id10">多平台</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id11">多平台</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>GStreamer 适用于所有主要操作系统，例如 Linux、Android、Windows、Max OS X、iOS，以及大多数 BSD、商业 Unix、Solaris 和 Symbian。</p>
 <p>它已被移植到广泛的操作系统、处理器和编译器。 它在所有主要硬件架构上运行，包括 x86、ARM、MIPS、SPARC 和 PowerPC，在 32 位和 64 位以及小端或大端上运行。</p>
 <p>GStreamer 可以桥接到其他多媒体框架，以便重用现有组件（例如编解码器）并使用平台输入/输出机制：</p>
@@ -282,9 +283,9 @@
 <li><p>Windows: DirectShow</p></li>
 <li><p>Mac OS X: QuickTime</p></li>
 </ul>
-</section>
-<section id="id3">
-<h3><a class="toc-backref" href="#id11">强大的核心库</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id12">强大的核心库</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>基于图的结构允许构建任意的流水线 pipeline</p></li>
 <li><p>基于 GLib 2.0 对象模型进行面向对象设计和继承</p></li>
@@ -296,9 +297,9 @@
 <li><p>时钟确保全局的数据流之间的的同步（音视频同步）</p></li>
 <li><p>通过服务质量 (qos) 确保在高 CPU 负载下获得最佳质量</p></li>
 </ul>
-</section>
-<section id="id4">
-<h3><a class="toc-backref" href="#id12">智能的插件架构</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id13">智能的插件架构</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>动态加载的插件提供 Element 和媒体类型，通过注册表缓存按需加载，类似于 ld.so.cache</p></li>
 <li><p>Element 接口处理所有已知类型的源 source、过滤器 filter 和接收器 sinks</p></li>
@@ -307,9 +308,9 @@
 <li><p>可以通过将 pipeline 转储到 .dot 文件并从中创建 PNG 图像来可视化 pipeline</p></li>
 <li><p>资源友好的插件不会浪费内存</p></li>
 </ul>
-</section>
-<section id="id5">
-<h3><a class="toc-backref" href="#id13">多媒体技术的广泛覆盖</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id14">多媒体技术的广泛覆盖</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>GStreamers 功能可以通过新插件进行扩展。 下面列出的功能只是一个粗略的概述，使用了 GStreamers 自带的插件，不包括任何第三方插件。</p>
 <ul class="simple">
 <li><p>容器格式 container formats: asf, avi, 3gp/mp4/mov, flv, mpeg-ps/ts, mkv/webm, mxf, ogg</p></li>
@@ -319,21 +320,21 @@
 <li><p>视频 video: various colorspaces, support for progressive and interlaced video</p></li>
 <li><p>音频 audio: integer and float audio in various bit depths and multichannel configurations</p></li>
 </ul>
-</section>
-<section id="id6">
-<h3><a class="toc-backref" href="#id14">可扩展的开发工具</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id15">可扩展的开发工具</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>gst-launch 是用于快速原型设计和测试的命令行工具，类似于 ecasound</p></li>
 <li><p>有大量文档，包括部分完成的手册和插件编写者指南</p></li>
 <li><p>每个模块中有大量测试程序和示例代码</p></li>
 <li><p>可使用各种编程语言访问 GStreamer API</p></li>
 </ul>
-</section>
-</section>
-<section id="installation">
-<h2><a class="toc-backref" href="#id15">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<section id="macos">
-<h3><a class="toc-backref" href="#id16">MacOS</a><a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id16">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="macos">
+<h3><a class="toc-backref" href="#id17">MacOS</a><a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h3>
 <p>可从下面的链接下载
 <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/installing/on-mac-osx.html?gi-language=c">https://gstreamer.freedesktop.org/documentation/installing/on-mac-osx.html?gi-language=c</a></p>
 <p>安装后有如下文件:</p>
@@ -349,12 +350,12 @@ export PATH=$PATH:/Library/Frameworks/GStreamer.framework/Versions/1.0/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/Library/Frameworks/GStreamer.framework/Versions/1.0/lib
 </pre></div>
 </div>
-</section>
-</section>
-<section id="get-started">
-<h2><a class="toc-backref" href="#id17">Get started</a><a class="headerlink" href="#get-started" title="Permalink to this headline">¶</a></h2>
-<section id="tools">
-<h3><a class="toc-backref" href="#id18">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="get-started">
+<h2><a class="toc-backref" href="#id18">Get started</a><a class="headerlink" href="#get-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tools">
+<h3><a class="toc-backref" href="#id19">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>gst-inspect 显示可用的插件及 element 列表</p></li>
 <li><p>gst-launch 运行 pipeline</p></li>
@@ -362,8 +363,8 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/Library/Frameworks/GStreamer.framework/
 <li><p>gst-codec-info</p></li>
 <li><p>gst-device-monitor</p></li>
 </ul>
-<section id="gst-launch">
-<h4><a class="toc-backref" href="#id19">gst-launch</a><a class="headerlink" href="#gst-launch" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="gst-launch">
+<h4><a class="toc-backref" href="#id20">gst-launch</a><a class="headerlink" href="#gst-launch" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>查看测试视频</p></li>
 </ul>
@@ -395,59 +396,59 @@ gst-launch-1.0 -v avfvideosrc capture-screen=true ! video/x-raw,framerate=20/1 !
 gst-launch-1.0 -v udpsrc port=5000 caps = &quot;application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96&quot; ! rtph264depay ! decodebin ! videoconvert ! autovideosink
 </pre></div>
 </div>
-</section>
-<section id="gst-inspect">
-<h4><a class="toc-backref" href="#id20">gst-inspect</a><a class="headerlink" href="#gst-inspect" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="gst-inspect">
+<h4><a class="toc-backref" href="#id21">gst-inspect</a><a class="headerlink" href="#gst-inspect" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>view plugin videotestsrc</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gst</span><span class="o">-</span><span class="n">inspect</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">videotestsrc</span>
 </pre></div>
 </div>
-</section>
-<section id="gst-discoverer">
-<h4><a class="toc-backref" href="#id21">gst-discoverer</a><a class="headerlink" href="#gst-discoverer" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="gst-discoverer">
+<h4><a class="toc-backref" href="#id22">gst-discoverer</a><a class="headerlink" href="#gst-discoverer" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>check video file codec</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gst</span><span class="o">-</span><span class="n">discoverer</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">../../../</span><span class="n">material</span><span class="o">/</span><span class="n">obama_talk</span><span class="o">.</span><span class="n">mp4</span>
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="id7">
-<h2><a class="toc-backref" href="#id22">基本概念</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<section id="pipeline">
-<h3><a class="toc-backref" href="#id23">PIPELINE 流水线</a><a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id23">基本概念</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pipeline">
+<h3><a class="toc-backref" href="#id24">PIPELINE 流水线</a><a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h3>
 <p>A pipeline consists elements and links.
 Elements can be put into bins of different sorts.
 Elements, links and bins can be specified in a pipeline description in any order.</p>
-</section>
-<section id="elements">
-<h3><a class="toc-backref" href="#id24">Elements 元素</a><a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="elements">
+<h3><a class="toc-backref" href="#id25">Elements 元素</a><a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h3>
 <p>ELEMENTTYPE [PROPERTY1 …]</p>
 <p>Creates an element of type ELEMENTTYPE and sets the PROPERTIES.</p>
-</section>
-<section id="bins">
-<h3><a class="toc-backref" href="#id25">Bins 箱子</a><a class="headerlink" href="#bins" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="bins">
+<h3><a class="toc-backref" href="#id26">Bins 箱子</a><a class="headerlink" href="#bins" title="Permalink to this headline">¶</a></h3>
 <p>[BINTYPE.] ( [PROPERTY1 …] PIPELINE-DESCRIPTION )
 Specifies that a bin of type BINTYPE is created and the given properties are set. Every element between the braces is put into the bin. Please note the dot that has to be used after the BINTYPE. You will almost never need this functionality, it is only really useful for applications using the gst_launch_parse() API with ‘bin’ as bintype. That way it is possible to build partial pipelines instead of a full-fledged top-level pipeline.</p>
-</section>
-<section id="links">
-<h3><a class="toc-backref" href="#id26">Links 连接</a><a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="links">
+<h3><a class="toc-backref" href="#id27">Links 连接</a><a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h3>
 <p>[[SRCELEMENT].[PAD1,…]] ! [[SINKELEMENT].[PAD1,…]] [[SRCELEMENT].[PAD1,…]] ! CAPS ! [[SINKELEMENT].[PAD1,…]] [[SRCELEMENT].[PAD1,…]] : [[SINKELEMENT].[PAD1,…]] [[SRCELEMENT].[PAD1,…]] : CAPS : [[SINKELEMENT].[PAD1,…]]</p>
 <p>Links the element with name SRCELEMENT to the element with name SINKELEMENT, using the caps specified in CAPS as a filter. Names can be set on elements with the name property. If the name is omitted, the element that was specified directly in front of or after the link is used. This works across bins. If a padname is given, the link is done with these pads. If no pad names are given all possibilities are tried and a matching pad is used. If multiple padnames are given, both sides must have the same number of pads specified and multiple links are done in the given order.
 So the simplest link is a simple exclamation mark, that links the element to the left of it to the element right of it.
 Linking using the : operator attempts to link all possible pads between the elements</p>
-</section>
-<section id="caps">
-<h3><a class="toc-backref" href="#id27">Caps 能力</a><a class="headerlink" href="#caps" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="caps">
+<h3><a class="toc-backref" href="#id28">Caps 能力</a><a class="headerlink" href="#caps" title="Permalink to this headline">¶</a></h3>
 <p>MEDIATYPE [, PROPERTY[, PROPERTY …]]] [; CAPS[; CAPS …]]</p>
 <p>Creates a capability with the given media type and optionally with given properties. The media type can be escaped using ” or ‘. If you want to chain caps, you can add more caps in the same format afterwards.</p>
-</section>
-<section id="properties">
-<h3><a class="toc-backref" href="#id28">Properties 属性</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="properties">
+<h3><a class="toc-backref" href="#id29">Properties 属性</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
 <p>NAME=[(TYPE)]VALUE
 in lists and ranges: [(TYPE)]VALUE</p>
 <p>Sets the requested property in capabilities. The name is an alphanumeric value and the type can have the following case-insensitive values:</p>
@@ -463,74 +464,74 @@ in lists and ranges: [(TYPE)]VALUE</p>
 Integer values must be parsable by strtol(), floats by strtod(). FOURCC values may either be integers or strings. Boolean values are (case insensitive) yes, no, true or false and may like strings be escaped with ” or ‘.
 Ranges are in this format: [ VALUE, VALUE ]
 Lists use this format: { VALUE [, VALUE …] }</p>
-</section>
-</section>
-<section id="id8">
-<h2><a class="toc-backref" href="#id29">PIPELINE 示例</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><a class="toc-backref" href="#id30">PIPELINE 示例</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>The examples below assume that you have the correct plug-ins available. In general, “pulsesink” can be substituted with another audio output plug-in such as “alsasink” or “osxaudiosink” Likewise, “xvimagesink” can be substituted with “ximagesink”, “glimagesink”, or “osxvideosink”. Keep in mind though that different sinks might accept different formats and even the same sink might accept different formats on different machines, so you might need to add converter elements like audioconvert and audioresample (for audio) or videoconvert (for video) in front of the sink to make things work.</p>
-<section id="audio-playback">
-<h3><a class="toc-backref" href="#id30">Audio playback</a><a class="headerlink" href="#audio-playback" title="Permalink to this headline">¶</a></h3>
-<section id="play-the-mp3-music-file-music-mp3-using-a-libmpg123-based-plug-in-and-output-to-an-pulseaudio-device">
-<h4><a class="toc-backref" href="#id31">Play the mp3 music file “music.mp3” using a libmpg123-based plug-in and output to an Pulseaudio device</a><a class="headerlink" href="#play-the-mp3-music-file-music-mp3-using-a-libmpg123-based-plug-in-and-output-to-an-pulseaudio-device" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="audio-playback">
+<h3><a class="toc-backref" href="#id31">Audio playback</a><a class="headerlink" href="#audio-playback" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="play-the-mp3-music-file-music-mp3-using-a-libmpg123-based-plug-in-and-output-to-an-pulseaudio-device">
+<h4><a class="toc-backref" href="#id32">Play the mp3 music file “music.mp3” using a libmpg123-based plug-in and output to an Pulseaudio device</a><a class="headerlink" href="#play-the-mp3-music-file-music-mp3-using-a-libmpg123-based-plug-in-and-output-to-an-pulseaudio-device" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=music.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="play-an-ogg-vorbis-format-file">
-<h4><a class="toc-backref" href="#id32">Play an Ogg Vorbis format file</a><a class="headerlink" href="#play-an-ogg-vorbis-format-file" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="play-an-ogg-vorbis-format-file">
+<h4><a class="toc-backref" href="#id33">Play an Ogg Vorbis format file</a><a class="headerlink" href="#play-an-ogg-vorbis-format-file" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=music.ogg ! oggdemux ! vorbisdec ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="play-an-mp3-file-or-an-http-stream-using-gio">
-<h4><a class="toc-backref" href="#id33">Play an mp3 file or an http stream using GIO</a><a class="headerlink" href="#play-an-mp3-file-or-an-http-stream-using-gio" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="play-an-mp3-file-or-an-http-stream-using-gio">
+<h4><a class="toc-backref" href="#id34">Play an mp3 file or an http stream using GIO</a><a class="headerlink" href="#play-an-mp3-file-or-an-http-stream-using-gio" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 giosrc location=music.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! pulsesink</p>
 <p>gst-launch-1.0 giosrc location=http://domain.com/music.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="use-gio-to-play-an-mp3-file-located-on-an-smb-server">
-<h4><a class="toc-backref" href="#id34">Use GIO to play an mp3 file located on an SMB server</a><a class="headerlink" href="#use-gio-to-play-an-mp3-file-located-on-an-smb-server" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="use-gio-to-play-an-mp3-file-located-on-an-smb-server">
+<h4><a class="toc-backref" href="#id35">Use GIO to play an mp3 file located on an SMB server</a><a class="headerlink" href="#use-gio-to-play-an-mp3-file-located-on-an-smb-server" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 giosrc location=smb://computer/music.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-</section>
-<section id="format-conversion">
-<h3><a class="toc-backref" href="#id35">Format conversion</a><a class="headerlink" href="#format-conversion" title="Permalink to this headline">¶</a></h3>
-<section id="convert-an-mp3-music-file-to-an-ogg-vorbis-file">
-<h4><a class="toc-backref" href="#id36">Convert an mp3 music file to an Ogg Vorbis file</a><a class="headerlink" href="#convert-an-mp3-music-file-to-an-ogg-vorbis-file" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="format-conversion">
+<h3><a class="toc-backref" href="#id36">Format conversion</a><a class="headerlink" href="#format-conversion" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="convert-an-mp3-music-file-to-an-ogg-vorbis-file">
+<h4><a class="toc-backref" href="#id37">Convert an mp3 music file to an Ogg Vorbis file</a><a class="headerlink" href="#convert-an-mp3-music-file-to-an-ogg-vorbis-file" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=music.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! vorbisenc ! oggmux ! filesink location=music.ogg</p>
 </div></blockquote>
-</section>
-<section id="convert-to-the-flac-format">
-<h4><a class="toc-backref" href="#id37">Convert to the FLAC format</a><a class="headerlink" href="#convert-to-the-flac-format" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="convert-to-the-flac-format">
+<h4><a class="toc-backref" href="#id38">Convert to the FLAC format</a><a class="headerlink" href="#convert-to-the-flac-format" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=music.mp3 ! mpegaudioparse ! mpg123audiodec ! audioconvert ! flacenc ! filesink location=test.flac</p>
 </div></blockquote>
-</section>
-<section id="plays-a-wav-file-that-contains-raw-audio-data-pcm">
-<h4><a class="toc-backref" href="#id38">Plays a .WAV file that contains raw audio data (PCM).</a><a class="headerlink" href="#plays-a-wav-file-that-contains-raw-audio-data-pcm" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="plays-a-wav-file-that-contains-raw-audio-data-pcm">
+<h4><a class="toc-backref" href="#id39">Plays a .WAV file that contains raw audio data (PCM).</a><a class="headerlink" href="#plays-a-wav-file-that-contains-raw-audio-data-pcm" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=music.wav ! wavparse ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="convert-a-wav-file-containing-raw-audio-data-into-an-ogg-vorbis-or-mp3-file">
-<h4><a class="toc-backref" href="#id39">Convert a .WAV file containing raw audio data into an Ogg Vorbis or mp3 file</a><a class="headerlink" href="#convert-a-wav-file-containing-raw-audio-data-into-an-ogg-vorbis-or-mp3-file" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="convert-a-wav-file-containing-raw-audio-data-into-an-ogg-vorbis-or-mp3-file">
+<h4><a class="toc-backref" href="#id40">Convert a .WAV file containing raw audio data into an Ogg Vorbis or mp3 file</a><a class="headerlink" href="#convert-a-wav-file-containing-raw-audio-data-into-an-ogg-vorbis-or-mp3-file" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=music.wav ! wavparse ! audioconvert ! vorbisenc ! oggmux ! filesink location=music.ogg</p>
 <p>gst-launch-1.0 filesrc location=music.wav ! wavparse ! audioconvert ! lamemp3enc ! filesink location=music.mp3</p>
 </div></blockquote>
-</section>
-<section id="rips-all-tracks-from-compact-disc-and-convert-them-into-a-single-mp3-file">
-<h4><a class="toc-backref" href="#id40">Rips all tracks from compact disc and convert them into a single mp3 file</a><a class="headerlink" href="#rips-all-tracks-from-compact-disc-and-convert-them-into-a-single-mp3-file" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="rips-all-tracks-from-compact-disc-and-convert-them-into-a-single-mp3-file">
+<h4><a class="toc-backref" href="#id41">Rips all tracks from compact disc and convert them into a single mp3 file</a><a class="headerlink" href="#rips-all-tracks-from-compact-disc-and-convert-them-into-a-single-mp3-file" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 cdparanoiasrc mode=continuous ! audioconvert ! lamemp3enc ! mpegaudioparse ! id3v2mux ! filesink location=cd.mp3</p>
 </div></blockquote>
-</section>
-<section id="rips-track-5-from-the-cd-and-converts-it-into-a-single-mp3-file">
-<h4><a class="toc-backref" href="#id41">Rips track 5 from the CD and converts it into a single mp3 file</a><a class="headerlink" href="#rips-track-5-from-the-cd-and-converts-it-into-a-single-mp3-file" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="rips-track-5-from-the-cd-and-converts-it-into-a-single-mp3-file">
+<h4><a class="toc-backref" href="#id42">Rips track 5 from the CD and converts it into a single mp3 file</a><a class="headerlink" href="#rips-track-5-from-the-cd-and-converts-it-into-a-single-mp3-file" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 cdparanoiasrc track=5 ! audioconvert ! lamemp3enc ! mpegaudioparse ! id3v2mux ! filesink location=track5.mp3</p>
 </div></blockquote>
@@ -538,36 +539,36 @@ Lists use this format: { VALUE [, VALUE …] }</p>
 <dt>Using gst-inspect-1.0(1), it is possible to discover settings like the above for cdparanoiasrc that will tell it to rip the entire cd or only tracks of it. Alternatively, you can use an URI and gst-launch-1.0 will find an element (such as cdparanoia) that supports that protocol for you, e.g.:</dt><dd><p>gst-launch-1.0 cdda://5 ! lamemp3enc vbr=new vbr-quality=6 ! filesink location=track5.mp3</p>
 </dd>
 </dl>
-</section>
-<section id="records-sound-from-your-audio-input-and-encodes-it-into-an-ogg-file">
-<h4><a class="toc-backref" href="#id42">Records sound from your audio input and encodes it into an ogg file</a><a class="headerlink" href="#records-sound-from-your-audio-input-and-encodes-it-into-an-ogg-file" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="records-sound-from-your-audio-input-and-encodes-it-into-an-ogg-file">
+<h4><a class="toc-backref" href="#id43">Records sound from your audio input and encodes it into an ogg file</a><a class="headerlink" href="#records-sound-from-your-audio-input-and-encodes-it-into-an-ogg-file" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 pulsesrc ! audioconvert ! vorbisenc ! oggmux ! filesink location=input.ogg</p>
 </div></blockquote>
-</section>
-</section>
-<section id="video">
-<h3><a class="toc-backref" href="#id43">Video</a><a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h3>
-<section id="display-only-the-video-portion-of-an-mpeg-1-video-file-outputting-to-an-x-display-window">
-<h4><a class="toc-backref" href="#id44">Display only the video portion of an MPEG-1 video file, outputting to an X display window</a><a class="headerlink" href="#display-only-the-video-portion-of-an-mpeg-1-video-file-outputting-to-an-x-display-window" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="video">
+<h3><a class="toc-backref" href="#id44">Video</a><a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="display-only-the-video-portion-of-an-mpeg-1-video-file-outputting-to-an-x-display-window">
+<h4><a class="toc-backref" href="#id45">Display only the video portion of an MPEG-1 video file, outputting to an X display window</a><a class="headerlink" href="#display-only-the-video-portion-of-an-mpeg-1-video-file-outputting-to-an-x-display-window" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=JB_FF9_TheGravityOfLove.mpg ! dvddemux ! mpegvideoparse ! mpeg2dec ! xvimagesink</p>
 </div></blockquote>
-</section>
-<section id="display-the-video-portion-of-a-vob-file-used-on-dvds-outputting-to-an-sdl-window">
-<h4><a class="toc-backref" href="#id45">Display the video portion of a .vob file (used on DVDs), outputting to an SDL window</a><a class="headerlink" href="#display-the-video-portion-of-a-vob-file-used-on-dvds-outputting-to-an-sdl-window" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="display-the-video-portion-of-a-vob-file-used-on-dvds-outputting-to-an-sdl-window">
+<h4><a class="toc-backref" href="#id46">Display the video portion of a .vob file (used on DVDs), outputting to an SDL window</a><a class="headerlink" href="#display-the-video-portion-of-a-vob-file-used-on-dvds-outputting-to-an-sdl-window" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=/flflfj.vob ! dvddemux ! mpegvideoparse ! mpeg2dec ! sdlvideosink</p>
 </div></blockquote>
-</section>
-<section id="play-both-video-and-audio-portions-of-an-mpeg-movie">
-<h4><a class="toc-backref" href="#id46">Play both video and audio portions of an MPEG movie</a><a class="headerlink" href="#play-both-video-and-audio-portions-of-an-mpeg-movie" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="play-both-video-and-audio-portions-of-an-mpeg-movie">
+<h4><a class="toc-backref" href="#id47">Play both video and audio portions of an MPEG movie</a><a class="headerlink" href="#play-both-video-and-audio-portions-of-an-mpeg-movie" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=movie.mpg ! dvddemux name=demuxer  demuxer. ! queue ! mpegvideoparse ! mpeg2dec ! sdlvideosink  demuxer. ! queue ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="play-an-avi-movie-with-an-external-text-subtitle-stream">
-<h4><a class="toc-backref" href="#id47">Play an AVI movie with an external text subtitle stream</a><a class="headerlink" href="#play-an-avi-movie-with-an-external-text-subtitle-stream" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="play-an-avi-movie-with-an-external-text-subtitle-stream">
+<h4><a class="toc-backref" href="#id48">Play an AVI movie with an external text subtitle stream</a><a class="headerlink" href="#play-an-avi-movie-with-an-external-text-subtitle-stream" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=movie.mpg ! mpegdemux name=demuxer demuxer. ! queue ! mpegvideoparse ! mpeg2dec ! videoconvert ! sdlvideosink   demuxer. ! queue ! mpegaudioparse ! mpg123audiodec ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
@@ -575,18 +576,18 @@ Lists use this format: { VALUE [, VALUE …] }</p>
 <blockquote>
 <div><p>gst-launch-1.0 textoverlay name=overlay ! videoconvert ! videoscale !  autovideosink   filesrc location=movie.avi ! decodebin ! videoconvert ! overlay.video_sink   filesrc location=movie.srt ! subparse ! overlay.text_sink</p>
 </div></blockquote>
-</section>
-<section id="play-an-avi-movie-with-an-external-text-subtitle-stream-using-playbin">
-<h4><a class="toc-backref" href="#id48">Play an AVI movie with an external text subtitle stream using playbin</a><a class="headerlink" href="#play-an-avi-movie-with-an-external-text-subtitle-stream-using-playbin" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="play-an-avi-movie-with-an-external-text-subtitle-stream-using-playbin">
+<h4><a class="toc-backref" href="#id49">Play an AVI movie with an external text subtitle stream using playbin</a><a class="headerlink" href="#play-an-avi-movie-with-an-external-text-subtitle-stream-using-playbin" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 playbin uri=file:///path/to/movie.avi suburi=file:///path/to/movie.srt</p>
 </div></blockquote>
-</section>
-</section>
-<section id="network-streaming">
-<h3><a class="toc-backref" href="#id49">Network streaming</a><a class="headerlink" href="#network-streaming" title="Permalink to this headline">¶</a></h3>
-<section id="stream-video-using-rtp-and-network-elements">
-<h4><a class="toc-backref" href="#id50">Stream video using RTP and network elements.</a><a class="headerlink" href="#stream-video-using-rtp-and-network-elements" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="network-streaming">
+<h3><a class="toc-backref" href="#id50">Network streaming</a><a class="headerlink" href="#network-streaming" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="stream-video-using-rtp-and-network-elements">
+<h4><a class="toc-backref" href="#id51">Stream video using RTP and network elements.</a><a class="headerlink" href="#stream-video-using-rtp-and-network-elements" title="Permalink to this headline">¶</a></h4>
 <p>This command would be run on the transmitter</p>
 <blockquote>
 <div><p>gst-launch-1.0 v4l2src ! video/x-raw,width=128,height=96,format=UYVY ! videoconvert ! ffenc_h263 ! video/x-h263 ! rtph263ppay pt=96 ! udpsink host=192.168.1.1 port=5000</p>
@@ -595,70 +596,70 @@ Lists use this format: { VALUE [, VALUE …] }</p>
 <blockquote>
 <div><p>gst-launch-1.0 udpsrc port=5000 ! application/x-rtp, clock-rate=90000,payload=96 ! rtph263pdepay queue-delay=0 ! ffdec_h263 ! xvimagesink</p>
 </div></blockquote>
-</section>
-</section>
-<section id="diagnostic">
-<h3><a class="toc-backref" href="#id51">Diagnostic</a><a class="headerlink" href="#diagnostic" title="Permalink to this headline">¶</a></h3>
-<section id="generate-a-null-stream-and-ignore-it-and-print-out-details">
-<h4><a class="toc-backref" href="#id52">Generate a null stream and ignore it (and print out details).</a><a class="headerlink" href="#generate-a-null-stream-and-ignore-it-and-print-out-details" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="diagnostic">
+<h3><a class="toc-backref" href="#id52">Diagnostic</a><a class="headerlink" href="#diagnostic" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="generate-a-null-stream-and-ignore-it-and-print-out-details">
+<h4><a class="toc-backref" href="#id53">Generate a null stream and ignore it (and print out details).</a><a class="headerlink" href="#generate-a-null-stream-and-ignore-it-and-print-out-details" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 -v fakesrc num-buffers=16 ! fakesink</p>
 </div></blockquote>
-</section>
-<section id="generate-a-pure-sine-tone-to-test-the-audio-output">
-<h4><a class="toc-backref" href="#id53">Generate a pure sine tone to test the audio output</a><a class="headerlink" href="#generate-a-pure-sine-tone-to-test-the-audio-output" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="generate-a-pure-sine-tone-to-test-the-audio-output">
+<h4><a class="toc-backref" href="#id54">Generate a pure sine tone to test the audio output</a><a class="headerlink" href="#generate-a-pure-sine-tone-to-test-the-audio-output" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 audiotestsrc ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="generate-a-familiar-test-pattern-to-test-the-video-output">
-<h4><a class="toc-backref" href="#id54">Generate a familiar test pattern to test the video output</a><a class="headerlink" href="#generate-a-familiar-test-pattern-to-test-the-video-output" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="generate-a-familiar-test-pattern-to-test-the-video-output">
+<h4><a class="toc-backref" href="#id55">Generate a familiar test pattern to test the video output</a><a class="headerlink" href="#generate-a-familiar-test-pattern-to-test-the-video-output" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 videotestsrc ! xvimagesink</p>
 <p>gst-launch-1.0 videotestsrc ! ximagesink</p>
 </div></blockquote>
-</section>
-</section>
-<section id="automatic-linking">
-<h3><a class="toc-backref" href="#id55">Automatic linking</a><a class="headerlink" href="#automatic-linking" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="automatic-linking">
+<h3><a class="toc-backref" href="#id56">Automatic linking</a><a class="headerlink" href="#automatic-linking" title="Permalink to this headline">¶</a></h3>
 <p>You can use the decodebin element to automatically select the right elements to get a working pipeline.</p>
-<section id="play-any-supported-audio-format">
-<h4><a class="toc-backref" href="#id56">Play any supported audio format</a><a class="headerlink" href="#play-any-supported-audio-format" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="play-any-supported-audio-format">
+<h4><a class="toc-backref" href="#id57">Play any supported audio format</a><a class="headerlink" href="#play-any-supported-audio-format" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=musicfile ! decodebin ! audioconvert ! audioresample ! pulsesink</p>
 </div></blockquote>
-</section>
-<section id="play-any-supported-video-format-with-video-and-audio-output">
-<h4><a class="toc-backref" href="#id57">Play any supported video format with video and audio output.</a><a class="headerlink" href="#play-any-supported-video-format-with-video-and-audio-output" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="play-any-supported-video-format-with-video-and-audio-output">
+<h4><a class="toc-backref" href="#id58">Play any supported video format with video and audio output.</a><a class="headerlink" href="#play-any-supported-video-format-with-video-and-audio-output" title="Permalink to this headline">¶</a></h4>
 <p>Threads are used automatically. To make this even easier, you can use the playbin element:</p>
 <blockquote>
 <div><p>gst-launch-1.0 filesrc location=videofile ! decodebin name=decoder decoder. ! queue ! audioconvert ! audioresample ! pulsesink   decoder. !  videoconvert ! xvimagesink</p>
 <p>gst-launch-1.0 playbin uri=file:///home/joe/foo.avi</p>
 </div></blockquote>
-</section>
-</section>
-<section id="filtered-connections">
-<h3><a class="toc-backref" href="#id58">Filtered connections</a><a class="headerlink" href="#filtered-connections" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="filtered-connections">
+<h3><a class="toc-backref" href="#id59">Filtered connections</a><a class="headerlink" href="#filtered-connections" title="Permalink to this headline">¶</a></h3>
 <p>These examples show you how to use filtered caps.</p>
-<section id="show-a-test-image-and-use-the-yuy2-or-yv12-video-format-for-this">
-<h4><a class="toc-backref" href="#id59">Show a test image and use the YUY2 or YV12 video format for this.</a><a class="headerlink" href="#show-a-test-image-and-use-the-yuy2-or-yv12-video-format-for-this" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="show-a-test-image-and-use-the-yuy2-or-yv12-video-format-for-this">
+<h4><a class="toc-backref" href="#id60">Show a test image and use the YUY2 or YV12 video format for this.</a><a class="headerlink" href="#show-a-test-image-and-use-the-yuy2-or-yv12-video-format-for-this" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>gst-launch-1.0 videotestsrc ! ‘video/x-raw,format=YUY2;video/x-raw,format=YV12’ ! xvimagesink</p>
 </div></blockquote>
-</section>
-<section id="record-audio-and-write-it-to-a-wav-file">
-<h4><a class="toc-backref" href="#id60">Record audio and write it to a .wav file.</a><a class="headerlink" href="#record-audio-and-write-it-to-a-wav-file" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="record-audio-and-write-it-to-a-wav-file">
+<h4><a class="toc-backref" href="#id61">Record audio and write it to a .wav file.</a><a class="headerlink" href="#record-audio-and-write-it-to-a-wav-file" title="Permalink to this headline">¶</a></h4>
 <p>Force usage of signed 16 to 32 bit samples and a sample rate between 32kHz and 64KHz.</p>
 <blockquote>
 <div><p>gst-launch-1.0 pulsesrc !  ‘audio/x-raw,rate=[32000,64000],format={S16LE,S24LE,S32LE}’ ! wavenc ! filesink location=recording.wav</p>
 </div></blockquote>
-</section>
-</section>
-</section>
-<section id="faq">
-<h2><a class="toc-backref" href="#id61">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
-<section id="how-to-make-a-gstreamer-plugin">
-<h3><a class="toc-backref" href="#id62">How to make a gstreamer plugin</a><a class="headerlink" href="#how-to-make-a-gstreamer-plugin" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="section" id="faq">
+<h2><a class="toc-backref" href="#id62">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-make-a-gstreamer-plugin">
+<h3><a class="toc-backref" href="#id63">How to make a gstreamer plugin</a><a class="headerlink" href="#how-to-make-a-gstreamer-plugin" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>build develop environment</p></li>
 </ol>
@@ -672,16 +673,16 @@ Lists use this format: { VALUE [, VALUE …] }</p>
 <li><p>定义返回类型信息的标准函数</p></li>
 <li><p>注册这个元素</p></li>
 </ol>
-</section>
-</section>
-<section id="reference">
-<h2><a class="toc-backref" href="#id63">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id64">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>GStreamer document: <a class="reference external" href="https://gitlab.freedesktop.org/gstreamer/gst-docs.git">https://gitlab.freedesktop.org/gstreamer/gst-docs.git</a></p></li>
 <li><p>GStreamer plugin guide: <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/plugin-development/index.html?gi-language=c">https://gstreamer.freedesktop.org/documentation/plugin-development/index.html?gi-language=c</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

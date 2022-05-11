@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Pacer &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -62,6 +61,7 @@
 <li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
@@ -93,7 +93,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="webrtc-pacer">
+  <div class="section" id="webrtc-pacer">
 <h1>WebRTC Pacer<a class="headerlink" href="#webrtc-pacer" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -111,18 +111,18 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-06</p></td>
+<td><p>2022-05-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p></li>
-<li><p><a class="reference internal" href="#types" id="id3">Types</a></p></li>
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#types" id="id4">Types</a></p></li>
 </ul>
 </div>
-<section id="overview">
-<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>将要发的包追加到一个队列中，由 Pacer 这个模块按照设定的速率将媒体包发送出去</p>
 <p>主要方法：</p>
 <ul class="simple">
@@ -130,9 +130,9 @@
 <li><p>ModuleRtpRtcpImpl::TrySendPacket(…)</p></li>
 <li><p>std::vector&lt;std::unique_ptr&lt;RtpPacketToSend&gt;&gt; RTPSender::GeneratePadding(…)</p></li>
 </ul>
-</section>
-<section id="types">
-<h2><a class="toc-backref" href="#id3">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="types">
+<h2><a class="toc-backref" href="#id4">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>RtpPacketMediaType 表示 RTP 包的类型，共有 5 种</p></li>
 </ul>
@@ -143,19 +143,19 @@
 <li><p>纠错包</p></li>
 <li><p>填充包</p></li>
 </ol>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">kNumMediaTypes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
-<span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">RtpPacketMediaType</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">kAudio</span><span class="p">,</span><span class="w">                         </span><span class="c1">// Audio media packets.</span>
-<span class="w">    </span><span class="n">kVideo</span><span class="p">,</span><span class="w">                         </span><span class="c1">// Video media packets.</span>
-<span class="w">    </span><span class="n">kRetransmission</span><span class="p">,</span><span class="w">                </span><span class="c1">// Retransmisions, sent as response to NACK.</span>
-<span class="w">    </span><span class="n">kForwardErrorCorrection</span><span class="p">,</span><span class="w">        </span><span class="c1">// FEC packets.</span>
-<span class="w">    </span><span class="n">kPadding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kNumMediaTypes</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">  </span><span class="c1">// RTX or plain padding sent to maintain BWE.</span>
-<span class="w">    </span><span class="c1">// Again, don&#39;t forget to udate `kNumMediaTypes` if you add another value!</span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">kNumMediaTypes</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">RtpPacketMediaType</span> <span class="o">:</span> <span class="kt">size_t</span> <span class="p">{</span>
+    <span class="n">kAudio</span><span class="p">,</span>                         <span class="c1">// Audio media packets.</span>
+    <span class="n">kVideo</span><span class="p">,</span>                         <span class="c1">// Video media packets.</span>
+    <span class="n">kRetransmission</span><span class="p">,</span>                <span class="c1">// Retransmisions, sent as response to NACK.</span>
+    <span class="n">kForwardErrorCorrection</span><span class="p">,</span>        <span class="c1">// FEC packets.</span>
+    <span class="n">kPadding</span> <span class="o">=</span> <span class="n">kNumMediaTypes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>  <span class="c1">// RTX or plain padding sent to maintain BWE.</span>
+    <span class="c1">// Again, don&#39;t forget to udate `kNumMediaTypes` if you add another value!</span>
+<span class="p">};</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

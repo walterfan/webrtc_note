@@ -16,6 +16,7 @@
    webrtc_cc
    webrtc_fec
    webrtc_rtx
+   webrtc_temporal_scalability
 
    jitter_buffer
    insertable_stream
@@ -24,5 +25,5 @@
 
    webrtc_svc
    webrtc_metrics
-
+   webrtc_e2e_delay
 

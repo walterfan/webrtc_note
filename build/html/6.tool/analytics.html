@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Analytics &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -72,6 +71,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a></li>
 <li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
@@ -102,7 +103,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="data-analytics">
+  <div class="section" id="data-analytics">
 <h1>Data Analytics<a class="headerlink" href="#data-analytics" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -120,24 +121,24 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-06</p></td>
+<td><p>2022-05-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p>
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p>
 <ul>
-<li><p><a class="reference internal" href="#elk-k" id="id3">ELK + K</a></p></li>
-<li><p><a class="reference internal" href="#fig-k" id="id4">FIG + K</a></p></li>
-<li><p><a class="reference internal" href="#pinot" id="id5">Pinot</a></p></li>
-<li><p><a class="reference internal" href="#iceberg" id="id6">Iceberg</a></p></li>
+<li><p><a class="reference internal" href="#elk-k" id="id4">ELK + K</a></p></li>
+<li><p><a class="reference internal" href="#fig-k" id="id5">FIG + K</a></p></li>
+<li><p><a class="reference internal" href="#pinot" id="id6">Pinot</a></p></li>
+<li><p><a class="reference internal" href="#iceberg" id="id7">Iceberg</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<section id="overview">
-<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>There are two kinds of data for data analytics:</p>
 <ol class="arabic simple">
 <li><p>Log</p></li>
@@ -152,32 +153,32 @@
 <li><p>provide API</p></li>
 <li><p>rich analytics and visualize tool</p></li>
 </ol>
-<section id="elk-k">
-<h3><a class="toc-backref" href="#id3">ELK + K</a><a class="headerlink" href="#elk-k" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="elk-k">
+<h3><a class="toc-backref" href="#id4">ELK + K</a><a class="headerlink" href="#elk-k" title="Permalink to this headline">¶</a></h3>
 <p>ElasticSearch + LogStash + Kibana + Kafka</p>
 <p>Data flow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LogStash</span> <span class="o">-&gt;</span> <span class="n">Kafka</span> <span class="o">-&gt;</span> <span class="n">ElasticSearch</span> <span class="o">-&gt;</span> <span class="n">Kibana</span>
 </pre></div>
 </div>
-</section>
-<section id="fig-k">
-<h3><a class="toc-backref" href="#id4">FIG + K</a><a class="headerlink" href="#fig-k" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="fig-k">
+<h3><a class="toc-backref" href="#id5">FIG + K</a><a class="headerlink" href="#fig-k" title="Permalink to this headline">¶</a></h3>
 <p>Data flow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Filebeat</span> <span class="o">-&gt;</span> <span class="n">Kafka</span> <span class="o">-&gt;</span> <span class="n">InfluxDB</span> <span class="o">-&gt;</span> <span class="n">Grafana</span>
 </pre></div>
 </div>
-</section>
-<section id="pinot">
-<h3><a class="toc-backref" href="#id5">Pinot</a><a class="headerlink" href="#pinot" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="pinot">
+<h3><a class="toc-backref" href="#id6">Pinot</a><a class="headerlink" href="#pinot" title="Permalink to this headline">¶</a></h3>
 <p>Pinot is a real-time distributed OLAP datastore, purpose-built to provide ultra low-latency analytics, even at extremely high throughput. It can ingest directly from streaming data sources - such as Apache Kafka and Amazon Kinesis - and make the events available for querying instantly. It can also ingest from batch data sources such as Hadoop HDFS, Amazon S3, Azure ADLS, and Google Cloud Storage.</p>
 <p>At the heart of the system is a columnar store, with several smart indexing and pre-aggregation techniques for low latency. This makes Pinot the most perfect fit for user-facing realtime analytics. At the same time, Pinot is also a great choice for other analytical use-cases, such as internal dashboards, anomaly detection, and ad-hoc data exploration.</p>
-</section>
-<section id="iceberg">
-<h3><a class="toc-backref" href="#id6">Iceberg</a><a class="headerlink" href="#iceberg" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="iceberg">
+<h3><a class="toc-backref" href="#id7">Iceberg</a><a class="headerlink" href="#iceberg" title="Permalink to this headline">¶</a></h3>
 <p>Iceberg is a high-performance format for huge analytic tables. Iceberg brings the reliability and simplicity of SQL tables to big data, while making it possible for engines like Spark, Trino, Flink, Presto, and Hive to safely work with the same tables, at the same time.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
