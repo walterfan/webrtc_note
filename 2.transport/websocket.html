@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebSocket &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -98,52 +97,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="websocket">
+  <div class="section" id="websocket">
 <h1>WebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h1>
-<section id="overview">
+<div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">websocket</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span><span class="w"></span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">websocket</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</section>
-<section id="example">
+</div>
+<div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>nodejs</p></li>
 </ul>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">WebSocket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ws&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span><span class="w"></span>
-<span class="w">  </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="mf">8080</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ws&#39;</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
+  <span class="nx">port</span><span class="o">:</span> <span class="mf">8080</span>
+<span class="p">});</span>
 
-<span class="kd">let</span><span class="w"> </span><span class="nx">connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">connection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">connections</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span><span class="w"></span>
+<span class="kd">let</span> <span class="nx">connections</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">connection</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">connections</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// When you receive a message, send that message to every socket.</span><span class="w"></span>
-<span class="w">  </span><span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">connections</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">));</span><span class="w"></span>
-<span class="w">  </span><span class="p">});</span><span class="w"></span>
+  <span class="c1">// When you receive a message, send that message to every socket.</span>
+  <span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">connections</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">s</span> <span class="p">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">));</span>
+  <span class="p">});</span>
 
-<span class="w">  </span><span class="c1">// When a socket closes, or disconnects, remove it from the array.</span><span class="w"></span>
-<span class="w">  </span><span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">connections</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">connection</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">});</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+  <span class="c1">// When a socket closes, or disconnects, remove it from the array.</span>
+  <span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">connections</span> <span class="o">=</span> <span class="nx">connections</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">s</span> <span class="p">=&gt;</span> <span class="nx">s</span> <span class="o">!==</span> <span class="nx">connection</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
 </pre></div>
 </div>
-<section id="reference">
+<div class="section" id="reference">
 <h3>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://spring.io/guides/gs/messaging-stomp-websocket/">https://spring.io/guides/gs/messaging-stomp-websocket/</a></p></li>
 <li><p><a class="reference external" href="https://developer.aliyun.com/article/613916">https://developer.aliyun.com/article/613916</a></p></li>
 </ul>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>video adaptation &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -49,7 +48,7 @@
 <li class="toctree-l3"><a class="reference internal" href="video_basic.html">Video Basic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="video_codec.html">视频编码</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">video adaptation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">概述</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -65,12 +64,14 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
@@ -105,7 +106,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="video-adaptation">
+  <div class="section" id="video-adaptation">
 <h1>video adaptation<a class="headerlink" href="#video-adaptation" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -123,29 +124,29 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-06</p></td>
+<td><p>2022-05-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id2" id="id4">概述</a></p>
+<li><p><a class="reference internal" href="#id3" id="id5">概述</a></p>
 <ul>
-<li><p><a class="reference internal" href="#device-adaptation" id="id5">Device adaptation</a></p>
+<li><p><a class="reference internal" href="#device-adaptation" id="id6">Device adaptation</a></p>
 <ul>
-<li><p><a class="reference internal" href="#encodeusageresource" id="id6">EncodeUsageResource</a></p></li>
-<li><p><a class="reference internal" href="#qualityscaler" id="id7">QualityScaler</a></p></li>
-<li><p><a class="reference internal" href="#qualityscalerqpusagehandlerinterface" id="id8">QualityScalerQpUsageHandlerInterface</a></p></li>
+<li><p><a class="reference internal" href="#encodeusageresource" id="id7">EncodeUsageResource</a></p></li>
+<li><p><a class="reference internal" href="#qualityscaler" id="id8">QualityScaler</a></p></li>
+<li><p><a class="reference internal" href="#qualityscalerqpusagehandlerinterface" id="id9">QualityScalerQpUsageHandlerInterface</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#network-adaptation" id="id9">Network adaptation</a></p></li>
+<li><p><a class="reference internal" href="#network-adaptation" id="id10">Network adaptation</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#reference" id="id10">Reference</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id11">Reference</a></p></li>
 </ul>
 </div>
-<section id="id2">
-<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>video 的编码或传输质量会受到网络带宽和设备能力的影响。</p>
 <p>网络质量不佳，带宽受限，如果还要发送高质量的视频会很困难，因为质量越高，码率越大，所以我们需要降低传送的码率。
 如果用户可以接受低质量的视频，那么这时候可以降低分辨率。如果用户不接受低质量视频，那么就需要忍受延迟，降低帧率或者有些丢帧。</p>
@@ -182,32 +183,32 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="device-adaptation">
-<h3><a class="toc-backref" href="#id5">Device adaptation</a><a class="headerlink" href="#device-adaptation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="device-adaptation">
+<h3><a class="toc-backref" href="#id6">Device adaptation</a><a class="headerlink" href="#device-adaptation" title="Permalink to this headline">¶</a></h3>
 <p>设备的计算和存储资源对于视频的编解码, 捕获和渲染是有很大影响的. 如果设备性能太差, 则不适合进行高分辨率和高帧率的视频编解码.</p>
 <p>在 webrtc library 中的 video 模块中有一个子模块 adaption, 它主要有如下的类来适应设备和网络状态</p>
-<section id="encodeusageresource">
-<h4><a class="toc-backref" href="#id6">EncodeUsageResource</a><a class="headerlink" href="#encodeusageresource" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="encodeusageresource">
+<h4><a class="toc-backref" href="#id7">EncodeUsageResource</a><a class="headerlink" href="#encodeusageresource" title="Permalink to this headline">¶</a></h4>
 <p>Handles interaction with the OveruseDetector.</p>
-</section>
-<section id="qualityscaler">
-<h4><a class="toc-backref" href="#id7">QualityScaler</a><a class="headerlink" href="#qualityscaler" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="qualityscaler">
+<h4><a class="toc-backref" href="#id8">QualityScaler</a><a class="headerlink" href="#qualityscaler" title="Permalink to this headline">¶</a></h4>
 <p>QualityScaler runs asynchronously and monitors QP values of encoded frames.
 It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to signal an overuse or underuse of QP
 (which indicate a desire to scale the video stream down or up).</p>
-</section>
-<section id="qualityscalerqpusagehandlerinterface">
-<h4><a class="toc-backref" href="#id8">QualityScalerQpUsageHandlerInterface</a><a class="headerlink" href="#qualityscalerqpusagehandlerinterface" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="qualityscalerqpusagehandlerinterface">
+<h4><a class="toc-backref" href="#id9">QualityScalerQpUsageHandlerInterface</a><a class="headerlink" href="#qualityscalerqpusagehandlerinterface" title="Permalink to this headline">¶</a></h4>
 <p>Reacts to QP being too high or too low.</p>
 <p>For best quality, when QP is high it is desired to decrease the resolution or frame rate of the stream and when QP is low it is desired to increase the resolution or frame rate of the stream.</p>
 <p>Whether to reconfigure the stream is ultimately up to the handler, which is able to respond asynchronously.</p>
-</section>
-</section>
-<section id="network-adaptation">
-<h3><a class="toc-backref" href="#id9">Network adaptation</a><a class="headerlink" href="#network-adaptation" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="network-adaptation">
+<h3><a class="toc-backref" href="#id10">Network adaptation</a><a class="headerlink" href="#network-adaptation" title="Permalink to this headline">¶</a></h3>
 <p>WebRTC 有一个网络拥塞和带宽估计的模块, 当检测到网络带宽有变化的(over-use, under-use), 就可以来调整视频的分辨率或帧率</p>
-<table class="colwidths-given docutils align-default" id="id3">
-<caption><span class="caption-text">分辨率对应的大约带宽</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id4">
+<caption><span class="caption-text">分辨率对应的大约带宽</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
@@ -250,16 +251,16 @@ It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="reference">
-<h2><a class="toc-backref" href="#id10">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id11">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h">overuse_frame_detector</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

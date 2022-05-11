@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Video Basic &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -48,15 +47,15 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Video Basic</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">概述</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">颜色</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">颜色模型</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">数字图像</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">视频编码的问题</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">视频压缩</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">颜色</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">颜色模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">数字图像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">视频编码的问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">视频压缩</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#video-frame">视频帧 Video Frame</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#video-compress">视频压缩 Video compress</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id17">H.264</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">H.264</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tools">Tools</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
@@ -75,12 +74,14 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
@@ -115,7 +116,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="video-basic">
+  <div class="section" id="video-basic">
 <h1>Video Basic<a class="headerlink" href="#video-basic" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -133,69 +134,69 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-06</p></td>
+<td><p>2022-05-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id2" id="id18">概述</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id19">颜色</a></p>
+<li><p><a class="reference internal" href="#id3" id="id19">概述</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id20">颜色</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id4" id="id20">光的三基色</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id21">色彩三要素</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id21">光的三基色</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id22">色彩三要素</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id6" id="id22">颜色模型</a></p>
+<li><p><a class="reference internal" href="#id7" id="id23">颜色模型</a></p>
 <ul>
-<li><p><a class="reference internal" href="#rgb" id="id23">RGB</a></p></li>
-<li><p><a class="reference internal" href="#yuv" id="id24">YUV</a></p></li>
+<li><p><a class="reference internal" href="#rgb" id="id24">RGB</a></p></li>
+<li><p><a class="reference internal" href="#yuv" id="id25">YUV</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id8" id="id25">数字图像</a></p>
+<li><p><a class="reference internal" href="#id9" id="id26">数字图像</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id9" id="id26">显示分辨率</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id27">显示分辨率</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id10" id="id27">视频编码的问题</a></p>
+<li><p><a class="reference internal" href="#id11" id="id28">视频编码的问题</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id11" id="id28">图像格式</a></p></li>
-<li><p><a class="reference internal" href="#id12" id="id29">视频会议中有哪些流行的分辩率?</a></p></li>
-<li><p><a class="reference internal" href="#id13" id="id30">高宽比</a></p></li>
-<li><p><a class="reference internal" href="#framedepth-bits" id="id31">FrameDepth Bits</a></p></li>
-<li><p><a class="reference internal" href="#frame-rate" id="id32">Frame Rate 帧率</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id29">图像格式</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id30">视频会议中有哪些流行的分辩率?</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id31">高宽比</a></p></li>
+<li><p><a class="reference internal" href="#framedepth-bits" id="id32">FrameDepth Bits</a></p></li>
+<li><p><a class="reference internal" href="#frame-rate" id="id33">Frame Rate 帧率</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id14" id="id33">视频压缩</a></p>
+<li><p><a class="reference internal" href="#id15" id="id34">视频压缩</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id15" id="id34">术语</a></p></li>
-<li><p><a class="reference internal" href="#h-261" id="id35">H.261</a></p></li>
-<li><p><a class="reference internal" href="#h-262-mpeg-2" id="id36">H.262/MPEG-2 编码</a></p></li>
-<li><p><a class="reference internal" href="#h-263" id="id37">H.263</a></p></li>
-<li><p><a class="reference internal" href="#h-264" id="id38">H.264</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id35">术语</a></p></li>
+<li><p><a class="reference internal" href="#h-261" id="id36">H.261</a></p></li>
+<li><p><a class="reference internal" href="#h-262-mpeg-2" id="id37">H.262/MPEG-2 编码</a></p></li>
+<li><p><a class="reference internal" href="#h-263" id="id38">H.263</a></p></li>
+<li><p><a class="reference internal" href="#h-264" id="id39">H.264</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#video-frame" id="id39">视频帧 Video Frame</a></p>
+<li><p><a class="reference internal" href="#video-frame" id="id40">视频帧 Video Frame</a></p>
 <ul>
-<li><p><a class="reference internal" href="#i-frame" id="id40">I-frame 信息帧</a></p></li>
-<li><p><a class="reference internal" href="#p-frame" id="id41">P-frame</a></p></li>
-<li><p><a class="reference internal" href="#b-frame" id="id42">B-frame</a></p></li>
+<li><p><a class="reference internal" href="#i-frame" id="id41">I-frame 信息帧</a></p></li>
+<li><p><a class="reference internal" href="#p-frame" id="id42">P-frame</a></p></li>
+<li><p><a class="reference internal" href="#b-frame" id="id43">B-frame</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#video-compress" id="id43">视频压缩 Video compress</a></p></li>
-<li><p><a class="reference internal" href="#id17" id="id44">H.264</a></p></li>
-<li><p><a class="reference internal" href="#tools" id="id45">Tools</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id46">Reference</a></p></li>
+<li><p><a class="reference internal" href="#video-compress" id="id44">视频压缩 Video compress</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id45">H.264</a></p></li>
+<li><p><a class="reference internal" href="#tools" id="id46">Tools</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id47">Reference</a></p></li>
 </ul>
 </div>
-<section id="id2">
-<h2><a class="toc-backref" href="#id18">概述</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id19">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>视频是图像的集合，按照一定的频率收集和回放， 它有亮度，对比度，饱和度。</p>
-</section>
-<section id="id3">
-<h2><a class="toc-backref" href="#id19">颜色</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<section id="id4">
-<h3><a class="toc-backref" href="#id20">光的三基色</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id20">颜色</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id21">光的三基色</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>Red, Green, Blue 红绿蓝称为三基色，它们按不同比例合成可以产生其他颜色</p>
 <p>..code-block:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">R</span> <span class="o">+</span> <span class="n">G</span> <span class="o">=</span> <span class="n">Yellow</span> <span class="n">黄色</span>
@@ -207,20 +208,20 @@
 <span class="n">B</span> <span class="o">+</span> <span class="n">Yellow</span> <span class="o">=</span> <span class="n">White</span>
 </pre></div>
 </div>
-</section>
-<section id="id5">
-<h3><a class="toc-backref" href="#id21">色彩三要素</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id22">色彩三要素</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>色相：也称色调，由光波波长的长短决定的视觉我，是区别不同颜色的标准</p></li>
 <li><p>亮度：lightness, brightness, 反映颜色的明暗程度</p></li>
 <li><p>纯度: purity, saturation，反映颜色的深浅程度或者鲜艳程度</p></li>
 </ol>
-</section>
-</section>
-<section id="id6">
-<h2><a class="toc-backref" href="#id22">颜色模型</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<section id="rgb">
-<h3><a class="toc-backref" href="#id23">RGB</a><a class="headerlink" href="#rgb" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id23">颜色模型</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rgb">
+<h3><a class="toc-backref" href="#id24">RGB</a><a class="headerlink" href="#rgb" title="Permalink to this headline">¶</a></h3>
 <p>首先就是rgba系列的格式，RGBA色彩主要用于色彩的显示和描述。</p>
 <p>常见的有RGBA/ARGB/BGRA/ABGR/RGB/BGR。这些格式都比较好理解了。</p>
 <p>R、G、B、A分别表示红绿蓝及透明通道。
@@ -241,9 +242,9 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="yuv">
-<h3><a class="toc-backref" href="#id24">YUV</a><a class="headerlink" href="#yuv" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="yuv">
+<h3><a class="toc-backref" href="#id25">YUV</a><a class="headerlink" href="#yuv" title="Permalink to this headline">¶</a></h3>
 <p>Y 指亮度信号, U 和 V 指色度信号（色相加纯度）: 它指某种颜色与同一亮度的白色之间的差别
 Y 明亮度， U 色度， V 浓度, 参见 <a class="reference external" href="yuv.html">YUV</a> 格式</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -323,35 +324,35 @@ Y 明亮度， U 色度， V 浓度, 参见 <a class="reference external" href="
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">YUVfromRGB</span><span class="p">(</span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">V</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">B</span><span class="p">)</span><span class="w"></span>
-<span class="linenos"> 2</span><span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="linenos"> 3</span><span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mf">0.257</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.504</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.098</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="mi">16</span><span class="p">;</span><span class="w"></span>
-<span class="linenos"> 4</span><span class="w">    </span><span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.148</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.291</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.439</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"></span>
-<span class="linenos"> 5</span><span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mf">0.439</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.368</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.071</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"></span>
-<span class="linenos"> 6</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>  <span class="kt">void</span> <span class="nf">YUVfromRGB</span><span class="p">(</span><span class="kt">double</span><span class="o">&amp;</span> <span class="n">Y</span><span class="p">,</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">U</span><span class="p">,</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">V</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">R</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">G</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">B</span><span class="p">)</span>
+<span class="linenos"> 2</span>  <span class="p">{</span>
+<span class="linenos"> 3</span>    <span class="n">Y</span> <span class="o">=</span>  <span class="mf">0.257</span> <span class="o">*</span> <span class="n">R</span> <span class="o">+</span> <span class="mf">0.504</span> <span class="o">*</span> <span class="n">G</span> <span class="o">+</span> <span class="mf">0.098</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span>  <span class="mi">16</span><span class="p">;</span>
+<span class="linenos"> 4</span>    <span class="n">U</span> <span class="o">=</span> <span class="mf">-0.148</span> <span class="o">*</span> <span class="n">R</span> <span class="o">-</span> <span class="mf">0.291</span> <span class="o">*</span> <span class="n">G</span> <span class="o">+</span> <span class="mf">0.439</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span> <span class="mi">128</span><span class="p">;</span>
+<span class="linenos"> 5</span>    <span class="n">V</span> <span class="o">=</span>  <span class="mf">0.439</span> <span class="o">*</span> <span class="n">R</span> <span class="o">-</span> <span class="mf">0.368</span> <span class="o">*</span> <span class="n">G</span> <span class="o">-</span> <span class="mf">0.071</span> <span class="o">*</span> <span class="n">B</span> <span class="o">+</span> <span class="mi">128</span><span class="p">;</span>
+<span class="linenos"> 6</span>  <span class="p">}</span>
 <span class="linenos"> 7</span>
-<span class="linenos"> 8</span><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">RGBfromYUV</span><span class="p">(</span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">R</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">G</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&amp;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">U</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">V</span><span class="p">)</span><span class="w"></span>
-<span class="linenos"> 9</span><span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="linenos">10</span><span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">11</span><span class="w">    </span><span class="n">U</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">12</span><span class="w">    </span><span class="n">V</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">13</span><span class="w">    </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.164</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1.596</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">14</span><span class="w">    </span><span class="n">G</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.164</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.392</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.813</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">V</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">15</span><span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.164</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2.017</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">U</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">16</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="linenos"> 8</span>  <span class="kt">void</span> <span class="nf">RGBfromYUV</span><span class="p">(</span><span class="kt">double</span><span class="o">&amp;</span> <span class="n">R</span><span class="p">,</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">G</span><span class="p">,</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">B</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Y</span><span class="p">,</span> <span class="kt">double</span> <span class="n">U</span><span class="p">,</span> <span class="kt">double</span> <span class="n">V</span><span class="p">)</span>
+<span class="linenos"> 9</span>  <span class="p">{</span>
+<span class="linenos">10</span>    <span class="n">Y</span> <span class="o">-=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="n">U</span> <span class="o">-=</span> <span class="mi">128</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="n">V</span> <span class="o">-=</span> <span class="mi">128</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="n">R</span> <span class="o">=</span> <span class="mf">1.164</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">+</span> <span class="mf">1.596</span> <span class="o">*</span> <span class="n">V</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="n">G</span> <span class="o">=</span> <span class="mf">1.164</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">-</span> <span class="mf">0.392</span> <span class="o">*</span> <span class="n">U</span> <span class="o">-</span> <span class="mf">0.813</span> <span class="o">*</span> <span class="n">V</span><span class="p">;</span>
+<span class="linenos">15</span>    <span class="n">B</span> <span class="o">=</span> <span class="mf">1.164</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">+</span> <span class="mf">2.017</span> <span class="o">*</span> <span class="n">U</span><span class="p">;</span>
+<span class="linenos">16</span>  <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id8">
-<h2><a class="toc-backref" href="#id25">数字图像</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><a class="toc-backref" href="#id26">数字图像</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>黑白图像</p></li>
 <li><p>灰度图像</p></li>
 <li><p>彩色图像</p></li>
 </ul>
-<section id="id9">
-<h3><a class="toc-backref" href="#id26">显示分辨率</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id27">显示分辨率</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>现代显示模式</p></li>
 </ul>
@@ -454,20 +455,20 @@ Y 明亮度， U 色度， V 浓度, 参见 <a class="reference external" href="
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="id10">
-<h2><a class="toc-backref" href="#id27">视频编码的问题</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<section id="id11">
-<h3><a class="toc-backref" href="#id28">图像格式</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id28">视频编码的问题</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id29">图像格式</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>JPG</p></li>
 <li><p>WEBP</p></li>
 <li><p>PNG</p></li>
 </ul>
-</section>
-<section id="id12">
-<h3><a class="toc-backref" href="#id29">视频会议中有哪些流行的分辩率?</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id30">视频会议中有哪些流行的分辩率?</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>p 代表逐行扫描</p>
 <ul class="simple">
 <li><p>90p: 160 * 90</p></li>
@@ -478,26 +479,26 @@ Y 明亮度， U 色度， V 浓度, 参见 <a class="reference external" href="
 <li><p>2K:  3840 * 2160</p></li>
 <li><p>4K:  7680 * 4320</p></li>
 </ul>
-</section>
-<section id="id13">
-<h3><a class="toc-backref" href="#id30">高宽比</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id31">高宽比</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>4:3</p></li>
 <li><p>16:9</p></li>
 <li><p>16:10</p></li>
 </ul>
-</section>
-<section id="framedepth-bits">
-<h3><a class="toc-backref" href="#id31">FrameDepth Bits</a><a class="headerlink" href="#framedepth-bits" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="framedepth-bits">
+<h3><a class="toc-backref" href="#id32">FrameDepth Bits</a><a class="headerlink" href="#framedepth-bits" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>8 bit</p></li>
 <li><p>10 bit</p></li>
 <li><p>12 bit</p></li>
 <li><p>29 bit</p></li>
 </ul>
-</section>
-<section id="frame-rate">
-<h3><a class="toc-backref" href="#id32">Frame Rate 帧率</a><a class="headerlink" href="#frame-rate" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="frame-rate">
+<h3><a class="toc-backref" href="#id33">Frame Rate 帧率</a><a class="headerlink" href="#frame-rate" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>24</p></li>
 <li><p>25</p></li>
@@ -505,14 +506,14 @@ Y 明亮度， U 色度， V 浓度, 参见 <a class="reference external" href="
 <li><p>60</p></li>
 <li><p>120</p></li>
 </ul>
-</section>
-</section>
-<section id="id14">
-<h2><a class="toc-backref" href="#id33">视频压缩</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id15">
+<h2><a class="toc-backref" href="#id34">视频压缩</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <p>视频是由一系列时间上有序的图像帧所组成的，这些图像之间有许多的冗余信息。</p>
 <p>视频压缩方法主要包括去除空间上，时间上，统计上以及感知上的冗余信息</p>
-<section id="id15">
-<h3><a class="toc-backref" href="#id34">术语</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id35">术语</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>GOP: Group of Picture 代表一组连续的图像帧，通常其第一帧为 I 帧（关键帧 Intra-Frame），其后跟着 B 帧和 P 帧 (Inter-Frame)</p></li>
 <li><p>DTS: Decode Timestamp</p></li>
@@ -521,31 +522,31 @@ Y 明亮度， U 色度， V 浓度, 参见 <a class="reference external" href="
 <li><p>ITU-T 国际电信联盟标准组织</p></li>
 <li><p>CCITT 国际电报电话咨询委员会</p></li>
 </ul>
-</section>
-<section id="h-261">
-<h3><a class="toc-backref" href="#id35">H.261</a><a class="headerlink" href="#h-261" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="h-261">
+<h3><a class="toc-backref" href="#id36">H.261</a><a class="headerlink" href="#h-261" title="Permalink to this headline">¶</a></h3>
 <p>H.261 是 CCITT 在 1988 年提出的，于1990 年为 ITU-T 所采纳，它是为了在 ISDN 电话线路上进行可视电话，视频会议和提供其他视听服务而制定的。
 该视频编码器只提供 p * 64 kbps 的码率（p 取值范围为 1 - 30），编码的延迟必须低于 150 ms。</p>
-</section>
-<section id="h-262-mpeg-2">
-<h3><a class="toc-backref" href="#id36">H.262/MPEG-2 编码</a><a class="headerlink" href="#h-262-mpeg-2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="h-262-mpeg-2">
+<h3><a class="toc-backref" href="#id37">H.262/MPEG-2 编码</a><a class="headerlink" href="#h-262-mpeg-2" title="Permalink to this headline">¶</a></h3>
 <p>MPEG-2 编码即 H.262 使用了 DCT（Discrete Cosine Transform 离散余弦变换），运动补偿和霍夫曼编码，对数据从大到小定义了
 sequence, GOP, Picture, Slice, MacroBlock (宏块)， Block 等多个层次</p>
 <p>MPEG-2 中的宏块定义了4:2:0, 4:2:2, 4:4:4 不同的结构， Block 则代表了 8*8 个采样值。</p>
-</section>
-<section id="h-263">
-<h3><a class="toc-backref" href="#id37">H.263</a><a class="headerlink" href="#h-263" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="h-263">
+<h3><a class="toc-backref" href="#id38">H.263</a><a class="headerlink" href="#h-263" title="Permalink to this headline">¶</a></h3>
 <p>H.263 是一个经过改进的视频编码标准，主要用于 PSTN 网络上的视频会议或其他可视化服务，用于在低码率 （64kbps ）及以下进行通信。
 H.264 于 1995 年被ITU-T 所采纳，类似于 H.261 在帧间编码中采用预测编码来减少时间冗余信息，对剩下的信号采用变换编码来减少空间冗余信息（如帧内编码及帧间预测的差分宏块）。</p>
-</section>
-<section id="h-264">
-<h3><a class="toc-backref" href="#id38">H.264</a><a class="headerlink" href="#h-264" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="h-264">
+<h3><a class="toc-backref" href="#id39">H.264</a><a class="headerlink" href="#h-264" title="Permalink to this headline">¶</a></h3>
 <p>H.264 是当下最流行的视频压缩标准，其第一版的草案于 2003 年 5 月完成，它也称为 MPEG-4 的第十部分或者 AVC(Advanced Video Codec 高级视频编码)。 H.264 规定了基于块的，支持运动补偿和变换编码的混合编码方案。同样，每个图像被分解为宏块 (16*16块)，并且任意大小的切片可将多个宏块分组为独立单元。</p>
 <p>H.264 的详细介绍参见  <a class="reference external" href="h264.html">H.264 视频编码简介</a></p>
-</section>
-</section>
-<section id="video-frame">
-<h2><a class="toc-backref" href="#id39">视频帧 Video Frame</a><a class="headerlink" href="#video-frame" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="video-frame">
+<h2><a class="toc-backref" href="#id40">视频帧 Video Frame</a><a class="headerlink" href="#video-frame" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">A video is an action sequence formed by a series of images, and each image in the series succeeds the previous one in the timeline of the action sequence to displayed . These still images are called video frames.</div>
 </div>
@@ -558,29 +559,29 @@ H.264 于 1995 年被ITU-T 所采纳，类似于 H.261 在帧间编码中采用�
 <div class="line">this is because there are more video frames generated per second to be displayed as part of the action sequence, therefore changes in the images between frames are slighter and movement appears smoother.</div>
 </div>
 <p>这是因为每秒有更多的视频帧要显示为动作序列的一部分，因此帧之间图像的变化较小，并且运动看起来更平滑。</p>
-<section id="i-frame">
-<h3><a class="toc-backref" href="#id40">I-frame 信息帧</a><a class="headerlink" href="#i-frame" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="i-frame">
+<h3><a class="toc-backref" href="#id41">I-frame 信息帧</a><a class="headerlink" href="#i-frame" title="Permalink to this headline">¶</a></h3>
 <p>信息帧用帧内压缩，用作关键帧</p>
-</section>
-<section id="p-frame">
-<h3><a class="toc-backref" href="#id41">P-frame</a><a class="headerlink" href="#p-frame" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="p-frame">
+<h3><a class="toc-backref" href="#id42">P-frame</a><a class="headerlink" href="#p-frame" title="Permalink to this headline">¶</a></h3>
 <p>预测帧 Predictive Frame 用帧间压缩，反映之前的 I-frame 的变化</p>
-</section>
-<section id="b-frame">
-<h3><a class="toc-backref" href="#id42">B-frame</a><a class="headerlink" href="#b-frame" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="b-frame">
+<h3><a class="toc-backref" href="#id43">B-frame</a><a class="headerlink" href="#b-frame" title="Permalink to this headline">¶</a></h3>
 <p>双向预测帧 Bidirectional Predictive Frames 使得总体压缩更高， 它参考了之前的 I-frame 和之后的 P-frame</p>
-</section>
-</section>
-<section id="video-compress">
-<h2><a class="toc-backref" href="#id43">视频压缩 Video compress</a><a class="headerlink" href="#video-compress" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="video-compress">
+<h2><a class="toc-backref" href="#id44">视频压缩 Video compress</a><a class="headerlink" href="#video-compress" title="Permalink to this headline">¶</a></h2>
 <p>由于视频是由图像的时间序列组成，视频压缩可以看作具有时间分量的图像压缩。</p>
 <p>大多数视频压缩方案都利用了时间相关性来消除冗余。</p>
 <p>预测帧与当前帧之间的差异称为预测误差或残差</p>
 <p>Intra-Frame 帧内压缩</p>
 <p>Inter-Frame 帧间压缩</p>
-</section>
-<section id="id17">
-<h2><a class="toc-backref" href="#id44">H.264</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id18">
+<h2><a class="toc-backref" href="#id45">H.264</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
 <p>H.264 and MPEG-4 Video Compression: Video Coding for Next-generation Multimedia</p>
 <p>视频是由一系列图像形成的动作序列，并且该系列中的每个图像在要显示的动作序列的时间线中与前一个图像相继。 这些静止图像称为视频帧。 每个视频帧之间的时间差越小，刷新率越高，在视频中表现出的的移动越自然。 这是因为每秒生成的视频帧数量更多，作为动作序列的一部分显示，因此帧之间图像的变化更小，移动看起来更平滑。</p>
 <ul class="simple">
@@ -612,9 +613,9 @@ H.264 于 1995 年被ITU-T 所采纳，类似于 H.261 在帧间编码中采用�
 <li><p>渐进式解码器刷新（GDR）帧</p></li>
 <li><p>长期参考图片（LTRP）帧</p></li>
 </ul>
-</section>
-<section id="tools">
-<h2><a class="toc-backref" href="#id45">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="tools">
+<h2><a class="toc-backref" href="#id46">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>sips</p></li>
 </ul>
@@ -624,14 +625,14 @@ Its functionality can also be used through the “Image Events” AppleScript su
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sips</span> <span class="o">-</span><span class="n">s</span> <span class="nb">format</span> <span class="n">bmp</span> <span class="nb">input</span><span class="o">.</span><span class="n">jpg</span> <span class="o">--</span><span class="n">out</span> <span class="n">output</span><span class="o">.</span><span class="n">bmp</span>
 </pre></div>
 </div>
-</section>
-<section id="reference">
-<h2><a class="toc-backref" href="#id46">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id47">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://scikit-image.org/">scikit-image</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

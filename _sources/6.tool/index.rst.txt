@@ -27,3 +27,5 @@
    analytics
    cookbook
    buildtools
+   docker
+   lal

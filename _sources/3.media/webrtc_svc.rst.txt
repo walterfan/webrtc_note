@@ -23,6 +23,14 @@ WebRTC SVC
 
 概述
 ===========================
+temporal scalability is  present in H.264/AVC, as profiles defined in Annex A of [H.264]
+
+
+Terminology
+==========================
+
+* SST: single-session transmission - refer to `RFC6190`_
+* MST: multi-session transmission - refer to `RFC6190`_
 
 
 示例
@@ -90,3 +98,4 @@ WebRTC SVC
 参考
 ===========================
 * https://www.w3.org/TR/webrtc-svc/
+* `RFC6190`_: RTP Payload Format for Scalable Video Coding
