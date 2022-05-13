@@ -2,9 +2,19 @@
 HTML5 for WebRTC
 ########################
 
-.. contents::
-    :local:
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
 
+============ ==========================
+**Abstract** HTML5 for WebRTC
+**Authors**  Walter Fan
+**Status**   WIP as draft
+**Updated**  |date|
+============ ==========================
+
+.. contents::
+   :local:
 
 Audio Element
 ======================

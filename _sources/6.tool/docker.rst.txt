@@ -339,7 +339,7 @@ Docker Container
 Docker data volume
 ==============================
 
-* 运行 container, image=centos, name=ccp, 映射本地目录到/opt/workspace
+* 运行 container, image=centos, name=ccp, 映射本地目录到 /opt/workspace
 	
 .. code-block::
 
@@ -359,7 +359,7 @@ Docker data volume
 Tips
 ===========================
 运行 docker centos 容器
--------------------------------
+--------------------------------------------------------------------
 .. code-block::
 
    docker run -idt -P --name ccp -v /Users/walter/Documents/workspace:/opt/workspace centos
@@ -372,7 +372,7 @@ Tips
 
 如果 exit 退出则停止了 docker container, 可以用 docker start cpp 再启动起来
 
-## 运行 docker busybox 容器  并执行 ‘echo’ command
+运行 docker busybox 容器  并执行 ‘echo’ command
 --------------------------------------------------------------------
 
 	$ docker run busybox echo hello world
@@ -380,8 +380,30 @@ Tips
 运行 docker nginx 容器, 映射容器内部端口80到外部 host 端口8000
 -------------------------------------------------------------------
 	$ docker run -d -p 8000:80 nginx
-	
-	
+
+
+升级 docker compose
+-----------------------------------------------------------------
+
+.. code-block::
+   
+   #If installed via apt-get
+   sudo apt-get remove docker-compose
+
+   #If installed via curl
+
+   sudo rm /usr/local/bin/docker-compose
+
+   #If installed via pip
+
+   pip uninstall docker-compose
+
+   VERSION=$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)
+   Finally, download to your favorite $PATH-accessible location and set permissions:
+
+   DESTINATION=/usr/local/bin/docker-compose
+   sudo curl -L https://github.com/docker/compose/releases/download/${VERSION}/docker-compose-$(uname -s)-$(uname -m) -o $DESTINATION
+   sudo chmod 755 $DESTINATION
 
 参考资料
 ================================

@@ -2,10 +2,18 @@
 WebRTC SDP
 ################
 
+
 .. include:: ../links.ref
 .. include:: ../tags.ref
 .. include:: ../abbrs.ref
 
+============ ==========================
+**Abstract** WebRTC SDP
+**Authors**  Walter Fan
+**Status**   WIP as draft
+**Category** LearningNote
+**Updated**  |date|
+============ ==========================
 
 .. contents::
     :local:
