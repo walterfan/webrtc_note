@@ -11,14 +11,12 @@ WebRTC stats
 **Abstract** WebRTC Stats
 **Authors**  Walter Fan
 **Status**   WIP as draft
+**Category** LearningNote
 **Updated**  |date|
 ============ ==========================
 
-
-
 .. contents::
-   :local:
-
+    :local:
 
 
 Overview

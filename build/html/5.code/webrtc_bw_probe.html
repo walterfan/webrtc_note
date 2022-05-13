@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Bandwidth Probe &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -103,7 +104,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="webrtc-bandwidth-probe">
+  <section id="webrtc-bandwidth-probe">
 <h1>WebRTC Bandwidth Probe<a class="headerlink" href="#webrtc-bandwidth-probe" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -124,7 +125,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-11</p></td>
+<td><p>2022-05-13</p></td>
 </tr>
 </tbody>
 </table>
@@ -147,7 +148,7 @@
 </li>
 </ul>
 </div>
-<div class="section" id="overview">
+<section id="overview">
 <h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>在会话刚建立时需要确定远端的一个初始带宽，congestion_controller 通过</p>
 <ul class="simple">
@@ -161,115 +162,115 @@
 <p>在收到feedback消息时，如果此RTP包是用来探测带宽的，那么就会调用到ProbeBitrateEstimator::HandleProbeAndEstimateBitrate函数进行处理。</p>
 <p>会话刚建立时会探测两次，以及编码器配置改变时会探测两次，一个cluster为一次探测，</p>
 <p>会话刚建立时进行两次探测的bps分别为900000、1800000，一般连续的两次探测，第二次的bps为第一次的两倍。</p>
-<div class="section" id="id3">
+<section id="id3">
 <h3><a class="toc-backref" href="#id5">触发探测的条件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>1）network available at startup
 2）enable periodic alr probing
 3）large drop in estimated bandwidth
 4) probing results indicate channel has greater capacity.</p>
-</div>
-</div>
-<div class="section" id="flow">
+</section>
+</section>
+<section id="flow">
 <h2><a class="toc-backref" href="#id6">Flow</a><a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="handle-transportpacketsfeedback">
+<section id="handle-transportpacketsfeedback">
 <h3><a class="toc-backref" href="#id7">handle TransportPacketsFeedback</a><a class="headerlink" href="#handle-transportpacketsfeedback" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>GoogCcNetworkController::OnTransportPacketsFeedback</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="structures">
+</section>
+</section>
+<section id="structures">
 <h2><a class="toc-backref" href="#id8">structures</a><a class="headerlink" href="#structures" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span> <span class="k">struct</span> <span class="nc">SentPacket</span> <span class="p">{</span>
-     <span class="n">Timestamp</span> <span class="n">send_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
-     <span class="c1">// Size of packet with overhead up to IP layer.</span>
-     <span class="n">DataSize</span> <span class="n">size</span> <span class="o">=</span> <span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
-     <span class="c1">// Size of preceeding packets that are not part of feedback.</span>
-     <span class="n">DataSize</span> <span class="n">prior_unacked_data</span> <span class="o">=</span> <span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
-     <span class="c1">// Probe cluster id and parameters including bitrate, number of packets and</span>
-     <span class="c1">// number of bytes.</span>
-     <span class="n">PacedPacketInfo</span> <span class="n">pacing_info</span><span class="p">;</span>
-     <span class="c1">// True if the packet is an audio packet, false for video, padding, RTX etc.</span>
-     <span class="kt">bool</span> <span class="n">audio</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-     <span class="c1">// Transport independent sequence number, any tracked packet should have a</span>
-     <span class="c1">// sequence number that is unique over the whole call and increasing by 1 for</span>
-     <span class="c1">// each packet.</span>
-     <span class="kt">int64_t</span> <span class="n">sequence_number</span><span class="p">;</span>
-     <span class="c1">// Tracked data in flight when the packet was sent, excluding unacked data.</span>
-     <span class="n">DataSize</span> <span class="n">data_in_flight</span> <span class="o">=</span> <span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
- <span class="p">};</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">struct</span> <span class="nc">SentPacket</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">send_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Size of packet with overhead up to IP layer.</span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Size of preceeding packets that are not part of feedback.</span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">prior_unacked_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Probe cluster id and parameters including bitrate, number of packets and</span>
+<span class="w">     </span><span class="c1">// number of bytes.</span>
+<span class="w">     </span><span class="n">PacedPacketInfo</span><span class="w"> </span><span class="n">pacing_info</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// True if the packet is an audio packet, false for video, padding, RTX etc.</span>
+<span class="w">     </span><span class="kt">bool</span><span class="w"> </span><span class="n">audio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Transport independent sequence number, any tracked packet should have a</span>
+<span class="w">     </span><span class="c1">// sequence number that is unique over the whole call and increasing by 1 for</span>
+<span class="w">     </span><span class="c1">// each packet.</span>
+<span class="w">     </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">sequence_number</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Tracked data in flight when the packet was sent, excluding unacked data.</span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">data_in_flight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="p">};</span><span class="w"></span>
 
- <span class="k">struct</span> <span class="nc">PacedPacketInfo</span> <span class="p">{</span>
-     <span class="n">PacedPacketInfo</span><span class="p">();</span>
-     <span class="n">PacedPacketInfo</span><span class="p">(</span><span class="kt">int</span> <span class="n">probe_cluster_id</span><span class="p">,</span>
-                     <span class="kt">int</span> <span class="n">probe_cluster_min_probes</span><span class="p">,</span>
-                     <span class="kt">int</span> <span class="n">probe_cluster_min_bytes</span><span class="p">);</span>
+<span class="w"> </span><span class="k">struct</span> <span class="nc">PacedPacketInfo</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">PacedPacketInfo</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">PacedPacketInfo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="p">);</span><span class="w"></span>
 
-     <span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">PacedPacketInfo</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<span class="w">     </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacedPacketInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
 
-     <span class="c1">// TODO(srte): Move probing info to a separate, optional struct.</span>
-     <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">int</span> <span class="n">kNotAProbe</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
-     <span class="kt">int</span> <span class="n">send_bitrate_bps</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
-     <span class="kt">int</span> <span class="n">probe_cluster_id</span> <span class="o">=</span> <span class="n">kNotAProbe</span><span class="p">;</span>
-     <span class="kt">int</span> <span class="n">probe_cluster_min_probes</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
-     <span class="kt">int</span> <span class="n">probe_cluster_min_bytes</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
-     <span class="kt">int</span> <span class="n">probe_cluster_bytes_sent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
- <span class="p">};</span>
+<span class="w">     </span><span class="c1">// TODO(srte): Move probing info to a separate, optional struct.</span>
+<span class="w">     </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">send_bitrate_bps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="p">};</span><span class="w"></span>
 
 
- <span class="k">struct</span> <span class="nc">PacketResult</span> <span class="p">{</span>
-     <span class="k">class</span> <span class="nc">ReceiveTimeOrder</span> <span class="p">{</span>
-     <span class="k">public</span><span class="o">:</span>
-         <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">PacketResult</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">PacketResult</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">);</span>
-     <span class="p">};</span>
+<span class="w"> </span><span class="k">struct</span> <span class="nc">PacketResult</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">class</span> <span class="nc">ReceiveTimeOrder</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">         </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="p">()(</span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lhs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="p">};</span><span class="w"></span>
 
-     <span class="n">PacketResult</span><span class="p">();</span>
-     <span class="n">PacketResult</span><span class="p">(</span><span class="k">const</span> <span class="n">PacketResult</span><span class="o">&amp;</span><span class="p">);</span>
-     <span class="o">~</span><span class="n">PacketResult</span><span class="p">();</span>
+<span class="w">     </span><span class="n">PacketResult</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">PacketResult</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="o">~</span><span class="n">PacketResult</span><span class="p">();</span><span class="w"></span>
 
-     <span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">IsReceived</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">receive_time</span><span class="p">.</span><span class="n">IsPlusInfinity</span><span class="p">();</span> <span class="p">}</span>
+<span class="w">     </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsReceived</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="n">receive_time</span><span class="p">.</span><span class="n">IsPlusInfinity</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-     <span class="n">SentPacket</span> <span class="n">sent_packet</span><span class="p">;</span>
-     <span class="n">Timestamp</span> <span class="n">receive_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
- <span class="p">};</span>
+<span class="w">     </span><span class="n">SentPacket</span><span class="w"> </span><span class="n">sent_packet</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">receive_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="p">};</span><span class="w"></span>
 
- <span class="k">struct</span> <span class="nc">AggregatedCluster</span> <span class="p">{</span>
-     <span class="kt">int</span> <span class="n">num_probes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-     <span class="n">Timestamp</span> <span class="n">first_send</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
-     <span class="n">Timestamp</span> <span class="n">last_send</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">::</span><span class="n">MinusInfinity</span><span class="p">();</span>
-     <span class="n">Timestamp</span> <span class="n">first_receive</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
-     <span class="n">Timestamp</span> <span class="n">last_receive</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="o">::</span><span class="n">MinusInfinity</span><span class="p">();</span>
-     <span class="n">DataSize</span> <span class="n">size_last_send</span> <span class="o">=</span> <span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
-     <span class="n">DataSize</span> <span class="n">size_first_receive</span> <span class="o">=</span> <span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
-     <span class="n">DataSize</span> <span class="n">size_total</span> <span class="o">=</span> <span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span>
-<span class="p">};</span>
+<span class="w"> </span><span class="k">struct</span> <span class="nc">AggregatedCluster</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">num_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">first_send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">last_send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">MinusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">first_receive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">last_receive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">MinusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size_last_send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size_first_receive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size_total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
-<div class="section" id="handleprobeandestimatebitrate">
+<section id="handleprobeandestimatebitrate">
 <h3><a class="toc-backref" href="#id9">HandleProbeAndEstimateBitrate</a><a class="headerlink" href="#handleprobeandestimatebitrate" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>HandleProbeAndEstimateBitrate</p></li>
 </ul>
-<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span> <span class="n">ProbeBitrateEstimator</span><span class="o">::</span><span class="n">HandleProbeAndEstimateBitrate</span>
-<span class="p">(</span><span class="k">const</span> <span class="n">PacketResult</span><span class="o">&amp;</span> <span class="n">packet_feedback</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">//...</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ProbeBitrateEstimator</span><span class="o">::</span><span class="n">HandleProbeAndEstimateBitrate</span><span class="w"></span>
+<span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">packet_feedback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//...</span>
 
-    <span class="n">DataSize</span> <span class="n">send_size</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_total</span> <span class="o">-</span> <span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_last_send</span><span class="p">;</span>
-    <span class="n">DataRate</span> <span class="n">send_rate</span> <span class="o">=</span> <span class="n">send_size</span> <span class="o">/</span> <span class="n">send_interval</span><span class="p">;</span>
+<span class="w">    </span><span class="n">DataSize</span><span class="w"> </span><span class="n">send_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_last_send</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">DataRate</span><span class="w"> </span><span class="n">send_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">send_size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">send_interval</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">DataSize</span> <span class="n">receive_size</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_total</span> <span class="o">-</span> <span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_first_receive</span><span class="p">;</span>
-    <span class="n">DataRate</span> <span class="n">receive_rate</span> <span class="o">=</span> <span class="n">receive_size</span> <span class="o">/</span> <span class="n">receive_interval</span><span class="p">;</span>
+<span class="w">    </span><span class="n">DataSize</span><span class="w"> </span><span class="n">receive_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_first_receive</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">DataRate</span><span class="w"> </span><span class="n">receive_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">receive_size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">receive_interval</span><span class="p">;</span><span class="w"></span>
 
-    <span class="n">DataRate</span> <span class="n">res</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">send_rate</span><span class="p">,</span> <span class="n">receive_rate</span><span class="p">);</span>
-    <span class="c1">//...</span>
-    <span class="n">estimated_data_rate_</span> <span class="o">=</span> <span class="n">res</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">estimated_data_rate_</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="n">DataRate</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">send_rate</span><span class="p">,</span><span class="w"> </span><span class="n">receive_rate</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//...</span>
+<span class="w">    </span><span class="n">estimated_data_rate_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">res</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">estimated_data_rate_</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

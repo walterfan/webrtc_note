@@ -8,11 +8,15 @@ WebRTC extension
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC extension
+**Abstract** WebRTC Extension
 **Authors**  Walter Fan
 **Status**   WIP as draft
+**Category** LearningNote
 **Updated**  |date|
 ============ ==========================
+
+.. contents::
+    :local:
 
 
 
