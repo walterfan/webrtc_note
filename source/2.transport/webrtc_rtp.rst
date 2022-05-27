@@ -67,7 +67,7 @@ timestamp 是必需的, 通过它我们可以用来 \* 回放 \* 计算网络抖
 承载具有实时性质的数据的实时传输协议RTP。 2)
 在进行的会话中监视服务质量并传输会话参与者信息的实时传输控制协议RTCP。
 
-.. image:: https://upload-images.jianshu.io/upload_images/1598924-7810459af208969b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. image:: ../_static/rtp_1.webp
 
 RTP
 ======
@@ -75,14 +75,14 @@ RTP
 RTP 通常基于 UDP 传输, 因为多媒体数据可以忍受少量丢包,
 却不能忍受数据包延时过大, 如图所示:
 
-.. figure:: https://upload-images.jianshu.io/upload_images/1598924-75b9eae3bf48385a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. figure:: ../_static/rtp_2.webp
    :alt: RTP协议栈
 
    RTP协议栈
 
 它的数据包格式如下:
 
-.. figure:: https://upload-images.jianshu.io/upload_images/1598924-c2c1dbb22ea20b2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. figure:: ../_static/rtp_packet.webp
    :alt: RTP 数据包格式
 
    RTP 数据包格式
@@ -116,7 +116,7 @@ RTP 通常基于 UDP 传输, 因为多媒体数据可以忍受少量丢包,
 
 RTP 标准头之后就是载荷了, 如图所示：
 
-.. figure:: https://upload-images.jianshu.io/upload_images/1598924-175b9b70ec9c2525.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. figure:: ../_static/rtp_payload.webp
    :alt: RTP 数据包负载g
 
    RTP 数据包负载g
@@ -229,21 +229,21 @@ RR, SR, SDES 可用来汇报在数据源和目的之间的多媒体传输信息,
 数据包到达的抖动, 通过这些报告, 应用程序就可以修改发送速率,
 也可做一些其他调整以及诊断。
 
-.. figure:: https://upload-images.jianshu.io/upload_images/1598924-6e85bc96a93ff2b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. figure:: ../_static/rtcp_type.webp
    :alt: RTCP 数据包类型
 
    RTCP 数据包类型
 
 它也是基于 UDP 包进行传输：
 
-.. figure:: https://upload-images.jianshu.io/upload_images/1598924-550f96c9a5f86db7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. figure:: ../_static/rtcp_stack.webp
    :alt: RTCP 数据包栈
 
    RTCP 数据包栈
 
 RTCP 的数据包格式如下：
 
-.. figure:: https://upload-images.jianshu.io/upload_images/1598924-dba3efba09f9bb14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. figure:: ../_static/rtcp_packet.webp
    :alt: RTCP packet
 
    RTCP packet
@@ -314,7 +314,7 @@ RTCP 的数据包格式如下：
 上一次发送者报告接收的时间 \* DLSR(Delay since last sender report
 received) 上一次发送者报告接收的延迟
 
-.. image:: https://upload-images.jianshu.io/upload_images/1598924-7e4e8454e5e0825e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. image:: ../_static/rtcp_rtt.webp
 
 往返时延RTT 计算公式如下：
 
@@ -353,7 +353,7 @@ received) 上一次发送者报告接收的延迟
 
 结果为 A - DLSR -LSR = 46864.500 - 5.250 - 46853.125 = 6.125 s
 
-2) 抖动Jitter
+1) 抖动Jitter
 -------------
 
 在理想情况下, RTP数据包到达的间隔是固定的, 比如IP电话中最常用的编码g.711, 每个包的荷载长度为20毫秒, 每秒应该有50个数据包, 但是实际上网络并不总能稳定传输的,
@@ -364,12 +364,12 @@ received) 上一次发送者报告接收的延迟
 首先计算数据包接收与发送时间间隔的差别，也就是两个 packet 传输延时的差异，此时所计算的 jitter 时只用到相邻两个 packet 的 delta，
 反映的是某一时刻网络延迟的变化情况
 
-.. image:: https://upload-images.jianshu.io/upload_images/1598924-2ad99cb7671ff297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. image:: ../_static/rtcp_jitter_1.webp
 
 而如下的到达间隔抖动 J 定义为差值的平均偏差（平滑后的绝对值）。之所以要除以 16 是为了减少大的随机变化的影响。
 所以到达间隔时间的变化需要重复几次才能显著地影响抖动的估计
 
-.. image:: https://upload-images.jianshu.io/upload_images/1598924-e8513998b1b91ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. image:: ../_static/rtcp_jitter_2.webp
 
 抖动是不可避免的, 在合理区间的抖动是可以接受, 通常采用抖动缓冲 Jitter Buffer 来解决抖动的问题, 数据包接收之后并不马上解码, 而是先放在缓冲区中.
 假设缓冲区深度是60ms, 那么解码总是等到缓冲区中的若干数据包总长度达到60ms时才取出解码, 在 60ms 之内的抖动自然没有任何影响.
@@ -395,7 +395,7 @@ RFC3550 中有具体算法
       if (d < 0) d = -d;
       s->jitter += (1./16.) * ((double)d - s->jitter);
 
-3) 丢包 Packet loss
+1) 丢包 Packet loss
 -------------------
 
 如果一个UDP
@@ -405,7 +405,7 @@ RFC3550 中有具体算法
 
 Packet loss丢包率的公式很简单
 
-.. image:: https://upload-images.jianshu.io/upload_images/1598924-05701e3f98e6285b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240
+.. image:: ../_static/rtcp_packet_loss.webp
 
 -  丢失的包数 = 期望的包数 - 收到的包数
 -  期望的包数 = 最大sequence number – 初始的 sequence number
