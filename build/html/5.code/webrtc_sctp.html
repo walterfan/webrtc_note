@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC SCTP library &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -97,7 +98,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="webrtc-sctp-library">
+  <section id="webrtc-sctp-library">
 <h1>WebRTC SCTP library<a class="headerlink" href="#webrtc-sctp-library" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -118,7 +119,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-11</p></td>
+<td><p>2022-05-13</p></td>
 </tr>
 </tbody>
 </table>
@@ -133,7 +134,7 @@
 </li>
 </ul>
 </div>
-<div class="section" id="overview">
+<section id="overview">
 <h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>WebRTC 的 data channel 使用了 SCTP 协议, 提供数据传输通道, 为安全起见, 其 SCTP 依赖 DTLS 进行安全加密传输。</p>
 <p>SCTP 是一种面向消息的可靠传输协议, 直接支持在 IP 或 UDP 之上运行的多宿主, 并支持 v4 和 v6 版本。</p>
@@ -163,15 +164,15 @@
 <p>We appreciate any bug reports to be filed at bugs.webrtc.org (DataChannel component) for the dcSCTP library and its transport, and at crbug.com (Blink&gt;WebRTC&gt;DataChannel) for bugs visible through the Chrome/Chromium JS API.</p>
 <p>We would like to thank Michael Tüxen for all his past and current support for the usrsctp library, which has been a core component for WebRTC. We would not be the platform we are today without all of Michael’s efforts.</p>
 </div></blockquote>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2><a class="toc-backref" href="#id5">相关代码</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>DcSctpTransport</p></li>
 <li><p>DcSctpSocketInterface
 - DcSctpSocket</p></li>
 </ul>
-<div class="section" id="core-class">
+<section id="core-class">
 <h3><a class="toc-backref" href="#id6">core class</a><a class="headerlink" href="#core-class" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Represents an immutable (received or to-be-sent) SCTP packet.
 class SctpPacket {
@@ -257,43 +258,43 @@ public:
 };
 </pre></div>
 </div>
-</div>
-<div class="section" id="snippets">
+</section>
+<section id="snippets">
 <h3><a class="toc-backref" href="#id7">snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RTCError</span> <span class="nf">SdpOfferAnswerHandler::PushdownMediaDescription</span><span class="p">(</span>
-   <span class="n">SdpType</span> <span class="n">type</span><span class="p">,</span>
-   <span class="n">cricket</span><span class="o">::</span><span class="n">ContentSource</span> <span class="n">source</span><span class="p">,</span>
-   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="k">const</span> <span class="n">cricket</span><span class="o">::</span><span class="n">ContentGroup</span><span class="o">*&gt;&amp;</span>
-      <span class="n">bundle_groups_by_mid</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RTCError</span><span class="w"> </span><span class="nf">SdpOfferAnswerHandler::PushdownMediaDescription</span><span class="p">(</span><span class="w"></span>
+<span class="w">   </span><span class="n">SdpType</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="n">cricket</span><span class="o">::</span><span class="n">ContentSource</span><span class="w"> </span><span class="n">source</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">cricket</span><span class="o">::</span><span class="n">ContentGroup</span><span class="o">*&gt;&amp;</span><span class="w"></span>
+<span class="w">      </span><span class="n">bundle_groups_by_mid</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
 
-   <span class="c1">//...</span>
+<span class="w">   </span><span class="c1">//...</span>
 
-   <span class="c1">// Need complete offer/answer with an SCTP m= section before starting SCTP,</span>
-      <span class="c1">// according to https://tools.ietf.org/html/draft-ietf-mmusic-sctp-sdp-19</span>
-   <span class="k">if</span> <span class="p">(</span><span class="n">pc_</span><span class="o">-&gt;</span><span class="n">sctp_mid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">local_description</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">remote_description</span><span class="p">())</span> <span class="p">{</span>
-      <span class="k">auto</span> <span class="n">local_sctp_description</span> <span class="o">=</span> <span class="n">cricket</span><span class="o">::</span><span class="n">GetFirstSctpDataContentDescription</span><span class="p">(</span>
-         <span class="n">local_description</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">());</span>
-      <span class="k">auto</span> <span class="n">remote_sctp_description</span> <span class="o">=</span> <span class="n">cricket</span><span class="o">::</span><span class="n">GetFirstSctpDataContentDescription</span><span class="p">(</span>
-         <span class="n">remote_description</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">());</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">local_sctp_description</span> <span class="o">&amp;&amp;</span> <span class="n">remote_sctp_description</span><span class="p">)</span> <span class="p">{</span>
-         <span class="kt">int</span> <span class="n">max_message_size</span><span class="p">;</span>
-         <span class="c1">// A remote max message size of zero means &quot;any size supported&quot;.</span>
-         <span class="c1">// We configure the connection with our own max message size.</span>
-         <span class="k">if</span> <span class="p">(</span><span class="n">remote_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-         <span class="n">max_message_size</span> <span class="o">=</span> <span class="n">local_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">();</span>
-         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-         <span class="n">max_message_size</span> <span class="o">=</span>
-               <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">local_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">(),</span>
-                        <span class="n">remote_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">());</span>
-         <span class="p">}</span>
-         <span class="n">pc_</span><span class="o">-&gt;</span><span class="n">StartSctpTransport</span><span class="p">(</span><span class="n">local_sctp_description</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">(),</span>
-                                 <span class="n">remote_sctp_description</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">(),</span>
-                                 <span class="n">max_message_size</span><span class="p">);</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-   <span class="c1">//...</span>
-<span class="p">}</span>
+<span class="w">   </span><span class="c1">// Need complete offer/answer with an SCTP m= section before starting SCTP,</span>
+<span class="w">      </span><span class="c1">// according to https://tools.ietf.org/html/draft-ietf-mmusic-sctp-sdp-19</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pc_</span><span class="o">-&gt;</span><span class="n">sctp_mid</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">local_description</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">remote_description</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">auto</span><span class="w"> </span><span class="n">local_sctp_description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cricket</span><span class="o">::</span><span class="n">GetFirstSctpDataContentDescription</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">local_description</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">());</span><span class="w"></span>
+<span class="w">      </span><span class="k">auto</span><span class="w"> </span><span class="n">remote_sctp_description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cricket</span><span class="o">::</span><span class="n">GetFirstSctpDataContentDescription</span><span class="p">(</span><span class="w"></span>
+<span class="w">         </span><span class="n">remote_description</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">());</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">local_sctp_description</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">remote_sctp_description</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="kt">int</span><span class="w"> </span><span class="n">max_message_size</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// A remote max message size of zero means &quot;any size supported&quot;.</span>
+<span class="w">         </span><span class="c1">// We configure the connection with our own max message size.</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">remote_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="n">max_message_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">local_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">();</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="n">max_message_size</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">               </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">local_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">remote_sctp_description</span><span class="o">-&gt;</span><span class="n">max_message_size</span><span class="p">());</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="n">pc_</span><span class="o">-&gt;</span><span class="n">StartSctpTransport</span><span class="p">(</span><span class="n">local_sctp_description</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                                 </span><span class="n">remote_sctp_description</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                                 </span><span class="n">max_message_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//...</span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -402,9 +403,9 @@ bool DcSctpTransport::Start(int local_sctp_port,
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

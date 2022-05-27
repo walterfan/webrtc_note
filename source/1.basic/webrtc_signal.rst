@@ -2,19 +2,18 @@
 WebRTC 的信令
 ################
 
+
 .. include:: ../links.ref
 .. include:: ../tags.ref
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** FFmpeg
+**Abstract** WebRTC Signal
 **Authors**  Walter Fan
-**Status**   WIP
+**Status**   WIP as draft
+**Category** LearningNote
 **Updated**  |date|
 ============ ==========================
-
-
-
 
 .. contents::
     :local:

@@ -8,16 +8,15 @@ Web Browser for RTC
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** Web Browser
+**Abstract** WebRTC Browser
 **Authors**  Walter Fan
-**Status**   WIP
+**Status**   WIP as draft
+**Category** LearningNote
 **Updated**  |date|
 ============ ==========================
 
-
-
 .. contents::
-   :local:
+    :local:
 
 
 简介

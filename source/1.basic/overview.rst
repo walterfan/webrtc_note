@@ -2,8 +2,19 @@
 WebRTC 概论
 ######################
 
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
+
+============ ==========================
+**Abstract** WebRTC 概论
+**Authors**  Walter Fan
+**Status**   WIP as draft
+**Updated**  |date|
+============ ==========================
+
 .. contents::
-    :local:
+   :local:
 
 
 WebRTC 简介
@@ -197,9 +208,13 @@ Local system support functions
 参考资料
 ===============================
 * `RFC8825`_: Overview: Real-Time Protocols for Browser-Based Applications
+
+* `WebRTC 实时通信`_
+
 * https://www.html5rocks.com/en/tutorials/webrtc/basics/
 * https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/
-* https://a-wing.github.io/webrtc-book-cn/01_introduction.html
-* https://codelabs.developers.google.com/codelabs/webrtc-web  
+* https://codelabs.developers.google.com/codelabs/webrtc-web
+
+.. _WebRTC 实时通信: * https://a-wing.github.io/webrtc-book-cn/01_introduction.html
 
 

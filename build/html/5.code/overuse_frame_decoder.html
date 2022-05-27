@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC OveruseFrameDetector &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -96,7 +97,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="webrtc-overuseframedetector">
+  <section id="webrtc-overuseframedetector">
 <h1>WebRTC OveruseFrameDetector<a class="headerlink" href="#webrtc-overuseframedetector" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -114,7 +115,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-11</p></td>
+<td><p>2022-05-13</p></td>
 </tr>
 </tbody>
 </table>
@@ -128,26 +129,26 @@
 <li><p><a class="reference internal" href="#reference" id="id5">Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="overview">
+<section id="overview">
 <h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>用户使用的设备千差万别，</p>
 <p>视频的分辨率，帧率过高可能会耗费大量的 CPU 资源，如果用户的设备性能不高，可能会造成应用程序</p>
 <p>过载检测器，分别对 cpu，qp，分辨率进行状态检测，通过与设定阈值比较，高于就认为过载，低于就认为欠载。</p>
-<div class="section" id="overuse-frame-detector">
+<section id="overuse-frame-detector">
 <h3><a class="toc-backref" href="#id4">overuse frame detector</a><a class="headerlink" href="#overuse-frame-detector" title="Permalink to this headline">¶</a></h3>
 <p>cpu 检测器”，通过编码器占用率与设定的阀值进行比较，编码器占用率计算公式：</p>
 <p>编码器占用率 = 编码时长/采集间隔，具体的实现在 SendProcessingUsage1 类中，编码时长与采集间隔</p>
 <p>都用了指数加权移动平均法（EWMA）。</p>
-</div>
-</div>
-<div class="section" id="reference">
+</section>
+</section>
+<section id="reference">
 <h2><a class="toc-backref" href="#id5">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/encode_usage_resource.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/encode_usage_resource.h</a></p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
