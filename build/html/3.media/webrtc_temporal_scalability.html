@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Temporal scalability &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -95,7 +94,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="temporal-scalability">
+  <div class="section" id="temporal-scalability">
 <h1>Temporal scalability<a class="headerlink" href="#temporal-scalability" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -116,7 +115,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-27</p></td>
 </tr>
 </tbody>
 </table>
@@ -126,18 +125,27 @@
 <li><p><a class="reference internal" href="#id4" id="id6">参考</a></p></li>
 </ul>
 </div>
-<section id="id3">
+<div class="section" id="id3">
 <h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>在时间可伸缩性(temporal scalability)的情况下，帧序列(the sequence of frames)以某种方式编码，
 以便可以在服务器中丢弃一些帧，并且仍然可以在接收器端解码得到的帧序列。</p>
-</section>
-<section id="id4">
+<p>In video coding, temporal scalability is the option to decode only some of the frames in a video stream instead of the whole stream. This enables an SFU for example to reduce the bitrate sent towards viewers who doesn’t have enough bitrate or CPU to handle the whole stream. It also assists devices that miss a packet to continue decoding the stream partially until an intra-frame is received.</p>
+<ul class="simple">
+<li><p>Temporal scalability is one of the scalability aspects usually attributed to SVC.</p></li>
+<li><p>H.264 AVC also support Temporal scalability already</p></li>
+<li><p>It is available for WebRTC in VP8 without the implementation of SVC.</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
 <h2><a class="toc-backref" href="#id6">参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li></li>
+<li><p>[1] “Advanced Video Coding for Generic Audiovisual Services,” ITU-T, Tech. Rep. Recommendation H.264 &amp; ISO/IEC 14496-10 AVC, v3,2005.</p></li>
+<li><p>[2] J. Ostermann, J .Bormans, P. List, D. Marpe, N. Narroschke, F. Pereira,T. Stockhammer, and T. Wedi, “Video Coding with H.264/AVC: Tools, Performance and Complexity,” IEEE Circuits and Systems Magazine,vol.4, no.1,pp. 7-28, April 2004.</p></li>
+<li><p>[3] H. Schwarz, D .Marpe, and T. Wiegand, “Overview of the Scalable Video Coding Extension of the H.264/ AVC Standard,” IEEE Transactions on Circuits and Systems for Video Technology, vol.17,no.9, pp. 1103-1120, September 2007.</p></li>
+<li><p>[4] “Advanced Video Coding for Generic Audiovisual Services, Annex G,” ITU-T, Tech. Rep. Recommendation H.264 &amp; ISO/IEC 14496-10 AVC/Amd.3 Scalable Video Coding, November 2007.</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

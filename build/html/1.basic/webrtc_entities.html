@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Entities &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -105,7 +104,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="webrtc-entities">
+  <div class="section" id="webrtc-entities">
 <h1>WebRTC Entities<a class="headerlink" href="#webrtc-entities" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -126,7 +125,7 @@
 <td><p>LearningNote</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-27</p></td>
 </tr>
 </tbody>
 </table>
@@ -176,23 +175,23 @@
 </li>
 </ul>
 </div>
-<section id="id4">
+<div class="section" id="id4">
 <h2><a class="toc-backref" href="#id16">概论</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<section id="rtcpeerconnection">
+<div class="section" id="rtcpeerconnection">
 <h3><a class="toc-backref" href="#id17">RTCPeerConnection</a><a class="headerlink" href="#rtcpeerconnection" title="Permalink to this headline">¶</a></h3>
 <p>The RTCPeerConnection interface represents a WebRTC connection between the local computer and a remote peer. It provides methods to connect to a remote peer, maintain and monitor the connection, and close the connection once it’s no longer needed.</p>
-</section>
-<section id="rtcdatachannel">
+</div>
+<div class="section" id="rtcdatachannel">
 <h3><a class="toc-backref" href="#id18">RTCDataChannel</a><a class="headerlink" href="#rtcdatachannel" title="Permalink to this headline">¶</a></h3>
 <p>The RTCDataChannel interface represents a network channel which can be used for bidirectional peer-to-peer transfers of arbitrary data. Every data channel is associated with an RTCPeerConnection, and each peer connection can have up to a theoretical maximum of 65,534 data channels (the actual limit may vary from browser to browser).</p>
 <p>To create a data channel and ask a remote peer to join you, call the RTCPeerConnection’s createDataChannel() method. The peer being invited to exchange data receives a datachannel event (which has type RTCDataChannelEvent) to let it know the data channel has been added to the connection.</p>
-</section>
-<section id="rtcrtptransceiver">
+</div>
+<div class="section" id="rtcrtptransceiver">
 <h3><a class="toc-backref" href="#id19">RTCRtpTransceiver</a><a class="headerlink" href="#rtcrtptransceiver" title="Permalink to this headline">¶</a></h3>
 <p>The WebRTC interface RTCRtpTransceiver describes a permanent pairing of an RTCRtpSender and an RTCRtpReceiver, along with some shared state.</p>
 <p>Each SDP media section describes one bidirectional SRTP (“Secure Real Time Protocol”) stream (excepting the media section for RTCDataChannel, if present). This pairing of send and receive SRTP streams is significant for some applications, so RTCRtpTransceiver is used to represent this pairing, along with other important state from the media section. Each non-disabled SRTP media section is always represented by exactly one transceiver.</p>
 <p>A transceiver is uniquely identified using its mid property, which is the same as the media ID (mid) of its corresponding m-line. An RTCRtpTransceiver is associated with an m-line if its mid is non-null; otherwise it’s considered disassociated.</p>
-<section id="properties">
+<div class="section" id="properties">
 <h4><a class="toc-backref" href="#id20">Properties</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>currentDirection Read only</p></li>
@@ -218,14 +217,14 @@
 <li><p>stopped</p></li>
 </ul>
 <p>Indicates whether or not sending and receiving using the paired RTCRtpSender and RTCRtpReceiver has been permanently disabled, either due to SDP offer/answer, or due to a call to stop().</p>
-</section>
-</section>
-<section id="rtcrtpsender">
+</div>
+</div>
+<div class="section" id="rtcrtpsender">
 <h3><a class="toc-backref" href="#id21">RTCRtpSender</a><a class="headerlink" href="#rtcrtpsender" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="rtcrtpencodingparameters">
+</div>
+<div class="section" id="rtcrtpencodingparameters">
 <h3><a class="toc-backref" href="#id22">RTCRtpEncodingParameters</a><a class="headerlink" href="#rtcrtpencodingparameters" title="Permalink to this headline">¶</a></h3>
-<section id="id5">
+<div class="section" id="id5">
 <h4><a class="toc-backref" href="#id23">Properties</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>active</p></li>
@@ -259,13 +258,13 @@
 <li><p>scaleResolutionDownBy</p></li>
 </ul>
 <p>Only used for senders whose track’s kind is video, this is a double-precision floating-point value specifying a factor by which to scale down the video during encoding. The default value, 1.0, means that the sent video’s size will be the same as the original. A value of 2.0 scales the video frames down by a factor of 2 in each dimension, resulting in a video 1/4 the size of the original. The value must not be less than 1.0 (you can’t use this to scale the video up).</p>
-</section>
-</section>
-<section id="rtcrtpreceiver">
+</div>
+</div>
+<div class="section" id="rtcrtpreceiver">
 <h3><a class="toc-backref" href="#id24">RTCRtpReceiver</a><a class="headerlink" href="#rtcrtpreceiver" title="Permalink to this headline">¶</a></h3>
 <p>The RTCRtpReceiver interface of the WebRTC API manages the reception and decoding of data for a MediaStreamTrack on an RTCPeerConnection.</p>
-</section>
-<section id="rtcrtpcontributingsource">
+</div>
+<div class="section" id="rtcrtpcontributingsource">
 <h3><a class="toc-backref" href="#id25">RTCRtpContributingSource</a><a class="headerlink" href="#rtcrtpcontributingsource" title="Permalink to this headline">¶</a></h3>
 <p>The RTCRtpContributingSource dictionary of the WebRTC API is used by getContributingSources() to provide information about a given contributing source (CSRC), including the most recent time a packet that the source contributed was played out.</p>
 <p>The information provided is based on the last ten seconds of media received.</p>
@@ -285,9 +284,9 @@
 <li><p>timestamp Optional</p></li>
 </ul>
 <p>A DOMHighResTimeStamp indicating the most recent time at which a frame originating from this source was delivered to the receiver’s MediaStreamTrack</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>

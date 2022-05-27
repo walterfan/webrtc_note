@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voice Activity Detector &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -118,7 +117,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="voice-activity-detector">
+  <div class="section" id="voice-activity-detector">
 <h1>Voice Activity Detector<a class="headerlink" href="#voice-activity-detector" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -136,7 +135,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-27</p></td>
 </tr>
 </tbody>
 </table>
@@ -154,23 +153,23 @@
 <li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
 </ul>
 </div>
-<section id="overview">
+<div class="section" id="overview">
 <h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Voice activity detection (VAD), also known as speech activity detection or speech detection, is the detection of the presence or absence of human speech, used in speech processing.</p>
 <p>The main uses of VAD are in speech coding and speech recognition. It can facilitate speech processing, and can also be used to deactivate some processes during non-speech section of an audio session: it can avoid unnecessary coding/transmission of silence packets in Voice over Internet Protocol (VoIP) applications, saving on computation and on network bandwidth.</p>
 <p>VAD is an important enabling technology for a variety of speech-based applications.</p>
 <p>Therefore, various VAD algorithms have been developed that provide varying features and compromises between latency, sensitivity, accuracy and computational cost.</p>
 <p>Some VAD algorithms also provide further analysis, for example whether the speech is voiced, unvoiced or sustained. Voice activity detection is usually independent of language.</p>
-</section>
-<section id="vad-in-codec">
+</div>
+<div class="section" id="vad-in-codec">
 <h2><a class="toc-backref" href="#id4">VAD in codec</a><a class="headerlink" href="#vad-in-codec" title="Permalink to this headline">¶</a></h2>
 <p>VAD in Opus determines whether a frame is sent out as empty (DTX) or not.</p>
 <p>If speech is classified as silence (false negative), the frame will be empty and speech will be lost
 False negative rate(FNR) needs to be as close to zero as possible when DTX is enabled
 the different VAD in opus codec under different complexity, VAD ON will tigger DTX ON（400ms）,and VAD’s decision will decide whether we should play CNG on playback.</p>
 <p>the RNN-VAD is used when complexity setting &gt;=7(float),which means when complexity &lt;7,we use traditional VAD.</p>
-</section>
-<section id="cng">
+</div>
+<div class="section" id="cng">
 <h2><a class="toc-backref" href="#id5">CNG</a><a class="headerlink" href="#cng" title="Permalink to this headline">¶</a></h2>
 <p>There is a Real-time Transport Protocol (RTP) Payload for Comfort Noise (CN).
 (refer to RFC 3389 )</p>
@@ -179,8 +178,8 @@ the different VAD in opus codec under different complexity, VAD ON will tigger D
 <p>The noise power levels in both VAD/CNG methods are expressed in −dBov to interoperate with each other.</p>
 <p>The unit “dBov” is the dB level relative to the overload of the system. It is not a Volts reference for dBV.</p>
 <p>For example, in the case of μ-law-based coding, the maximum sine wave signal power without distortion is 3.17 dBm with amplitude ±8159. Square wave power is 3 dB more than sine wave power. The maximum possible power of signal from a square wave with an amplitude of ±8159 is 0 dBov as reference, which corresponds to a 6.17-dBm power level in the μ-law system. Hence, 0 dBov = 6.17 dBm is used in μ-law system. Sine and square wave power levels and signal amplitudes are shown in Fig. 4.1(c). Representation relative to the overload point of a system is particularly useful for digital implementations, because one does not need to know the relative calibration of the analog circuitry.</p>
-</section>
-<section id="vad-definition">
+</div>
+<div class="section" id="vad-definition">
 <h2><a class="toc-backref" href="#id6">VAD definition</a><a class="headerlink" href="#vad-definition" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>SILK VAD(SNR based)</p></li>
@@ -192,8 +191,8 @@ Multiplying this smoothed inverse energy with the subband energy gives the SNR.<
 <li><p>Opus VAD(RNN based)</p></li>
 </ul>
 <p>Opus VAD uses recursive neural network based on GRU units to perform both speech/music and speech/silence classification:</p>
-</section>
-<section id="algorithm">
+</div>
+<div class="section" id="algorithm">
 <h2><a class="toc-backref" href="#id7">Algorithm</a><a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>There may first be a noise reduction stage, e.g. via spectral subtraction.</p></li>
@@ -203,12 +202,12 @@ Multiplying this smoothed inverse energy with the subband energy gives the SNR.<
 <p>There may be some feedback in this sequence, in which the VAD decision is used to improve the noise estimate in the noise reduction stage, or to adaptively vary the threshold(s). These feedback operations improve the VAD performance in non-stationary noise (i.e. when the noise varies a lot).[citation needed]</p>
 <p>A representative set of recently published VAD methods formulates the decision rule on a frame by frame basis using instantaneous measures of the divergence distance between speech and noise.[citation needed] The different measures which are used in VAD methods include spectral slope, correlation coefficients, log likelihood ratio, cepstral, weighted cepstral, and modified distance measures.[citation needed]</p>
 <p>Independently from the choice of VAD algorithm, a compromise must be made between having voice detected as noise, or noise detected as voice (between false positive and false negative). A VAD operating in a mobile phone must be able to detect speech in the presence of a range of very diverse types of acoustic background noise. In these difficult detection conditions it is often preferable that a VAD should fail-safe, indicating speech detected when the decision is in doubt, to lower the chance of losing speech segments. The biggest difficulty in the detection of speech in this environment is the very low signal-to-noise ratios (SNRs) that are encountered. It may be impossible to distinguish between speech and noise using simple level detection techniques when parts of the speech utterance are buried below the noise.</p>
-<section id="gmm-vad">
+<div class="section" id="gmm-vad">
 <h3><a class="toc-backref" href="#id8">GMM VAD</a><a class="headerlink" href="#gmm-vad" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/common_audio/vad/vad_gmm.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/common_audio/vad/vad_gmm.h</a></p>
-</section>
-</section>
-<section id="reference">
+</div>
+</div>
+<div class="section" id="reference">
 <h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Voice_activity_detection">https://en.wikipedia.org/wiki/Voice_activity_detection</a></p></li>
@@ -219,8 +218,8 @@ Multiplying this smoothed inverse energy with the subband energy gives the SNR.<
 <li><p><a class="reference external" href="https://www.mathworks.com/matlabcentral/fileexchange/78895-google-webrtc-voice-activity-detection-vad-module">https://www.mathworks.com/matlabcentral/fileexchange/78895-google-webrtc-voice-activity-detection-vad-module</a></p></li>
 <li><p><a class="reference external" href="https://github.com/cpuimage/WebRTC_VAD">https://github.com/cpuimage/WebRTC_VAD</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
