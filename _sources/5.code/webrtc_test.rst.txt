@@ -28,7 +28,7 @@ Chrome testing
 * Chrome command line flags that are useful for WebRTC-related testing:
 
 .. code-block::
-      
+
    --allow-file-access-from-files allows getUserMedia() to be called from file:// URLs.
 
    --disable-gesture-requirement-for-media-playback removes the need to tap a <video> element to start it playing on Android.
@@ -39,10 +39,17 @@ Chrome testing
 
    --use-file-for-fake-video-capture=path/to/file.y4m feeds a Y4M test file to getUserMedia() instead of live camera input.
 
+* disable CORS
+
+.. code-block::
+
+  open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
 
 
 * enable logging::
 
+
+.. code-block::
 
    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=1
 
@@ -52,17 +59,28 @@ Chrome testing
 * disable SRTP
 
 
-.. code-block:: 
+.. code-block::
 
     cd /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/
     ./Google\ Chrome\ Canary --disable-webrtc-encryption
+
+
+* allow some unsafe ports
+
+.. code-block::
+
+   "C:\Program Files\Google\Chrome\Application\chrome.exe --explicitly-allowed-ports=6000,6443"
+
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --explicitly-allowed-ports=6000,6443
+
+   /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --explicitly-allowed-ports=6000,6443
 
 
 Load local vide file as a virtual camear
 --------------------------------------------
 
 * MacOS
-  
+
 .. code-block::
 
    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --use-fake-device-for-media-stream \

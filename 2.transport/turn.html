@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TURN &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -104,7 +103,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="turn">
+  <div class="section" id="turn">
 <h1>TURN<a class="headerlink" href="#turn" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -122,7 +121,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-27</p></td>
 </tr>
 </tbody>
 </table>
@@ -141,14 +140,14 @@
 <li><p><a class="reference internal" href="#supported-relay-protocols" id="id13">Supported relay protocols</a></p></li>
 </ul>
 </div>
-<section id="ovewview">
+<div class="section" id="ovewview">
 <h2><a class="toc-backref" href="#id3">Ovewview</a><a class="headerlink" href="#ovewview" title="Permalink to this headline">¶</a></h2>
 <p>As described in [RFC5128] and [RFC4787], hole punching techniques will fail if both hosts are behind NATs that are not well behaved.</p>
 <p>For example, if both hosts are behind NATs that have a mapping behavior of “address-dependent mapping” or “address- and port- dependent mapping” (see Section 4.1 of [RFC4787]), then hole punching  techniques generally fail.</p>
 <p>TURN (Traversal Using Relays around NAT), that allows a host behind a NAT (called the “TURN client”) to request that another host (called the “TURN server”) act as a relay.  The client can arrange for the server to relay packets to and from certain other hosts (called “peers”), and the client can control aspects of how the relaying is done.</p>
 <p>If TURN is used with ICE [RFC8445], then the relayed transport address and the IP addresses and ports of the peers are included in  the ICE candidate information that the rendezvous protocol must  carry.</p>
-</section>
-<section id="terminology">
+</div>
+<div class="section" id="terminology">
 <h2><a class="toc-backref" href="#id4">Terminology</a><a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Server-Reflexive Transport Address: A transport address on the “external side” of a NAT.</p></li>
@@ -157,8 +156,8 @@
 <ul class="simple">
 <li><p>Allocation: The relayed transport address granted to a client through an Allocate request, along with related state, such as permissions and expiration timers.</p></li>
 </ul>
-</section>
-<section id="basic-flow">
+</div>
+<div class="section" id="basic-flow">
 <h2><a class="toc-backref" href="#id5">Basic flow</a><a class="headerlink" href="#basic-flow" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                                    <span class="n">Peer</span> <span class="n">A</span>
                                     <span class="n">Server</span><span class="o">-</span><span class="n">Reflexive</span>    <span class="o">+---------+</span>
@@ -212,8 +211,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
                       <span class="n">Table</span> <span class="mi">1</span>
 </pre></div>
 </div>
-</section>
-<section id="allocation">
+</div>
+<div class="section" id="allocation">
 <h2><a class="toc-backref" href="#id6">Allocation</a><a class="headerlink" href="#allocation" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TURN</span>                                 <span class="n">TURN</span>          <span class="n">Peer</span>         <span class="n">Peer</span>
 <span class="n">client</span>                               <span class="n">server</span>         <span class="n">A</span>            <span class="n">B</span>
@@ -238,8 +237,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
                               <span class="n">Figure</span> <span class="mi">2</span>
 </pre></div>
 </div>
-</section>
-<section id="send-mechanism">
+</div>
+<div class="section" id="send-mechanism">
 <h2><a class="toc-backref" href="#id7">Send Mechanism</a><a class="headerlink" href="#send-mechanism" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TURN</span>                                <span class="n">TURN</span>           <span class="n">Peer</span>          <span class="n">Peer</span>
 <span class="n">client</span>                              <span class="n">server</span>          <span class="n">A</span>             <span class="n">B</span>
@@ -264,8 +263,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
                                <span class="n">Figure</span> <span class="mi">3</span>
 </pre></div>
 </div>
-</section>
-<section id="channel">
+</div>
+<div class="section" id="channel">
 <h2><a class="toc-backref" href="#id8">Channel</a><a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TURN</span>                                <span class="n">TURN</span>           <span class="n">Peer</span>          <span class="n">Peer</span>
 <span class="n">client</span>                              <span class="n">server</span>          <span class="n">A</span>             <span class="n">B</span>
@@ -291,8 +290,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
                                <span class="n">Figure</span> <span class="mi">4</span>
 </pre></div>
 </div>
-</section>
-<section id="turn-specs">
+</div>
+<div class="section" id="turn-specs">
 <h2><a class="toc-backref" href="#id9">TURN specs</a><a class="headerlink" href="#turn-specs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>RFC 5766 - base TURN specs</p></li>
@@ -308,8 +307,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
 <li><p>TURN Bandwidth draft specs (<a class="reference external" href="http://tools.ietf.org/html/draft-thomson-tram-turn-bandwidth-01">http://tools.ietf.org/html/draft-thomson-tram-turn-bandwidth-01</a>)</p></li>
 <li><p>TURN-bis (with dual allocation) draft specs (<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-tram-turnbis-04">http://tools.ietf.org/html/draft-ietf-tram-turnbis-04</a>).</p></li>
 </ul>
-</section>
-<section id="stun-specs">
+</div>
+<div class="section" id="stun-specs">
 <h2><a class="toc-backref" href="#id10">STUN specs</a><a class="headerlink" href="#stun-specs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>RFC 3489 - “classic” STUN</p></li>
@@ -319,8 +318,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
 <li><p>RFC 7443 - ALPN support for STUN &amp; TURN</p></li>
 <li><p>RFC 7635 - oAuth third-party TURN/STUN authorization</p></li>
 </ul>
-</section>
-<section id="supported-ice-and-related-specs">
+</div>
+<div class="section" id="supported-ice-and-related-specs">
 <h2><a class="toc-backref" href="#id11">Supported ICE and related specs</a><a class="headerlink" href="#supported-ice-and-related-specs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>RFC 5245 - ICE</p></li>
@@ -329,8 +328,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
 <li><p>RFC 6544 – ICE–TCP</p></li>
 <li><p>RFC 5928 - TURN Resolution Mechanism</p></li>
 </ul>
-</section>
-<section id="client-to-turn-server-protocols">
+</div>
+<div class="section" id="client-to-turn-server-protocols">
 <h2><a class="toc-backref" href="#id12">client-to-TURN-server protocols</a><a class="headerlink" href="#client-to-turn-server-protocols" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>UDP (per RFC 5766)</p></li>
@@ -339,13 +338,13 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
 <li><p>DTLS (<a class="reference external" href="http://tools.ietf.org/html/draft-petithuguenin-tram-turn-dtls-00">http://tools.ietf.org/html/draft-petithuguenin-tram-turn-dtls-00</a>): DTLS versions 1.0 and 1.2.</p></li>
 <li><p>SCTP (experimental implementation).</p></li>
 </ul>
-</section>
-<section id="supported-relay-protocols">
+</div>
+<div class="section" id="supported-relay-protocols">
 <h2><a class="toc-backref" href="#id13">Supported relay protocols</a><a class="headerlink" href="#supported-relay-protocols" title="Permalink to this headline">¶</a></h2>
 <p>UDP (per RFC 5766)
 TCP (per RFC 6062)</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

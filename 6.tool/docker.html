@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Docker &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -114,7 +113,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="docker">
+  <div class="section" id="docker">
 <h1>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -135,7 +134,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-27</p></td>
 </tr>
 </tbody>
 </table>
@@ -162,12 +161,12 @@
 <li><p><a class="reference internal" href="#id4" id="id18">参考资料</a></p></li>
 </ul>
 </div>
-<section id="overview">
+<div class="section" id="overview">
 <h2><a class="toc-backref" href="#id6">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <img alt="../_images/docker_mindmap.webp" src="../_images/docker_mindmap.webp" />
 <img alt="../_images/docker_theory.png" src="../_images/docker_theory.png" />
-</section>
-<section id="id3">
+</div>
+<div class="section" id="id3">
 <h2><a class="toc-backref" href="#id7">快速上手</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>docker 的命令很多, 可以用 docker help command 来获取详细帮助</p>
 <table class="colwidths-given docutils align-default" id="id5">
@@ -210,8 +209,8 @@
 </tr>
 </tbody>
 </table>
-</section>
-<section id="docker-image">
+</div>
+<div class="section" id="docker-image">
 <h2><a class="toc-backref" href="#id8">Docker image</a><a class="headerlink" href="#docker-image" title="Permalink to this headline">¶</a></h2>
 <p>先试着运行一下 HelloWorld</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
@@ -274,7 +273,7 @@ busybox             latest              47bcc53f74dc        3 months ago        
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Exit</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39; &#39;</span> <span class="o">-</span><span class="n">f</span> <span class="mi">1</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">rm</span>
 </pre></div>
 </div>
-<section id="dockerfile-image">
+<div class="section" id="dockerfile-image">
 <h3><a class="toc-backref" href="#id9">用 Dockerfile 构建image</a><a class="headerlink" href="#dockerfile-image" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>create project folder</p></li>
@@ -301,15 +300,15 @@ busybox             latest              47bcc53f74dc        3 months ago        
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span><span class="o">=</span><span class="s2">&quot;walterfan/hfkb:v1&quot;</span> <span class="o">.</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="docker-hub">
+</div>
+</div>
+<div class="section" id="docker-hub">
 <h2><a class="toc-backref" href="#id10">Docker Hub</a><a class="headerlink" href="#docker-hub" title="Permalink to this headline">¶</a></h2>
 <p>docker hub 类似于 maven 仓库, 持有各种 docker image
 在 <a class="reference external" href="https://hub.docker.com">https://hub.docker.com</a> 上创建 docker hub 帐号, 然后就可以上传自己的 Image 了</p>
 <img alt="../_images/docker_hub.png" src="../_images/docker_hub.png" />
-</section>
-<section id="docker-container">
+</div>
+<div class="section" id="docker-container">
 <h2><a class="toc-backref" href="#id11">Docker Container</a><a class="headerlink" href="#docker-container" title="Permalink to this headline">¶</a></h2>
 <p>镜像是静态的文件系统, 容器是动态的运行实例</p>
 <ul class="simple">
@@ -443,8 +442,8 @@ busybox             latest              47bcc53f74dc        3 months ago        
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">xxx</span><span class="o">.</span><span class="n">tar</span><span class="o">|</span><span class="n">docker</span> <span class="kn">import</span> <span class="o">-</span> <span class="o">&lt;</span><span class="n">container_name</span><span class="o">&gt;/</span><span class="n">centos</span><span class="p">:</span><span class="n">v1</span><span class="mf">.0</span>
 </pre></div>
 </div>
-</section>
-<section id="docker-data-volume">
+</div>
+<div class="section" id="docker-data-volume">
 <h2><a class="toc-backref" href="#id12">Docker data volume</a><a class="headerlink" href="#docker-data-volume" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>运行 container, image=centos, name=ccp, 映射本地目录到 /opt/workspace</p></li>
@@ -458,10 +457,10 @@ busybox             latest              47bcc53f74dc        3 months ago        
 <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">automake</span>
 </pre></div>
 </div>
-</section>
-<section id="tips">
+</div>
+<div class="section" id="tips">
 <h2><a class="toc-backref" href="#id13">Tips</a><a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
-<section id="docker-centos">
+<div class="section" id="docker-centos">
 <h3><a class="toc-backref" href="#id14">运行 docker centos 容器</a><a class="headerlink" href="#docker-centos" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">idt</span> <span class="o">-</span><span class="n">P</span> <span class="o">--</span><span class="n">name</span> <span class="n">ccp</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">walter</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">workspace</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">workspace</span> <span class="n">centos</span>
 <span class="n">docker</span> <span class="n">attache</span> <span class="n">ccp</span>
@@ -472,20 +471,20 @@ busybox             latest              47bcc53f74dc        3 months ago        
 <div><p>$ yum install vim</p>
 </div></blockquote>
 <p>如果 exit 退出则停止了 docker container, 可以用 docker start cpp 再启动起来</p>
-</section>
-<section id="docker-busybox-echo-command">
+</div>
+<div class="section" id="docker-busybox-echo-command">
 <h3><a class="toc-backref" href="#id15">运行 docker busybox 容器  并执行 ‘echo’ command</a><a class="headerlink" href="#docker-busybox-echo-command" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>$ docker run busybox echo hello world</p>
 </div></blockquote>
-</section>
-<section id="docker-nginx-80-host-8000">
+</div>
+<div class="section" id="docker-nginx-80-host-8000">
 <h3><a class="toc-backref" href="#id16">运行 docker nginx 容器, 映射容器内部端口80到外部 host 端口8000</a><a class="headerlink" href="#docker-nginx-80-host-8000" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>$ docker run -d -p 8000:80 nginx</p>
 </div></blockquote>
-</section>
-<section id="docker-compose">
+</div>
+<div class="section" id="docker-compose">
 <h3><a class="toc-backref" href="#id17">升级 docker compose</a><a class="headerlink" href="#docker-compose" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#If installed via apt-get
 sudo apt-get remove docker-compose
@@ -506,15 +505,15 @@ sudo curl -L https://github.com/docker/compose/releases/download/${VERSION}/dock
 sudo chmod 755 $DESTINATION
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id4">
+</div>
+</div>
+<div class="section" id="id4">
 <h2><a class="toc-backref" href="#id18">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.docker.com">https://docs.docker.com</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
