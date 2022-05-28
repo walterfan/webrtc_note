@@ -80,6 +80,27 @@ SCTP 相关的协议和扩展很多, 最主要的有两个
   - DcSctpSocket
 
 
+可以从 WebRTC 源码中单独编译出 libdcsctp, 方法是在 BUILD.gn 中添加如下这段
+
+.. code-block::
+
+   rtc_static_library("dcsctp") {
+      visibility = [
+         "//:default",
+      ]
+      sources = []
+      complete_static_lib = true
+      suppressed_configs += [ "//build/config/compiler:thin_archive" ]
+      deps = [
+         "rtc_base",
+         "net/dcsctp/public:socket",
+         "net/dcsctp/public:types",
+         "net/dcsctp/public:factory",
+         "net/dcsctp/socket:dcsctp_socket",
+         "net/dcsctp/timer:task_queue_timeout",
+      ]
+   }
+
 
 core class
 -------------------------

@@ -8,16 +8,16 @@
    :caption: Contents:
 
    overview
-   
-   html5
 
-   javascript
+   learning_path
 
    web_browser
 
    webrtc_spec
 
    webrtc_api
+
+   webrtc_elements
 
    webrtc_entities
    

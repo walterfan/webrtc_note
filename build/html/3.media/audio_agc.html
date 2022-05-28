@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Automatic Gain Control &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -118,7 +117,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="automatic-gain-control">
+  <div class="section" id="automatic-gain-control">
 <h1>Automatic Gain Control<a class="headerlink" href="#automatic-gain-control" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -136,7 +135,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-28</p></td>
 </tr>
 </tbody>
 </table>
@@ -163,22 +162,22 @@
 <li><p><a class="reference internal" href="#reference" id="id17">Reference</a></p></li>
 </ul>
 </div>
-<section id="id3">
+<div class="section" id="id3">
 <h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>自动增益控制（AGC）是指当直放站工作于最大增益且输出为最大功率时，增加输入信号电平，提高直放站对输出信号电平控制的能力。</p>
 <p>自动增益控制主要用于调整音量幅值。</p>
 <p>正常人交谈的音量在40~60dB之间，低于25dB的声音听起来很吃力，超过100dB的声音会让人不适。AGC的作用就是将音量调整到人接受的范围。</p>
 <p>AGC的调整分为模拟部分(AAGC)和数字部分(DAGC)，模拟部分是麦克风的采集增益，数字部分是音频数据的数字电平调整。</p>
-<figure class="align-default">
+<div class="figure align-default">
 <img alt="AGC flow" src="../_images/agc_flow.png" />
-</figure>
+</div>
 <ul class="simple">
 <li><p>Calculate the short-term mean and variance, describe the instantaneous change of the voice envelope, which can accurately reflect the voice envelope,</p></li>
 <li><p>Calculate the long-term mean and variance, describe the overall slow change trend of the signal, outline the “center of gravity” of the signal, and it is more smooth to use the threshold as the detection condition, such as Figure 2 left blue curve ;</p></li>
 <li><p>Calculate the standard score and describe the deviation of the short-term average from the “center of gravity”. The part above the center can be considered as having a great possibility of voice activity;</p></li>
 </ul>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h2><a class="toc-backref" href="#id6">原理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>自动增益控制是指使放大电路的增益自动地随信号强度而调整的自动控制方法。实现这种功能的电路简称AGC环。
 AGC环是闭环电子电路，是一个负反馈系统，它可以分成增益受控放大电路和控制电压形成电路两部分。</p>
@@ -188,64 +187,64 @@ AGC环是闭环电子电路，是一个负反馈系统，它可以分成增益�
 ②在放大器各级间插入电控衰减器。
 ③用电控可变电阻作放大器负载等。</p>
 <p>AGC电路广泛用于各种接收机 ，录音机和测量仪器中，它常被用来使系统的输出电平保持在一定范围内 ，因而也称自动电平控制； 用于话音放大器或收音机时，称为自动音量控制。</p>
-</section>
-<section id="glossary">
+</div>
+<div class="section" id="glossary">
 <h2><a class="toc-backref" href="#id7">Glossary</a><a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
-<section id="audio-level">
+<div class="section" id="audio-level">
 <h3><a class="toc-backref" href="#id8">audio level</a><a class="headerlink" href="#audio-level" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="single-talk">
+</div>
+<div class="section" id="single-talk">
 <h3><a class="toc-backref" href="#id9">single talk</a><a class="headerlink" href="#single-talk" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="multiple-talk">
+</div>
+<div class="section" id="multiple-talk">
 <h3><a class="toc-backref" href="#id10">multiple talk</a><a class="headerlink" href="#multiple-talk" title="Permalink to this headline">¶</a></h3>
-</section>
-<section id="boost-volume">
+</div>
+<div class="section" id="boost-volume">
 <h3><a class="toc-backref" href="#id11">boost volume</a><a class="headerlink" href="#boost-volume" title="Permalink to this headline">¶</a></h3>
-</section>
-</section>
-<section id="key-points">
+</div>
+</div>
+<div class="section" id="key-points">
 <h2><a class="toc-backref" href="#id12">Key points</a><a class="headerlink" href="#key-points" title="Permalink to this headline">¶</a></h2>
 <p>AAGC/DAGC supported by</p>
-</section>
-<section id="webrtc-implementation">
+</div>
+<div class="section" id="webrtc-implementation">
 <h2><a class="toc-backref" href="#id13">WebRTC Implementation</a><a class="headerlink" href="#webrtc-implementation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Legacy AGC</p></li>
 <li><p>AGC</p></li>
 <li><p>AGC2</p></li>
 </ul>
-<section id="parameters">
+<div class="section" id="parameters">
 <h3><a class="toc-backref" href="#id14">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
 <p>targetDbFs
 compressionGainDb
 agcMode
 limiterEnabled</p>
-</section>
-<section id="agc-mode">
+</div>
+<div class="section" id="agc-mode">
 <h3><a class="toc-backref" href="#id15">AGC Mode</a><a class="headerlink" href="#agc-mode" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Fixed Digital: for embeded devices</p></li>
 <li><p>Adaptive Analog: device provided in analog domain</p></li>
 <li><p>Adaptive Digital: in digital domain</p></li>
 </ul>
-</section>
-<section id="legacy-agc">
+</div>
+<div class="section" id="legacy-agc">
 <h3><a class="toc-backref" href="#id16">Legacy AGC</a><a class="headerlink" href="#legacy-agc" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Calculate Gain Table</p></li>
 </ul>
-</section>
-</section>
-<section id="reference">
+</div>
+</div>
+<div class="section" id="reference">
 <h2><a class="toc-backref" href="#id17">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://testing.googleblog.com/2015/10/audio-testing-automatic-gain-control.html">https://testing.googleblog.com/2015/10/audio-testing-automatic-gain-control.html</a></p></li>
 <li><p><a class="reference external" href="https://testing.googleblog.com/2013/11/webrtc-audio-quality-testing.html">https://testing.googleblog.com/2013/11/webrtc-audio-quality-testing.html</a></p></li>
 <li><p>详解 WebRTC 高音质低延时的背后 — AGC（自动增益控制): <a class="reference external" href="https://segmentfault.com/a/1190000040072259">https://segmentfault.com/a/1190000040072259</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
