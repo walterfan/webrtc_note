@@ -63,8 +63,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#rtcp">RTCP</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id7">1. RTP 协议的度量要点</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#rtt">1) 往返延时RTT</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jitter">2) 抖动Jitter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#packet-loss">3) 丢包 Packet loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jitter">1) 抖动Jitter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#packet-loss">1) 丢包 Packet loss</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id8">4. 实例</a></li>
@@ -147,8 +147,8 @@
 <li><p><a class="reference internal" href="#id7" id="id30">1. RTP 协议的度量要点</a></p>
 <ul>
 <li><p><a class="reference internal" href="#rtt" id="id31">1) 往返延时RTT</a></p></li>
-<li><p><a class="reference internal" href="#jitter" id="id32">2) 抖动Jitter</a></p></li>
-<li><p><a class="reference internal" href="#packet-loss" id="id33">3) 丢包 Packet loss</a></p></li>
+<li><p><a class="reference internal" href="#jitter" id="id32">1) 抖动Jitter</a></p></li>
+<li><p><a class="reference internal" href="#packet-loss" id="id33">1) 丢包 Packet loss</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#id8" id="id34">4. 实例</a></p></li>
@@ -200,19 +200,19 @@ timestamp 是必需的, 通过它我们可以用来 * 回放 * 计算网络抖�
 <p>根据上述的问题和需求, RTP 协议由此制订出来, 它主要包括两块 1)
 承载具有实时性质的数据的实时传输协议RTP。 2)
 在进行的会话中监视服务质量并传输会话参与者信息的实时传输控制协议RTCP。</p>
-<img alt="https://upload-images.jianshu.io/upload_images/1598924-7810459af208969b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-7810459af208969b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="../_images/rtp_1.webp" src="../_images/rtp_1.webp" />
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id25">RTP</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>RTP 通常基于 UDP 传输, 因为多媒体数据可以忍受少量丢包,
 却不能忍受数据包延时过大, 如图所示:</p>
 <div class="figure align-default" id="id17">
-<img alt="RTP协议栈" src="https://upload-images.jianshu.io/upload_images/1598924-75b9eae3bf48385a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="RTP协议栈" src="../_images/rtp_2.webp" />
 <p class="caption"><span class="caption-text">RTP协议栈</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
 </div>
 <p>它的数据包格式如下:</p>
 <div class="figure align-default" id="id18">
-<img alt="RTP 数据包格式" src="https://upload-images.jianshu.io/upload_images/1598924-c2c1dbb22ea20b2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="RTP 数据包格式" src="../_images/rtp_packet.webp" />
 <p class="caption"><span class="caption-text">RTP 数据包格式</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
 </div>
 <p>包头详细解释如下:</p>
@@ -237,7 +237,7 @@ timestamp 是必需的, 通过它我们可以用来 * 回放 * 计算网络抖�
 </ul>
 <p>RTP 标准头之后就是载荷了, 如图所示：</p>
 <div class="figure align-default" id="id19">
-<img alt="RTP 数据包负载g" src="https://upload-images.jianshu.io/upload_images/1598924-175b9b70ec9c2525.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="RTP 数据包负载g" src="../_images/rtp_payload.webp" />
 <p class="caption"><span class="caption-text">RTP 数据包负载g</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
 </div>
 <p>SDP 描述如下：</p>
@@ -344,17 +344,17 @@ SDES数据源描述报告 Source DEScription 4. BYE 告别报告 Goodbye 5. APP
 数据包到达的抖动, 通过这些报告, 应用程序就可以修改发送速率,
 也可做一些其他调整以及诊断。</p>
 <div class="figure align-default" id="id20">
-<img alt="RTCP 数据包类型" src="https://upload-images.jianshu.io/upload_images/1598924-6e85bc96a93ff2b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="RTCP 数据包类型" src="../_images/rtcp_type.webp" />
 <p class="caption"><span class="caption-text">RTCP 数据包类型</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
 </div>
 <p>它也是基于 UDP 包进行传输：</p>
 <div class="figure align-default" id="id21">
-<img alt="RTCP 数据包栈" src="https://upload-images.jianshu.io/upload_images/1598924-550f96c9a5f86db7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="RTCP 数据包栈" src="../_images/rtcp_stack.webp" />
 <p class="caption"><span class="caption-text">RTCP 数据包栈</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </div>
 <p>RTCP 的数据包格式如下：</p>
 <div class="figure align-default" id="id22">
-<img alt="RTCP packet" src="https://upload-images.jianshu.io/upload_images/1598924-dba3efba09f9bb14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="RTCP packet" src="../_images/rtcp_packet.webp" />
 <p class="caption"><span class="caption-text">RTCP packet</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
 </div>
 <ul class="simple">
@@ -405,7 +405,7 @@ ROC*2^16, ROC 指 Sequence Number
 在接收者报告中包含: * LSR(Last timestamp Sener Report received)
 上一次发送者报告接收的时间 * DLSR(Delay since last sender report
 received) 上一次发送者报告接收的延迟</p>
-<img alt="https://upload-images.jianshu.io/upload_images/1598924-7e4e8454e5e0825e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-7e4e8454e5e0825e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="../_images/rtcp_rtt.webp" src="../_images/rtcp_rtt.webp" />
 <p>往返时延RTT 计算公式如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>RTT = T1 – LSR - DLSR
 </pre></div>
@@ -441,16 +441,16 @@ received) 上一次发送者报告接收的延迟</p>
 <p>结果为 A - DLSR -LSR = 46864.500 - 5.250 - 46853.125 = 6.125 s</p>
 </div>
 <div class="section" id="jitter">
-<h3><a class="toc-backref" href="#id32">2) 抖动Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id32">1) 抖动Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h3>
 <p>在理想情况下, RTP数据包到达的间隔是固定的, 比如IP电话中最常用的编码g.711, 每个包的荷载长度为20毫秒, 每秒应该有50个数据包, 但是实际上网络并不总能稳定传输的,
 阻塞,拥塞是常有的事, Jitter 抖动即指数据到达间隔的变化,如图所示:</p>
 <p>抖动的计算要稍微麻烦一点, 为避免偶发的波动造成抖动的计算偏差, 它被定义为 RTP 数据包到达间隔时间的统计方差。</p>
 <p>首先计算数据包接收与发送时间间隔的差别，也就是两个 packet 传输延时的差异，此时所计算的 jitter 时只用到相邻两个 packet 的 delta，
 反映的是某一时刻网络延迟的变化情况</p>
-<img alt="https://upload-images.jianshu.io/upload_images/1598924-2ad99cb7671ff297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-2ad99cb7671ff297.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="../_images/rtcp_jitter_1.webp" src="../_images/rtcp_jitter_1.webp" />
 <p>而如下的到达间隔抖动 J 定义为差值的平均偏差（平滑后的绝对值）。之所以要除以 16 是为了减少大的随机变化的影响。
 所以到达间隔时间的变化需要重复几次才能显著地影响抖动的估计</p>
-<img alt="https://upload-images.jianshu.io/upload_images/1598924-e8513998b1b91ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-e8513998b1b91ea7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="../_images/rtcp_jitter_2.webp" src="../_images/rtcp_jitter_2.webp" />
 <p>抖动是不可避免的, 在合理区间的抖动是可以接受, 通常采用抖动缓冲 Jitter Buffer 来解决抖动的问题, 数据包接收之后并不马上解码, 而是先放在缓冲区中.
 假设缓冲区深度是60ms, 那么解码总是等到缓冲区中的若干数据包总长度达到60ms时才取出解码, 在 60ms 之内的抖动自然没有任何影响.</p>
 <p>RFC3550 中有具体算法</p>
@@ -465,13 +465,13 @@ received) 上一次发送者报告接收的延迟</p>
 </div>
 </div>
 <div class="section" id="packet-loss">
-<h3><a class="toc-backref" href="#id33">3) 丢包 Packet loss</a><a class="headerlink" href="#packet-loss" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id33">1) 丢包 Packet loss</a><a class="headerlink" href="#packet-loss" title="Permalink to this headline">¶</a></h3>
 <p>如果一个UDP
 包在网络上由于拥塞或超时而丢失了，或者一个TCP数据包的延时过大,
 超过了最大的抖动缓冲深度, 应用程序也就不会再等待, 直接丢弃,
 这时候，我们要么采用丢包补偿策略进行处理, 要么发消息让发送方重传.</p>
 <p>Packet loss丢包率的公式很简单</p>
-<img alt="https://upload-images.jianshu.io/upload_images/1598924-05701e3f98e6285b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-05701e3f98e6285b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<img alt="../_images/rtcp_packet_loss.webp" src="../_images/rtcp_packet_loss.webp" />
 <ul class="simple">
 <li><p>丢失的包数 = 期望的包数 - 收到的包数</p></li>
 <li><p>期望的包数 = 最大sequence number – 初始的 sequence number</p></li>

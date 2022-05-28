@@ -46,11 +46,10 @@ Week 1
   - wireshark
 
 
-5. Learn TLS, DTLS and SRTP
+5. Learn DTLS and SRTP
 
-- TLS
-- DTLS
-- SRTP
+   - DTLS
+   - SRTP
 
 6. Learn ICE, STUN and TURN
 
@@ -85,12 +84,12 @@ Week 3
 
 2. Congestion control methods
 
-3. Feedback and retransmission: NACK, PLI and FIR
+3. Feedback and retransmission:NACK, PLI and FIR
 
 4. FEC
 
 5. RTX and RED
 
-6. Network impair by Linux Traffic Control
+6. Network impair and QoS testing
 
 7. build libwebrtc and its sample, do some testing
