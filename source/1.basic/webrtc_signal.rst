@@ -141,6 +141,28 @@ Defines a mechanism to describe RTP sources, identified by their synchronization
 
 更多的 SDP 实例说明请参见 `SDP for the WebRTC`_
 
+
+Signal Server
+==============
+Signal Server 即我们通常所说的信令服务器，在 WebRTC 应用中它通常是一个 Web Server, 提供 Web App 的访问和下载。而且，它主要还有如下功能
+
+1. 用户的注册和登录
+2. SDP 的交换
+3. ICE 候选者的交换
+4. 通信实体的管理，例如如下实体创建，结束，加入，离开
+   - 会议室  room 管理
+   - 会话 session 管理
+   - 连接 connection 管理
+   - 媒体流 media stream 管理
+
+
+示例
+---------------------
+
+nginx + nodejs + redis
+
+
+
 参考资料
 ==============
 * `Signaling and video calling`_

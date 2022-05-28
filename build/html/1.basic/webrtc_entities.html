@@ -57,10 +57,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#rtcrtpcontributingsource">RTCRtpContributingSource</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_flow.html">WebRTC 呼叫流程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="media_device.html">Media Device</a></li>
 <li class="toctree-l2"><a class="reference internal" href="media_capture.html">WebRTC API 之 Media Capture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_capture.html">WebRTC API 之 Screen Capture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="media_record.html">WebRTC API 之 Media Record</a></li>
@@ -150,49 +150,61 @@
 <li><p><a class="reference internal" href="#rtcrtpcontributingsource" id="id15">RTCRtpContributingSource</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#reference" id="id16">Reference</a></p></li>
 </ul>
 </div>
 <div class="contents local topic" id="id3">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id4" id="id16">概论</a></p>
+<li><p><a class="reference internal" href="#id4" id="id17">概论</a></p>
 <ul>
-<li><p><a class="reference internal" href="#rtcpeerconnection" id="id17">RTCPeerConnection</a></p></li>
-<li><p><a class="reference internal" href="#rtcdatachannel" id="id18">RTCDataChannel</a></p></li>
-<li><p><a class="reference internal" href="#rtcrtptransceiver" id="id19">RTCRtpTransceiver</a></p>
+<li><p><a class="reference internal" href="#rtcpeerconnection" id="id18">RTCPeerConnection</a></p></li>
+<li><p><a class="reference internal" href="#rtcdatachannel" id="id19">RTCDataChannel</a></p></li>
+<li><p><a class="reference internal" href="#rtcrtptransceiver" id="id20">RTCRtpTransceiver</a></p>
 <ul>
-<li><p><a class="reference internal" href="#properties" id="id20">Properties</a></p></li>
+<li><p><a class="reference internal" href="#properties" id="id21">Properties</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#rtcrtpsender" id="id21">RTCRtpSender</a></p></li>
-<li><p><a class="reference internal" href="#rtcrtpencodingparameters" id="id22">RTCRtpEncodingParameters</a></p>
+<li><p><a class="reference internal" href="#rtcrtpsender" id="id22">RTCRtpSender</a></p></li>
+<li><p><a class="reference internal" href="#rtcrtpencodingparameters" id="id23">RTCRtpEncodingParameters</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id5" id="id23">Properties</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id24">Properties</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#rtcrtpreceiver" id="id24">RTCRtpReceiver</a></p></li>
-<li><p><a class="reference internal" href="#rtcrtpcontributingsource" id="id25">RTCRtpContributingSource</a></p></li>
+<li><p><a class="reference internal" href="#rtcrtpreceiver" id="id25">RTCRtpReceiver</a></p></li>
+<li><p><a class="reference internal" href="#rtcrtpcontributingsource" id="id26">RTCRtpContributingSource</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#reference" id="id27">Reference</a></p></li>
 </ul>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id16">概论</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">概论</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Media Device</p></li>
+<li><p>RTP Peer Connection</p></li>
+<li><p>RTC RTP Transceiver</p></li>
+<li><p>RTC RTP Sender</p></li>
+<li><p>RTC RTP Receiver</p></li>
+<li><p>ICE Candidate</p></li>
+<li><p>Media Stream</p></li>
+<li><p>Media Stream Track</p></li>
+</ol>
 <div class="section" id="rtcpeerconnection">
-<h3><a class="toc-backref" href="#id17">RTCPeerConnection</a><a class="headerlink" href="#rtcpeerconnection" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">RTCPeerConnection</a><a class="headerlink" href="#rtcpeerconnection" title="Permalink to this headline">¶</a></h3>
 <p>The RTCPeerConnection interface represents a WebRTC connection between the local computer and a remote peer. It provides methods to connect to a remote peer, maintain and monitor the connection, and close the connection once it’s no longer needed.</p>
 </div>
 <div class="section" id="rtcdatachannel">
-<h3><a class="toc-backref" href="#id18">RTCDataChannel</a><a class="headerlink" href="#rtcdatachannel" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">RTCDataChannel</a><a class="headerlink" href="#rtcdatachannel" title="Permalink to this headline">¶</a></h3>
 <p>The RTCDataChannel interface represents a network channel which can be used for bidirectional peer-to-peer transfers of arbitrary data. Every data channel is associated with an RTCPeerConnection, and each peer connection can have up to a theoretical maximum of 65,534 data channels (the actual limit may vary from browser to browser).</p>
 <p>To create a data channel and ask a remote peer to join you, call the RTCPeerConnection’s createDataChannel() method. The peer being invited to exchange data receives a datachannel event (which has type RTCDataChannelEvent) to let it know the data channel has been added to the connection.</p>
 </div>
 <div class="section" id="rtcrtptransceiver">
-<h3><a class="toc-backref" href="#id19">RTCRtpTransceiver</a><a class="headerlink" href="#rtcrtptransceiver" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">RTCRtpTransceiver</a><a class="headerlink" href="#rtcrtptransceiver" title="Permalink to this headline">¶</a></h3>
 <p>The WebRTC interface RTCRtpTransceiver describes a permanent pairing of an RTCRtpSender and an RTCRtpReceiver, along with some shared state.</p>
 <p>Each SDP media section describes one bidirectional SRTP (“Secure Real Time Protocol”) stream (excepting the media section for RTCDataChannel, if present). This pairing of send and receive SRTP streams is significant for some applications, so RTCRtpTransceiver is used to represent this pairing, along with other important state from the media section. Each non-disabled SRTP media section is always represented by exactly one transceiver.</p>
 <p>A transceiver is uniquely identified using its mid property, which is the same as the media ID (mid) of its corresponding m-line. An RTCRtpTransceiver is associated with an m-line if its mid is non-null; otherwise it’s considered disassociated.</p>
 <div class="section" id="properties">
-<h4><a class="toc-backref" href="#id20">Properties</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21">Properties</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>currentDirection Read only</p></li>
 </ul>
@@ -220,12 +232,12 @@
 </div>
 </div>
 <div class="section" id="rtcrtpsender">
-<h3><a class="toc-backref" href="#id21">RTCRtpSender</a><a class="headerlink" href="#rtcrtpsender" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">RTCRtpSender</a><a class="headerlink" href="#rtcrtpsender" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="rtcrtpencodingparameters">
-<h3><a class="toc-backref" href="#id22">RTCRtpEncodingParameters</a><a class="headerlink" href="#rtcrtpencodingparameters" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">RTCRtpEncodingParameters</a><a class="headerlink" href="#rtcrtpencodingparameters" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id5">
-<h4><a class="toc-backref" href="#id23">Properties</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id24">Properties</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>active</p></li>
 </ul>
@@ -261,11 +273,11 @@
 </div>
 </div>
 <div class="section" id="rtcrtpreceiver">
-<h3><a class="toc-backref" href="#id24">RTCRtpReceiver</a><a class="headerlink" href="#rtcrtpreceiver" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">RTCRtpReceiver</a><a class="headerlink" href="#rtcrtpreceiver" title="Permalink to this headline">¶</a></h3>
 <p>The RTCRtpReceiver interface of the WebRTC API manages the reception and decoding of data for a MediaStreamTrack on an RTCPeerConnection.</p>
 </div>
 <div class="section" id="rtcrtpcontributingsource">
-<h3><a class="toc-backref" href="#id25">RTCRtpContributingSource</a><a class="headerlink" href="#rtcrtpcontributingsource" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">RTCRtpContributingSource</a><a class="headerlink" href="#rtcrtpcontributingsource" title="Permalink to this headline">¶</a></h3>
 <p>The RTCRtpContributingSource dictionary of the WebRTC API is used by getContributingSources() to provide information about a given contributing source (CSRC), including the most recent time a packet that the source contributed was played out.</p>
 <p>The information provided is based on the last ten seconds of media received.</p>
 <ul class="simple">
@@ -285,6 +297,12 @@
 </ul>
 <p>A DOMHighResTimeStamp indicating the most recent time at which a frame originating from this source was delivered to the receiver’s MediaStreamTrack</p>
 </div>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id27">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/ondevicechange">https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/ondevicechange</a></p></li>
+</ul>
 </div>
 </div>
 
