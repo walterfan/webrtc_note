@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Connectivity Establishment &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -98,7 +97,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="interactive-connectivity-establishment">
+  <div class="section" id="interactive-connectivity-establishment">
 <h1>Interactive Connectivity Establishment<a class="headerlink" href="#interactive-connectivity-establishment" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -116,7 +115,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-28</p></td>
 </tr>
 </tbody>
 </table>
@@ -129,11 +128,11 @@
 <li><p><a class="reference internal" href="#reference" id="id7">Reference</a></p></li>
 </ul>
 </div>
-<section id="ovewview">
+<div class="section" id="ovewview">
 <h2><a class="toc-backref" href="#id3">Ovewview</a><a class="headerlink" href="#ovewview" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8445">RFC8445</a> Interactive Connectivity Establishment (ICE) 交互式连接建立是一个网络地址转换 NAT 穿透的协议</p>
-</section>
-<section id="nat">
+</div>
+<div class="section" id="nat">
 <h2><a class="toc-backref" href="#id4">NAT</a><a class="headerlink" href="#nat" title="Permalink to this headline">¶</a></h2>
 <p>NAT 是指路由器把本地私有子网IP地址转换称公网 IP 地址的过程。
 ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连接</p>
@@ -144,8 +143,8 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
 <li><p>Port-restricted cone（端口限制型锥型）</p></li>
 <li><p>Symmetric（对称型）</p></li>
 </ul>
-</section>
-<section id="tcp-candidates-with-interactive-connectivity-establishment-ice">
+</div>
+<div class="section" id="tcp-candidates-with-interactive-connectivity-establishment-ice">
 <h2><a class="toc-backref" href="#id5">TCP Candidates with Interactive Connectivity Establishment (ICE)</a><a class="headerlink" href="#tcp-candidates-with-interactive-connectivity-establishment-ice" title="Permalink to this headline">¶</a></h2>
 <p>ICE defines a mechanism for  NAT traversal for multimedia communication protocols based on the offer/answer model of session negotiation.</p>
 <p>The ICE Candidate can also be TCP-based , refer to RFC6544 and RFC4571</p>
@@ -169,8 +168,8 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
   <span class="n">Figure</span> <span class="mi">1</span><span class="p">:</span> <span class="n">ICE</span> <span class="n">TCP</span> <span class="n">Stack</span> <span class="k">with</span> <span class="ow">and</span> <span class="n">without</span> <span class="p">(</span><span class="n">D</span><span class="p">)</span><span class="n">TLS</span>
 </pre></div>
 </div>
-</section>
-<section id="framing-rtp-and-rtcp-packets-over-tcp">
+</div>
+<div class="section" id="framing-rtp-and-rtcp-packets-over-tcp">
 <h2><a class="toc-backref" href="#id6">Framing RTP and RTCP Packets over TCP</a><a class="headerlink" href="#framing-rtp-and-rtcp-packets-over-tcp" title="Permalink to this headline">¶</a></h2>
 <p>参见 RFC4571</p>
 <ul class="simple">
@@ -210,15 +209,15 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
        <span class="n">Figure</span> <span class="mi">4</span><span class="p">:</span> <span class="n">TCP</span> <span class="n">session</span> <span class="n">description</span> <span class="k">for</span> <span class="n">the</span> <span class="n">second</span> <span class="n">participant</span>
 </pre></div>
 </div>
-</section>
-<section id="reference">
+</div>
+<div class="section" id="reference">
 <h2><a class="toc-backref" href="#id7">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8445">RFC8445</a>: Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal</p></li>
 <li><p>_RFC8445: <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8445">https://datatracker.ietf.org/doc/html/rfc8445</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

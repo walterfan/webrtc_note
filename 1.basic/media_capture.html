@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC API 之 Media Capture &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -42,11 +41,11 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">1. WebRTC 基础</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 概论</a></li>
-<li class="toctree-l2"><a class="reference internal" href="html5.html">HTML5 for WebRTC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javascript.html">JavaScript Can Do More</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning_path.html">WebRTC Learning Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_browser.html">Web Browser for RTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_spec.html">WebRTC 标准，协议和规范</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_api.html">WebRTC API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_elements.html">WebRTC Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_entities.html">WebRTC Entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_flow.html">WebRTC 呼叫流程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="media_device.html">Media Device</a></li>
@@ -107,7 +106,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="webrtc-api-media-capture">
+  <div class="section" id="webrtc-api-media-capture">
 <h1>WebRTC API 之 Media Capture<a class="headerlink" href="#webrtc-api-media-capture" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -125,7 +124,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-28</p></td>
 </tr>
 </tbody>
 </table>
@@ -147,7 +146,7 @@
 <li><p><a class="reference internal" href="#id5" id="id13">参考资料</a></p></li>
 </ul>
 </div>
-<section id="overview">
+<div class="section" id="overview">
 <h2><a class="toc-backref" href="#id6">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>WebRTC（Web 实时通信）是一种技术，它使 Web 应用程序和站点能够捕获和可选地流式传输音频和/或视频媒体，以及在不需要中介的情况下在浏览器之间交换任意数据。 包含 WebRTC 的一组标准使得共享数据和执行点对点电话会议成为可能，而无需用户安装插件或任何其他第三方软件。</p>
 <p>WebRTC 有多种用途；它们与 Media Capture 和 Streams API 一起为 Web 提供强大的多媒体功能，包括支持音频和视频会议、文件交换、屏幕共享、身份管理以及与传统电话系统的接口，包括支持发送 DTMF（按键拨号）信号。可以在不需要任何特殊驱动程序或插件的情况下建立对等点之间的连接，并且通常可以在没有任何中间服务器的情况下建立。</p>
@@ -165,8 +164,8 @@
 <li><p>RTCDataChannel</p></li>
 </ol>
 <p>您还可以使用两个对等点之间的连接，使用 RTCDataChannel 接口交换任意二进制数据。这可用于反向通道信息、元数据交换、游戏状态数据包、文件传输，甚至可用作数据传输的主要通道。</p>
-</section>
-<section id="enumeratedevices">
+</div>
+<div class="section" id="enumeratedevices">
 <h2><a class="toc-backref" href="#id7">enumerateDevices</a><a class="headerlink" href="#enumeratedevices" title="Permalink to this headline">¶</a></h2>
 <p>与媒体捕获和播放有关的设备有输入和输出设备之分</p>
 <ol class="arabic simple">
@@ -205,8 +204,8 @@
 <span class="p">};</span>
 </pre></div>
 </div>
-</section>
-<section id="gum-getusermedia">
+</div>
+<div class="section" id="gum-getusermedia">
 <h2><a class="toc-backref" href="#id8">GUM-getUserMedia</a><a class="headerlink" href="#gum-getusermedia" title="Permalink to this headline">¶</a></h2>
 <p>接口原型为</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">partial</span> <span class="n">interface</span> <span class="n">MediaDevices</span> <span class="p">{</span>
@@ -247,9 +246,9 @@
 <p>返回值是一个 Promise, 成功执行后返回 MediaStream</p>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="nx">Window</span><span class="p">]</span>
 <span class="kr">interface</span> <span class="nx">MediaStream</span> <span class="o">:</span> <span class="nx">EventTarget</span> <span class="p">{</span>
-    <span class="kr">constructor</span><span class="p">();</span>
-    <span class="kr">constructor</span><span class="p">(</span><span class="nx">MediaStream</span> <span class="nx">stream</span><span class="p">);</span>
-    <span class="kr">constructor</span><span class="p">(</span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">tracks</span><span class="p">);</span>
+    <span class="nx">constructor</span><span class="p">();</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">MediaStream</span> <span class="nx">stream</span><span class="p">);</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">tracks</span><span class="p">);</span>
     <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">DOMString</span> <span class="nx">id</span><span class="p">;</span>
     <span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">getAudioTracks</span><span class="p">();</span>
     <span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">getVideoTracks</span><span class="p">();</span>
@@ -286,7 +285,7 @@
 <span class="p">};</span>
 </pre></div>
 </div>
-<section id="example">
+<div class="section" id="example">
 <h3><a class="toc-backref" href="#id9">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">constraints</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">video</span><span class="o">:</span> <span class="p">{</span>
@@ -315,11 +314,11 @@
         <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">handleError</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="faq">
+</div>
+</div>
+<div class="section" id="faq">
 <h2><a class="toc-backref" href="#id10">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
-<section id="id3">
+<div class="section" id="id3">
 <h3><a class="toc-backref" href="#id11">如何缩放编码的分辨率</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>RTCRtpEncodingParameters used by RTCRtpSender.setParameters()
 RTCRtpDecodingParameters used by RTCRtpReceiver.setParameters()</p>
@@ -329,8 +328,8 @@ RTCRtpDecodingParameters used by RTCRtpReceiver.setParameters()</p>
 <p>Only used for senders whose track’s kind is video, this is a double-precision floating-point value specifying a factor by which to scale down the video during encoding.</p>
 <p>The default value, 1.0, means that the sent video’s size will be the same as the original. A value of 2.0 scales the video frames down by a factor of 2 in each dimension, resulting in a video 1/4 the size of the original.</p>
 <p>The value must not be less than 1.0 (you can’t use this to scale the video up).</p>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h3><a class="toc-backref" href="#id12">如何获取摄像头的分辨率</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>采用探测法，给 getUserMedia 方法传入不同的分辨率，看是否能成功获取到媒体流，参见 <a class="reference external" href="https://www.w3.org/TR/mediacapture-streams">W3C Media Capture and Streams Spec</a>。</p>
 <p>具体方法这里有详细讨论： <a class="reference external" href="https://webrtchacks.com/how-to-figure-out-webrtc-camera-resolutions/">https://webrtchacks.com/how-to-figure-out-webrtc-camera-resolutions/</a>
@@ -412,16 +411,16 @@ RTCRtpDecodingParameters used by RTCRtpReceiver.setParameters()</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id5">
+</div>
+</div>
+<div class="section" id="id5">
 <h2><a class="toc-backref" href="#id13">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API">MDN WebRTC API</a></p></li>
 <li><p><a class="reference external" href="https://www.w3.org/TR/mediacapture-streams">W3C Media Capture and Streams Spec</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

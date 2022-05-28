@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 概论 &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -19,7 +18,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="HTML5 for WebRTC" href="html5.html" />
+    <link rel="next" title="WebRTC Learning Path" href="learning_path.html" />
     <link rel="prev" title="1. WebRTC 基础" href="index.html" /> 
 </head>
 
@@ -66,11 +65,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#id9">参考资料</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="html5.html">HTML5 for WebRTC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="javascript.html">JavaScript Can Do More</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning_path.html">WebRTC Learning Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_browser.html">Web Browser for RTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_spec.html">WebRTC 标准，协议和规范</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_api.html">WebRTC API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_elements.html">WebRTC Elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_entities.html">WebRTC Entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_flow.html">WebRTC 呼叫流程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="media_device.html">Media Device</a></li>
@@ -117,7 +116,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="webrtc">
+  <div class="section" id="webrtc">
 <h1>WebRTC 概论<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -135,7 +134,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-13</p></td>
+<td><p>2022-05-28</p></td>
 </tr>
 </tbody>
 </table>
@@ -168,13 +167,13 @@
 <li><p><a class="reference internal" href="#id9" id="id26">参考资料</a></p></li>
 </ul>
 </div>
-<section id="id3">
+<div class="section" id="id3">
 <h2><a class="toc-backref" href="#id11">WebRTC 简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>一句话，WebRTC 用浏览器来进行实时通信的一套基于 Web 进行实时通信的标准和参考实现, 它也是一个开源项目，最初由 google 发起并交由开源社区，各大浏览器厂商在其各自的产品中亦有部分的采用。</p>
 <p>借助WebRTC，你可以在基于开放标准的应用程序中添加实时通信功能。 它支持在节点之间发送视频，语音和通用数据，从而使开发人员能够构建功能强大的语音和视频通信解决方案。 该技术可在所有现代浏览器以及所有主要平台的本机客户端上使用。</p>
 <p>WebRTC背后的技术被实现为一个开放的Web标准，并在所有主要浏览器中均以常规JavaScript API的形式提供。 对于本机客户端（例如Android和iOS应用程序），可以使用提供相同功能的库。</p>
 <img alt="../_images/webrtc-architecture.png" src="../_images/webrtc-architecture.png" />
-<section id="id4">
+<div class="section" id="id4">
 <h3><a class="toc-backref" href="#id12">什么是 WebRTC?</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>WebRTC 意味着两个东西：</p>
 <ol class="arabic simple">
@@ -210,8 +209,8 @@
 <li><p>数据通道 Data Channel</p></li>
 <li><p>中转服务器 Turn Server</p></li>
 </ul>
-</section>
-<section id="id5">
+</div>
+<div class="section" id="id5">
 <h3><a class="toc-backref" href="#id13">多媒体通信相关的技术</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>音频: 回声消除 Echo Cancellation, 静音检测 Silence Detection, 噪声消除 Noise Removal, G.711 及 Opus 等编码，防抖动缓冲等</p></li>
@@ -220,27 +219,27 @@
 <li><p>信令: 基于 SDP 和 SIP, Jingle, ROAP, RESTful 等协议的多媒体媒体通信参数协商</p></li>
 <li><p>网络 - 通过 ICE, TURN, STUN 的 NAT 穿透与连接</p></li>
 </ul>
-</section>
-<section id="id6">
+</div>
+<div class="section" id="id6">
 <h3><a class="toc-backref" href="#id14">三大任务</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>获取音视频流 audio and video</p></li>
 <li><p>音视频媒体流的通信</p></li>
 <li><p>任意数据的通信</p></li>
 </ul>
-</section>
-<section id="js-apis">
+</div>
+<div class="section" id="js-apis">
 <h3><a class="toc-backref" href="#id15">三个主要的 JS APIs</a><a class="headerlink" href="#js-apis" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>媒体流 MediaStream</p></li>
 <li><p>对等连接 RTCPeerConnection</p></li>
 <li><p>数据通道 RTCDataChannel</p></li>
 </ul>
-</section>
-</section>
-<section id="id7">
+</div>
+</div>
+<div class="section" id="id7">
 <h2><a class="toc-backref" href="#id16">WebRTC 应用模型</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<section id="browser-model">
+<div class="section" id="browser-model">
 <h3><a class="toc-backref" href="#id17">Browser Model 浏览器模型</a><a class="headerlink" href="#browser-model" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>     <span class="o">+------------------------+</span>  <span class="n">On</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">wire</span>
      <span class="o">|</span>                        <span class="o">|</span>  <span class="n">Protocols</span>
@@ -275,8 +274,8 @@
                     <span class="n">Native</span> <span class="n">OS</span> <span class="n">Services</span>
 </pre></div>
 </div>
-</section>
-<section id="browser-rtc-trapezoid">
+</div>
+<div class="section" id="browser-rtc-trapezoid">
 <h3><a class="toc-backref" href="#id18">Browser RTC Trapezoid 浏览器实时通信三角</a><a class="headerlink" href="#browser-rtc-trapezoid" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="o">+-----------+</span>                  <span class="o">+-----------+</span>
        <span class="o">|</span>   <span class="n">Web</span>     <span class="o">|</span>                  <span class="o">|</span>   <span class="n">Web</span>     <span class="o">|</span>
@@ -304,9 +303,9 @@
 <span class="o">+-----------+</span>                                <span class="o">+-----------+</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id8">
+</div>
+</div>
+<div class="section" id="id8">
 <h2><a class="toc-backref" href="#id19">WebRTC 应用的核心功能</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>用户管理 User management</p></li>
@@ -317,57 +316,57 @@
 <li><p>媒体流管理 Media Stream/Track management</p></li>
 <li><p>媒体统计和度量 Media statistics and metrics</p></li>
 </ul>
-<section id="data-transport">
+<div class="section" id="data-transport">
 <h3><a class="toc-backref" href="#id20">Data transport</a><a class="headerlink" href="#data-transport" title="Permalink to this headline">¶</a></h3>
 <p>例如，TCP 和 UDP，以及在实体之间安全地建立连接的手段，以及决定何时发送数据的功能：拥塞管理、带宽估计等。</p>
 <p>相关协议:</p>
 <ul class="simple">
 <li><p>RFC8835: Transports for WebRTC</p></li>
 </ul>
-</section>
-<section id="data-framing">
+</div>
+<div class="section" id="data-framing">
 <h3><a class="toc-backref" href="#id21">Data framing</a><a class="headerlink" href="#data-framing" title="Permalink to this headline">¶</a></h3>
 <p>RTP、流控制传输协议 (SCTP)、DTLS 和其他用作容器的数据格式，以及它们用于数据机密性和完整性的功能。</p>
-</section>
-<section id="data-formats">
+</div>
+<div class="section" id="data-formats">
 <h3><a class="toc-backref" href="#id22">Data formats</a><a class="headerlink" href="#data-formats" title="Permalink to this headline">¶</a></h3>
 <p>系统之间传递的数据的编解码器规范、格式规范和功能规范。 音频和视频编解码器以及用于数据和文档共享的格式都属于这一类。
 为了使用数据格式，需要一种描述它们的方法（例如，会话描述 SDP ）。</p>
-</section>
-<section id="connection-management">
+</div>
+<div class="section" id="connection-management">
 <h3><a class="toc-backref" href="#id23">Connection management</a><a class="headerlink" href="#connection-management" title="Permalink to this headline">¶</a></h3>
 <p>例如，建立连接、就数据格式达成一致、在通话期间更改数据格式。 SDP、SIP 和Jingle/XMPP 属于这一类。</p>
-</section>
-<section id="presentation-and-control">
+</div>
+<div class="section" id="presentation-and-control">
 <h3><a class="toc-backref" href="#id24">Presentation and control</a><a class="headerlink" href="#presentation-and-control" title="Permalink to this headline">¶</a></h3>
 <p>为了确保交互以一种意料之中的方式进行，所需要的功能包括 floor control, screen layout, voice-activated image
 switching 和其他此类功能，其中部分系统需要各方之间的合作。 集中式会议 Centralized Conferencing (XCON) [RFC6501] 和 Cisco/Tandberg 的 Telepresence
 Interoperability Protocol (TIP) 是规范此类功能的一些尝试。</p>
 <p>许多应用程序是在没有针对这些功能的标准化接口的情况下构建的。</p>
-</section>
-<section id="local-system-support-functions">
+</div>
+<div class="section" id="local-system-support-functions">
 <h3><a class="toc-backref" href="#id25">Local system support functions</a><a class="headerlink" href="#local-system-support-functions" title="Permalink to this headline">¶</a></h3>
 <p>一些不需要统一指定的功能，因为每个参与者都可以根据自己的选择实现这些功能，而不会以其他人必须认识到的方式影响线上传输的数据。 例如回声消除（以它的某些形式）、本地身份验证和授权机制、操作系统访问控制以及对对话进行本地记录的能力。</p>
-</section>
-</section>
-<section id="id9">
+</div>
+</div>
+<div class="section" id="id9">
 <h2><a class="toc-backref" href="#id26">参考资料</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8825">RFC8825</a>: Overview: Real-Time Protocols for Browser-Based Applications</p></li>
-<li><p><a class="reference external" href="*https://a-wing.github.io/webrtc-book-cn/01_introduction.html">WebRTC 实时通信</a></p></li>
+<li><p><a class="reference external" href="*https://a-wing.github.io/webrtc-book-cn">WebRTC 实时通信</a></p></li>
 <li><p><a class="reference external" href="https://www.html5rocks.com/en/tutorials/webrtc/basics/">https://www.html5rocks.com/en/tutorials/webrtc/basics/</a></p></li>
 <li><p><a class="reference external" href="https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/">https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/</a></p></li>
 <li><p><a class="reference external" href="https://codelabs.developers.google.com/codelabs/webrtc-web">https://codelabs.developers.google.com/codelabs/webrtc-web</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="1. WebRTC 基础" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="html5.html" class="btn btn-neutral float-right" title="HTML5 for WebRTC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="learning_path.html" class="btn btn-neutral float-right" title="WebRTC Learning Path" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
