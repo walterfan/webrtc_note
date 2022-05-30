@@ -205,6 +205,7 @@ Local system support functions
 
 一些不需要统一指定的功能，因为每个参与者都可以根据自己的选择实现这些功能，而不会以其他人必须认识到的方式影响线上传输的数据。 例如回声消除（以它的某些形式）、本地身份验证和授权机制、操作系统访问控制以及对对话进行本地记录的能力。
 
+
 参考资料
 ===============================
 * `RFC8825`_: Overview: Real-Time Protocols for Browser-Based Applications
@@ -215,6 +216,6 @@ Local system support functions
 * https://www.html5rocks.com/en/tutorials/webrtc/infrastructure/
 * https://codelabs.developers.google.com/codelabs/webrtc-web
 
-.. _WebRTC 实时通信: * https://a-wing.github.io/webrtc-book-cn/01_introduction.html
+.. _WebRTC 实时通信: * https://a-wing.github.io/webrtc-book-cn
 
 

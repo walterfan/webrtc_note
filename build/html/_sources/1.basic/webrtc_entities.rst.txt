@@ -1,6 +1,6 @@
-######################
+#############################
 WebRTC Entities
-######################
+#############################
 
 
 
@@ -25,6 +25,16 @@ WebRTC Entities
 
 概论
 ============
+1. Media Device
+2. RTP Peer Connection
+3. RTC RTP Transceiver
+4. RTC RTP Sender
+5. RTC RTP Receiver
+6. ICE Candidate
+7. Media Stream
+8. Media Stream Track
+
+
 
 RTCPeerConnection
 ------------------------------------
@@ -148,3 +158,8 @@ A 32-bit unsigned integer value specifying the CSRC identifier of the contributi
 * timestamp Optional
 
 A DOMHighResTimeStamp indicating the most recent time at which a frame originating from this source was delivered to the receiver's MediaStreamTrack
+
+
+Reference
+===================
+* https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/ondevicechange

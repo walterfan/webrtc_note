@@ -9,14 +9,12 @@
 
    overview
    wasm
-   
-   signal_server
-   media_server
 
    coturn
    apprtc
    aiortc
 
+   sfu
    janus
    janus_code
    mediasoup

@@ -28,7 +28,7 @@ WebRTC 的 Data Channel 被设计用来在两个端点之间传输非音视频�
 RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向对等传输。 每个数据通道都与一个 RTCPeerConnection 相关联，每个对等连接理论上最多可以有 65,534 个数据通道（实际限制可能因浏览器而异）。
 
 发起方如果要创建数据通道并要求远程对等方加入您，可调用 `RTCPeerConnection 的 createDataChannel()` 方法。
-应答方会接收到一个数据通道事件（其类型为 RTCDataChannelEvent），以告知其数据通道已添加到连接中。
+应答方会接收到一个数据通道事件 (其类型为 RTCDataChannelEvent), 以告知其数据通道已添加到连接中。
 
 
 .. code-block:: javascript
@@ -306,7 +306,8 @@ it is a sdp example that use sctp over dtls
     a=max-message-size:262144
 
 
-Multiple SCTP associations MAY be multiplexed over a single DTLS connection. The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
+Multiple SCTP associations MAY be multiplexed over a single DTLS connection.
+The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
 
 
 

@@ -8,10 +8,8 @@
    :caption: Contents:
 
    overview
-   
-   html5
 
-   javascript
+   learning_path
 
    web_browser
 
@@ -19,11 +17,11 @@
 
    webrtc_api
 
+   webrtc_elements
+
    webrtc_entities
    
    webrtc_flow
-
-   media_device
 
    media_capture
 
@@ -39,6 +37,7 @@
 
    webrtc_stats
 
+ 
    video_chat
 
 
