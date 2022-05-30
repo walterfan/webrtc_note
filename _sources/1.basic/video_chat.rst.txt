@@ -42,3 +42,8 @@ components
 4. media server
    * dtls and srtp service
    * switch RTP packets among the attendeess in a room
+
+
+快速实现
+================
+对于 P2P 应用，我们可以只实现 1 和 2, 省略掉 3 和 4
