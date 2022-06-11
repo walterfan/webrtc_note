@@ -38,6 +38,22 @@ RTP retransmission is an effective packet loss recovery technique for real-time 
 RTX 即 RTransmission, 用于丢包重传， 它使用额外的 ssrc
   
 
+Retransmission Payload Format
+
+.. code-block:: 
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                         RTP Header                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |            OSN                |                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+   |                  Original RTP Packet Payload                  |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
 参考资料
 =========================
 * RFC4588: `RTP Retransmission Payload Format`_

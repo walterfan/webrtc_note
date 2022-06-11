@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>scapy &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -100,7 +101,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="scapy">
+  <section id="scapy">
 <h1>scapy<a class="headerlink" href="#scapy" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -118,20 +119,20 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-28</p></td>
+<td><p>2022-06-11</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id3" id="id8">简介</a></p></li>
-<li><p><a class="reference internal" href="#commands" id="id9">Commands</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id10">抓包</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id11">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id7">简介</a></p></li>
+<li><p><a class="reference internal" href="#commands" id="id8">Commands</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">抓包</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id10">参考资料</a></p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id8">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h2><a class="toc-backref" href="#id7">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>Scapy is a packet manipulation tool for computer networks, written in Python by Philippe Biondi.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">scapy</span>
 <span class="n">scapy</span>
@@ -197,41 +198,73 @@
 <span class="mi">0</span><span class="n">A</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="commands">
-<h2><a class="toc-backref" href="#id9">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
-<div class="line-block">
-<div class="line">Command | Effect |</div>
-</div>
-<p><a href="#id6"><span class="problematic" id="id7">|---------|</span></a>——–|
-| raw(pkt) | assemble the packet |
-| hexdump(pkt) | have a hexadecimal dump |
-| ls(pkt) | have the list of fields values |
-| pkt.summary() | for a one-line summary |
-| pkt.show() | for a developed view of the packet |
-| pkt.show2() | same as show but on the assembled packet (checksum is calculated, for instance) |
-| pkt.sprintf()|  fills a format string with fields values of the packet |
-| pkt.decode_payload_as()| changes the way the payload is decoded |
-| pkt.psdump() | draws a PostScript diagram with explained dissection |
-| pkt.pdfdump() | draws a PDF with explained dissection |
-| pkt.command()| return a Scapy command that can generate the packet |</p>
-</div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id10">抓包</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="commands">
+<h2><a class="toc-backref" href="#id8">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-given docutils align-default" id="id6">
+<caption><span class="caption-text">Commands</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>命令</p></th>
+<th class="head"><p>作用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>raw(pkt)</p></td>
+<td><p>assemble the packet</p></td>
+</tr>
+<tr class="row-odd"><td><p>hexdump(pkt)</p></td>
+<td><p>have a hexadecimal dump</p></td>
+</tr>
+<tr class="row-even"><td><p>ls(pkt)</p></td>
+<td><p>have the list of fields values</p></td>
+</tr>
+<tr class="row-odd"><td><p>pkt.summary()</p></td>
+<td><p>for a one-line summary</p></td>
+</tr>
+<tr class="row-even"><td><p>pkt.show()</p></td>
+<td><p>for a developed view of the packet</p></td>
+</tr>
+<tr class="row-odd"><td><p>pkt.show2()</p></td>
+<td><p>same as show but on the assembled packet (checksum is calculated, for instance)</p></td>
+</tr>
+<tr class="row-even"><td><p>pkt.sprintf()</p></td>
+<td><p>fills a format string with fields values of the packet</p></td>
+</tr>
+<tr class="row-odd"><td><p>pkt.decode_payload_as()</p></td>
+<td><p>changes the way the payload is decoded</p></td>
+</tr>
+<tr class="row-even"><td><p>pkt.psdump()</p></td>
+<td><p>draws a PostScript diagram with explained dissection</p></td>
+</tr>
+<tr class="row-odd"><td><p>pkt.pdfdump()</p></td>
+<td><p>draws a PDF with explained dissection</p></td>
+</tr>
+<tr class="row-even"><td><p>pkt.command()</p></td>
+<td><p>return a Scapy command that can generate the packet</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id9">抓包</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scapy.all</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">dpkt</span> <span class="o">=</span> <span class="n">sniff</span><span class="p">(</span><span class="n">iface</span> <span class="o">=</span> <span class="s2">&quot;wlp7s0&quot;</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id11">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id10">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/phaethon/scapy">https://github.com/phaethon/scapy</a></p></li>
 <li><p><a class="reference external" href="http://phaethon.github.io/scapy/api/">http://phaethon.github.io/scapy/api/</a></p></li>
 <li><p><a class="reference external" href="http://scapy.readthedocs.io/en/latest/usage.html">http://scapy.readthedocs.io/en/latest/usage.html</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
