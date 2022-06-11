@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Audio worklet &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -75,6 +76,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_red.html">WebRTC RED</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
@@ -117,7 +119,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="audio-worklet">
+  <section id="audio-worklet">
 <h1>Audio worklet<a class="headerlink" href="#audio-worklet" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -142,7 +144,7 @@
 <li><p><a class="reference internal" href="#reference" id="id12">Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="overview">
+<section id="overview">
 <h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Using Audio Worklet consists of two parts: AudioWorkletProcessor and AudioWorkletNode.</p>
 <img alt="../_images/audioworklet-instantiation-sequence.png" src="../_images/audioworklet-instantiation-sequence.png" />
@@ -150,8 +152,8 @@
 <p>AudioWorkletProcessor represents the actual audio processor written in JavaScript code, and it lives in the AudioWorkletGlobalScope.</p>
 <p>AudioWorkletNode is the counterpart of AudioWorkletProcessor and takes care of the connection to and from other AudioNodes in the main thread. It is exposed in the main global scope and functions like a regular AudioNode.</p>
 <p>an AudioContext object and the processor name as a string. A processor definition can be loaded and registered by the new Audio Worklet object’s addModule() call.</p>
-<img alt="../_images/webaudio-1.svg" src="../_images/webaudio-1.svg" /></div>
-<div class="section" id="terms">
+<img alt="../_images/webaudio-1.svg" src="../_images/webaudio-1.svg" /></section>
+<section id="terms">
 <h2><a class="toc-backref" href="#id4">Terms</a><a class="headerlink" href="#terms" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>BaseAudioContext: Web Audio API’s primary object.</p></li>
@@ -161,10 +163,10 @@
 <li><p>AudioWorkletNode : An AudioNode designed for the Audio Worklet operation. Instantiated from a BaseAudioContext. A BaseAudioContext can have multiple AudioWorkletNodes similarly to the native AudioNodes.</p></li>
 <li><p>AudioWorkletProcessor : A counterpart of the AudioWorkletNode. The actual guts of the AudioWorkletNode processing the audio stream by the user-supplied code. It is instantiated in the AudioWorkletGlobalScope when a AudioWorkletNode is constructed. An AudioWorkletNode can have one matching AudioWorkletProcessor.</p></li>
 </ul>
-</div>
-<div class="section" id="mechanism">
+</section>
+<section id="mechanism">
 <h2><a class="toc-backref" href="#id5">Mechanism</a><a class="headerlink" href="#mechanism" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="processing-audio">
+<section id="processing-audio">
 <h3><a class="toc-backref" href="#id6">Processing audio</a><a class="headerlink" href="#processing-audio" title="Permalink to this headline">¶</a></h3>
 <p>An example algorithm of creating a custom audio processing mechanism is:</p>
 <p>1. Create a separate file;
@@ -176,12 +178,12 @@ Extend the AudioWorkletProcessor class (see “Deriving classes” section) and 
 <li><p>Create an AudioWorkletNode based on the processor. The processor will be instantiated internally by the AudioWorkletNode constructor.</p></li>
 <li><p>Connect the node to the other nodes.</p></li>
 </ol>
-</div>
-<div class="section" id="process-method">
+</section>
+<section id="process-method">
 <h3><a class="toc-backref" href="#id7">Process Method</a><a class="headerlink" href="#process-method" title="Permalink to this headline">¶</a></h3>
 <p>Note: Currently, audio data blocks are always 128 frames long—that is, they contain 128 32-bit floating-point samples for each of the inputs’ channels. However, plans are already in place to revise the specification to allow the size of the audio blocks to be changed depending on circumstances (for example, if the audio hardware or CPU utilization is more efficient with larger block sizes). Therefore, you must always check the size of the sample array rather than assuming a particular size.</p>
 <p>This size may even be allowed to change over time, so you mustn’t look at just the first block and assume the sample buffers will always be the same size.</p>
-<div class="section" id="parameters">
+<section id="parameters">
 <h4><a class="toc-backref" href="#id8">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>inputs</p></li>
@@ -191,10 +193,10 @@ Extend the AudioWorkletProcessor class (see “Deriving classes” section) and 
 <li><p>outputs</p></li>
 </ul>
 <p>An array of outputs that is similar to the inputs parameter in structure. It is intended to be filled during the execution of the process() method. Each of the output channels is filled with zeros by default — the processor will output silence unless the output arrays are modified.</p>
-</div>
-</div>
-</div>
-<div class="section" id="example">
+</section>
+</section>
+</section>
+<section id="example">
 <h2><a class="toc-backref" href="#id9">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>First, we need to define a custom AudioWorkletProcessor, which will output white noise, and register it. Note that this should be done in a separate file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">white</span><span class="o">-</span><span class="n">noise</span><span class="o">-</span><span class="n">processor</span><span class="o">.</span><span class="n">js</span>
@@ -220,25 +222,25 @@ Extend the AudioWorkletProcessor class (see “Deriving classes” section) and 
 <span class="n">whiteNoiseNode</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">audioContext</span><span class="o">.</span><span class="n">destination</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="design-patterns">
+</section>
+<section id="design-patterns">
 <h2><a class="toc-backref" href="#id10">Design Patterns</a><a class="headerlink" href="#design-patterns" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="using-audio-worklet-with-webassembly">
+<section id="using-audio-worklet-with-webassembly">
 <h3><a class="toc-backref" href="#id11">Using Audio Worklet with WebAssembly</a><a class="headerlink" href="#using-audio-worklet-with-webassembly" title="Permalink to this headline">¶</a></h3>
 <p>The combination of these two features brings a variety of advantages to audio processing on the web, but the two biggest benefits are:
 a) bringing existing C/C++ audio processing code into the WebAudio ecosystem and
 b) avoiding the overhead of JS JIT compilation and garbage collection in the audio processing code.</p>
 <p>refe to <a class="reference external" href="https://developers.google.com/web/updates/2018/06/audio-worklet-design-pattern">Audio Worklet Design Pattern</a></p>
-</div>
-</div>
-<div class="section" id="reference">
+</section>
+</section>
+<section id="reference">
 <h2><a class="toc-backref" href="#id12">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://webaudio.github.io/web-audio-api/#AudioWorkletNode">AudioWorkletNode</a></p></li>
 <li><p><a class="reference external" href="https://developers.google.com/web/updates/2017/12/audio-worklet">Enter Audio Worklet</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

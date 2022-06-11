@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>netcat &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -106,7 +107,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="netcat">
+  <section id="netcat">
 <h1>netcat<a class="headerlink" href="#netcat" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -124,7 +125,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-05-28</p></td>
+<td><p>2022-06-11</p></td>
 </tr>
 </tbody>
 </table>
@@ -143,20 +144,20 @@
 <li><p><a class="reference internal" href="#reference" id="id13">Reference</a></p></li>
 </ul>
 </div>
-<div class="section" id="id3">
+<section id="id3">
 <h2><a class="toc-backref" href="#id6">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>netcat</p>
-</div>
-<div class="section" id="samples">
+</section>
+<section id="samples">
 <h2><a class="toc-backref" href="#id7">Samples</a><a class="headerlink" href="#samples" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="chat">
+<section id="chat">
 <h3><a class="toc-backref" href="#id8">chat</a><a class="headerlink" href="#chat" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="mi">2008</span>
 <span class="n">nc</span> <span class="mf">127.0.0.1</span> <span class="mi">2008</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="file-transfer">
+</section>
+<section id="file-transfer">
 <h3><a class="toc-backref" href="#id9">file transfer</a><a class="headerlink" href="#file-transfer" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Server</span>
 <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="mi">1567</span> <span class="o">&lt;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
@@ -165,8 +166,8 @@
 <span class="n">nc</span> <span class="o">-</span><span class="n">n</span> <span class="mf">172.31.100.7</span> <span class="mi">1567</span> <span class="o">&gt;</span> <span class="n">file</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3><a class="toc-backref" href="#id10">侦听80端口并将收到的请求记录下来</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>在 192.268.3.4 上运行</p></li>
@@ -184,8 +185,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">test</span><span class="o">.</span><span class="n">log</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id5">
+</section>
+<section id="id5">
 <h3><a class="toc-backref" href="#id11">接收和发送文件</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>在 192.268.3.4 上运行</p></li>
@@ -195,22 +196,22 @@
 <li><p>在 192.268.3.5 上运行</p></li>
 </ol>
 <p>netcat 192.268.3.4 8888 &lt; received_file</p>
-</div>
-<div class="section" id="web-server">
+</section>
+<section id="web-server">
 <h3><a class="toc-backref" href="#id12">作为一个简单的web server</a><a class="headerlink" href="#web-server" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">echo</span> <span class="o">-</span><span class="n">ne</span> <span class="s2">&quot;HTTP/1.0 200 OK</span><span class="se">\r\n</span><span class="s2">Content-Length: $(wc -c &lt;index.html)</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span><span class="p">;</span> <span class="n">cat</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">;</span> <span class="p">}</span> <span class="o">|</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">p</span> <span class="mi">8080</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="reference">
+</section>
+</section>
+<section id="reference">
 <h2><a class="toc-backref" href="#id13">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Offical site: <a class="reference external" href="http://sourceforge.net/projects/nc110/">http://sourceforge.net/projects/nc110/</a></p></li>
 <li><p>Wiki: <a class="reference external" href="https://en.wikipedia.org/wiki/Netcat#Test_if_UDP_port_is_open:_simple_UDP_server_and_client">https://en.wikipedia.org/wiki/Netcat#Test_if_UDP_port_is_open:_simple_UDP_server_and_client</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

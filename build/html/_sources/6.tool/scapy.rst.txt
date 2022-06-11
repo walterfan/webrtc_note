@@ -92,20 +92,21 @@ Scapy is a packet manipulation tool for computer networks, written in Python by 
 Commands
 ===================
 
+.. csv-table:: Commands
+   :header: "命令", "作用"
+   :widths: 40,60
 
-| Command | Effect |
-|---------|--------|
-| raw(pkt) | assemble the packet |
-| hexdump(pkt) | have a hexadecimal dump |
-| ls(pkt) | have the list of fields values |
-| pkt.summary() | for a one-line summary |
-| pkt.show() | for a developed view of the packet |
-| pkt.show2() | same as show but on the assembled packet (checksum is calculated, for instance) |
-| pkt.sprintf()|  fills a format string with fields values of the packet |
-| pkt.decode_payload_as()| changes the way the payload is decoded |
-| pkt.psdump() | draws a PostScript diagram with explained dissection |
-| pkt.pdfdump() | draws a PDF with explained dissection |
-| pkt.command()| return a Scapy command that can generate the packet |
+   raw(pkt), "assemble the packet"
+   hexdump(pkt), "have a hexadecimal dump"
+   ls(pkt), "have the list of fields values"
+   pkt.summary(), "for a one-line summary"
+   pkt.show(), "for a developed view of the packet"
+   pkt.show2(), "same as show but on the assembled packet (checksum is calculated, for instance)"
+   pkt.sprintf(), "fills a format string with fields values of the packet"
+   pkt.decode_payload_as(), "changes the way the payload is decoded"
+   pkt.psdump(), "draws a PostScript diagram with explained dissection"
+   pkt.pdfdump(), "draws a PDF with explained dissection"
+   pkt.command(), "return a Scapy command that can generate the packet"
 
 抓包
 ===================

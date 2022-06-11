@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 媒体概论 &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -56,6 +57,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_red.html">WebRTC RED</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
@@ -97,7 +99,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="webrtc">
+  <section id="webrtc">
 <h1>WebRTC 媒体概论<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -109,22 +111,22 @@
 </li>
 </ul>
 </div>
-<div class="section" id="media-stream-and-track">
+<section id="media-stream-and-track">
 <h2><a class="toc-backref" href="#id1">Media Stream and track</a><a class="headerlink" href="#media-stream-and-track" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Audio</p></li>
 <li><p>Video</p></li>
 <li><p>Sharing</p></li>
 </ul>
-</div>
-<div class="section" id="peer-connections">
+</section>
+<section id="peer-connections">
 <h2><a class="toc-backref" href="#id2">Peer Connections</a><a class="headerlink" href="#peer-connections" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="simulcasting">
+<section id="simulcasting">
 <h3><a class="toc-backref" href="#id3">Simulcasting</a><a class="headerlink" href="#simulcasting" title="Permalink to this headline">¶</a></h3>
 <p>Simulcast 可翻译为同播或并播，一个摄像头可以发送不同分辨率（spatial quality）或帧率(temporal quality)的视频流，这些流可以在一个 RTP 会话中传送， 不同的分辨率使用不同的 SSRC, 不同的帧率可以使用相同的 SSRC（SST） 或者不同的 SSRC（MST）。这些流可以共同使用一个相同的 CSRC 或者一个扩展的 ID</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

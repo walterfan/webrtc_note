@@ -26,6 +26,7 @@ WebRTC 视频
    video_adaptation
    video_quality
    video_pipeline
+   video_process
    yuv
    h264
 

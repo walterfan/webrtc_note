@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Pipeline &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Video Process" href="video_process.html" />
+    <link rel="prev" title="video quality" href="video_quality.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="video_basic.html">Video Basic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="video_codec.html">视频编码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="video_adaptation.html">video adaptation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="video_quality.html">video quality</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Video Pipeline</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">概述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="video_process.html">Video Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="yuv.html">YUV 图像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="h264.html">H.264 编码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_video.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_video.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_qos.html">WebRTC QoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_red.html">WebRTC RED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
+          <li><a href="webrtc_video.html">WebRTC 视频</a> &raquo;</li>
+      <li>Video Pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/3.media/video_pipeline.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="video-pipeline">
+<h1>Video Pipeline<a class="headerlink" href="#video-pipeline" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>Video Pipeline</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-06-11</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#id3" id="id4">概述</a></p>
+<ul>
+<li><p><a class="reference internal" href="#video-pipeline-by-gstreamer" id="id5">Video pipeline by gstreamer</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id3">
+<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>视频流水线是指视频从发送端摄像头捕捉视频图像，将视频流进行转换，编码，打包，发送，直到接收端进行解包，缓存，解码再到将视频图像渲染到画布上或者视频元素中</p>
+<img alt="../_images/video_pipeline.webp" src="../_images/video_pipeline.webp" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#show test video
+gst-launch-1.0 -vvv videotestsrc ! &#39;video/x-raw,width=1280,height=720,format=RGB,framerate=60/1&#39; ! fpsdisplaysink
+
+#play audio of mp4
+gst-launch-1.0 filesrc location=`pwd`/obama_talk.mp4 \
+! qtdemux name=demux  demux.audio_0 \
+! decodebin ! audioconvert ! audioresample ! autoaudiosink
+
+#play video of mp4
+gst-launch-1.0 filesrc location=`pwd`/obama_talk.mp4 \
+! qtdemux name=demux  demux.video_0 \
+! decodebin ! videoconvert ! videoscale ! autovideosink
+</pre></div>
+</div>
+<section id="video-pipeline-by-gstreamer">
+<h3><a class="toc-backref" href="#id5">Video pipeline by gstreamer</a><a class="headerlink" href="#video-pipeline-by-gstreamer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># linux send h264 rtp stream:
+gst-launch-1.0 -v ximagesrc \
+! video/x-raw,framerate=20/1 \
+! videoscale ! videoconvert \
+! x264enc tune=zerolatency bitrate=500 speed-preset=superfast \
+! rtph264pay \
+! udpsink host=127.0.0.1 port=5000
+
+# Macos send h264 rtp stream:
+gst-launch-1.0 -v avfvideosrc capture-screen=true \
+! video/x-raw,framerate=20/1 \
+! videoscale ! videoconvert \
+! x264enc tune=zerolatency bitrate=500 speed-preset=superfast \
+! rtph264pay \
+! udpsink host=127.0.0.1 port=5000
+
+# receive h264 rtp stream:
+gst-launch-1.0 -v udpsrc port=5000 caps = &quot;application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96&quot; \
+! rtph264depay \
+! decodebin \
+! videoconvert \
+! autovideosink
+</pre></div>
+</div>
+<p>大体步骤如下</p>
+<ol class="arabic simple">
+<li><p>capture 捕捉媒体流</p></li>
+</ol>
+<p>getUserMedia
+getDisplayMedia</p>
+<ol class="arabic simple" start="2">
+<li><p>convert 格式转换</p></li>
+</ol>
+<p>RGB –&gt; YUV</p>
+<ol class="arabic simple" start="3">
+<li><p>Encode 编码</p></li>
+</ol>
+<p>H.264 Encode</p>
+<ol class="arabic simple" start="4">
+<li><p>Packetize 打包</p></li>
+</ol>
+<p>H264 NAL pack into RTP packet</p>
+<ol class="arabic simple" start="5">
+<li><p>Transmit 传输</p></li>
+</ol>
+<p>Transmit RTP packets from sender to receiver</p>
+<ol class="arabic simple" start="6">
+<li><p>Depacketize 解包</p></li>
+</ol>
+<p>Depacketize RTP packets to H264 NAL</p>
+<ol class="arabic simple" start="7">
+<li><p>Jitter Buffer 缓存</p></li>
+</ol>
+<p>Cache H264 NAL if there is no frame can be decoded</p>
+<ol class="arabic simple" start="9">
+<li><p>Decode 解码</p></li>
+</ol>
+<p>Decode H264 NAL to VAL to image</p>
+<ol class="arabic simple" start="10">
+<li><p>Render 渲染或回放</p></li>
+</ol>
+<p>Render the image to Canvas, playback the images as video</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="video_quality.html" class="btn btn-neutral float-left" title="video quality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="video_process.html" class="btn btn-neutral float-right" title="Video Process" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

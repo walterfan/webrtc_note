@@ -7,7 +7,7 @@ WebRTC test
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC test 
+**Abstract** WebRTC test
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|
@@ -46,8 +46,7 @@ Chrome testing
   open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
 
 
-* enable logging::
-
+* enable logging
 
 .. code-block::
 

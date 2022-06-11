@@ -16,6 +16,7 @@
    webrtc_cc
    webrtc_fec
    webrtc_rtx
+   webrtc_red
    webrtc_temporal_scalability
 
    jitter_buffer
