@@ -23,8 +23,8 @@
    webrtc_multiplex
    webrtc_simulcast
 
-   webrtc_rtp
-   webrtc_rtcp
+   rtp
+   rtcp
    webrtc_data_channel
    
    rtp_header_extension

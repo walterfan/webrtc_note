@@ -71,9 +71,13 @@
 
 .. _WebRTC Priority API: https://www.w3.org/TR/webrtc-priority/
 
+
+
+.. _RFC3605: https://datatracker.ietf.org/doc/html/rfc3605
 .. _RFC5348: https://datatracker.ietf.org/doc/html/rfc5348
 .. _RFC5576: https://datatracker.ietf.org/doc/html/rfc5576
-
+.. _RFC6051: https://datatracker.ietf.org/doc/html/rfc6051
+.. _RFC5506: https://datatracker.ietf.org/doc/html/rfc5506
 .. _RFC5761: https://datatracker.ietf.org/doc/html/rfc5761
 
 .. _RFC6190: https://datatracker.ietf.org/doc/html/rfc6190

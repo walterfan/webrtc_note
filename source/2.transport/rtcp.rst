@@ -232,3 +232,11 @@ A participant sends a BYE packet to indicate that one or more sources are no lon
 
 * V, P, PT, L, SSRC/CSRC: As described for SR packets, with the packet type code 202 set.
 * SC:5 bits, The number of SSRC/CSRC identifiers contained in this BYE packet.
+
+
+
+Reference
+=================
+* `RFC4585`_: Extended RTP Profile for Real-time Transport Control Protocol (RTCP)-Based Feedback (RTP/AVPF)
+* `RFC3605`_: Real Time Control Protocol (RTCP) attribute in  Session Description Protocol (SDP)
+* `RFC5506`_: Support for Reduced-Size Real-Time Transport Control Protocol (RTCP): Opportunities and Consequences
