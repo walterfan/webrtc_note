@@ -28,6 +28,21 @@ QUIC includes security measures that ensure  confidentiality, integrity, and ava
 Accompanying documents describe the integration of TLS for key negotiation, loss detection, and an exemplary congestion control algorithm.
 
 
+Background
+----------------------------------------
+
+Just like with HTTP/2, an advancement which was spearheaded by Google’s SPDY or speedy, HTTP/3 will again build on these achievements.
+
+While HTTP/2 did give us multiplexing, and mitigate head-of-line-blocking, it is constrained by TCP. You can use a single TCP connection for multiple streams multiplexed together to transfer data, but when one of those streams suffers a packet loss, the whole connection (and all its streams) are held hostage, so to say, until TCP does its thing (retransmits the lost packet).
+
+This means that all the packets, even if they are already transmitted and waiting, in the buffer of the destination node, are being blocked until the lost packet is retransmitted. Daniel Stenberg in his book on http/3 calls this a “TCP-based head of line block.” He claims that, with 2% packet loss, users will do better with HTTP/1, with six connections to hedge this risk.
+
+QUIC is not constrained by this. With QUIC building on the on connectionless UDP protocol, the concept of connection does not carry the limitations of TCP and failures of one stream do not have to influence the rest.
+
+
+While QUIC does away with TCP reliability features, it makes up for it above the UDP layer, providing retransmitting of packets, ordering and so on. Google Cloud Platform introduced QUIC support for their load balancers in 2018 and saw an improvement in mean page load time by 8% globally, and up to 13% in regions where latency is higher.
+
+
 协议文档结构
 =======================================
 

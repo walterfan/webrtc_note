@@ -92,3 +92,19 @@ datachannel
     a=ice-pwd:ngG0BJGSJgQpbglkHxo8tx
     a=fingerprint:sha-256 F3:D3:48:D2:BC:97:83:A9:88:34:30:B9:9A:2F:1A:C4:F5:DF:B4:C1:8D:89:CE:63:E9:37:1F:B7:57:54:48:8E
     a=setup:active
+
+
+
+RTP packet 处理
+========================
+
+* https://github.com/aiortc/aiortc/blob/main/src/aiortc/rtp.py
+
+对于 RTP 的打包和解包应用了 `Python Structure module`_`
+
+
+
+'>BBHL{payload}s'
+
+
+.. _Python Structure module: https://docs.python.org/3/library/struct.html

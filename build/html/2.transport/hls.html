@@ -48,7 +48,13 @@
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">HTTP Live Streaming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">简介</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#video-streaming">video streaming 协议回顾</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hls">HLS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#protocols-enhancement">Protocols Enhancement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation">Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
@@ -58,11 +64,8 @@
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp.html">WebRTC RTP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rtcp_sr.html">RTCP Sender Report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rtcp_rr.html">RTCP Receiver Report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rtcp_xr.html">RTCP XR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_rtcp.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp_keepalive.html">RTP Keepalive</a></li>
@@ -118,34 +121,72 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-06-11</p></td>
+<td><p>2022-07-02</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id3" id="id4">简介</a></p></li>
-<li><p><a class="reference internal" href="#performance" id="id5">Performance</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id6">Reference</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id4">简介</a></p>
+<ul>
+<li><p><a class="reference internal" href="#video-streaming" id="id5">video streaming 协议回顾</a></p></li>
+<li><p><a class="reference internal" href="#hls" id="id6">HLS</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#protocols-enhancement" id="id7">Protocols Enhancement</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id8">Implementation</a></p></li>
+<li><p><a class="reference internal" href="#performance" id="id9">Performance</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id10">Reference</a></p></li>
 </ul>
 </div>
 <section id="id3">
 <h2><a class="toc-backref" href="#id4">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="video-streaming">
+<h3><a class="toc-backref" href="#id5">video streaming 协议回顾</a><a class="headerlink" href="#video-streaming" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>RTMP: Adobe 公司为 Flash 播放器和服务器之间音频、视频和数据传输开发的协议。</p></li>
+<li><p>HTTP-FLV: Adobe 公司推出，将音视频数据封装成 flv, 然后通过 http 协议传送给客户端。</p></li>
+<li><p>HLS (全称：Http Live Streaming):
+采集推流端将视频流推到流媒体服务器时，服务器将收到的流信息每缓存一段时间就生成一个新的 ts 文件，同时建立一个m3u8的文件来维护几个最新的 ts 文件索引，
+会时时更新 m3u8 索引文件内容，所以当播放端获取直播时，从 m3u8 索引文件里面获取的播放 ts 视频文件片段都是最新的，保证用户在任何时间进直播都能看到较新内容，近似直播体验。</p></li>
+<li><p>DASH: 也叫 MEPG-DASH，是可以发送动态码率的直播技术，借助 MPD 将视频分割成多个切片，每个切片都有不同的码率;
+DASH 客户端会根据自己网络情况选择一个码率进行播放，是类似 HLS 的一种技术。</p></li>
+<li><p>FMP4: mp4 本身数据结构是 box 嵌套 box，所以不能只下载某个小段视频播放，因为 meta 信息不完善，依赖于外层 box 的 meta 信息，
+所以普通的 mp4 视频只能把整个索引文件下载下来然后用户才能播放，短视频还好，遇到长一些的视频，比如电视剧和电影等，索引文件特别大，导致首帧视频时常很长，给用户卡顿的感受，
+所以出了 fmp4 这种格式，然后每个小段视频格式都是独立的一个数据包，符合流的数据格式规定, 不用下载整个索引文件，只需要下载视频片段的相应小索引文件就能播放，减少了用户的等待时间</p></li>
+</ul>
+</section>
+<section id="hls">
+<h3><a class="toc-backref" href="#id6">HLS</a><a class="headerlink" href="#hls" title="Permalink to this headline">¶</a></h3>
 <p>HTTP Live Streaming (also known as HLS) is an HTTP-based adaptive bitrate streaming communications protocol developed by Apple Inc. and released in 2009. Support for the protocol is widespread in media players, web browsers, mobile devices, and streaming media servers. As of 2019, an annual video industry survey has consistently found it to be the most popular streaming format.[2]</p>
 <p>HLS resembles MPEG-DASH in that it works by breaking the overall stream into a sequence of small HTTP-based file downloads, each downloading one short chunk of an overall potentially unbounded transport stream. A list of available streams, encoded at different bit rates, is sent to the client using an extended M3U playlist.</p>
 <p>Based on standard HTTP transactions, HTTP Live Streaming can traverse any firewall or proxy server that lets through standard HTTP traffic, unlike UDP-based protocols such as RTP. This also allows content to be offered from conventional HTTP servers and delivered over widely available HTTP-based content delivery networks. The standard also includes a standard encryption mechanism[5] and secure-key distribution using HTTPS, which together provide a simple DRM system. Later versions of the protocol also provide for trick-mode fast-forward and rewind and for integration of subtitle</p>
 </section>
+</section>
+<section id="protocols-enhancement">
+<h2><a class="toc-backref" href="#id7">Protocols Enhancement</a><a class="headerlink" href="#protocols-enhancement" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>LL-HLS: Low-Latency HTTP Live Streaming</p></li>
+<li><p>LL-DASH</p></li>
+<li><p>LAS: HTTP FLV</p></li>
+</ul>
+</section>
+<section id="implementation">
+<h2><a class="toc-backref" href="#id8">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>Nginx RTMP module</p>
+</section>
 <section id="performance">
-<h2><a class="toc-backref" href="#id5">Performance</a><a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Performance</a><a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
 <p>HLS may have 10s above delay, need low latency HLS</p>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id6">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/HTTP_Live_Streaming">https://en.wikipedia.org/wiki/HTTP_Live_Streaming</a></p></li>
 <li><p><a class="reference external" href="https://www.dacast.com/blog/hls-streaming-protocol/">https://www.dacast.com/blog/hls-streaming-protocol/</a></p></li>
 <li><p><a class="reference external" href="https://developer.apple.com/documentation/http_live_streaming/preparing_audio_for_http_live_streaming">https://developer.apple.com/documentation/http_live_streaming/preparing_audio_for_http_live_streaming</a></p></li>
 <li><p>HTTP Live Streaming: <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8216">https://datatracker.ietf.org/doc/html/rfc8216</a></p></li>
+<li><p><a class="reference external" href="https://segmentfault.com/a/1190000021788479">https://segmentfault.com/a/1190000021788479</a></p></li>
 </ul>
 </section>
 </section>
