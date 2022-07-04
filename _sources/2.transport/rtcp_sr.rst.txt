@@ -22,10 +22,55 @@ RTCP Sender Report
 Overview
 ==========================
 
-Sender Report RTCP Packets (SR)
-  A Sender Report message consists of the header, the sender information block, a variable number of receiver report blocks, and potentially a profile-specific extensions.
+RTCP 最初由 RFC3550 定义，随后在 `RFC4585`_ "Extended RTP Profile for Real-time Transport Control Protocol (RTCP)-Based Feedback (RTP/AVPF)" 中对组合 RTCP 做出了一些规范。
+`RFC5506`_ "Support for Reduced-Size Real-Time Transport Control Protocol (RTCP): Opportunities and Consequences" 规定了
 
-The header:
+术语
+================================
+
+RTCP packet
+--------------------------------
+
+Can be of different types, contains a fixed header part followed by structured elements depending on RTCP packet type.
+
+Lower layer datagram:
+--------------------------------
+
+Can be interpreted as the UDP payload.  It may however, depending on the transport, be a TCP or Datagram Congestion Control Protocol (DCCP) payload or something else.
+
+Synonymous to the "underlying protocol" defined in Section 3 in [RFC3550].
+
+
+Compound RTCP packet
+---------------------------------
+A collection of two or more RTCP packets.
+
+A compound RTCP packet is transmitted in a lower-layer datagram.  It  must contain at least an RTCP RR or SR packet and an SDES packet with the CNAME item.
+
+Often "compound" is left out, the interpretation of RTCP packet is therefore dependent on the context.
+
+
+Minimal compound RTCP packet
+---------------------------------
+
+A compound RTCP packet that contains the RTCP RR or SR packet and the SDES packet with the CNAME item  with a specified ordering.
+
+(Full) compound RTCP packet
+---------------------------------
+A compound RTCP packet that conforms to the requirements on minimal compound RTCP packets and contains more RTCP packets.
+
+
+Reduced-Size RTCP packet
+---------------------------------
+May contain one or more RTCP packets but does not follow the compound RTCP rules defined in Section 6.1 in  `RFC3550`_ and is thus neither a minimal nor a full compound RTCP.  See Section 4.1 for a full definition of `RFC5506`_
+
+
+Sender Report RTCP Packets (SR)
+=============================================
+A Sender Report message consists of the header, the sender information block, a variable number of receiver report blocks, and potentially a profile-specific extensions.
+
+The header
+-------------------------------------------
 
 .. code-block::
 
@@ -43,8 +88,10 @@ The header:
 * PT: 8 bits, The packet type constant 200 designates an RTCP SR packet.
 * L: 16 bits, The length of this RTCP packet in 32-bit words minus one, including the header and any padding.
 * SSRC: 32 bits, The synchronisation source identifier for the sender of this SR packet.
-* The sender information block:
 
+
+The sender information block
+-------------------------------------------
 .. code-block::
 
     0               1               2               3
@@ -66,8 +113,8 @@ The header:
 * SPC: 32 bits, The sender's packet count totals up the number of RTP data packets transmitted by the sender since joining the RTP session. This field can be used to estimate the average data packet rate.
 * SOC: 32 bits, The total number of payload octets (i.e., not including the header or any padding) transmitted in RTP data packets by the sender since starting up transmission. This field can be used to estimate the average payload data rate.
 
-The receiver report blocks:
-
+The receiver report blocks
+-------------------------------------------
 .. code-block::
 
     0               1               2               3
@@ -95,8 +142,8 @@ The receiver report blocks:
 * EHSN: 32 bits, The low 16 bits of the extended highest sequence number contain the highest sequence number received in an RTP data packet from source SSRC_n, and the most significant 16 bits extend that sequence number with the corresponding count of sequence number cycles.
 * J: 32 bits, An estimate of the statistical variance of the RTP data packet inter-arrival time, measured in timestamp units and expressed as an unsigned integer.
 
-* The extensions:
-
+The extensions
+-------------------------------------------
 .. code-block::
 
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+

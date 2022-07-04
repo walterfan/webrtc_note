@@ -20,6 +20,7 @@
    webrtc_pacer
 
    webrtc_sctp
+   webrtc_rtp_rtcp_module
 
    overuse_frame_decoder
    remote_bitrate_estimator

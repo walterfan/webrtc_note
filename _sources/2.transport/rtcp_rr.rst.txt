@@ -53,3 +53,35 @@ Receiver Reports are structured in the same way as Sender Reports. Of course, th
    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
    |                  profile-specific extensions                  |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+
+
+code snippets
+=========================
+
+.. code-block:: python
+
+   class RtcpReportBlock:
+      """RTCP Report Block """
+
+      def __init__(self):
+         self.base_format = '>HBHLLLL'
+         self.ssrc = 0 # 32 bits
+         self.fraction_lost = 0 # 8 bits
+         self.packets_lost = 0 # 24 bits
+         self.highest_sequence = 0 # 32 bits
+         self.jitter = 0 # 32 bits
+         self.lsr = 0 # 32 bits
+         self.dlsr = 0 # 32 bits
+
+   class RtcpPacket:
+
+      def __init__(self):
+        self.base_format = '>BBHL{payload}s'
+        self.vpc = self.VER  # version(2 bits),  padding(1 bit), count(5 bits)
+        self.type = 0
+        self.len = 1
+        self.ssrc = 0
+        self.payload = ""
+

@@ -27,9 +27,18 @@ Overview
 
 在 WebRTC library 中一般分为
 
-1. 网络线程：在这个线程中处理连接和收发数据的事件，通常会使用 reactor 或 proactor 模式
-2. 工作线程：在这个线程中通常会处理业务网络
+1. 网络线程：在这个线程中处理网络有关的操作，例如处理连接和收发数据的事件，通常会使用 reactor 或 proactor 模式
+2. 工作线程：在这个线程中通常会处理与网络无关的业务处理，即使耗时也不会影响网络传输
+3. 信令线程：peerconnection 对外的 API 接口调用和回调都工作在信令线程
 
+线程模式
+======================
+
+.. code-block::
+
+    std::unique_ptr<TaskQueueFactory> CreateDefaultTaskQueueFactory() {
+      return CreateTaskQueueStdlibFactory();
+    }
 
 main classes
 ======================

@@ -51,9 +51,10 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Thread Model</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">线程模式</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#main-classes">main classes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#thread">Thread</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">事件分派</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">事件分派</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#faq">FAQ</a><ul>
@@ -120,24 +121,25 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-06-11</p></td>
+<td><p>2022-07-02</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p></li>
-<li><p><a class="reference internal" href="#main-classes" id="id5">main classes</a></p>
+<li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id6">线程模式</a></p></li>
+<li><p><a class="reference internal" href="#main-classes" id="id7">main classes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#thread" id="id6">Thread</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id7">事件分派</a></p></li>
+<li><p><a class="reference internal" href="#thread" id="id8">Thread</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">事件分派</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#faq" id="id8">FAQ</a></p>
+<li><p><a class="reference internal" href="#faq" id="id10">FAQ</a></p>
 <ul>
-<li><p><a class="reference internal" href="#how-to-wait-an-event-and-wakeup-by-an-event" id="id9">How to wait an event and wakeup by an event?</a></p>
+<li><p><a class="reference internal" href="#how-to-wait-an-event-and-wakeup-by-an-event" id="id11">How to wait an event and wakeup by an event?</a></p>
 <ul>
-<li><p><a class="reference internal" href="#windows-platform" id="id10">windows platform</a></p></li>
+<li><p><a class="reference internal" href="#windows-platform" id="id12">windows platform</a></p></li>
 </ul>
 </li>
 </ul>
@@ -145,19 +147,28 @@
 </ul>
 </div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>一个线程通常会有一个对应的任务队列，在线程的运行方法中会执行一个循环，不断地检查这个任务队列中是否有任务</p>
 <p>如果有任务的话，从队头取出任务执行，如果没有的话，阻塞等待有新的任务追加到这个任务队列尾部。</p>
 <p>在 WebRTC library 中一般分为</p>
 <ol class="arabic simple">
-<li><p>网络线程：在这个线程中处理连接和收发数据的事件，通常会使用 reactor 或 proactor 模式</p></li>
-<li><p>工作线程：在这个线程中通常会处理业务网络</p></li>
+<li><p>网络线程：在这个线程中处理网络有关的操作，例如处理连接和收发数据的事件，通常会使用 reactor 或 proactor 模式</p></li>
+<li><p>工作线程：在这个线程中通常会处理与网络无关的业务处理，即使耗时也不会影响网络传输</p></li>
+<li><p>信令线程：peerconnection 对外的 API 接口调用和回调都工作在信令线程</p></li>
 </ol>
 </section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id6">线程模式</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">TaskQueueFactory</span><span class="o">&gt;</span> <span class="n">CreateDefaultTaskQueueFactory</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">CreateTaskQueueStdlibFactory</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 <section id="main-classes">
-<h2><a class="toc-backref" href="#id5">main classes</a><a class="headerlink" href="#main-classes" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">main classes</a><a class="headerlink" href="#main-classes" title="Permalink to this headline">¶</a></h2>
 <section id="thread">
-<h3><a class="toc-backref" href="#id6">Thread</a><a class="headerlink" href="#thread" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">Thread</a><a class="headerlink" href="#thread" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Get() will process I/O until:
 1) A message is available (returns true)
@@ -171,8 +182,8 @@ By default, Thread::Run() calls ProcessMessages(kForever).  To do other work, ov
 To receive and dispatch messages, call rocessMessages occasionally.</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3><a class="toc-backref" href="#id7">事件分派</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<section id="id4">
+<h3><a class="toc-backref" href="#id9">事件分派</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Dispatcher</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="k">public</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Dispatcher</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
@@ -192,11 +203,11 @@ To receive and dispatch messages, call rocessMessages occasionally.</p></li>
 </section>
 </section>
 <section id="faq">
-<h2><a class="toc-backref" href="#id8">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
 <section id="how-to-wait-an-event-and-wakeup-by-an-event">
-<h3><a class="toc-backref" href="#id9">How to wait an event and wakeup by an event?</a><a class="headerlink" href="#how-to-wait-an-event-and-wakeup-by-an-event" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">How to wait an event and wakeup by an event?</a><a class="headerlink" href="#how-to-wait-an-event-and-wakeup-by-an-event" title="Permalink to this headline">¶</a></h3>
 <section id="windows-platform">
-<h4><a class="toc-backref" href="#id10">windows platform</a><a class="headerlink" href="#windows-platform" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id12">windows platform</a><a class="headerlink" href="#windows-platform" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>main classes
 - WSAEVENT

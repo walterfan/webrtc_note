@@ -9,8 +9,6 @@
 
    overview
 
-   learning_path
-
    web_browser
 
    webrtc_spec
@@ -37,7 +35,7 @@
 
    webrtc_stats
 
- 
+
    video_chat
 
 

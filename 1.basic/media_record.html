@@ -40,9 +40,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">1. WebRTC 基础</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 概论</a></li>
-<li class="toctree-l2"><a class="reference internal" href="learning_path.html">WebRTC Learning Path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_browser.html">Web Browser for RTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_spec.html">WebRTC 标准，协议和规范</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_api.html">WebRTC API</a></li>
@@ -53,6 +53,14 @@
 <li class="toctree-l2"><a class="reference internal" href="screen_capture.html">WebRTC API 之 Screen Capture</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC API 之 Media Record</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html">第一步：创建一个供演示的 HTML  文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#click">第二步：处理这四个按键的的 click 事件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#open-media">1. 打开媒体 “open media” 按键的处理 - 获取本地媒体流</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-record">2. 开始录制 “start record” 的处理 - 录制本地媒体流</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plan-record">3. 播放 “Plan Record” 的处理 - 播放本地存储的媒体文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#download-record">4. 下载 “Download Record ” 的处理 -  下载本地存储的媒体文件</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">参考资料</a></li>
 </ul>
 </li>
@@ -114,21 +122,196 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-06-11</p></td>
+<td><p>2022-07-02</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id5">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#html" id="id5">第一步：创建一个供演示的 HTML  文件</a></p></li>
+<li><p><a class="reference internal" href="#click" id="id6">第二步：处理这四个按键的的 click 事件</a></p>
+<ul>
+<li><p><a class="reference internal" href="#open-media" id="id7">1. 打开媒体 “open media” 按键的处理 - 获取本地媒体流</a></p></li>
+<li><p><a class="reference internal" href="#start-record" id="id8">2. 开始录制 “start record” 的处理 - 录制本地媒体流</a></p></li>
+<li><p><a class="reference internal" href="#plan-record" id="id9">3. 播放 “Plan Record” 的处理 - 播放本地存储的媒体文件</a></p></li>
+<li><p><a class="reference internal" href="#download-record" id="id10">4. 下载 “Download Record ” 的处理 -  下载本地存储的媒体文件</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id11">参考资料</a></p></li>
 </ul>
 </div>
 <section id="overview">
 <h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>既然现在的笔记本电脑，平板，手机都有摄像头和麦克风，那么录音和录像就是一件非常容易的事情了，但是如果不用别人写好的录音录像程序，让你自己来实现一个录音和录像应用，其实也没那么简单。</p>
+<p>但是有了 WebRTC 和支持它的浏览器， 事情就变得简单多了</p>
+<p>现代浏览器不仅支持 audio 和 video 两个新的元素，还支持了MediaStream 和 MediaRecorder 这样的媒体 API</p>
+</section>
+<section id="html">
+<h2><a class="toc-backref" href="#id5">第一步：创建一个供演示的 HTML  文件</a><a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>源码在此 <a class="reference external" href="https://github.com/walterfan/webrtc_primer/blob/main/examples/record_demo.html">record_demo.html</a></p></li>
+</ul>
+<p>这个 html 文件很简单，就是如下四个按钮</p>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-8cda83479a5b1c27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-8cda83479a5b1c27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<p>再加上一个 HTML5 支持的 video 元素</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">video</span> <span class="n">autoplay</span><span class="o">&gt;&lt;/</span><span class="n">video</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="click">
+<h2><a class="toc-backref" href="#id6">第二步：处理这四个按键的的 click 事件</a><a class="headerlink" href="#click" title="Permalink to this headline">¶</a></h2>
+<p>源码见 <a class="reference external" href="https://github.com/walterfan/webrtc_primer/blob/main/examples/js/record_demo.js">record_demo.js</a></p>
+<section id="open-media">
+<h3><a class="toc-backref" href="#id7">1. 打开媒体 “open media” 按键的处理 - 获取本地媒体流</a><a class="headerlink" href="#open-media" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">localStream</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">mediaRecorder</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">recordChunks</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="n">var</span> <span class="n">recordElement</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">querySelector</span><span class="p">(</span><span class="s1">&#39;video&#39;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">recordMediaType</span> <span class="o">=</span> <span class="s1">&#39;video/webm&#39;</span><span class="p">;</span>
+
+<span class="n">var</span> <span class="n">mediaConstraints</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">audio</span><span class="p">:</span>  <span class="p">{</span>
+        <span class="n">echoCancellation</span><span class="p">:</span> <span class="p">{</span><span class="n">exact</span><span class="p">:</span> <span class="n">true</span><span class="p">}</span>
+      <span class="p">},</span>
+    <span class="n">video</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">width</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">:</span> <span class="mi">480</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">async</span> <span class="n">function</span> <span class="n">openMedia</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mediaButton</span><span class="o">.</span><span class="n">textContent</span> <span class="o">===</span> <span class="s1">&#39;Close Media&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">closeMedia</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="n">const</span> <span class="n">stream</span> <span class="o">=</span> <span class="k">await</span> <span class="n">navigator</span><span class="o">.</span><span class="n">mediaDevices</span><span class="o">.</span><span class="n">getUserMedia</span><span class="p">(</span><span class="n">mediaConstraints</span><span class="p">);</span>
+        <span class="n">handleSuccess</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+        <span class="n">mediaButton</span><span class="o">.</span><span class="n">textContent</span> <span class="o">=</span> <span class="s1">&#39;Close Media&#39;</span><span class="p">;</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;openMedia success &#39;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">handleError</span><span class="p">(</span><span class="n">ex</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">function</span> <span class="n">handleSuccess</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">localStream</span> <span class="o">=</span> <span class="n">stream</span><span class="p">;</span>
+    <span class="n">recordElement</span><span class="o">.</span><span class="n">srcObject</span> <span class="o">=</span> <span class="n">stream</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>上述代码获取本地用户的 audio 和 video 媒体流，async 和 await 关键字是ES7 提供的异步支持，await 就是先返回，等异步操作完成再回来执行下一步语句， async 代表函数是异步的。
+当媒体流获取后，就赋予本地的</p>
+</section>
+<section id="start-record">
+<h3><a class="toc-backref" href="#id8">2. 开始录制 “start record” 的处理 - 录制本地媒体流</a><a class="headerlink" href="#start-record" title="Permalink to this headline">¶</a></h3>
+<p>MediaRecorder API 就是录制媒体流的核心</p>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-17c1cf6ef5e39e66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="image.png" src="https://upload-images.jianshu.io/upload_images/1598924-17c1cf6ef5e39e66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>function startRecord() {
+    if(!localStream) {
+        console.error(&quot;stream is not created.&quot;);
+        return;
+    }
+
+    if (recordButton.textContent === &#39;Stop Record&#39;) {
+        stopRecord();
+        return;
+    }
+
+    var options = {mimeType: recordMediaType};
+    mediaRecorder = new MediaRecorder(localStream, options);
+    mediaRecorder.start();
+
+    recordButton.textContent = &#39;Stop Record&#39;;
+    playButton.disabled = true;
+    downButton.disabled = true;
+
+    console.log(&quot;recorder started&quot;);
+
+    mediaRecorder.ondataavailable = function(e) {
+        console.log(&quot;data available&quot;, e.data);
+        recordChunks.push(e.data);
+    }
+
+    mediaRecorder.onstop = function(e) {
+        console.log(&#39;onstop fired&#39;);
+        var blob = new Blob(recordChunks, { &#39;type&#39; : recordMediaType });
+        var blobURL = URL.createObjectURL(blob);
+        const a = document.createElement(&#39;a&#39;);
+        a.style.display = &#39;none&#39;;
+        a.href = blobURL;
+        a.download = &#39;test.webm&#39;;
+        document.body.appendChild(a);
+    };
+}
+</pre></div>
+</div>
+<p>上述代码很简单，关键的地方就是创建 MediaRecorder 对象，传入媒体流，然后开始录制</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="n">mimeType</span><span class="p">:</span> <span class="n">recordMediaType</span><span class="p">};</span>
+<span class="n">mediaRecorder</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MediaRecorder</span><span class="p">(</span><span class="n">localStream</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
+<span class="n">mediaRecorder</span><span class="o">.</span><span class="n">start</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>为了能播放和下载所录制的媒体文件，需要将录制的内容存贮下来
+<code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">recordChunks</span> <span class="pre">=</span> <span class="pre">[];</span></code>是一个字节数组， 在录制停止时一起存入本地的 blob 对象中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mediaRecorder</span><span class="o">.</span><span class="n">ondataavailable</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;data available&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">recordChunks</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">mediaRecorder</span><span class="o">.</span><span class="n">onstop</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;onstop fired&#39;</span><span class="p">);</span>
+    <span class="n">var</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Blob</span><span class="p">(</span><span class="n">recordChunks</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;type&#39;</span> <span class="p">:</span> <span class="n">recordMediaType</span> <span class="p">});</span>
+    <span class="n">var</span> <span class="n">blobURL</span> <span class="o">=</span> <span class="n">URL</span><span class="o">.</span><span class="n">createObjectURL</span><span class="p">(</span><span class="n">blob</span><span class="p">);</span>
+    <span class="n">const</span> <span class="n">a</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">display</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">href</span> <span class="o">=</span> <span class="n">blobURL</span><span class="p">;</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="s1">&#39;test.webm&#39;</span><span class="p">;</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="plan-record">
+<h3><a class="toc-backref" href="#id9">3. 播放 “Plan Record” 的处理 - 播放本地存储的媒体文件</a><a class="headerlink" href="#plan-record" title="Permalink to this headline">¶</a></h3>
+<p>它由录制时保存下来的 blob 数组创建出来</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">playRecord</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">const</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Blob</span><span class="p">(</span><span class="n">recordChunks</span><span class="p">,</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="n">recordMediaType</span><span class="p">});</span>
+    <span class="n">recordElement</span><span class="o">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+    <span class="n">recordElement</span><span class="o">.</span><span class="n">srcObject</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+    <span class="n">recordElement</span><span class="o">.</span><span class="n">src</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">createObjectURL</span><span class="p">(</span><span class="n">blob</span><span class="p">);</span>
+    <span class="n">recordElement</span><span class="o">.</span><span class="n">controls</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+    <span class="n">recordElement</span><span class="o">.</span><span class="n">play</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="download-record">
+<h3><a class="toc-backref" href="#id10">4. 下载 “Download Record ” 的处理 -  下载本地存储的媒体文件</a><a class="headerlink" href="#download-record" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">downRecord</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">const</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Blob</span><span class="p">(</span><span class="n">recordChunks</span><span class="p">,</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="n">recordMediaType</span><span class="p">});</span>
+    <span class="n">const</span> <span class="n">url</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">createObjectURL</span><span class="p">(</span><span class="n">blob</span><span class="p">);</span>
+    <span class="n">const</span> <span class="n">a</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">display</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">href</span> <span class="o">=</span> <span class="n">url</span><span class="p">;</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="s1">&#39;test.webm&#39;</span><span class="p">;</span>
+    <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">click</span><span class="p">();</span>
+    <span class="n">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+      <span class="n">window</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">revokeObjectURL</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>可点击https://www.fanyamin.com/webrtc/examples/record_demo.html 看最终的效果：</p>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-fb4ccdf3c4b167fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-fb4ccdf3c4b167fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+</section>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5">参考资料</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">参考资料</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API">MDN WebRTC API</a></p></li>
 <li><p><a class="reference external" href="https://www.w3.org/TR/mediacapture-streams">W3C Media Capture and Streams Spec</a></p></li>
