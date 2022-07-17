@@ -7,7 +7,7 @@ WebRTC Learning Path
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC 概论
+**Abstract** WebRTC Learn Path
 **Authors**  Walter Fan
 **Status**   WIP as draft
 **Updated**  |date|
@@ -16,7 +16,7 @@ WebRTC Learning Path
 .. contents::
    :local:
 
-Learn WebRTC in on month
+Learn WebRTC in one month
 =======================================
 Looks like an Impossible Mission, but we can do that on elementary level.
 
@@ -28,23 +28,20 @@ Looks like an Impossible Mission, but we can do that on elementary level.
 Week 1
 =======================================
 
-#. Learn WebRTC basic concepts, API and specs
-#. Learn WebRTC basic flow and Write an example of P2P call
+#. Learn WebRTC basic concepts and specs
 #. Learn Media Capture and Screen Sharing
-#. Media Recorder
+#. Media Recording and transimission
 #. Audio API and worklet
 #. Video API and Canvas
-#. Offer/Answer and SDP
-
-
-
+#. WebRTC Session Establishment
+#. Write an example of P2P call
 
 Week 2
 =======================================
 
-#. RTP
-#. RTCP
-#. RTP header extension
+#. RTP and Extension
+#. RTCP and Extension
+#. SDP and Offer/Answer model
 #. Do testing and capture/analyze packets by tcpdump/wireshark
 #. Learn DTLS and SRTP
 #. SCTP and Data channel

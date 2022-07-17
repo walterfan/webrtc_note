@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC RTCP Usage &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RTCP Sender Report" href="rtcp_sr.html" />
+    <link rel="prev" title="WebRTC RTP Usage" href="rtp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">2. WebRTC 传输</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 传输概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websocket.html">WebSocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC RTCP Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_sr.html">RTCP Sender Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_rr.html">RTCP Receiver Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_xr.html">RTCP XR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rtcp-compound-packet">RTCP compound packet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rtcp-transmission-interval">RTCP Transmission Interval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sender-report">200 Sender Report</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#receiver-report">201 Receiver Report</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#source-description-rtcp-packets-sdes">202 Source Description RTCP Packets (SDES)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#goodbye-rtcp-packets-bye">203 Goodbye RTCP Packets (BYE)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp_keepalive.html">RTP Keepalive</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
+      <li>WebRTC RTCP Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/2.transport/rtcp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-rtcp-usage">
+<h1>WebRTC RTCP Usage<a class="headerlink" href="#webrtc-rtcp-usage" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rtcp_sr.html">RTCP Sender Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rtcp_rr.html">RTCP Receiver Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rtcp_xr.html">RTCP XR</a></li>
+</ul>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC RTCP Usage</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-07-17</p></td>
+</tr>
+</tbody>
+</table>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>RTCP 即 RTP Control Protocol , 也就是是 RTP 控制协议，在会话中给所有与会者定期传送控制数据包，其分发的机制和媒体数据包一致，传统上与 RTP 包通过不同的端口传输，
+在 WebRTC 中的通常做法是 RTP 与 RTCP 复用相同的端口。</p>
+<p>RTCP 主要实现四大功能</p>
+<ol class="arabic simple">
+<li><p>提供数据传输质量的反馈</p></li>
+<li><p>为 RTP 源携带一个持久的传输层标识， 称为 CNAME (Canonical name)</p></li>
+<li><p>控制和调整 RTCP 的传输间隔</p></li>
+<li><p>传达会话控制信息</p></li>
+</ol>
+<dl class="simple">
+<dt>RTCP 在多媒体终端的源端与目的端之间交换指定的消息，主要有以下几种</dt><dd><ul class="simple">
+<li><p>RR: Receiver Report 接收者报告</p></li>
+<li><p>SR: Sender Report 发送者报告</p></li>
+<li><p>SDES: Source Description 源端信息描述，包含 CNAME</p></li>
+<li><p>BYE: 表示离开会话</p></li>
+<li><p>APP: 应用程序指定的功能</p></li>
+</ul>
+</dd>
+</dl>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-text">RTCP Packet</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>缩写</p></th>
+<th class="head"><p>名称“， ”参考文档</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>200</p></td>
+<td><p>SR</p></td>
+<td><p>Sender Report</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3550">RFC3550</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>201</p></td>
+<td><p>RR</p></td>
+<td><p>Receiver Report</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3550">RFC3550</a></p></td>
+</tr>
+<tr class="row-even"><td><p>202</p></td>
+<td><p>SDES</p></td>
+<td><p>Source Description</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3550">RFC3550</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>203</p></td>
+<td><p>BYE</p></td>
+<td><p>Goodbye</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3550">RFC3550</a></p></td>
+</tr>
+<tr class="row-even"><td><p>204</p></td>
+<td><p>APP</p></td>
+<td><p>Application defined</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3550">RFC3550</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>205</p></td>
+<td><p>RTPFB</p></td>
+<td><p>Generic RTP feedback</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4585">RFC4585</a></p></td>
+</tr>
+<tr class="row-even"><td><p>206</p></td>
+<td><p>PSFB</p></td>
+<td><p>Payload specfic feedback</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4585">RFC4585</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>207</p></td>
+<td><p>XR</p></td>
+<td><p>Extended Report</p></td>
+<td><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3611">RFC3611</a></p></td>
+</tr>
+</tbody>
+</table>
+<section id="rtcp-compound-packet">
+<h3>RTCP compound packet<a class="headerlink" href="#rtcp-compound-packet" title="Permalink to this headline">¶</a></h3>
+<p>An individual RTP participant SHOULD send only one compound RTCP  packet per report interval in order for the RTCP bandwidth per participant to be estimated correctly.</p>
+<p>If there are too many sources to fit all the necessary RR packets into one compound RTCP packet without exceeding the maximum transmission unit (MTU) of the network path, then only the subset that will fit into one MTU SHOULD be included in each interval.</p>
+<p>The subsets SHOULD be selected round-robin across multiple intervals so that all sources are reported.</p>
+<p>It is RECOMMENDED that translators and mixers combine individual RTCP packets from the multiple sources they are forwarding into one compound packet whenever feasible in order to amortize the packet overhead</p>
+<p>An example RTCP compound packet as might be produced by a mixer is shown in Fig. 1.</p>
+<p>If the overall length of a compound packet would exceed the MTU of the network path, it SHOULD be segmented into multiple shorter compound packets to be transmitted in separate packets of the underlying protocol.</p>
+<p>This does not impair the RTCP bandwidth estimation because each compound packet represents at least one distinct participant.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">encrypted</span><span class="p">:</span> <span class="n">random</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">integer</span>
+<span class="o">|</span>
+<span class="o">|</span><span class="p">[</span><span class="o">---------</span> <span class="n">packet</span> <span class="o">--------</span><span class="p">][</span><span class="o">----------</span> <span class="n">packet</span> <span class="o">----------</span><span class="p">][</span><span class="o">-</span><span class="n">packet</span><span class="o">-</span><span class="p">]</span>
+<span class="o">|</span>
+<span class="o">|</span>                <span class="n">receiver</span>            <span class="n">chunk</span>        <span class="n">chunk</span>
+<span class="n">V</span>                <span class="n">reports</span>           <span class="n">item</span>  <span class="n">item</span>   <span class="n">item</span>  <span class="n">item</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">R</span><span class="p">[</span><span class="n">SR</span> <span class="c1">#sendinfo #site1#site2][SDES #CNAME PHONE #CNAME LOC][BYE##why]</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="o">|</span>                                                                  <span class="o">|</span>
+<span class="o">|&lt;-----------------------</span>  <span class="n">compound</span> <span class="n">packet</span> <span class="o">-----------------------&gt;|</span>
+<span class="o">|&lt;--------------------------</span>  <span class="n">UDP</span> <span class="n">packet</span> <span class="o">-------------------------&gt;|</span>
+
+<span class="c1">#: SSRC/CSRC identifier</span>
+
+           <span class="n">Figure</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Example</span> <span class="n">of</span> <span class="n">an</span> <span class="n">RTCP</span> <span class="n">compound</span> <span class="n">packet</span>
+</pre></div>
+</div>
+</section>
+<section id="rtcp-transmission-interval">
+<h3>RTCP Transmission Interval<a class="headerlink" href="#rtcp-transmission-interval" title="Permalink to this headline">¶</a></h3>
+<p>For audio we use a configurable interval (default: 5 seconds)</p>
+<p>For video we use a configurable interval (default: 1 second) for a BW smaller than 360 kbit/s,
+technicaly we break the max 5% RTCP BW for video below 10 kbit/s but that should be extremely rare</p>
+<p>From RFC 3550</p>
+<p>MAX RTCP BW is 5% if the session BW</p>
+<blockquote>
+<div><p>A send report is approximately 65 bytes inc CNAME
+A receiver report is approximately 28 bytes</p>
+</div></blockquote>
+<p>The RECOMMENDED value for the reduced minimum in seconds is 360 divided by the session bandwidth in kilobits/second.</p>
+<p>This minimum is smaller than 5 seconds for bandwidths greater than 72 kb/s.</p>
+<p>If the participant has not yet sent an RTCP packet (the variable initial is true),
+the constant Tmin is set to half of the configured interval.</p>
+<p>The interval between RTCP packets is varied randomly over the range [0.5,1.5] times the calculated interval to avoid unintended synchronization of all participants</p>
+<p>if we send</p>
+<p>If the participant is a sender (we_sent true), the constant C is set to the average RTCP packet size (avg_rtcp_size) divided by 25% of the RTCP bandwidth (rtcp_bw), and the constant n is set to the number of senders.</p>
+<p>if we receive only</p>
+<p>If we_sent is not true, the constant C is set to the average RTCP packet size divided by 75% of the RTCP bandwidth.
+The constant n is set to the number of receivers (members - senders).  If the number of senders is greater than 25%, senders and receivers are treated together.</p>
+<p>reconsideration NOT required for peer-to-peer “timer reconsideration” is employed.</p>
+<p>This algorithm implements a simple back-off mechanism which causes users to hold back RTCP packet transmission if the group sizes are increasing.</p>
+<p>n = number of members
+C = avg_size/(rtcpBW/4)</p>
+<ol class="arabic simple" start="3">
+<li><p>The deterministic calculated interval Td is set to max(Tmin, n*C).</p></li>
+</ol>
+<p>4. The calculated interval T is set to a number uniformly distributed
+between 0.5 and 1.5 times the deterministic calculated interval.</p>
+<p>5. The resulting value of T is divided by e-3/2=1.21828 to compensate
+for the fact that the timer reconsideration algorithm converges to
+a value of the RTCP bandwidth below the intended average</p>
+</section>
+<section id="sender-report">
+<h3>200 Sender Report<a class="headerlink" href="#sender-report" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="rtcp_sr.html">RTCP SR</a></p>
+</section>
+<section id="receiver-report">
+<h3>201 Receiver Report<a class="headerlink" href="#receiver-report" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="rtcp_rr.html">RTCP RR</a></p>
+</section>
+<section id="source-description-rtcp-packets-sdes">
+<h3>202 Source Description RTCP Packets (SDES)<a class="headerlink" href="#source-description-rtcp-packets-sdes" title="Permalink to this headline">¶</a></h3>
+<p>A SDES packet consists of a SDES header and a variable number of chunks for the described sources. Each chunk in turn consists of a SSRC/CSRC identifier and a collection of SDES items. SDES items themselves consists of a SDES item type code (8 bits), a length field (8 bits) and as much text octets as the length field indicates.</p>
+<p>SDES Header</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span><span class="n">V</span><span class="o">=</span><span class="mi">2</span><span class="o">|</span><span class="n">P</span><span class="o">|</span>    <span class="n">SC</span>   <span class="o">|</span>  <span class="n">PT</span><span class="o">=</span><span class="n">SDES</span><span class="o">=</span><span class="mi">202</span>  <span class="o">|</span>            <span class="n">length</span> <span class="n">L</span>           <span class="o">|</span>
+<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
+<span class="o">|</span>                          <span class="n">SSRC</span><span class="o">/</span><span class="n">CSRC_1</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                           <span class="n">SDES</span> <span class="n">items</span>                          <span class="o">|</span>
+<span class="o">|</span>                              <span class="o">...</span>                              <span class="o">|</span>
+<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
+<span class="o">|</span>                          <span class="n">SSRC</span><span class="o">/</span><span class="n">CSRC_2</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                           <span class="n">SDES</span> <span class="n">items</span>                          <span class="o">|</span>
+<span class="o">|</span>                              <span class="o">...</span>                              <span class="o">|</span>
+<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>V, P, PT, L: As described for SR packets, with the packet type code set to 202.</p></li>
+<li><p>SC: 5 bits, The number of SSRC/CSRC chunks contained in this SDES packet.</p></li>
+</ul>
+<p>The different SDES items are encoded according to a type-length-value scheme. Currently, CNAME, NAME, EMAIL, PHONE, LOC, TOOL, NOTE, and PRIV items are defined in [RFC1889].
+The CNAME item is mandatory in every SDES packet, which in turn is mandatory part of every compound RTCP packet.
+Like the SSRC identifier, a CNAME must differ from the CNAMEs of every other session participants. But instead of choosing the CNAME identifier randomly, the CNAME should allow both a person or a program to locate the source by means of the CNAME contents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>    <span class="n">CNAME</span><span class="o">=</span><span class="mi">1</span>    <span class="o">|</span>     <span class="n">length</span>    <span class="o">|</span> <span class="n">user</span> <span class="ow">and</span> <span class="n">domain</span> <span class="n">name</span>         <span class="o">...</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+</section>
+<section id="goodbye-rtcp-packets-bye">
+<h3>203 Goodbye RTCP Packets (BYE)<a class="headerlink" href="#goodbye-rtcp-packets-bye" title="Permalink to this headline">¶</a></h3>
+<p>A participant sends a BYE packet to indicate that one or more sources are no longer active, optionally giving a reason for leaving.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span><span class="n">V</span><span class="o">=</span><span class="mi">2</span><span class="o">|</span><span class="n">P</span><span class="o">|</span>    <span class="n">SC</span>   <span class="o">|</span>   <span class="n">PT</span><span class="o">=</span><span class="n">BYE</span><span class="o">=</span><span class="mi">203</span>  <span class="o">|</span>            <span class="n">length</span> <span class="n">L</span>           <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                           <span class="n">SSRC</span><span class="o">/</span><span class="n">CSRC</span>                           <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="p">:</span>                              <span class="o">...</span>                              <span class="p">:</span>
+<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
+<span class="o">|</span>     <span class="n">length</span>    <span class="o">|</span>               <span class="n">reason</span> <span class="k">for</span> <span class="n">leaving</span> <span class="p">(</span><span class="n">opt</span><span class="p">)</span>       <span class="o">...</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>V, P, PT, L, SSRC/CSRC: As described for SR packets, with the packet type code 202 set.</p></li>
+<li><p>SC:5 bits, The number of SSRC/CSRC identifiers contained in this BYE packet.</p></li>
+</ul>
+</section>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4585">RFC4585</a>: Extended RTP Profile for Real-time Transport Control Protocol (RTCP)-Based Feedback (RTP/AVPF)</p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3605">RFC3605</a>: Real Time Control Protocol (RTCP) attribute in  Session Description Protocol (SDP)</p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5506">RFC5506</a>: Support for Reduced-Size Real-Time Transport Control Protocol (RTCP): Opportunities and Consequences</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rtp.html" class="btn btn-neutral float-left" title="WebRTC RTP Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rtcp_sr.html" class="btn btn-neutral float-right" title="RTCP Sender Report" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
