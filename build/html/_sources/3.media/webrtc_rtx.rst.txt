@@ -29,18 +29,18 @@ RTP retransmission is an effective packet loss recovery technique for real-time 
 
 发送方与接收方之间的丢包会显著地降低接收到的媒体质量。有好几种技术可以用来提高抗丢包的弹性：
 
-* Forward error correction (FEC)： 前向纠错
+* Forward error correction (FEC): 前向纠错
 * Retransmissions 重传
 * Interleaving 交织
   
 `RFC2354`_ 对这些方法有所讨论
   
-RTX 即 RTransmission, 用于丢包重传， 它使用额外的 ssrc
-  
+RTX 即 RTransmission, 用于丢包重传， 它使用不同的会话(session) 或者不同的 ssrc 来传送冗余的 RTP 包
+
 
 Retransmission Payload Format
 
-.. code-block:: 
+.. code-block::
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1

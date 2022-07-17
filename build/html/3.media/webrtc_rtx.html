@@ -40,6 +40,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
@@ -134,7 +135,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-07-02</p></td>
+<td><p>2022-07-17</p></td>
 </tr>
 </tbody>
 </table>
@@ -150,12 +151,12 @@
 <p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4588">RFC4588</a> describes an RTP payload format for performing retransmissions.  Retransmitted RTP packets are sent in a separate stream from the original RTP stream.</p>
 <p>发送方与接收方之间的丢包会显著地降低接收到的媒体质量。有好几种技术可以用来提高抗丢包的弹性：</p>
 <ul class="simple">
-<li><p>Forward error correction (FEC)： 前向纠错</p></li>
+<li><p>Forward error correction (FEC): 前向纠错</p></li>
 <li><p>Retransmissions 重传</p></li>
 <li><p>Interleaving 交织</p></li>
 </ul>
 <p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc2354">RFC2354</a> 对这些方法有所讨论</p>
-<p>RTX 即 RTransmission, 用于丢包重传， 它使用额外的 ssrc</p>
+<p>RTX 即 RTransmission, 用于丢包重传， 它使用不同的会话(session) 或者不同的 ssrc 来传送冗余的 RTP 包</p>
 <p>Retransmission Payload Format</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
