@@ -48,9 +48,11 @@ Chrome testing
 
 * enable logging
 
+refer to https://www.chromium.org/for-testers/enable-logging/
+
 .. code-block::
 
-   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=1
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging=stderr --v=1 > log.txt 2>&1 # Capture stderr and stdout to a log file
 
    /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary  --enable-logging --v=1
 

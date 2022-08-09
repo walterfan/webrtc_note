@@ -21,6 +21,9 @@
 
    webrtc_sctp
    webrtc_rtp_rtcp_module
+   webrtc_rtp_sender
+   webrtc_sdp_offer_answer
+   webrtc_remb
 
    overuse_frame_decoder
    remote_bitrate_estimator

@@ -36,7 +36,18 @@ RED was standardized more than 20 years ago in RFC 2198, and was initially conce
 
 As a format, it’s quite trivial: it basically allows you to packetize, within the payload of a single RTP packet, multiple frames that you’d normally send in different RTP packets instead. It performs that by listing a series of block headers at the beginning, each containing some relevant information (including the block length), which are then followed by the actual frame payloads in sequence. The following diagram from the RFC shows this more clearly in a visual way:
 
-Packet
+
+SDP 扩展
+===========================
+
+.. code-block:: 
+
+       m=audio 12345 RTP/AVP 121 0 5
+       a=rtpmap:121 red/8000/1
+       a=fmtp:121 0/5
+
+
+Packet 数据包格式
 ===========================
 
 .. code-block::
