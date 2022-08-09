@@ -29,7 +29,7 @@ rtp_rtcp 是 libwebrtc 的一个核心模块
     constexpr int RTCP_MAX_REPORT_BLOCKS = 31;  // RFC 3550 page 37
 
 
-RTC Mode
+RTCP Mode
 --------------------------------------
 
 .. code-block::
@@ -37,6 +37,18 @@ RTC Mode
     // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
     // RTCP mode is described by RFC 5506.
     enum class RtcpMode { kOff, kCompound, kReducedSize };
+
+
+RTX Mode
+
+.. code-block::
+
+    enum RtxMode {
+    kRtxOff = 0x0,
+    kRtxRetransmitted = 0x1,     // Only send retransmissions over RTX.
+    kRtxRedundantPayloads = 0x2  // Preventively send redundant payloads
+                                // instead of padding.
+    };
 
 
 WebRTC 中计算的汇报间隔

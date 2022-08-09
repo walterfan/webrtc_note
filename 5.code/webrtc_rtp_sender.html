@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC RTP Sender &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC SDP Offer Answer" href="webrtc_sdp_offer_answer.html" />
+    <link rel="prev" title="WebRTC RTP RTCP module" href="webrtc_rtp_rtcp_module.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bw_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC RTP Sender</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rtpstate">RtpState</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#packet-history">Packet History</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nack">对 NACK 的处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rtp">重发 RTP 包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rtx">构建 RTX 包</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_remb.html">WebRTC REMB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC RTP Sender</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/5.code/webrtc_rtp_sender.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-rtp-sender">
+<h1>WebRTC RTP Sender<a class="headerlink" href="#webrtc-rtp-sender" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC RTP Sender</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2022-08-09</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#implementation" id="id4">Implementation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rtpstate" id="id5">RtpState</a></p></li>
+<li><p><a class="reference internal" href="#packet-history" id="id6">Packet History</a></p></li>
+<li><p><a class="reference internal" href="#nack" id="id7">对 NACK 的处理</a></p></li>
+<li><p><a class="reference internal" href="#rtp" id="id8">重发 RTP 包</a></p></li>
+<li><p><a class="reference internal" href="#rtx" id="id9">构建 RTX 包</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A RTCPeerConnection method getSenders() returns an array of RTCRtpSender objects, each of which represents the RTP sender responsible for transmitting one track’s data.</p>
+<p>A sender object provides methods and properties for examining and controlling the encoding and transmission of the track’s data.</p>
+<p>和 Javascript 中的 API 定义的 RTCRtpSender 类似，这里的 RTPSender 就是 C++ 层面的实现</p>
+</section>
+<section id="implementation">
+<h2><a class="toc-backref" href="#id4">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<section id="rtpstate">
+<h3><a class="toc-backref" href="#id5">RtpState</a><a class="headerlink" href="#rtpstate" title="Permalink to this headline">¶</a></h3>
+<p>RtpSender 会维护一个状态</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">RtpState</span> <span class="p">{</span>
+    <span class="n">uint16_t</span> <span class="n">sequence_number</span><span class="p">;</span>
+    <span class="n">uint32_t</span> <span class="n">start_timestamp</span><span class="p">;</span>
+    <span class="n">uint32_t</span> <span class="n">timestamp</span><span class="p">;</span>
+    <span class="n">int64_t</span> <span class="n">capture_time_ms</span><span class="p">;</span>
+    <span class="n">int64_t</span> <span class="n">last_timestamp_time_ms</span><span class="p">;</span>
+    <span class="nb">bool</span> <span class="n">ssrc_has_acked</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="packet-history">
+<h3><a class="toc-backref" href="#id6">Packet History</a><a class="headerlink" href="#packet-history" title="Permalink to this headline">¶</a></h3>
+<p>RtpSender 维护了一个用来存储发送过的包的队列，称为 Packet History, 根据 sequence  number 来排序
+老包放在队首，新包放在队尾</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">RtpPacketHistory</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">packet_history_</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>由于存在 sequence number 回滚的情况，队尾的包的 sequence  number 有可能比之前的包小。</p>
+<p>RtpPacketHistory 包含了一个队列，队列的元素是 <cite>StoredPacket</cite> , 形如 <cite>std::deque&lt;StoredPacket&gt; packet_history_</cite></p>
+</section>
+<section id="nack">
+<h3><a class="toc-backref" href="#id7">对 NACK 的处理</a><a class="headerlink" href="#nack" title="Permalink to this headline">¶</a></h3>
+<p>收到  NACK 请求，根据 sequence number 从发送缓存中找到相应的包重发</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">RTPSender::OnReceivedNack</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="n">packet_history_</span><span class="o">-&gt;</span><span class="n">SetRtt</span><span class="p">(</span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Millis</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">));</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="nl">seq_no</span> <span class="p">:</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReSendPacket</span><span class="p">(</span><span class="n">seq_no</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Failed to send one Sequence number. Give up the rest in this nack.</span>
+<span class="w">        </span><span class="n">RTC_LOG</span><span class="p">(</span><span class="n">LS_WARNING</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed resending RTP packet &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">seq_no</span><span class="w"></span>
+<span class="w">                            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, Discard rest of packets.&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="rtp">
+<h3><a class="toc-backref" href="#id8">重发 RTP 包</a><a class="headerlink" href="#rtp" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int32_t RTPSender::ReSendPacket(uint16_t packet_id) {
+    int32_t packet_size = 0;
+    const bool rtx = (RtxStatus() &amp; kRtxRetransmitted) &gt; 0;
+
+    std::unique_ptr&lt;RtpPacketToSend&gt; packet =
+        packet_history_-&gt;GetPacketAndMarkAsPending(
+            packet_id, [&amp;](const RtpPacketToSend&amp; stored_packet) {
+                // Check if we&#39;re overusing retransmission bitrate.
+                // TODO(sprang): Add histograms for nack success or failure
+                // reasons.
+                packet_size = stored_packet.size();
+                std::unique_ptr&lt;RtpPacketToSend&gt; retransmit_packet;
+                if (retransmission_rate_limiter_ &amp;&amp;
+                    !retransmission_rate_limiter_-&gt;TryUseRate(packet_size)) {
+                        return retransmit_packet;
+                }
+                // walter: 如果开启了 RTX, 就构建 RTX 包，否则就用原始的流，相同的 SSRC
+                if (rtx) {
+                    retransmit_packet = BuildRtxPacket(stored_packet);
+                } else {
+                    retransmit_packet =
+                        std::make_unique&lt;RtpPacketToSend&gt;(stored_packet);
+                }
+
+                if (retransmit_packet) {
+                    retransmit_packet-&gt;set_retransmitted_sequence_number(
+                        stored_packet.SequenceNumber());
+                }
+                return retransmit_packet;
+            });
+
+    if (packet_size == 0) {
+        // Packet not found or already queued for retransmission, ignore.
+        RTC_DCHECK(!packet);
+        return 0;
+    }
+    if (!packet) {
+        // Packet was found, but lambda helper above chose not to create
+        // `retransmit_packet` out of it.
+        return -1;
+    }
+
+    packet-&gt;set_packet_type(RtpPacketMediaType::kRetransmission);
+    packet-&gt;set_fec_protect_packet(false);
+    std::vector&lt;std::unique_ptr&lt;RtpPacketToSend&gt;&gt; packets;
+    packets.emplace_back(std::move(packet));
+    paced_sender_-&gt;EnqueuePackets(std::move(packets));
+
+    return packet_size;
+}
+</pre></div>
+</div>
+</section>
+<section id="rtx">
+<h3><a class="toc-backref" href="#id9">构建 RTX 包</a><a class="headerlink" href="#rtx" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>std::unique_ptr&lt;RtpPacketToSend&gt; RTPSender::BuildRtxPacket(
+    const RtpPacketToSend&amp; packet) {
+std::unique_ptr&lt;RtpPacketToSend&gt; rtx_packet;
+
+// Walter: 先添加原始的 RTP 包头
+// Add original RTP header.
+{
+    MutexLock lock(&amp;send_mutex_);
+    if (!sending_media_)
+    return nullptr;
+
+    RTC_DCHECK(rtx_ssrc_);
+    // Walter: 将 payload type 修改为重传的 RTP 包的 payload type
+    // Replace payload type.
+    auto kv = rtx_payload_type_map_.find(packet.PayloadType());
+    if (kv == rtx_payload_type_map_.end())
+    return nullptr;
+
+    rtx_packet = std::make_unique&lt;RtpPacketToSend&gt;(&amp;rtp_header_extension_map_,
+                                                max_packet_size_);
+
+    rtx_packet-&gt;SetPayloadType(kv-&gt;second);
+    // Walter: 将 SSRC 修改为 RTX 重传包的 SSRC
+    // Replace SSRC.
+    rtx_packet-&gt;SetSsrc(*rtx_ssrc_);
+
+    CopyHeaderAndExtensionsToRtxPacket(packet, rtx_packet.get());
+
+    // Walter: RTX 包和原始包使用不同的 SSRC , 通过 MID 和  RRID 将其关联起来
+    // Walter: 关联的规则就是相同的 MID, RTX 包头中的 RRID 扩展头中存放的是原始包的 RID
+
+    // RTX packets are sent on an SSRC different from the main media, so the
+    // decision to attach MID and/or RRID header extensions is completely
+    // separate from that of the main media SSRC.
+    //
+    // Note that RTX packets must used the RepairedRtpStreamId (RRID) header
+    // extension instead of the RtpStreamId (RID) header extension even though
+    // the payload is identical.
+    if (always_send_mid_and_rid_ || !rtx_ssrc_has_acked_) {
+    // These are no-ops if the corresponding header extension is not
+    // registered.
+    if (!mid_.empty()) {
+        rtx_packet-&gt;SetExtension&lt;RtpMid&gt;(mid_);
+    }
+    if (!rid_.empty()) {
+        rtx_packet-&gt;SetExtension&lt;RepairedRtpStreamId&gt;(rid_);
+    }
+    }
+}
+RTC_DCHECK(rtx_packet);
+
+uint8_t* rtx_payload =
+    rtx_packet-&gt;AllocatePayload(packet.payload_size() + kRtxHeaderSize);
+if (rtx_payload == nullptr)
+    return nullptr;
+
+// Walter: 添加原始包的 sequence number
+// Add OSN (original sequence number).
+ByteWriter&lt;uint16_t&gt;::WriteBigEndian(rtx_payload, packet.SequenceNumber());
+
+// Walter: 复制原始包的 payload
+// Add original payload data.
+auto payload = packet.payload();
+memcpy(rtx_payload + kRtxHeaderSize, payload.data(), payload.size());
+// Walter: 复制原始包的 additional data
+// Add original additional data.
+rtx_packet-&gt;set_additional_data(packet.additional_data());
+
+// Walter: 复制原始包的 capture time
+// Copy capture time so e.g. TransmissionOffset is correctly set.
+rtx_packet-&gt;set_capture_time(packet.capture_time());
+
+return rtx_packet;
+}
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="webrtc_rtp_rtcp_module.html" class="btn btn-neutral float-left" title="WebRTC RTP RTCP module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_sdp_offer_answer.html" class="btn btn-neutral float-right" title="WebRTC SDP Offer Answer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

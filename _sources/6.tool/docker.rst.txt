@@ -44,8 +44,33 @@ docker 的命令很多, 可以用 docker help command 来获取详细帮助
    Docker 中命令的执行,	docker exec [OPTIONS] CONTAINER COMMAND [ARG...],	docker exec -it tomcat /bin/bash
    拷贝文件到 Docker 中,	docker cp [OPTIONS] SRC_PATH CONTAINER:DEST_PATH,	docker cp ./examples/guestbook/target/guestbook.war tomcat:/usr/local/tomcat/webapps
 
+
+Docker with Selenium
+==========================
+
+* Firefox
+
+`docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:4.3.0-20220706`
+
+* Chrome
+
+`docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:4.3.0-20220706`
+
+* Edge
+
+`docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-edge:4.3.0-20220706`
+
+
+
+.. code-block::
+
+   sudo apt-get install xorg openbox
+   sudo apt-get install ubuntu-desktop
+   sudo apt-get install vnc4server
+
+
 Docker image
-===================
+==========================
 
 先试着运行一下 HelloWorld
 
