@@ -31,11 +31,16 @@ rtp_rtcp 是 libwebrtc 的一个核心模块
 
 RTCP Mode
 --------------------------------------
+RtcpMode 有三种:
+
+* kOff
+* kCompound 复合包
+* kReducedSize 缩小尺寸包
 
 .. code-block::
 
-    // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
-    // RTCP mode is described by RFC 5506.
+    // RTCP mode to use. Compound mode is described by RFC 4585
+    // and reduced-size RTCP mode is described by RFC 5506.
     enum class RtcpMode { kOff, kCompound, kReducedSize };
 
 
@@ -53,7 +58,18 @@ RTX Mode
 
 WebRTC 中计算的汇报间隔
 ======================================
+默认汇报间隔是
+* 视频会话: 1s
+* 音频会话: 5s
 
+.. code-block::
+
+    constexpr TimeDelta kDefaultVideoReportInterval = TimeDelta::Seconds(1);
+    constexpr TimeDelta kDefaultAudioReportInterval = TimeDelta::Seconds(5);
+
+
+
+实际上会根据反馈的网络状态来调整发送频率
 
 .. code-block::
 
