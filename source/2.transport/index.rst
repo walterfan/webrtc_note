@@ -21,7 +21,6 @@
    srtp
 
    webrtc_multiplex
-   webrtc_simulcast
 
    rtp
    rtcp
