@@ -1,5 +1,5 @@
 ######################
-Janus Code analysis
+Janus Plugins
 ######################
 
 
@@ -8,7 +8,7 @@ Janus Code analysis
 .. include:: ../abbrs.ref
 
 ============ =============================
-**Abstract** Janus gateway code analysis
+**Abstract** Janus Plugins
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|
@@ -24,5 +24,15 @@ Overview
 ========================
 
 
+Echo test
+========================
 
-https://github.com/murillo128/janus-gateway/pull/2
+
+Video Room
+========================
+configuration: conf/janus.plugin.videoroom.jcfg
+
+Reference
+========================
+* https://blog.avdancedu.com/bb906872/
+* https://github.com/murillo128/janus-gateway/pull/2

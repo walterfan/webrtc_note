@@ -16,7 +16,7 @@
 
    sfu
    janus
-   janus_code
+   janus_plugins
    mediasoup
    pion
 
