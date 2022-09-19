@@ -57,6 +57,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#build-gn">Build.gn</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#chrome">构建 Chrome</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">构建工具</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ninja">Ninja</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id5">gn</a></li>
@@ -131,7 +132,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-09-16</p></td>
+<td><p>2022-09-19</p></td>
 </tr>
 </tbody>
 </table>
@@ -149,18 +150,19 @@
 <li><p><a class="reference internal" href="#build-gn" id="id11">Build.gn</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id4" id="id12">构建工具</a></p>
+<li><p><a class="reference internal" href="#chrome" id="id12">构建 Chrome</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id13">构建工具</a></p>
 <ul>
-<li><p><a class="reference internal" href="#ninja" id="id13">Ninja</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id14">gn</a></p>
+<li><p><a class="reference internal" href="#ninja" id="id14">Ninja</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id15">gn</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id6" id="id15">.gn</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">.gn</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#cmake" id="id16">CMake</a></p></li>
+<li><p><a class="reference internal" href="#cmake" id="id17">CMake</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#reference" id="id17">Reference</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id18">Reference</a></p></li>
 </ul>
 </div>
 <section id="source-code">
@@ -169,10 +171,14 @@
 <p>前提是你要能连接上 webrtc 的仓库，有些地方需要翻墙。</p>
 <ol class="arabic">
 <li><p>安装 Chromium 软件库工具.</p>
-<p>参见
-* <a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/development/prerequisite-sw/index.md">WebRTC 开发依赖软件</a>
-* <a class="reference external" href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">安装 WebRTC 开发工具</a></p>
+<p>参见</p>
 </li>
+</ol>
+<ul class="simple">
+<li><p><a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/development/prerequisite-sw/index.md">WebRTC 开发依赖软件</a></p></li>
+<li><p><a class="reference external" href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">安装 WebRTC 开发工具</a></p></li>
+</ul>
+<ol class="arabic simple" start="2">
 <li><p>下载 WebRTC 源码</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir webrtc-checkout
@@ -285,31 +291,48 @@ $ ninja -C out/Default
 </div>
 </section>
 </section>
+<section id="chrome">
+<h2><a class="toc-backref" href="#id12">构建 Chrome</a><a class="headerlink" href="#chrome" title="Permalink to this headline">¶</a></h2>
+<p>参见 <a class="reference external" href="https://chromium.googlesource.com/chromium/src/+/master/docs/mac_build_instructions.md">https://chromium.googlesource.com/chromium/src/+/master/docs/mac_build_instructions.md</a></p>
+<p>Mac 上需要 Xcode <cite>sudo xcode-select -s /Applications/Xcode.app/Contents/Developer</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">chromium</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">chromium</span>
+<span class="n">caffeinate</span> <span class="n">fetch</span> <span class="n">chromium</span>
+<span class="n">cd</span> <span class="n">src</span>
+<span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+<span class="n">autoninja</span> <span class="o">-</span><span class="n">C</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span> <span class="n">chrome</span>
+</pre></div>
+</div>
+<p>启动时可以使用</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">logging</span> <span class="o">--</span><span class="n">v</span><span class="o">=</span><span class="mi">0</span> <span class="o">--</span><span class="n">vmodule</span><span class="o">=*/</span><span class="n">webrtc</span><span class="o">/*=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>参见 <a class="reference external" href="https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&amp;ref_topic=6314967#zippy=%2Cmac">https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&amp;ref_topic=6314967#zippy=%2Cmac</a></p>
+</section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id12">构建工具</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">构建工具</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <section id="ninja">
-<h3><a class="toc-backref" href="#id13">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h3>
 <p>Ninja is yet another build system. It takes as input the interdependencies of files (typically source code and output executables) and orchestrates building them, quickly.</p>
 <p>Run ninja. By default, it looks for a file named build.ninja in the current directory and builds all out-of-date targets. You can specify which targets (files) to build as command line arguments.</p>
 <p>There is also a special syntax target^ for specifying a target as the first output of some rule containing the source you put in the command line, if one exists. For example, if you specify target as foo.c^ then foo.o will get built (assuming you have those targets in your build files).</p>
 </section>
 <section id="id5">
-<h3><a class="toc-backref" href="#id14">gn</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">gn</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>The meta-build system used to generate build files for Google Chrome and related projects (v8, node.js), as well as Google Fuchsia. gn can generate Ninja files for all platforms supported by Chrome.</p>
 <section id="id6">
-<h4><a class="toc-backref" href="#id15">.gn</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id16">.gn</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>.gn 文件是 GN build 的 “源文件”，在这里可以做各种条件判断和配置，gn 会根据这些配置生成特定的 ninja 文件。</p>
 <p>.gn 文件中可以使用预定义的参数，比如 is_debug ， target_os ， rtc_use_h264 等。</p>
 <p>.gn 中可以 import .gni 文件。</p>
 </section>
 </section>
 <section id="cmake">
-<h3><a class="toc-backref" href="#id16">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
 <p>A widely used meta-build system that can generate Ninja files on Linux as of CMake version 2.8.8. Newer versions of CMake support generating Ninja files on Windows and Mac OS X too.</p>
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id17">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src">Chromium Code Search</a></p></li>
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>
