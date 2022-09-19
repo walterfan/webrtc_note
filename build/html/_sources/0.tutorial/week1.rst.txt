@@ -27,19 +27,29 @@ Overview
 #. Write an example of P2P call
 
 
-Day 1: Learn WebRTC basic concepts and specs
+Content
 ==============================================================
-* `WebRTC 简介`_
-* `WebRTC 文档`_
+
+`WebRTC 基础`_
+
+* WebRTC 概论
+* Web Browser for RTC
+* WebRTC 标准，协议和规范
 * WebRTC API
+* WebRTC Elements
+* WebRTC Entities
+* WebRTC 呼叫流程
+* WebRTC API 之 Media Capture
+* WebRTC API 之 Screen Capture
+* WebRTC API 之 Media Record
+* WebRTC extension
+* WebRTC 的信令
+* WebRTC SDP
+* WebRTC stats
+* 视频聊天实例
 
-Day 2: Learn Media Capture, Screen Sharing and Recording
-==============================================================
-* 音视频媒体流的捕捉
-* 屏幕的共享
-* 媒体流的录制
 
 
-
+.. _WebRTC 基础: ../1.basic/index.html
 .. _WebRTC 简介: ../1.basic/overview.html
 .. _WebRTC 文档: ../1.basic/webrtc_spec.html

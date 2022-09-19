@@ -27,4 +27,4 @@
    webrtc_svc
    webrtc_metrics
    webrtc_e2e_delay
-
+   webrtc_simulcast

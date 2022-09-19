@@ -8,7 +8,10 @@
    :caption: Contents:
 
    learning_path
+   
    week1
    week2
    week3
    week4
+
+   appendix
