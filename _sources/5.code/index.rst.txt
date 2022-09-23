@@ -9,6 +9,9 @@
 
    overview
 
+   build_tools
+   build_browser
+   
    webrtc_build
    webrtc_test
    webrtc_issues
