@@ -49,7 +49,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 工具</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 常用工具</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Devtools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#webrtc-internals">Webrtc internals</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#chome-devtools">Chome Devtools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rtp-log-analyzer">RTP Log Analyzer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#video-replay">Video Replay</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="netcat.html">netcat</a></li>
@@ -123,14 +126,48 @@
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#chome-devtools" id="id3">Chome Devtools</a></p></li>
+<li><p><a class="reference internal" href="#webrtc-internals" id="id6">Webrtc internals</a></p></li>
+<li><p><a class="reference internal" href="#chome-devtools" id="id7">Chome Devtools</a></p></li>
+<li><p><a class="reference internal" href="#rtp-log-analyzer" id="id8">RTP Log Analyzer</a></p></li>
+<li><p><a class="reference internal" href="#video-replay" id="id9">Video Replay</a></p></li>
 </ul>
 </div>
+<section id="webrtc-internals">
+<h2><a class="toc-backref" href="#id6">Webrtc internals</a><a class="headerlink" href="#webrtc-internals" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://testrtc.com/webrtc-internals-parameters/">webrtc-internals</a>: and getstats parameters – a detailed view of webrtc-internals and the getstats() parameters it collects</p></li>
+<li><p><cite>active connections</cite>:_ in webrtc-internals – an explanation of how to find the active connection in webrtc-internals – and how to wrap back from there to find the ICE candidates of the active connection</p></li>
+<li><p><a class="reference external" href="https://testrtc.com/webrtc-api-trace/">webrtc-internals API trace</a>: API trace – a guide on what to expect in the API trace for a successful WebRTC session, along with some typical failure cases</p></li>
+</ul>
+</section>
 <section id="chome-devtools">
-<h2><a class="toc-backref" href="#id3">Chome Devtools</a><a class="headerlink" href="#chome-devtools" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Chome Devtools</a><a class="headerlink" href="#chome-devtools" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.chrome.com/docs/devtools/evaluate-performance/">Analyze runtime performance</a></p></li>
 </ul>
+</section>
+<section id="rtp-log-analyzer">
+<h2><a class="toc-backref" href="#id8">RTP Log Analyzer</a><a class="headerlink" href="#rtp-log-analyzer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://webrtc.googlesource.com/src/+/refs/heads/lkgr/rtc_tools/py_event_log_analyzer/README.md">RTP log analyzer</a></p></li>
+</ul>
+</section>
+<section id="video-replay">
+<h2><a class="toc-backref" href="#id9">Video Replay</a><a class="headerlink" href="#video-replay" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://webrtchacks.com/video_replay/">Video Replay</a></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">checkout</span>
+<span class="n">cd</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">checkout</span><span class="o">/</span>
+<span class="n">fetch</span> <span class="o">--</span><span class="n">nohooks</span> <span class="n">webrtc</span>
+<span class="n">gclient</span> <span class="n">sync</span>
+<span class="n">cd</span> <span class="n">src</span>
+<span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+<span class="n">ninja</span> <span class="o">-</span><span class="n">C</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span> <span class="n">video_replay</span>
+
+<span class="n">out</span><span class="o">/</span><span class="n">Default</span><span class="o">/</span><span class="n">video_replay</span> <span class="o">-</span><span class="n">input_file</span> <span class="n">received</span><span class="o">-</span><span class="n">video</span><span class="o">.</span><span class="n">rtpdump</span> <span class="o">-</span><span class="n">codec</span> <span class="n">VP9</span> <span class="o">-</span><span class="n">media_payload_type</span> <span class="mi">98</span> <span class="o">-</span><span class="n">red_payload_type</span> <span class="mi">102</span> <span class="o">-</span><span class="n">ssrc</span> <span class="mi">4075734755</span>
+</pre></div>
+</div>
 </section>
 </section>
 
