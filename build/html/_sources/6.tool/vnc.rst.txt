@@ -33,7 +33,20 @@ VNC
 -------------------------
 Virtual Network Computing, or VNC, is a graphical desktop sharing system that lets its users remotely control a computer while the main user can interact and watch. It is pixel-based, which means it is more flexible than RDP. 
 
-VNC is platform-independent, which means it can easily be used across Mac, Windows, Linux, Raspberry Pi, and other platforms to share a desktop across different computers, and there are no limits in using VNC applications to connect to different computers on different platforms.  
+VNC is platform-independent, which means it can easily be used across Mac, Windows, Linux, Raspberry Pi, and other platforms to share a desktop across different computers, and there are no limits in using VNC applications to connect to different computers on different platforms.
+
+
+Tight VNC on Ubuntu
+=========================
+
+
+.. code-block::
+
+   sudo apt update
+   # select default display manager
+   sudo apt install -y xfce4 xfce4-goodies
+   sudo apt install -y tightvncserver
+   vncserver
 
 
 

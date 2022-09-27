@@ -11,7 +11,7 @@
 
    build_tools
    build_browser
-   
+
    webrtc_build
    webrtc_test
    webrtc_issues
@@ -26,7 +26,8 @@
    webrtc_rtp_rtcp_module
    webrtc_rtp_sender
    webrtc_sdp_offer_answer
-   webrtc_remb
+   webrtc_remb_code
+   webrtc_rtx_code
 
    overuse_frame_decoder
    remote_bitrate_estimator
