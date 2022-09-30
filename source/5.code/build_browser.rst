@@ -50,11 +50,10 @@ Mac 上需要 Xcode `sudo xcode-select -s /Applications/Xcode.app/Contents/Devel
 
 .. code-block::
 
-   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=0 --vmodule=*/webrtc/*=1
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging --v=0 --vmodule=*/webrtc/*=1 --use-fake-device-for-media-stream --use-file-for-fake-video-capture=/Users/yafan/Downloads/FourPeople_1280x720_60.y4m
 
-参见 https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&ref_topic=6314967#zippy=%2Cmac
-
-log file 位于 `~/Library/Application Support/Chromium/chrome_debug.log`
+* 参见 https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&ref_topic=6314967#zippy=%2Cmac
+* 日志文件位于 `~/Library/Application Support/Chromium/chrome_debug.log`
 
 Linux 系统
 -----------------------
