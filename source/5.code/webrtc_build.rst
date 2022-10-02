@@ -32,7 +32,12 @@ Source code
 
 * `WebRTC 开发依赖软件 <webrtc-prerequisite-sw_>`_
 * `安装 WebRTC 开发工具  <webrtc-depot-tools_>`_
-  
+
+.. code-block:: bash
+
+    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+    export PATH="$PATH:${HOME}/depot_tools"
+
 2. 下载 WebRTC 源码
        
 .. code-block:: bash

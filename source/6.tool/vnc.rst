@@ -52,5 +52,6 @@ Tight VNC on Ubuntu
 
 Reference
 =========================
+* https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-20-04
 * https://serverspace.io/support/help/install-tightvnc-server-on-ubuntu-20-04/
 * https://discover.realvnc.com/blog/vnc-vs-rdp-which-remote-desktop-tool-is-best

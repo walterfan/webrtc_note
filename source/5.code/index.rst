@@ -16,7 +16,7 @@
    webrtc_test
    webrtc_issues
 
-
+   webrtc_demux
    webrtc_thread
    webrtc_cc
    webrtc_bw_probe
@@ -33,5 +33,8 @@
    remote_bitrate_estimator
 
    webrtc_pc_example
+   webrtc_video_flow
+   webrtc_config
+
    janus_code_1
    aiortc
