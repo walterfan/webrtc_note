@@ -36,6 +36,16 @@ SRTP 密钥，用 SRTP 来传输媒体数据, 用 SCTP 来传输应用数据。
 
 而在信令层，WebRTC 并未指定，各个应用可以用自己喜欢的信令协议来进行媒体协商，一般都是用 XMPP, SIP 或者自定义的消息格式包含 SDP，通过 HTTP, WebSocket 或直接用 TCP 协议承载具体的媒体会话描述。
 
+
+RTCRtpTransceiver
+------------------------
+A transceiver is uniquely identified using its mid property, which is the same as the media ID (mid) of its corresponding m-line.
+An RTCRtpTransceiver is associated with an m-line if its mid is non-null; otherwise it's considered disassociated.
+
+
+典型流程
+=================
+
 如果我们要进行视频聊天， 最基本的呼叫流程大致如下：
 
 .. figure:: ../_static/webrtc_flow.webp

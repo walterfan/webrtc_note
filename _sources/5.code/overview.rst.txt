@@ -26,6 +26,28 @@ WebRTC release notes are posted to the discuss-webrtc mailing list before the re
 https://webrtc.googlesource.com/src/+/refs/heads/main/docs/release-notes.md
 
 
+Domain object
+====================
+
+Call
+--------------------
+A Call represents a two-way connection carrying zero or more outgoing and incoming media streams, transported over one or more RTP transports.
+
+A Call instance can contain several send and/or receive streams.
+
+All streams are assumed to have the same remote endpoint and will share bitrate estimates etc.
+
+When using the PeerConnection API, there is an one to one relationship between the PeerConnection and the Call.
+
+Stream
+--------------------
+* AudioSendStream
+* AudioReceiveStream
+* VideoSendStream
+* VideoReceiveStream
+
+
+
 Modules
 =============
 
@@ -49,6 +71,45 @@ Modules
 * video_capture
 * video_coding
 * video_processing
+
+
+Import Interfaces
+========================
+* LossNotificationSender,
+* RecoveredPacketReceiver,
+
+* KeyFrameRequestSender,
+* NackSender,
+* OnDecryptedFrameCallback,
+* OnDecryptionStatusChangeCallback,
+* RtpVideoFrameReceiver
+
+* RtpPacketSinkInterface,
+
+.. code-block:: cpp
+
+   void OnRtpPacket(const RtpPacketReceived& packet) override;
+
+
+.. code-block:: cpp
+
+
+    class PacketReceiver {
+    public:
+        enum DeliveryStatus {
+          DELIVERY_OK,
+          DELIVERY_UNKNOWN_SSRC,
+          DELIVERY_PACKET_ERROR,
+        };
+
+        virtual DeliveryStatus DeliverPacket(MediaType media_type,
+                                            rtc::CopyOnWriteBuffer packet,
+                                            int64_t packet_time_us) = 0;
+
+    protected:
+        virtual ~PacketReceiver() {}
+    };
+
 
 
 Treasure in code
