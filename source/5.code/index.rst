@@ -28,6 +28,7 @@
    webrtc_sdp_offer_answer
    webrtc_remb_code
    webrtc_rtx_code
+   webrtc_nack_code
 
    overuse_frame_decoder
    remote_bitrate_estimator

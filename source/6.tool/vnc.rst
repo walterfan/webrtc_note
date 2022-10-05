@@ -40,14 +40,27 @@ Tight VNC on Ubuntu
 =========================
 
 
-.. code-block::
+.. code-block:: bash
 
    sudo apt update
    # select default display manager
    sudo apt install -y xfce4 xfce4-goodies
    sudo apt install -y tightvncserver
-   vncserver
+   vncserver   #set password
+   vncserver -kill :1
 
+   mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+   vim +x ~/.vnc/xstartup # set GUI
+   chmod +x ~/.vnc/xstartup
+
+
+xstartup 内容如下
+
+.. code-block::
+
+   #!/bin/bash
+   xrdb $HOME/.Xresources
+   startxfce4 &
 
 
 Reference

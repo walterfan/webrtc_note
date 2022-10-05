@@ -61,6 +61,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC Congestion Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_bw_probe.html">WebRTC Bandwidth Probe</a></li>
@@ -69,10 +70,14 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_remb.html">WebRTC REMB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_remb_code.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
 </ul>
@@ -124,7 +129,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-09-23</p></td>
+<td><p>2022-10-05</p></td>
 </tr>
 </tbody>
 </table>
@@ -143,6 +148,13 @@
 </div>
 <section id="id3">
 <h2><a class="toc-backref" href="#id4">构建工具</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>首先需要安装 depot tools</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">chromium</span><span class="o">.</span><span class="n">googlesource</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chromium</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">depot_tools</span><span class="o">.</span><span class="n">git</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;$PATH:/path/to/depot_tools&quot;</span>
+<span class="c1"># if you install it on the home folder , do not use ~</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;$PATH:$</span><span class="si">{HOME}</span><span class="s2">/depot_tools&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="chrome">
 <h2><a class="toc-backref" href="#id5">构建 Chrome</a><a class="headerlink" href="#chrome" title="Permalink to this headline">¶</a></h2>
@@ -158,14 +170,88 @@
 </pre></div>
 </div>
 <p>启动时可以使用</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">logging</span> <span class="o">--</span><span class="n">v</span><span class="o">=</span><span class="mi">0</span> <span class="o">--</span><span class="n">vmodule</span><span class="o">=*/</span><span class="n">webrtc</span><span class="o">/*=</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">logging</span> <span class="o">--</span><span class="n">v</span><span class="o">=</span><span class="mi">0</span> <span class="o">--</span><span class="n">vmodule</span><span class="o">=*/</span><span class="n">webrtc</span><span class="o">/*=</span><span class="mi">1</span> <span class="o">--</span><span class="n">use</span><span class="o">-</span><span class="n">fake</span><span class="o">-</span><span class="n">device</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">media</span><span class="o">-</span><span class="n">stream</span> <span class="o">--</span><span class="n">use</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">fake</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">capture</span><span class="o">=/</span><span class="n">Users</span><span class="o">/</span><span class="n">yafan</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">FourPeople_1280x720_60</span><span class="o">.</span><span class="n">y4m</span>
 </pre></div>
 </div>
-<p>参见 <a class="reference external" href="https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&amp;ref_topic=6314967#zippy=%2Cmac">https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&amp;ref_topic=6314967#zippy=%2Cmac</a></p>
+<ul class="simple">
+<li><p>参见 <a class="reference external" href="https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&amp;ref_topic=6314967#zippy=%2Cmac">https://support.google.com/chrome/a/answer/6271282?hl=zh-Hans&amp;ref_topic=6314967#zippy=%2Cmac</a></p></li>
+<li><p>日志文件位于 <cite>~/Library/Application Support/Chromium/chrome_debug.log</cite></p></li>
+</ul>
 </section>
 <section id="linux">
 <h3><a class="toc-backref" href="#id7">Linux 系统</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
-<p>参见 <a class="reference external" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/linux/build_instructions.md">https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/linux/build_instructions.md</a></p>
+<p>参见</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/linux/build_instructions.md">build_instructions</a></p></li>
+<li><p><a class="reference external" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/linux/debugging.md">debugging tips</a></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">chromium</span><span class="o">.</span><span class="n">googlesource</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chromium</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">depot_tools</span><span class="o">.</span><span class="n">git</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;$PATH:/home/ubuntu/depot_tools&quot;</span>
+<span class="n">mkdir</span> <span class="o">~/</span><span class="n">chromium</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">chromium</span>
+<span class="n">fetch</span> <span class="o">--</span><span class="n">nohooks</span> <span class="n">chromium</span>
+<span class="n">cd</span> <span class="n">src</span>
+<span class="o">./</span><span class="n">build</span><span class="o">/</span><span class="n">install</span><span class="o">-</span><span class="n">build</span><span class="o">-</span><span class="n">deps</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">gclient</span> <span class="n">runhooks</span>
+<span class="n">gn</span> <span class="n">args</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+
+<span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+
+<span class="n">autoninja</span> <span class="o">-</span><span class="n">C</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span> <span class="n">chrome</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>为了提高编译速度， 在 gn 的参数文件中填入如下编译参数</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">blink_symbol_level</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">dcheck_always_on</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">is_official_build</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">is_debug</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">enable_nacl</span> <span class="o">=</span> <span class="n">false</span>
+
+<span class="n">proprietary_codecs</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">ffmpeg_branding</span> <span class="o">=</span> <span class="s2">&quot;Chrome&quot;</span>
+</pre></div>
+</div>
+<p>启动测试</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">chromium</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+<span class="o">./</span><span class="n">chrome</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">logging</span> <span class="o">--</span><span class="n">v</span><span class="o">=</span><span class="mi">0</span> <span class="o">--</span><span class="n">vmodule</span><span class="o">=*/</span><span class="n">webrtc</span><span class="o">/*=</span><span class="mi">1</span> \
+<span class="o">--</span><span class="n">use</span><span class="o">-</span><span class="n">fake</span><span class="o">-</span><span class="n">device</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">media</span><span class="o">-</span><span class="n">stream</span> \
+<span class="o">--</span><span class="n">use</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="n">fake</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">capture</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">reference_less_video_test_file</span><span class="o">.</span><span class="n">y4m</span>
+</pre></div>
+</div>
+<p>Log file 位于 <cite>~/.config/chromium/chrome_debug.log</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">~/</span><span class="n">chromium</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="o">~/</span><span class="n">chromium</span>
+<span class="n">fetch</span> <span class="o">--</span><span class="n">nohooks</span> <span class="n">chromium</span>
+<span class="n">cd</span> <span class="n">src</span>
+<span class="o">./</span><span class="n">build</span><span class="o">/</span><span class="n">install</span><span class="o">-</span><span class="n">build</span><span class="o">-</span><span class="n">deps</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">gclient</span> <span class="n">runhooks</span>
+<span class="n">gn</span> <span class="n">args</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+<span class="n">gn</span> <span class="n">gen</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span>
+<span class="n">autoninja</span> <span class="o">-</span><span class="n">C</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span> <span class="n">chrome</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>out/default/args.gn</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">is_debug</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">dcheck_always_on</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">is_official_build</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">is_debug</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">enable_nacl</span> <span class="o">=</span> <span class="n">false</span>
+
+<span class="n">proprietary_codecs</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">ffmpeg_branding</span> <span class="o">=</span> <span class="s2">&quot;Chrome&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>编译和执行相关的单元测试</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">autoninja</span> <span class="o">-</span><span class="n">C</span> <span class="n">out</span><span class="o">/</span><span class="n">Default</span> <span class="n">unit_tests</span>
+<span class="n">out</span><span class="o">/</span><span class="n">Default</span><span class="o">/</span><span class="n">unit_tests</span> <span class="o">--</span><span class="n">gtest_filter</span><span class="o">=</span><span class="s2">&quot;PushClientTest.*&quot;</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="firefox">
