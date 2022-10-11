@@ -74,9 +74,9 @@ Installation and startup
 
 .. code-block::
 
-    wget http://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-0.9.59.tar.gz 
-    tar xvf libmicrohttpd-0.9.59.tar.gz 
-    cd libmicrohttpd-0.9.59 
+    wget http://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-0.9.59.tar.gz
+    tar xvf libmicrohttpd-0.9.59.tar.gz
+    cd libmicrohttpd-0.9.59
     ./configure --libdir=/usr/lib64
     make 
     sudo make install 
@@ -97,7 +97,7 @@ Installation and startup
 .. code-block::
 
     cd /opt/janus
-    ./bin/janus &
+    sudo nohup ./bin/janus &
 
     yum install nginx
     nginx
@@ -113,6 +113,131 @@ Installation and startup
     unix  3      [ ]         STREAM     CONNECTED     6894357  27849/./bin/janus
     unix  3      [ ]         STREAM     CONNECTED     6894356  27849/./bin/janus
 
+
+configuration
+===========================
+
+* janus.jcfg
+
+.. code-block::
+
+    diff --git a/janus.jcfg.sample b/janus.jcfg
+    index f2c71e8..15d4c1d 100644
+    --- a/janus.jcfg.sample
+    +++ b/janus.jcfg
+    @@ -13,7 +13,7 @@ general: {
+            # The next settings configure logging
+            #log_to_stdout = false                                  # Whether the Janus output should be written
+                                                                                            # to stdout or not (default=true)
+    -       #log_to_file = "/path/to/janus.log"             # Whether to use a log file or not
+    +       log_to_file = "/opt/janus/logs/janus.log"               # Whether to use a log file or not
+            debug_level = 4                                                 # Debug/logging level, valid values are 0-7
+            #debug_timestamps = true                                # Whether to show a timestamp for each log line
+            #debug_colors = false                                   # Whether colors should be disabled in the log
+    @@ -47,7 +47,7 @@ general: {
+                                                                            # without this, the Admin API MUST
+                                                                            # be enabled, as tokens are added and removed
+                                                                            # through messages sent there.
+    -       admin_secret = "janusoverlord"  # String that all Janus requests must contain
+    +       admin_secret = "P@ss1234"        # String that all Janus requests must contain
+                                                                            # to be accepted/authorized by the admin/monitor.
+                                                                            # only needed if you enabled the admin API
+                                                                            # in any of the available transports.
+    @@ -300,7 +300,7 @@ nat: {
+            # Multiple public IP addresses can be specified as a comma separated list
+            # if the Janus is deployed in a DMZ between two 1-1 NAT for internal and
+            # external users.
+    -       #nat_1_1_mapping = "1.2.3.4"
+    +       nat_1_1_mapping = "10.224.122.36"
+            #keep_private_host = true
+
+            # You can configure a TURN server in two different ways: specifying a
+    @@ -351,7 +351,7 @@ nat: {
+            #     ice_enforce_list = "eth0,192.168."
+            #     ice_enforce_list = "eth0,192.168.0.1"
+            # By default, no interface is enforced, meaning Janus will try to use them all.
+    -       #ice_enforce_list = "eth0"
+    +       ice_enforce_list = "ens3,10.224.122.36"
+
+
+* janus.transport.http.jcfg
+
+.. code-block::
+
+    diff --git a/janus.transport.http.jcfg.sample b/janus.transport.http.jcfg
+    index 37923c6..a5539cd 100644
+    --- a/janus.transport.http.jcfg.sample
+    +++ b/janus.transport.http.jcfg
+    @@ -15,8 +15,8 @@ general: {
+            port = 8088                                             # Web server HTTP port
+            #interface = "eth0"                             # Whether we should bind this server to a specific interface only
+            #ip = "192.168.0.1"                             # Whether we should bind this server to a specific IP address (v4 or v6) only
+    -       https = false                                   # Whether to enable HTTPS (default=false)
+    -       #secure_port = 8089                             # Web server HTTPS port, if enabled
+    +       https = true                                    # Whether to enable HTTPS (default=false)
+    +       secure_port = 8089                              # Web server HTTPS port, if enabled
+            #secure_interface = "eth0"              # Whether we should bind this server to a specific interface only
+            #secure_ip = "192.168.0.1"              # Whether we should bind this server to a specific IP address (v4 or v6) only
+            #acl = "127.,192.168.0."                # Only allow requests coming from this comma separated list of addresses
+    @@ -37,12 +37,12 @@ general: {
+    # endpoint is disabled by default, enable it by setting admin_http=true.
+    admin: {
+            admin_base_path = "/admin"                      # Base path to bind to in the admin/monitor web server (plain HTTP only)
+    -       admin_http = false                                      # Whether to enable the plain HTTP interface
+    +       admin_http = true                                       # Whether to enable the plain HTTP interface
+            admin_port = 7088                                       # Admin/monitor web server HTTP port
+            #admin_interface = "eth0"                       # Whether we should bind this server to a specific interface only
+            #admin_ip = "192.168.0.1"                       # Whether we should bind this server to a specific IP address (v4 or v6) only
+    -       admin_https = false                                     # Whether to enable HTTPS (default=false)
+    -       #admin_secure_port = 7889                       # Admin/monitor web server HTTPS port, if enabled
+    +       admin_https = true                                      # Whether to enable HTTPS (default=false)
+    +       admin_secure_port = 7889                        # Admin/monitor web server HTTPS port, if enabled
+            #admin_secure_interface = "eth0"        # Whether we should bind this server to a specific interface only
+            #admin_secure_ip = "192.168.0.1         # Whether we should bind this server to a specific IP address (v4 or v6) only
+            #admin_acl = "127.,192.168.0."          # Only allow requests coming from this comma separated list of addresses
+    @@ -67,8 +67,8 @@ cors: {
+    # You can also disable insecure protocols and ciphers by configuring the
+    # 'ciphers' property accordingly (no limitation by default).
+    certificates: {
+    -       #cert_pem = "/path/to/cert.pem"
+    -       #cert_key = "/path/to/key.pem"
+    +       cert_pem = "/opt/lampp/etc/ssl.crt/server.crt"
+    +       cert_key = "/opt/lampp/etc/ssl.key/server.key"
+            #cert_pwd = "secretpassphrase"
+            #ciphers = "PFS:-VERS-TLS1.0:-VERS-TLS1.1:-3DES-CBC:-ARCFOUR-128"
+    }
+
+
+* janus.transport.websockets.jcfg
+
+.. code-block::
+
+    diff --git a/janus.transport.websockets.jcfg.sample b/janus.transport.websockets.jcfg
+    index 073b8d1..49c6154 100644
+    --- a/janus.transport.websockets.jcfg.sample
+    +++ b/janus.transport.websockets.jcfg
+    @@ -12,8 +12,8 @@ general: {
+            #ws_interface = "eth0"                  # Whether we should bind this server to a specific interface only
+            #ws_ip = "192.168.0.1"                  # Whether we should bind this server to a specific IP address only
+            #ws_unix = "/run/ws.sock"               # Use WebSocket server over UNIX socket instead of TCP
+    -       wss = false                                             # Whether to enable secure WebSockets
+    -       #wss_port = 8989                                # WebSockets server secure port, if enabled
+    +       wss = true                                              # Whether to enable secure WebSockets
+    +       wss_port = 8989                         # WebSockets server secure port, if enabled
+            #wss_interface = "eth0"                 # Whether we should bind this server to a specific interface only
+            #wss_ip = "192.168.0.1"                 # Whether we should bind this server to a specific IP address only
+            #wss_unix = "/run/wss.sock"             # Use WebSocket server over UNIX socket instead of TCP
+    @@ -61,8 +61,8 @@ cors: {
+    # 'ciphers' property accordingly (no limitation by default).
+    # Examples of recommended cipher strings at https://cheatsheetseries.owasp.org/cheatsheets/TLS_Cipher_String_Cheat_Sheet.html
+    certificates: {
+    -       #cert_pem = "/path/to/cert.pem"
+    -       #cert_key = "/path/to/key.pem"
+    +       cert_pem = "/opt/lampp/etc/ssl.crt/server.crt"
+    +       cert_key = "/opt/lampp/etc/ssl.key/server.key"
+            #cert_pwd = "secretpassphrase"
+            #ciphers = "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
+    }
 
 usage and testing
 ===========================

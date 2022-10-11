@@ -18,7 +18,7 @@ WebRTC Tutorial
 
 Target readers
 =====================
-Students interested in webrtc technology, front-end and back-end engineering technicians
+Front-end or back-end engineers who is interested in webrtc technology,
 
 
 Features

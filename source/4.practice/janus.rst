@@ -97,7 +97,7 @@ Installation and startup
 .. code-block::
 
     cd /opt/janus
-    ./bin/janus &
+    sudo nohup ./bin/janus &
 
     yum install nginx
     nginx
@@ -208,7 +208,7 @@ configuration
     }
 
 
-* janus.websockets.jcfg
+* janus.transport.websockets.jcfg
 
 .. code-block::
 
