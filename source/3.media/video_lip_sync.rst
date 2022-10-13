@@ -43,17 +43,6 @@ This pair of time stamps communicates the relationship between the NTP time and 
 The sender calculates the relationship between its NTP timebase and the RTP media stream by observing the value of the RTP media capture clock and the NTP wall clock in real time. The clocks have both an offset and a scale relationship, according to the following equation:
 
 
-..
-
-RFC6051:  To allow   a receiver to synchronise the components of a multimedia session, a   compound RTCP packet containing an RTCP SR packet and an RTCP SDES
-packet with a CNAME item MUST be sent to each of the RTP sessions in   the multimedia session by each sender.
-
-.. code-block::
-
-      RTP/(RTP sample rate) = (NTP + offset) x scale
-
-
-
 
 先回顾一下 RTP packet 和 RTCP sender report
 
@@ -118,8 +107,30 @@ packet with a CNAME item MUST be sent to each of the RTP sessions in   the multi
 1. audio 包先来，video 包后来: audio 包放在 jitter buffer 时等一会儿，但是这个时间是有限的，音频的流畅是首先要保证的，视频跟不上可能降低视频的码率
 2. video 包先来，audio 包后来: video 包始终要等 audio 包来，这是为了让音视频同步要付出的
 
+
+具体步骤如下:
+
+1. Map the video RTP time stamp RTPv into the sender NTP time domain, using the mapping established by the RTP/NTP time stamp pairs in the video RTCP packets.
+
+2. From this NTP time stamp, calculate the corresponding audio RTP time stamp from the sender using the mapping established by the RTP/NTP time stamp pairs in the audio RTCP packets. At this point, the video RTP time stamp is mapped into the audio RTP timebase.
+
+3. From this audio RTP time stamp, calculate the corresponding time stamp in the audio device timebase by using the Krl offset. The result is a time stamp in the audio device timebase ATB.
+
+4. From ATB, calculate the corresponding time stamp in the video device timebase VTB using the offset AtoV.
+
+The receiver now ensures that the video frame with RTP time stamp RTPv will play on the video presentation device at the calculated local video device timebase VTB.
+
+
+.. code-block::
+
+      AtoV = Vtime - ATime/(audio sample rate)
+
+* ATB: Audio device TimeBase
+* VTB: Video device TimeBase
+
 Reference
 ===============
 * https://www.ciscopress.com/articles/article.asp?p=705533&seqNum=6
 * https://www.ccexpert.us/video-conferencing/using-rtcp-for-media-synchronization.html
+
 * `RFC6051`_: Rapid Synchronisation of RTP Flows
