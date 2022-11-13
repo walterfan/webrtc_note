@@ -18,15 +18,19 @@
 
    webrtc_demux
    webrtc_thread
-   webrtc_cc
-   webrtc_bw_probe
+
+   webrtc_bwe_gcc
+   webrtc_bwe_probe
+   webrtc_bwe_remb
+   webrtc_bwe_loss
+
    webrtc_pacer
 
    webrtc_sctp
    webrtc_rtp_rtcp_module
    webrtc_rtp_sender
    webrtc_sdp_offer_answer
-   webrtc_remb_code
+
    webrtc_rtx_code
    webrtc_nack_code
 
