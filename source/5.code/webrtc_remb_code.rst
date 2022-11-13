@@ -26,6 +26,112 @@ Overview
 * delay based controller on receiver side
 * loss based controller on sender side
 
+Flow
+=======================================
+
+这里应用了观察者模式， 当 `rtcp_receiver` 收到了 REMB 或者 TMMBR 消息后，可以通知观察者 `rtcp_bandwidth_observer`
+
+
+.. epigraph::
+
+   A receiver, translator, or mixer uses the Temporary Maximum Media Stream Bit Rate Request (TMMBR, "timber") to request a sender to limit the maximum bit rate for a media stream
+
+rtcp_bandwidth_observer 然后再通知 `NetworkController`
+
+
+* rtp_transport_controller_send.cc
+
+.. code-block:: c++
+
+   std::unique_ptr<NetworkControllerInterface> controller_
+      RTC_GUARDED_BY(task_queue_) RTC_PT_GUARDED_BY(task_queue_);
+
+   void RtpTransportControllerSend::OnReceivedEstimatedBitrate(uint32_t bitrate) {
+      RemoteBitrateReport msg;
+      msg.receive_time = Timestamp::Millis(clock_->TimeInMilliseconds());
+      msg.bandwidth = DataRate::BitsPerSec(bitrate);
+      task_queue_.RunOrPost([this, msg]() {
+         RTC_DCHECK_RUN_ON(&task_queue_);
+         if (controller_)
+            PostUpdates(controller_->OnRemoteBitrateReport(msg));
+      });
+   }
+
+之后回调到 GoogCcNetworkController 也就 GCC 的核心类
+
+.. code-block::
+
+   NetworkControlUpdate GoogCcNetworkController::OnRemoteBitrateReport(
+         RemoteBitrateReport msg) {
+      if (packet_feedback_only_) {
+         RTC_LOG(LS_ERROR) << "Received REMB for packet feedback only GoogCC";
+         return NetworkControlUpdate();
+      }
+      bandwidth_estimation_->UpdateReceiverEstimate(msg.receive_time,
+                                                      msg.bandwidth);
+      BWE_TEST_LOGGING_PLOT(1, "REMB_kbps", msg.receive_time.ms(),
+                              msg.bandwidth.bps() / 1000);
+      return NetworkControlUpdate();
+   }
+
+* third_party/webrtc/modules/congestion_controller/goog_cc/send_side_bandwidth_estimation.cc
+
+.. code-block:: c++
+
+   void SendSideBandwidthEstimation::UpdateReceiverEstimate(Timestamp at_time,
+                                                            DataRate bandwidth) {
+      // TODO(srte): Ensure caller passes PlusInfinity, not zero, to represent no
+      // limitation.
+      receiver_limit_ = bandwidth.IsZero() ? DataRate::PlusInfinity() : bandwidth;
+      ApplyTargetLimits(at_time);
+   }
+
+
+   void SendSideBandwidthEstimation::UpdateTargetBitrate(DataRate new_bitrate,
+                                                         Timestamp at_time) {
+      new_bitrate = std::min(new_bitrate, GetUpperLimit());
+      if (new_bitrate < min_bitrate_configured_) {
+         MaybeLogLowBitrateWarning(new_bitrate, at_time);
+         new_bitrate = min_bitrate_configured_;
+      }
+      current_target_ = new_bitrate;
+      MaybeLogLossBasedEvent(at_time);
+      link_capacity_.OnRateUpdate(acknowledged_rate_, current_target_, at_time);
+   }
+
+   void SendSideBandwidthEstimation::ApplyTargetLimits(Timestamp at_time) {
+      UpdateTargetBitrate(current_target_, at_time);
+   }
+
+   DataRate SendSideBandwidthEstimation::GetUpperLimit() const {
+      DataRate upper_limit = delay_based_limit_;
+      if (disable_receiver_limit_caps_only_)
+         upper_limit = std::min(upper_limit, receiver_limit_);
+      return std::min(upper_limit, max_bitrate_configured_);
+   }
+
+
+注：这里的 GetUpperLimit() 中应用了 REMB 设定的最大带宽， 和当前带宽的最大值进行比较，取其较小的值进行速率调整
+
+
+
+.. code-block:: c++
+
+   void LinkCapacityTracker::OnRateUpdate(absl::optional<DataRate> acknowledged,
+                                          DataRate target,
+                                          Timestamp at_time) {
+      if (!acknowledged)
+         return;
+      DataRate acknowledged_target = std::min(*acknowledged, target);
+      if (acknowledged_target.bps() > capacity_estimate_bps_) {
+         TimeDelta delta = at_time - last_link_capacity_update_;
+         double alpha = delta.IsFinite() ? exp(-(delta / tracking_rate.Get())) : 0;
+         capacity_estimate_bps_ = alpha * capacity_estimate_bps_ +
+                                 (1 - alpha) * acknowledged_target.bps<double>();
+      }
+      last_link_capacity_update_ = at_time;
+   }
+
 
 Algorigthm
 =======================================
@@ -39,6 +145,7 @@ Algorigthm
 由于延迟梯度的测量精度很小, 为了避免网络噪音带来的误差, 利用了卡尔曼滤波来平滑延迟梯度的测量结果。
 
 WebRTC的实现中, 并不是单纯的测量单个数据包彼此之间的延迟梯度, 而是将数据包按发送时间间隔和到达时间间隔分组, 计算组间的整体延迟梯度。分组规则是：
+
 1. 发送时间间隔小于5ms的数据包被归为一组,
 
    这是由于WebRTC的发送端实现了一个平滑发送模块, 该模块的发送间隔是5ms发送一批数据包。

@@ -16,3 +16,4 @@
    mathematics
    statistics
    scientific_calculation
+   jenkins
