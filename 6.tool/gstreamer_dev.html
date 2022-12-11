@@ -7,6 +7,7 @@
   <title>GStreamer Development &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -133,7 +134,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-10-11</p></td>
+<td><p>2022-12-09</p></td>
 </tr>
 </tbody>
 </table>
@@ -212,16 +213,16 @@
 <span class="w">   </span><span class="n">gchar</span><span class="w"> </span><span class="o">*</span><span class="n">debug_info</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">   </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">GST_MESSAGE_TYPE</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">GST_MESSAGE_ERROR</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">GST_MESSAGE_ERROR</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="n">gst_message_parse_error</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">err</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">debug_info</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">g_printerr</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Error received from element %s: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">            </span><span class="n">GST_OBJECT_NAME</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">src</span><span class="p">),</span><span class="w"> </span><span class="n">err</span><span class="o">-&gt;</span><span class="n">message</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">g_printerr</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Debugging information: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">debug_info</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nl">debug_info</span> <span class="p">:</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="n">debug_info</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">debug_info</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;none&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">g_clear_error</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">err</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="n">g_free</span><span class="w"> </span><span class="p">(</span><span class="n">debug_info</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">GST_MESSAGE_EOS</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">GST_MESSAGE_EOS</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="n">g_print</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;End-Of-Stream reached.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="w">      </span><span class="k">default</span><span class="o">:</span><span class="w"></span>

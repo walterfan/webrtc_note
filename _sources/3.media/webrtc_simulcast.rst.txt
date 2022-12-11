@@ -21,11 +21,19 @@ WebRTC Simulcast
 
 概述
 ===========================
-我们的电脑有强大的多媒体能力，有多个媒体源 - 麦克风，摄像头，电脑屏幕，可以发送多路的音频，视频以及共享屏幕内容。
-也可能接多个摄像头，几个外接显示器。每个摄像头或屏幕可以分别分送不同的分辨率和帧率。
+我们的电脑有强大的多媒体能力, 有多个媒体源 - 麦克风, 摄像头, 电脑屏幕, 可以发送多路的音频, 视频以及共享屏幕内容。
+也可能接多个摄像头, 几个外接显示器。每个摄像头或屏幕可以分别分送不同的分辨率和帧率。
 
 
-Simulcast 可翻译为联播，同播或并播，一个摄像头可以发送不同分辨率（spatial quality）或帧率(temporal quality)的视频流，这些流可以在一个 RTP 会话中传送， 不同的分辨率使用不同的 SSRC, 不同的帧率可以使用相同的 SSRC（SST） 或者不同的 SSRC（MST）。这些流可以共同使用一个相同的 CSRC 或者一个扩展的 ID
+
+什么叫 Simulcast
+===========================
+
+In some application scenarios, it may be desirable to send multiple differently encoded versions of the same media source in different RTP streams.
+
+ Simulcast is defined as the act of simultaneously sending multiple different encoded streams of the same media source
+
+Simulcast 可翻译为联播, 同播或并播, 一个摄像头可以发送不同分辨率 (spatial quality) 或帧率(temporal quality)的视频流, 这些流可以在一个 RTP 会话中传送,  不同的分辨率使用不同的 SSRC, 不同的帧率可以使用相同的 SSRC (SST)  或者不同的 SSRC (MST) 。这些流可以共同使用一个相同的 CSRC 或者一个扩展的 ID
 
 .. code-block::
 
@@ -65,9 +73,9 @@ Simulcast 可翻译为联播，同播或并播，一个摄像头可以发送不�
 SDP grouping Framework
 ===============================================
 
-SDP 中包含多个 m-line 代表多路媒体流，每个媒体流用 mid 来标识，但是媒体流之间的关系如何描述呢？
+SDP 中包含多个 m-line 代表多路媒体流, 每个媒体流用 mid 来标识, 但是媒体流之间的关系如何描述呢？
 
-RFC5888 中提出了分组的方法，将这些媒体流分为一个个的组
+RFC5888 中提出了分组的方法, 将这些媒体流分为一个个的组
 
 例如
 
@@ -122,17 +130,17 @@ Source-Specific Media Attributes in SDP
    a=ssrc-group:<semantics> <ssrc-id> ...
 
 
-SDP 媒体属性“ssrc-group”表示一个 RTP 会话的几个来源之间的关系。 它类似于上面提到的 "SDP grouping Framework" 的会话级属性，它表达了 SDP 多媒体会话中媒体流之间的关系（即，几个逻辑相关的 RTP 会话之间的关系）。
+SDP 媒体属性“ssrc-group”表示一个 RTP 会话的几个来源之间的关系。 它类似于上面提到的 "SDP grouping Framework" 的会话级属性, 它表达了 SDP 多媒体会话中媒体流之间的关系 (即, 几个逻辑相关的 RTP 会话之间的关系) 。
 
-由于源已经由它们的 SSRC ID 标识，因此不需要类似于“mid”属性的属性； 源组由它们的 SSRC ID 直接标识
+由于源已经由它们的 SSRC ID 标识, 因此不需要类似于“mid”属性的属性； 源组由它们的 SSRC ID 直接标识
 
 
-<semantics> 参数取自“组”属性 [RFC3388] 的规范。 为“ssrc-group”属性定义的初始语义值是 FID（流标识）[RFC3388] 和 FEC（前向纠错）[RFC4756]。 在每种情况下，分组源之间的关系与使用 SDP“组”属性分组的媒体流中的相应源之间的关系相同。
+<semantics> 参数取自“组”属性 [RFC3388] 的规范。 为“ssrc-group”属性定义的初始语义值是 FID (流标识) [RFC3388] 和 FEC (前向纠错) [RFC4756]。 在每种情况下, 分组源之间的关系与使用 SDP“组”属性分组的媒体流中的相应源之间的关系相同。
 
 Example
 -------------------------------------
 
-例1. 演示了一个视频流，其中一个参会者（由单个 CNAME 标识）具有多个摄像头。 来源可以由 RTCP Source Description (SDES) 进一步区分
+例1. 演示了一个视频流, 其中一个参会者 (由单个 CNAME 标识) 具有多个摄像头。 来源可以由 RTCP Source Description (SDES) 进一步区分
 
 .. code-block::
 
@@ -143,7 +151,7 @@ Example
 
 
 
-例2. 演示了用于 RTP 重传 [RFC4588] 的源之间的关系， 当 SSRC 多路复用用于 RTP 重传时，这可以防止将原始源与重传源相关联的复杂性，如 [RFC4588] 的第 5.3 节所述
+例2. 演示了用于 RTP 重传 [RFC4588] 的源之间的关系,  当 SSRC 多路复用用于 RTP 重传时, 这可以防止将原始源与重传源相关联的复杂性, 如 [RFC4588] 的第 5.3 节所述
 
 .. code-block::
 
@@ -164,13 +172,13 @@ Negotiating Media Multiplexing Using SDP
 ================================================
 
 
-RFC 8843 Negotiating Media Multiplexing Using SDP 中提出了一个新的 SDP 分组框架 [RFC5888] 扩展，“BUNDLE”。
+RFC 8843 Negotiating Media Multiplexing Using SDP 中提出了一个新的 SDP 分组框架 [RFC5888] 扩展, “BUNDLE”。
 
-BUNDLE 扩展可以与 SDP 提供/应答机制一起使用来协商一组“m=”部分，这些部分将成为 BUNDLE group 的一部分。
+BUNDLE 扩展可以与 SDP 提供/应答机制一起使用来协商一组“m=”部分, 这些部分将成为 BUNDLE group 的一部分。
 
-在 BUNDLE group 中，每个“m=”部分使用 BUNDLE 传输来发送和接收捆绑媒体。每个端点使用一个地址：端口组合来发送和接收捆绑的媒体。
+在 BUNDLE group 中, 每个“m=”部分使用 BUNDLE 传输来发送和接收捆绑媒体。每个端点使用一个地址：端口组合来发送和接收捆绑的媒体。
 
-BUNDLE 扩展使用具有“BUNDLE”语义值 [RFC5888] 的 SDP 'group' 属性来指示。为每个捆绑的“m=”部分分配一个标识标签，每个标识标签 mid 都列在 SDP 'group:BUNDLE' 属性标识标签列表中。
+BUNDLE 扩展使用具有“BUNDLE”语义值 [RFC5888] 的 SDP 'group' 属性来指示。为每个捆绑的“m=”部分分配一个标识标签, 每个标识标签 mid 都列在 SDP 'group:BUNDLE' 属性标识标签列表中。
 
 标识标签列表中列出的标识标签的每个“m=”部分都与给定的 BUNDLE 组相关联。 SDP 主体可以包含多个 BUNDLE 组。
 
@@ -179,7 +187,7 @@ BUNDLE 扩展使用具有“BUNDLE”语义值 [RFC5888] 的 SDP 'group' 属性�
 实现 SDP bundle negotiation extension 的 WebRTC 端点将使用 SDP SDP Grouping Framework 中的 "mid" 属性来识别媒体流。
 这样的端点必须实现 RFC8843 中描述的 RTP MID 头扩展。
 
-此 RTP 扩展头 使用 RFC828 中描述的通用包头扩展框架，因此需要在使用之前进行协商。
+此 RTP 扩展头 使用 RFC828 中描述的通用包头扩展框架, 因此需要在使用之前进行协商。
 
 
 Example
@@ -244,10 +252,10 @@ Example
 Using Simulcast in SDP and RTP Sessions
 ===============================================================================
 
-RTP 会话中会包含多路的媒体流 media stream，每一路流由 ssrc 这个 RTP 头域来标识。不过，SSRC 和媒体流的关联并不是恒定的.
-在一个会话中，，这些 stream 可以用一些标识符来区分，包括 CNAMES, MSID（RFC8830）。
+RTP 会话中会包含多路的媒体流 media stream, 每一路流由 ssrc 这个 RTP 头域来标识。不过, SSRC 和媒体流的关联并不是恒定的.
+在一个会话中, , 这些 stream 可以用一些标识符来区分, 包括 CNAMES, MSID (RFC8830) 。
 
-不幸的是，它们在同一时刻可能出现在多路流中，都不合适用来标识一个独立的媒体流
+不幸的是, 它们在同一时刻可能出现在多路流中, 都不合适用来标识一个独立的媒体流
 
 * RFC8852 RTP Stream Identifier Source Description (SDES) 定义了 RTCP SDES 消息扩展和 RID 属性
 * RFC7941 RTP Header Extension for the RTP Control Protocol (RTCP) Source Description Items 中定义了相应的 RTP 头扩展
@@ -261,8 +269,8 @@ SDP Example
 因为 `a=simulcast:send 1;2,3 recv 4` , 所以我们知道提议者能够发送两路 media stream (rid=1 和 rid=2或3),
 接收一路 media stream (rid=4 )
 
-1) 一个 H.264 编码流，分辨率高达 720p
-2) 另一个流编码为 H.264 或 VP8，最大分辨率为 320x180 像素
+1) 一个 H.264 编码流, 分辨率高达 720p
+2) 另一个流编码为 H.264 或 VP8, 最大分辨率为 320x180 像素
 3) 提议者者可以接收一个最大 720p 分辨率的 H.264 流
 
 

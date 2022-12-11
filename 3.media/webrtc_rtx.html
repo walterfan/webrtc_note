@@ -7,6 +7,7 @@
   <title>WebRTC RTX &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -152,7 +153,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-10-11</p></td>
+<td><p>2022-12-09</p></td>
 </tr>
 </tbody>
 </table>
@@ -296,7 +297,7 @@ sequence number to detect lost packets.</p>
 </ul>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Settings for ULPFEC forward error correction.</span>
 <span class="c1">// Set the payload types to &#39;-1&#39; to disable.</span>
-<span class="k">struct</span> <span class="nc">UlpfecConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">UlpfecConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="n">UlpfecConfig</span><span class="p">()</span><span class="w"></span>
 <span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">ulpfec_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">),</span><span class="w"></span>
 <span class="w">        </span><span class="n">red_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">),</span><span class="w"></span>
@@ -320,7 +321,7 @@ sequence number to detect lost packets.</p>
 </ul>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Settings for RTP retransmission payload format, see RFC 4588 for</span>
 <span class="c1">// details.</span>
-<span class="k">struct</span> <span class="nc">Rtx</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Rtx</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="n">Rtx</span><span class="p">();</span><span class="w"></span>
 <span class="w">  </span><span class="n">Rtx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Rtx</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="o">~</span><span class="n">Rtx</span><span class="p">();</span><span class="w"></span>
@@ -336,11 +337,11 @@ sequence number to detect lost packets.</p>
 <ul class="simple">
 <li><p>RtpRtcpInterface</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RtpRtcpInterface</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">RtcpFeedbackSenderInterface</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RtpRtcpInterface</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">RtcpFeedbackSenderInterface</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="k">public</span><span class="o">:</span><span class="w"></span>
 <span class="w">  </span><span class="c1">//...</span>
 
-<span class="w">    </span><span class="k">struct</span> <span class="nc">Configuration</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">Configuration</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
 <span class="w">      </span><span class="c1">// Called when the receiver sends a loss notification.</span>
 <span class="w">      </span><span class="n">RtcpLossNotificationObserver</span><span class="o">*</span><span class="w"> </span><span class="n">rtcp_loss_notification_observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>

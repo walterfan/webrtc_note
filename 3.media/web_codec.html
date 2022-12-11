@@ -7,6 +7,7 @@
   <title>Web Codecs &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -128,7 +129,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-10-11</p></td>
+<td><p>2022-12-09</p></td>
 </tr>
 </tbody>
 </table>
@@ -215,170 +216,170 @@
 <p>Represents an individual image track.</p>
 <section id="audiodecoder-interface">
 <h3><a class="toc-backref" href="#id6">AudioDecoder Interface</a><a class="headerlink" href="#audiodecoder-interface" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span> <span class="nx">SecureContext</span><span class="p">]</span>
-<span class="kr">interface</span> <span class="nx">AudioDecoder</span> <span class="p">{</span>
-    <span class="kr">constructor</span><span class="p">(</span><span class="nx">AudioDecoderInit</span> <span class="nx">init</span><span class="p">);</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span><span class="w"></span>
+<span class="kr">interface</span><span class="w"> </span><span class="nx">AudioDecoder</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">AudioDecoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">CodecState</span> <span class="nx">state</span><span class="p">;</span>
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="kr">long</span> <span class="nx">decodeQueueSize</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">CodecState</span><span class="w"> </span><span class="nx">state</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">decodeQueueSize</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kc">undefined</span> <span class="nx">configure</span><span class="p">(</span><span class="nx">AudioDecoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-    <span class="kc">undefined</span> <span class="nx">decode</span><span class="p">(</span><span class="nx">EncodedAudioChunk</span> <span class="nx">chunk</span><span class="p">);</span>
-    <span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span> <span class="nx">flush</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">reset</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">close</span><span class="p">();</span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">configure</span><span class="p">(</span><span class="nx">AudioDecoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">decode</span><span class="p">(</span><span class="nx">EncodedAudioChunk</span><span class="w"> </span><span class="nx">chunk</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">flush</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">reset</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">close</span><span class="p">();</span><span class="w"></span>
 
-    <span class="k">static</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">AudioDecoderSupport</span><span class="o">&gt;</span> <span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">AudioDecoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">AudioDecoderSupport</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">AudioDecoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">dictionary</span> <span class="nx">AudioDecoderInit</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">AudioDataOutputCallback</span> <span class="nx">output</span><span class="p">;</span>
-    <span class="nx">required</span> <span class="nx">WebCodecsErrorCallback</span> <span class="nx">error</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="nx">dictionary</span><span class="w"> </span><span class="nx">AudioDecoderInit</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">AudioDataOutputCallback</span><span class="w"> </span><span class="nx">output</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">WebCodecsErrorCallback</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">callback</span> <span class="nx">AudioDataOutputCallback</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">(</span><span class="nx">AudioData</span> <span class="nx">output</span><span class="p">);</span>
+<span class="nx">callback</span><span class="w"> </span><span class="nx">AudioDataOutputCallback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">undefined</span><span class="p">(</span><span class="nx">AudioData</span><span class="w"> </span><span class="nx">output</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="videodecoder-interface">
 <h3><a class="toc-backref" href="#id7">VideoDecoder Interface</a><a class="headerlink" href="#videodecoder-interface" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span> <span class="nx">SecureContext</span><span class="p">]</span>
-<span class="kr">interface</span> <span class="nx">VideoDecoder</span> <span class="p">{</span>
-    <span class="kr">constructor</span><span class="p">(</span><span class="nx">VideoDecoderInit</span> <span class="nx">init</span><span class="p">);</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span><span class="w"></span>
+<span class="kr">interface</span><span class="w"> </span><span class="nx">VideoDecoder</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">VideoDecoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">CodecState</span> <span class="nx">state</span><span class="p">;</span>
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="kr">long</span> <span class="nx">decodeQueueSize</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">CodecState</span><span class="w"> </span><span class="nx">state</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">decodeQueueSize</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kc">undefined</span> <span class="nx">configure</span><span class="p">(</span><span class="nx">VideoDecoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-    <span class="kc">undefined</span> <span class="nx">decode</span><span class="p">(</span><span class="nx">EncodedVideoChunk</span> <span class="nx">chunk</span><span class="p">);</span>
-    <span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span> <span class="nx">flush</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">reset</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">close</span><span class="p">();</span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">configure</span><span class="p">(</span><span class="nx">VideoDecoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">decode</span><span class="p">(</span><span class="nx">EncodedVideoChunk</span><span class="w"> </span><span class="nx">chunk</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">flush</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">reset</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">close</span><span class="p">();</span><span class="w"></span>
 
-    <span class="k">static</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">VideoDecoderSupport</span><span class="o">&gt;</span> <span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">VideoDecoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">VideoDecoderSupport</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">VideoDecoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">dictionary</span> <span class="nx">VideoDecoderInit</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">VideoFrameOutputCallback</span> <span class="nx">output</span><span class="p">;</span>
-    <span class="nx">required</span> <span class="nx">WebCodecsErrorCallback</span> <span class="nx">error</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="nx">dictionary</span><span class="w"> </span><span class="nx">VideoDecoderInit</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">VideoFrameOutputCallback</span><span class="w"> </span><span class="nx">output</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">WebCodecsErrorCallback</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">callback</span> <span class="nx">VideoFrameOutputCallback</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">(</span><span class="nx">VideoFrame</span> <span class="nx">output</span><span class="p">);</span>
+<span class="nx">callback</span><span class="w"> </span><span class="nx">VideoFrameOutputCallback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">undefined</span><span class="p">(</span><span class="nx">VideoFrame</span><span class="w"> </span><span class="nx">output</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="audioencoder-interface">
 <h3><a class="toc-backref" href="#id8">AudioEncoder Interface</a><a class="headerlink" href="#audioencoder-interface" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span> <span class="nx">SecureContext</span><span class="p">]</span>
-<span class="kr">interface</span> <span class="nx">AudioEncoder</span> <span class="p">{</span>
-    <span class="kr">constructor</span><span class="p">(</span><span class="nx">AudioEncoderInit</span> <span class="nx">init</span><span class="p">);</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span><span class="w"></span>
+<span class="kr">interface</span><span class="w"> </span><span class="nx">AudioEncoder</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">AudioEncoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">CodecState</span> <span class="nx">state</span><span class="p">;</span>
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="kr">long</span> <span class="nx">encodeQueueSize</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">CodecState</span><span class="w"> </span><span class="nx">state</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">encodeQueueSize</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kc">undefined</span> <span class="nx">configure</span><span class="p">(</span><span class="nx">AudioEncoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-    <span class="kc">undefined</span> <span class="nx">encode</span><span class="p">(</span><span class="nx">AudioData</span> <span class="nx">data</span><span class="p">);</span>
-    <span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span> <span class="nx">flush</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">reset</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">close</span><span class="p">();</span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">configure</span><span class="p">(</span><span class="nx">AudioEncoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">encode</span><span class="p">(</span><span class="nx">AudioData</span><span class="w"> </span><span class="nx">data</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">flush</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">reset</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">close</span><span class="p">();</span><span class="w"></span>
 
-    <span class="k">static</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">AudioEncoderSupport</span><span class="o">&gt;</span> <span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">AudioEncoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">AudioEncoderSupport</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">AudioEncoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">dictionary</span> <span class="nx">AudioEncoderInit</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">EncodedAudioChunkOutputCallback</span> <span class="nx">output</span><span class="p">;</span>
-    <span class="nx">required</span> <span class="nx">WebCodecsErrorCallback</span> <span class="nx">error</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="nx">dictionary</span><span class="w"> </span><span class="nx">AudioEncoderInit</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">EncodedAudioChunkOutputCallback</span><span class="w"> </span><span class="nx">output</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">WebCodecsErrorCallback</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">callback</span> <span class="nx">EncodedAudioChunkOutputCallback</span> <span class="o">=</span>
-    <span class="kc">undefined</span> <span class="p">(</span><span class="nx">EncodedAudioChunk</span> <span class="nx">output</span><span class="p">,</span>
-            <span class="nx">optional</span> <span class="nx">EncodedAudioChunkMetadata</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{});</span>
+<span class="nx">callback</span><span class="w"> </span><span class="nx">EncodedAudioChunkOutputCallback</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="p">(</span><span class="nx">EncodedAudioChunk</span><span class="w"> </span><span class="nx">output</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nx">optional</span><span class="w"> </span><span class="nx">EncodedAudioChunkMetadata</span><span class="w"> </span><span class="nx">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="videoencoder-interface">
 <h3><a class="toc-backref" href="#id9">VideoEncoder Interface</a><a class="headerlink" href="#videoencoder-interface" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span> <span class="nx">SecureContext</span><span class="p">]</span>
-<span class="kr">interface</span> <span class="nx">VideoEncoder</span> <span class="p">{</span>
-    <span class="kr">constructor</span><span class="p">(</span><span class="nx">VideoEncoderInit</span> <span class="nx">init</span><span class="p">);</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span><span class="w"></span>
+<span class="kr">interface</span><span class="w"> </span><span class="nx">VideoEncoder</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">VideoEncoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">CodecState</span> <span class="nx">state</span><span class="p">;</span>
-    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="kr">long</span> <span class="nx">encodeQueueSize</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">CodecState</span><span class="w"> </span><span class="nx">state</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">encodeQueueSize</span><span class="p">;</span><span class="w"></span>
 
-    <span class="kc">undefined</span> <span class="nx">configure</span><span class="p">(</span><span class="nx">VideoEncoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-    <span class="kc">undefined</span> <span class="nx">encode</span><span class="p">(</span><span class="nx">VideoFrame</span> <span class="nx">frame</span><span class="p">,</span> <span class="nx">optional</span> <span class="nx">VideoEncoderEncodeOptions</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{});</span>
-    <span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span> <span class="nx">flush</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">reset</span><span class="p">();</span>
-    <span class="kc">undefined</span> <span class="nx">close</span><span class="p">();</span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">configure</span><span class="p">(</span><span class="nx">VideoEncoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">encode</span><span class="p">(</span><span class="nx">VideoFrame</span><span class="w"> </span><span class="nx">frame</span><span class="p">,</span><span class="w"> </span><span class="nx">optional</span><span class="w"> </span><span class="nx">VideoEncoderEncodeOptions</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span><span class="w"></span>
+<span class="w">    </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">flush</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">reset</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">close</span><span class="p">();</span><span class="w"></span>
 
-    <span class="k">static</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">boolean</span><span class="o">&gt;</span> <span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">VideoEncoderConfig</span> <span class="nx">config</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">isConfigSupported</span><span class="p">(</span><span class="nx">VideoEncoderConfig</span><span class="w"> </span><span class="nx">config</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">dictionary</span> <span class="nx">VideoEncoderInit</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">EncodedVideoChunkOutputCallback</span> <span class="nx">output</span><span class="p">;</span>
-    <span class="nx">required</span> <span class="nx">WebCodecsErrorCallback</span> <span class="nx">error</span><span class="p">;</span>
-<span class="p">};</span>
+<span class="nx">dictionary</span><span class="w"> </span><span class="nx">VideoEncoderInit</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">EncodedVideoChunkOutputCallback</span><span class="w"> </span><span class="nx">output</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">WebCodecsErrorCallback</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="nx">callback</span> <span class="nx">EncodedVideoChunkOutputCallback</span> <span class="o">=</span>
-    <span class="kc">undefined</span> <span class="p">(</span><span class="nx">EncodedVideoChunk</span> <span class="nx">chunk</span><span class="p">,</span>
-            <span class="nx">optional</span> <span class="nx">EncodedVideoChunkMetadata</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{});</span>
+<span class="nx">callback</span><span class="w"> </span><span class="nx">EncodedVideoChunkOutputCallback</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="p">(</span><span class="nx">EncodedVideoChunk</span><span class="w"> </span><span class="nx">chunk</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nx">optional</span><span class="w"> </span><span class="nx">EncodedVideoChunkMetadata</span><span class="w"> </span><span class="nx">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="audiodecoderconfig">
 <h3><a class="toc-backref" href="#id10">AudioDecoderConfig</a><a class="headerlink" href="#audiodecoderconfig" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span> <span class="nx">AudioDecoderConfig</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">DOMString</span> <span class="nx">codec</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">required</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">sampleRate</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">required</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">numberOfChannels</span><span class="p">;</span>
-    <span class="nx">BufferSource</span> <span class="nx">description</span><span class="p">;</span>
-<span class="p">};</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">AudioDecoderConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">required</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">sampleRate</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">required</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">numberOfChannels</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">BufferSource</span><span class="w"> </span><span class="nx">description</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="videodecoderconfig">
 <h3><a class="toc-backref" href="#id11">VideoDecoderConfig</a><a class="headerlink" href="#videodecoderconfig" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span> <span class="nx">VideoDecoderConfig</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">DOMString</span> <span class="nx">codec</span><span class="p">;</span>
-    <span class="nx">BufferSource</span> <span class="nx">description</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">codedWidth</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">codedHeight</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">displayAspectWidth</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">displayAspectHeight</span><span class="p">;</span>
-    <span class="nx">VideoColorSpaceInit</span> <span class="nx">colorSpace</span><span class="p">;</span>
-    <span class="nx">HardwareAcceleration</span> <span class="nx">hardwareAcceleration</span> <span class="o">=</span> <span class="s2">&quot;no-preference&quot;</span><span class="p">;</span>
-    <span class="kr">boolean</span> <span class="nx">optimizeForLatency</span><span class="p">;</span>
-<span class="p">};</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">VideoDecoderConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">BufferSource</span><span class="w"> </span><span class="nx">description</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">codedWidth</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">codedHeight</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">displayAspectWidth</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">displayAspectHeight</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">VideoColorSpaceInit</span><span class="w"> </span><span class="nx">colorSpace</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">HardwareAcceleration</span><span class="w"> </span><span class="nx">hardwareAcceleration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;no-preference&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kr">boolean</span><span class="w"> </span><span class="nx">optimizeForLatency</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="audioencoderconfig">
 <h3><a class="toc-backref" href="#id12">AudioEncoderConfig</a><a class="headerlink" href="#audioencoderconfig" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span> <span class="nx">AudioEncoderConfig</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">DOMString</span> <span class="nx">codec</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">sampleRate</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">numberOfChannels</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="kr">long</span> <span class="nx">bitrate</span><span class="p">;</span>
-<span class="p">};</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">AudioEncoderConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">sampleRate</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">numberOfChannels</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">bitrate</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
 <section id="videoencoderconfig">
 <h3><a class="toc-backref" href="#id13">VideoEncoderConfig</a><a class="headerlink" href="#videoencoderconfig" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span> <span class="nx">VideoEncoderConfig</span> <span class="p">{</span>
-    <span class="nx">required</span> <span class="nx">DOMString</span> <span class="nx">codec</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">required</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">width</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">required</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">height</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">displayWidth</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="nx">displayHeight</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="nx">unsigned</span> <span class="kr">long</span> <span class="kr">long</span> <span class="nx">bitrate</span><span class="p">;</span>
-    <span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span> <span class="kr">double</span> <span class="nx">framerate</span><span class="p">;</span>
-    <span class="nx">HardwareAcceleration</span> <span class="nx">hardwareAcceleration</span> <span class="o">=</span> <span class="s2">&quot;no-preference&quot;</span><span class="p">;</span>
-    <span class="nx">AlphaOption</span> <span class="nx">alpha</span> <span class="o">=</span> <span class="s2">&quot;discard&quot;</span><span class="p">;</span>
-    <span class="nx">DOMString</span> <span class="nx">scalabilityMode</span><span class="p">;</span>
-    <span class="nx">BitrateMode</span> <span class="nx">bitrateMode</span> <span class="o">=</span> <span class="s2">&quot;variable&quot;</span><span class="p">;</span>
-    <span class="nx">LatencyMode</span> <span class="nx">latencyMode</span> <span class="o">=</span> <span class="s2">&quot;quality&quot;</span><span class="p">;</span>
-<span class="p">};</span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">VideoEncoderConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">required</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">width</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">required</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">height</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">displayWidth</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">displayHeight</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">bitrate</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="kr">double</span><span class="w"> </span><span class="nx">framerate</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">HardwareAcceleration</span><span class="w"> </span><span class="nx">hardwareAcceleration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;no-preference&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">AlphaOption</span><span class="w"> </span><span class="nx">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;discard&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">scalabilityMode</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">BitrateMode</span><span class="w"> </span><span class="nx">bitrateMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;variable&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">LatencyMode</span><span class="w"> </span><span class="nx">latencyMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;quality&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 </section>

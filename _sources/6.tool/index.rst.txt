@@ -21,11 +21,14 @@
    perf
    tcpdump
    wireshark
-   
+
    network_simulator
-   
+
    analytics
    cookbook
    buildtools
    docker
    lal
+   selenium
+   fuzzer
+   kitty
