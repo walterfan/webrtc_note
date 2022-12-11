@@ -21,6 +21,13 @@ HTTP Live Streaming
 
 简介
 =======================================
+A streaming protocol specifically dictates how streaming media is broken up and transmitted across a network.
+
+* HTTP Live Streaming (HLS)
+* Real-Time Messaging Protocol (RTMP)
+* Real-Time Streaming Protocol (RTSP)
+* WebRTC
+* Secure Reliable Transport (SRT)
 
 
 video streaming 协议回顾
@@ -67,7 +74,14 @@ Performance
 HLS may have 10s above delay, need low latency HLS
 
 
+mp4 --> hls.m3u8 + ts
 
+
+mp4
+=========================
+* normal mp4
+* fast start noraml mp4
+* fragment mp4
 
 Reference
 =======================================

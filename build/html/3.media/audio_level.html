@@ -7,6 +7,7 @@
   <title>Audio Level &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -143,7 +144,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-10-11</p></td>
+<td><p>2022-12-09</p></td>
 </tr>
 </tbody>
 </table>
@@ -317,7 +318,7 @@
 <div class="header docutils container">
 <p><strong>显示/隐藏代码</strong></p>
 </div>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span>     <span class="cm">/*</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="w">     </span><span class="cm">/*</span>
 <span class="linenos">  2</span><span class="cm">     Copyright (c) 2011 IETF Trust and the persons identified</span>
 <span class="linenos">  3</span><span class="cm">     as authors of the code.  All rights reserved.</span>
 <span class="linenos">  4</span>
@@ -326,16 +327,16 @@
 <span class="linenos">  7</span><span class="cm">     to the license terms contained in, the Simplified BSD License</span>
 <span class="linenos">  8</span><span class="cm">     set forth in Section 4.c of the IETF Trust&#39;s Legal Provisions</span>
 <span class="linenos">  9</span><span class="cm">     Relating to IETF Documents (http://trustee.ietf.org/license-info).</span>
-<span class="linenos"> 10</span><span class="cm"> */</span>
+<span class="linenos"> 10</span><span class="cm"> */</span><span class="w"></span>
 <span class="linenos"> 11</span>
-<span class="linenos"> 12</span> <span class="cm">/**</span>
+<span class="linenos"> 12</span><span class="w"> </span><span class="cm">/**</span>
 <span class="linenos"> 13</span><span class="cm">     * Calculates the audio level of specific samples of a signal</span>
 <span class="linenos"> 14</span><span class="cm">     * relative to overload.</span>
-<span class="linenos"> 15</span><span class="cm">     */</span>
-<span class="linenos"> 16</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">AudioLevelCalculator</span>
-<span class="linenos"> 17</span> <span class="p">{</span>
+<span class="linenos"> 15</span><span class="cm">     */</span><span class="w"></span>
+<span class="linenos"> 16</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AudioLevelCalculator</span><span class="w"></span>
+<span class="linenos"> 17</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="linenos"> 18</span>
-<span class="linenos"> 19</span>     <span class="cm">/**</span>
+<span class="linenos"> 19</span><span class="w">     </span><span class="cm">/**</span>
 <span class="linenos"> 20</span><span class="cm">         * Calculates the audio level of a signal with specific</span>
 <span class="linenos"> 21</span><span class="cm">         * &lt;tt&gt;samples&lt;/tt&gt;.</span>
 <span class="linenos"> 22</span><span class="cm">         *</span>
@@ -361,68 +362,68 @@
 <span class="linenos"> 42</span><span class="cm">         * 16-bit signed samples.</span>
 <span class="linenos"> 43</span><span class="cm">         *</span>
 <span class="linenos"> 44</span><span class="cm">         * @return  the audio level of the specified signal.</span>
-<span class="linenos"> 45</span><span class="cm">         */</span>
-<span class="linenos"> 46</span>     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculateAudioLevel</span><span class="p">(</span>
-<span class="linenos"> 47</span>         <span class="kt">int</span><span class="o">[]</span> <span class="n">samples</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">,</span>
-<span class="linenos"> 48</span>         <span class="kt">int</span> <span class="n">overload</span><span class="p">)</span>
-<span class="linenos"> 49</span>     <span class="p">{</span>
-<span class="linenos"> 50</span>         <span class="cm">/*</span>
+<span class="linenos"> 45</span><span class="cm">         */</span><span class="w"></span>
+<span class="linenos"> 46</span><span class="w">     </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">calculateAudioLevel</span><span class="p">(</span><span class="w"></span>
+<span class="linenos"> 47</span><span class="w">         </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"></span>
+<span class="linenos"> 48</span><span class="w">         </span><span class="kt">int</span><span class="w"> </span><span class="n">overload</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 49</span><span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 50</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 51</span><span class="cm">             * Calculate the root mean square (RMS) of the signal.</span>
-<span class="linenos"> 52</span><span class="cm">             */</span>
-<span class="linenos"> 53</span>         <span class="kt">double</span> <span class="n">rms</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 52</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 53</span><span class="w">         </span><span class="kt">double</span><span class="w"> </span><span class="n">rms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 54</span>
-<span class="linenos"> 55</span>         <span class="k">for</span> <span class="p">(;</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">offset</span><span class="o">++</span><span class="p">)</span>
-<span class="linenos"> 56</span>         <span class="p">{</span>
-<span class="linenos"> 57</span>             <span class="kt">double</span> <span class="n">sample</span> <span class="o">=</span> <span class="n">samples</span><span class="o">[</span><span class="n">offset</span><span class="o">]</span><span class="p">;</span>
+<span class="linenos"> 55</span><span class="w">         </span><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">length</span><span class="p">;</span><span class="w"> </span><span class="n">offset</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 56</span><span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 57</span><span class="w">             </span><span class="kt">double</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">samples</span><span class="o">[</span><span class="n">offset</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 58</span>
-<span class="linenos"> 59</span>             <span class="n">sample</span> <span class="o">/=</span> <span class="n">overload</span><span class="p">;</span>
-<span class="linenos"> 60</span>             <span class="n">rms</span> <span class="o">+=</span> <span class="n">sample</span> <span class="o">*</span> <span class="n">sample</span><span class="p">;</span>
-<span class="linenos"> 61</span>         <span class="p">}</span>
-<span class="linenos"> 62</span>         <span class="n">rms</span> <span class="o">=</span> <span class="p">(</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">Math</span><span class="p">.</span><span class="na">sqrt</span><span class="p">(</span><span class="n">rms</span> <span class="o">/</span> <span class="n">length</span><span class="p">);</span>
+<span class="linenos"> 59</span><span class="w">             </span><span class="n">sample</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">overload</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 60</span><span class="w">             </span><span class="n">rms</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sample</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 61</span><span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="linenos"> 62</span><span class="w">         </span><span class="n">rms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">sqrt</span><span class="p">(</span><span class="n">rms</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">length</span><span class="p">);</span><span class="w"></span>
 <span class="linenos"> 63</span>
-<span class="linenos"> 64</span>         <span class="cm">/*</span>
+<span class="linenos"> 64</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 65</span><span class="cm">             * The audio level is a logarithmic measure of the</span>
 <span class="linenos"> 66</span><span class="cm">             * rms level of an audio sample relative to a reference</span>
 <span class="linenos"> 67</span><span class="cm">             * value and is measured in decibels.</span>
-<span class="linenos"> 68</span><span class="cm">             */</span>
-<span class="linenos"> 69</span>         <span class="kt">double</span> <span class="n">db</span><span class="p">;</span>
+<span class="linenos"> 68</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 69</span><span class="w">         </span><span class="kt">double</span><span class="w"> </span><span class="n">db</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 70</span>
-<span class="linenos"> 71</span>         <span class="cm">/*</span>
+<span class="linenos"> 71</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 72</span><span class="cm">             * The minimum audio level permitted.</span>
-<span class="linenos"> 73</span><span class="cm">             */</span>
-<span class="linenos"> 74</span>         <span class="kd">final</span> <span class="kt">double</span> <span class="n">MIN_AUDIO_LEVEL</span> <span class="o">=</span> <span class="o">-</span><span class="mi">127</span><span class="p">;</span>
+<span class="linenos"> 73</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 74</span><span class="w">         </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">127</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 75</span>
-<span class="linenos"> 76</span>         <span class="cm">/*</span>
+<span class="linenos"> 76</span><span class="w">         </span><span class="cm">/*</span>
 <span class="linenos"> 77</span><span class="cm">             * The maximum audio level permitted.</span>
-<span class="linenos"> 78</span><span class="cm">             */</span>
-<span class="linenos"> 79</span>         <span class="kd">final</span> <span class="kt">double</span> <span class="n">MAX_AUDIO_LEVEL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 78</span><span class="cm">             */</span><span class="w"></span>
+<span class="linenos"> 79</span><span class="w">         </span><span class="kd">final</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">MAX_AUDIO_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 <span class="linenos"> 80</span>
-<span class="linenos"> 81</span>         <span class="k">if</span> <span class="p">(</span><span class="n">rms</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<span class="linenos"> 82</span>         <span class="p">{</span>
-<span class="linenos"> 83</span>             <span class="cm">/*</span>
+<span class="linenos"> 81</span><span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rms</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 82</span><span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="linenos"> 83</span><span class="w">             </span><span class="cm">/*</span>
 <span class="linenos"> 84</span><span class="cm">                 * The &quot;zero&quot; reference level is the overload level,</span>
 <span class="linenos"> 85</span><span class="cm">                 * which corresponds to 1.0 in this calculation, because</span>
 <span class="linenos"> 86</span><span class="cm">                 * the samples are normalized in calculating the RMS.</span>
-<span class="linenos"> 87</span><span class="cm">                 */</span>
-<span class="linenos"> 88</span>             <span class="n">db</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">Math</span><span class="p">.</span><span class="na">log10</span><span class="p">(</span><span class="n">rms</span><span class="p">);</span>
+<span class="linenos"> 87</span><span class="cm">                 */</span><span class="w"></span>
+<span class="linenos"> 88</span><span class="w">             </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">log10</span><span class="p">(</span><span class="n">rms</span><span class="p">);</span><span class="w"></span>
 <span class="linenos"> 89</span>
-<span class="linenos"> 90</span>             <span class="cm">/*</span>
+<span class="linenos"> 90</span><span class="w">             </span><span class="cm">/*</span>
 <span class="linenos"> 91</span><span class="cm">                 * Ensure that the calculated level is within the minimum</span>
 <span class="linenos"> 92</span><span class="cm">                 * and maximum range permitted.</span>
-<span class="linenos"> 93</span><span class="cm">                 */</span>
-<span class="linenos"> 94</span>             <span class="k">if</span> <span class="p">(</span><span class="n">db</span> <span class="o">&lt;</span> <span class="n">MIN_AUDIO_LEVEL</span><span class="p">)</span>
-<span class="linenos"> 95</span>                 <span class="n">db</span> <span class="o">=</span> <span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span>
-<span class="linenos"> 96</span>             <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">db</span> <span class="o">&gt;</span> <span class="n">MAX_AUDIO_LEVEL</span><span class="p">)</span>
-<span class="linenos"> 97</span>                 <span class="n">db</span> <span class="o">=</span> <span class="n">MAX_AUDIO_LEVEL</span><span class="p">;</span>
-<span class="linenos"> 98</span>         <span class="p">}</span>
-<span class="linenos"> 99</span>         <span class="k">else</span>
-<span class="linenos">100</span>         <span class="p">{</span>
-<span class="linenos">101</span>             <span class="n">db</span> <span class="o">=</span> <span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span>
-<span class="linenos">102</span>         <span class="p">}</span>
+<span class="linenos"> 93</span><span class="cm">                 */</span><span class="w"></span>
+<span class="linenos"> 94</span><span class="w">             </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">db</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 95</span><span class="w">                 </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 96</span><span class="w">             </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">db</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MAX_AUDIO_LEVEL</span><span class="p">)</span><span class="w"></span>
+<span class="linenos"> 97</span><span class="w">                 </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MAX_AUDIO_LEVEL</span><span class="p">;</span><span class="w"></span>
+<span class="linenos"> 98</span><span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="linenos"> 99</span><span class="w">         </span><span class="k">else</span><span class="w"></span>
+<span class="linenos">100</span><span class="w">         </span><span class="p">{</span><span class="w"></span>
+<span class="linenos">101</span><span class="w">             </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MIN_AUDIO_LEVEL</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">102</span><span class="w">         </span><span class="p">}</span><span class="w"></span>
 <span class="linenos">103</span>
-<span class="linenos">104</span>         <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="na">round</span><span class="p">(</span><span class="n">db</span><span class="p">);</span>
-<span class="linenos">105</span>     <span class="p">}</span>
-<span class="linenos">106</span> <span class="p">}</span>
+<span class="linenos">104</span><span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="na">round</span><span class="p">(</span><span class="n">db</span><span class="p">);</span><span class="w"></span>
+<span class="linenos">105</span><span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="linenos">106</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>

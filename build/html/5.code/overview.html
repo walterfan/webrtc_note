@@ -7,6 +7,7 @@
   <title>WebRTC 源码概览 &mdash; webrtc_tutorial 1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -56,6 +57,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#import-interfaces">Import Interfaces</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#treasure-in-code">Treasure in code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contribution">Contribution</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#preparation">preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upload-patch">upload patch</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -66,14 +72,15 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC Congestion Control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_bw_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_remb_code.html">WebRTC REMB Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
@@ -132,7 +139,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-10-11</p></td>
+<td><p>2022-12-09</p></td>
 </tr>
 </tbody>
 </table>
@@ -149,7 +156,13 @@
 <li><p><a class="reference internal" href="#modules" id="id7">Modules</a></p></li>
 <li><p><a class="reference internal" href="#import-interfaces" id="id8">Import Interfaces</a></p></li>
 <li><p><a class="reference internal" href="#treasure-in-code" id="id9">Treasure in code</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id10">Reference</a></p></li>
+<li><p><a class="reference internal" href="#contribution" id="id10">Contribution</a></p>
+<ul>
+<li><p><a class="reference internal" href="#preparation" id="id11">preparation</a></p></li>
+<li><p><a class="reference internal" href="#upload-patch" id="id12">upload patch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id13">Reference</a></p></li>
 </ul>
 </div>
 <section id="overview">
@@ -216,9 +229,9 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">OnRtpPacket</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RtpPacketReceived</span><span class="o">&amp;</span><span class="w"> </span><span class="n">packet</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PacketReceiver</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PacketReceiver</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="k">public</span><span class="o">:</span><span class="w"></span>
-<span class="w">    </span><span class="k">enum</span> <span class="nc">DeliveryStatus</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">DeliveryStatus</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">      </span><span class="n">DELIVERY_OK</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">DELIVERY_UNKNOWN_SSRC</span><span class="p">,</span><span class="w"></span>
 <span class="w">      </span><span class="n">DELIVERY_PACKET_ERROR</span><span class="p">,</span><span class="w"></span>
@@ -245,8 +258,42 @@
 - webrtc/modules/remote_bitrate_estimator/</p></li>
 </ul>
 </section>
+<section id="contribution">
+<h2><a class="toc-backref" href="#id10">Contribution</a><a class="headerlink" href="#contribution" title="Permalink to this headline">¶</a></h2>
+<p>The detailed stpes refer to <a class="reference external" href="https://webrtc.org/support/contributing">https://webrtc.org/support/contributing</a>
+There is an example: <a class="reference external" href="https://webrtc-review.googlesource.com/c/src/+/278682">https://webrtc-review.googlesource.com/c/src/+/278682</a></p>
+<section id="preparation">
+<h3><a class="toc-backref" href="#id11">preparation</a><a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Check out and build the code</p></li>
+<li><p>Fill in the Contributor agreement</p></li>
+</ol>
+<p>3) If you’ve never submitted code before, you must add your name and contact info to the AUTHORS file
+Go to <a class="reference external" href="https://webrtc.googlesource.com/new-password">https://webrtc.googlesource.com/new-password</a> and login with your email account. This should be the same account as returned by git config user.email</p>
+<ol class="arabic simple" start="4">
+<li><p>Then, run: git cl creds-check. If you get any errors, ask for help on discuss-webrtc</p></li>
+</ol>
+<p>You will not have to repeat the above. After all that, you’re ready to upload:</p>
+</section>
+<section id="upload-patch">
+<h3><a class="toc-backref" href="#id12">upload patch</a><a class="headerlink" href="#upload-patch" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Assuming you’re on the main branch:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">my</span><span class="o">-</span><span class="n">work</span><span class="o">-</span><span class="n">branch</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Make changes, build locally, run tests locally</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">am</span> <span class="s2">&quot;Changed x, and it is working&quot;</span>
+<span class="n">git</span> <span class="n">cl</span> <span class="n">upload</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id10">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src">Chromium Code Search</a></p></li>
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>

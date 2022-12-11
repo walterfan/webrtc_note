@@ -125,11 +125,45 @@ Treasure in code
   - webrtc/modules/remote_bitrate_estimator/
 
 
+Contribution
+========================
+The detailed stpes refer to https://webrtc.org/support/contributing
+There is an example: https://webrtc-review.googlesource.com/c/src/+/278682
 
+preparation
+-------------------------
+
+1) Check out and build the code
+
+2) Fill in the Contributor agreement
+
+3) If you’ve never submitted code before, you must add your name and contact info to the AUTHORS file
+Go to https://webrtc.googlesource.com/new-password and login with your email account. This should be the same account as returned by git config user.email
+
+4) Then, run: git cl creds-check. If you get any errors, ask for help on discuss-webrtc
+
+You will not have to repeat the above. After all that, you’re ready to upload:
+
+
+upload patch
+-------------------------
+
+* Assuming you're on the main branch:
+
+.. code-block::
+
+  git checkout -b my-work-branch
+
+* Make changes, build locally, run tests locally
+
+.. code-block::
+
+  git commit -am "Changed x, and it is working"
+  git cl upload
 
 
 Reference
-====================
+========================
 * `Chromium Code Search`_
 * `Webrtc video framerate/resolution 自适应 <https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9>`_
 

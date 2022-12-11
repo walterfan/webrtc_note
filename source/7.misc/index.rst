@@ -17,3 +17,4 @@
    statistics
    scientific_calculation
    jenkins
+   sphinx

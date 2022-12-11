@@ -4,3 +4,4 @@ ujson==1.35
 mistune<2.0.0
 m2r==0.2.1
 Sphinx==4.2.0
+sphinxcontrib-plantuml==0.24.1

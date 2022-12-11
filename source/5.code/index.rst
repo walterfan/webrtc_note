@@ -37,6 +37,7 @@
    overuse_frame_decoder
    remote_bitrate_estimator
 
+   webrtc_pc_channel
    webrtc_pc_example
    webrtc_video_flow
    webrtc_config
