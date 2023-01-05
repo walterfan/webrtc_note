@@ -18,6 +18,7 @@
    webrtc_rtx
    webrtc_red
    webrtc_temporal_scalability
+   webrtc_feedback
 
    jitter_buffer
    insertable_stream

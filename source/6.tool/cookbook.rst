@@ -105,8 +105,46 @@ packet filter
    $ sudo pfctl -ef /etc/pf.conf
 
 
+其他常用工具
+=============================
+
+Mosh(mobile shell)
+------------------------------
+Remote terminal application that allows roaming, supports intermittent connectivity, and provides intelligent local echo and line editing of user keystrokes.
+
+Mosh is a replacement for interactive SSH terminals. It's more robust and responsive, especially over Wi-Fi, cellular, and long-distance links.
+
+Mosh is free software, available for GNU/Linux, BSD, macOS, Solaris, Android, Chrome, and iOS.
+
+refer to https://mosh.org/
+
+common steps
+~~~~~~~~~~~~~~~~~~~
+在服务器安装 mosh
+
+1.  `apt install mosh`
+2.  ufw allow 60000:61000/udp
+
+打开了服务器的端口限制，在客户端安装 mosh
+
+3.  brew install mosh
+4.  mosh walter@www.fanyamin.com
+
+
+Better Touch Tool
+-------------------------------
+https://folivora.ai/
+
+Midnight Commander
+-------------------------------
+https://midnight-commander.org/
+
+
+
+
+
 参考资料
-==============
+=============================
 * Windows Defender Firewall with Advanced Security
 * https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf
 * http://krypted.com/mac-security/a-cheat-sheet-for-using-pf-in-os-x-lion-and-up/

@@ -89,7 +89,7 @@ Overview
 
 
 我们比较关心的方法是
-
+* OnSentPacket 当有包发送时回调过来
 * OnTransportLossReport 传输通道的丢失报告
 * OnTransportPacketsFeedback 传输通道的 RTP 包的状态反馈报告
 

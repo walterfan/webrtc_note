@@ -151,75 +151,78 @@ RtpPacketHistory 包含了一个队列，队列的元素是 `StoredPacket` , 形
 
     std::unique_ptr<RtpPacketToSend> RTPSender::BuildRtxPacket(
         const RtpPacketToSend& packet) {
-    std::unique_ptr<RtpPacketToSend> rtx_packet;
+        std::unique_ptr<RtpPacketToSend> rtx_packet;
 
-    // Walter: 先添加原始的 RTP 包头
-    // Add original RTP header.
-    {
-        MutexLock lock(&send_mutex_);
-        if (!sending_media_)
-        return nullptr;
+        // Walter: 先添加原始的 RTP 包头
+        // Add original RTP header.
+        {
+            MutexLock lock(&send_mutex_);
+            if (!sending_media_)
+            return nullptr;
 
-        RTC_DCHECK(rtx_ssrc_);
-        // Walter: 将 payload type 修改为重传的 RTP 包的 payload type
-        // Replace payload type.
-        auto kv = rtx_payload_type_map_.find(packet.PayloadType());
-        if (kv == rtx_payload_type_map_.end())
-        return nullptr;
+            RTC_DCHECK(rtx_ssrc_);
+            // Walter: 将 payload type 修改为重传的 RTP 包的 payload type
+            // Replace payload type.
+            auto kv = rtx_payload_type_map_.find(packet.PayloadType());
+            if (kv == rtx_payload_type_map_.end())
+            return nullptr;
 
-        rtx_packet = std::make_unique<RtpPacketToSend>(&rtp_header_extension_map_,
-                                                    max_packet_size_);
+            rtx_packet = std::make_unique<RtpPacketToSend>(&rtp_header_extension_map_,
+                                                        max_packet_size_);
 
-        rtx_packet->SetPayloadType(kv->second);
-        // Walter: 将 SSRC 修改为 RTX 重传包的 SSRC
-        // Replace SSRC.
-        rtx_packet->SetSsrc(*rtx_ssrc_);
+            rtx_packet->SetPayloadType(kv->second);
+            // Walter: 将 SSRC 修改为 RTX 重传包的 SSRC
+            // Replace SSRC.
+            rtx_packet->SetSsrc(*rtx_ssrc_);
 
-        CopyHeaderAndExtensionsToRtxPacket(packet, rtx_packet.get());
+            CopyHeaderAndExtensionsToRtxPacket(packet, rtx_packet.get());
 
-        // Walter: RTX 包和原始包使用不同的 SSRC , 通过 MID 和  RRID 将其关联起来
-        // Walter: 关联的规则就是相同的 MID, RTX 包头中的 RRID 扩展头中存放的是原始包的 RID
+            // Walter: RTX 包和原始包使用不同的 SSRC , 通过 MID 和  RRID 将其关联起来
+            // Walter: 关联的规则就是相同的 MID, RTX 包头中的 RRID 扩展头中存放的是原始包的 RID
 
-        // RTX packets are sent on an SSRC different from the main media, so the
-        // decision to attach MID and/or RRID header extensions is completely
-        // separate from that of the main media SSRC.
-        //
-        // Note that RTX packets must used the RepairedRtpStreamId (RRID) header
-        // extension instead of the RtpStreamId (RID) header extension even though
-        // the payload is identical.
-        if (always_send_mid_and_rid_ || !rtx_ssrc_has_acked_) {
-        // These are no-ops if the corresponding header extension is not
-        // registered.
-        if (!mid_.empty()) {
-            rtx_packet->SetExtension<RtpMid>(mid_);
+            // RTX packets are sent on an SSRC different from the main media, so the
+            // decision to attach MID and/or RRID header extensions is completely
+            // separate from that of the main media SSRC.
+            //
+            // Note that RTX packets must used the RepairedRtpStreamId (RRID) header
+            // extension instead of the RtpStreamId (RID) header extension even though
+            // the payload is identical.
+            if (always_send_mid_and_rid_ || !rtx_ssrc_has_acked_) {
+            // These are no-ops if the corresponding header extension is not
+            // registered.
+            if (!mid_.empty()) {
+                rtx_packet->SetExtension<RtpMid>(mid_);
+            }
+            if (!rid_.empty()) {
+                rtx_packet->SetExtension<RepairedRtpStreamId>(rid_);
+            }
+            }
         }
-        if (!rid_.empty()) {
-            rtx_packet->SetExtension<RepairedRtpStreamId>(rid_);
-        }
-        }
+        RTC_DCHECK(rtx_packet);
+
+        uint8_t* rtx_payload =
+            rtx_packet->AllocatePayload(packet.payload_size() + kRtxHeaderSize);
+        if (rtx_payload == nullptr)
+            return nullptr;
+
+        // Walter: 添加原始包的 sequence number
+        // Add OSN (original sequence number).
+        ByteWriter<uint16_t>::WriteBigEndian(rtx_payload, packet.SequenceNumber());
+
+        // Walter: 复制原始包的 payload
+        // Add original payload data.
+        auto payload = packet.payload();
+        memcpy(rtx_payload + kRtxHeaderSize, payload.data(), payload.size());
+        // Walter: 复制原始包的 additional data
+        // Add original additional data.
+        rtx_packet->set_additional_data(packet.additional_data());
+
+        // Walter: 复制原始包的 capture time
+        // Copy capture time so e.g. TransmissionOffset is correctly set.
+        rtx_packet->set_capture_time(packet.capture_time());
+
+        return rtx_packet;
     }
-    RTC_DCHECK(rtx_packet);
 
-    uint8_t* rtx_payload =
-        rtx_packet->AllocatePayload(packet.payload_size() + kRtxHeaderSize);
-    if (rtx_payload == nullptr)
-        return nullptr;
-
-    // Walter: 添加原始包的 sequence number
-    // Add OSN (original sequence number).
-    ByteWriter<uint16_t>::WriteBigEndian(rtx_payload, packet.SequenceNumber());
-
-    // Walter: 复制原始包的 payload
-    // Add original payload data.
-    auto payload = packet.payload();
-    memcpy(rtx_payload + kRtxHeaderSize, payload.data(), payload.size());
-    // Walter: 复制原始包的 additional data
-    // Add original additional data.
-    rtx_packet->set_additional_data(packet.additional_data());
-
-    // Walter: 复制原始包的 capture time
-    // Copy capture time so e.g. TransmissionOffset is correctly set.
-    rtx_packet->set_capture_time(packet.capture_time());
-
-    return rtx_packet;
-    }
+在 RTX 重传包的处理方法 `ReSendPacket(uint16_t packet_id)` 中有一个速率限制器 `retransmission_rate_limiter_`
+如果应用了这个限速器，并检查发送速率，只有低于这个限速器才发出去重传包

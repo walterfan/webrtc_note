@@ -40,7 +40,7 @@ Flow chart
 
 
 * mindmap
-  
+
 .. graphviz::
 
     graph {

@@ -339,7 +339,7 @@ RTCP 报告包括如 [20] 中所述计算的丢失数据包比例 fl(tk)。
 
 参考资料
 ================
-
+* http://www.rtcbits.com/2017/01/bandwidth-estimation-in-webrtc-and-new.html
 * `GCC Introduction`_
 
 * `WebRTC的拥塞控制和带宽策略 <https://mp.weixin.qq.com/s/Ej63-FTe5-2pkxyXoXBUTw>`_
