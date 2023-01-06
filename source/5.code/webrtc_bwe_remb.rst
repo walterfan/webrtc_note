@@ -29,6 +29,27 @@ Overview
 Flow
 =======================================
 
+
+生成和发送 REMB 消息
+---------------------------------------
+
+根据所接收到的 RTP packet 中的 abs_send_time, 以及所接收到的时间
+
+.. uml::
+
+   MediaChannel->WebRtcVideoChannel: OnPacketReceived
+   WebRtcVideoChannel->Call: DeliverPacket
+   Call->Call: DeliverRtp
+   Call->Call: NotifyBweOfReceivedPacket(const RtpPacketReceived& packet,
+   Call->ReceiveSideCongestionController: OnReceivedPacket
+   ReceiveSideCongestionController-> RemoteBitrateEstimatorAbsSendTime : IncomingPacket
+
+
+
+
+接收和解析 REMB 消息
+---------------------------------------
+
 这里应用了观察者模式， 当 `rtcp_receiver` 收到了 REMB 或者 TMMBR 消息后，可以通知观察者 `rtcp_bandwidth_observer`
 
 
