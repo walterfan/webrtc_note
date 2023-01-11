@@ -37,6 +37,43 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
 * Port-restricted cone（端口限制型锥型）
 * Symmetric（对称型）
 
+ICE procedure
+=========================
+1. Candidate gathering
+* STUN
+* TURN
+2. Prioritisation
+3. Exchange
+4. Connectivity checks
+5. Coordination
+6. Communication
+
+
+ICE candidae
+=========================
+
+ICE candiate type
+
+* host: Host Candidate
+
+  A candidate obtained by binding to a specific port from an IP address on the host.
+  This includes IP addresses on physical interfaces and logical ones, such as ones obtained through VPNs.
+
+* srflx: Server-Reflexive Candidate
+
+  A candidate whose IP address and port are a binding allocated by a NAT for an ICE agent after it sends a
+  packet through the NAT to a server, such as a STUN server.
+
+* prflx: Peer-Reflexive Candidate
+
+  A candidate whose IP address and port are a binding allocated by a NAT for an ICE agent after it sends a
+  packet through the NAT to its peer.
+
+* relay: Relayed Candidate
+
+  A candidate obtained from a relay server, such as a TURN server.
+
+
 TCP Candidates with Interactive Connectivity Establishment (ICE)
 ===========================================================================
 

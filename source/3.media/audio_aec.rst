@@ -24,8 +24,16 @@ Acoustic Echo Canceller
 
 回声消除的原理就是利用接收到的音频与本地采集的音频做对比，添加反相的人造回声，将远端的声音消除。
 
+WebRTC library 提供了 Echo Cancellation 的功能
+
+MediaTrackSettings.echoCancellation
+----------------------------------------------
+
+The MediaTrackSettings dictionary's echoCancellation property is a Boolean value whose value indicates whether or not echo cancellation is enabled on an audio track.
+
+
 何为回声？
----------------------
+-----------------------------------------------
 
 In audio signal processing and acoustics, an echo is a reflection of sound that arrives at the listener with a delay after the direct sound. The delay is directly proportional to the distance of the reflecting surface from the source and the listener. Typical examples are the echo produced by the bottom of a well, by a building, or by the walls of an enclosed room and an empty room. A true echo is a single reflection of the sound source.[citation needed]
 
