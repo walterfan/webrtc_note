@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bandwidth Probe &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Bandwidth Probe</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/3.media/webrtc_bw_probe.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bandwidth-probe">
+<h1>Bandwidth Probe<a class="headerlink" href="#bandwidth-probe" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC Bandwidth Probe</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Category</strong></p></td>
+<td><p>Learning note</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-01-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#when" id="id3">When</a></p></li>
+<li><p><a class="reference internal" href="#why" id="id4">Why</a></p></li>
+<li><p><a class="reference internal" href="#how" id="id5">How</a></p>
+<ul>
+<li><p><a class="reference internal" href="#related-code" id="id6">Related Code</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#application-limited-region" id="id7">Application Limited Region</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id8">Reference</a></p></li>
+</ul>
+</div>
+<section id="when">
+<h2><a class="toc-backref" href="#id3">When</a><a class="headerlink" href="#when" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>network available at startup 在启动时网络连通时</p></li>
+<li><p>enable periodic ALR probing 启用了定时 ALR 探测</p></li>
+<li><p>large drop in estimated bandwidth 发现评估的带宽有大幅衰减</p></li>
+<li><p>probing results indicate channel has greater capacity 探测结果揭示有更大的容量</p></li>
+</ul>
+<p>Note:</p>
+<p>ALR is Application-Limited Region, ALR region start when bandwidth usage drops below kAlrStartUsageRatio and ends when it raises above kAlrEndUsageRatio.
+This is intentionally conservative at the moment until BW adjustments of application limited region is fine tuned.</p>
+</section>
+<section id="why">
+<h2><a class="toc-backref" href="#id4">Why</a><a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<p>We want to use appropriate video/audio media parameters to transmission under the current bandwidth
+We did not know whether there is enough bandwidth that we want if we do not probe with higher bitrate in some cases</p>
+</section>
+<section id="how">
+<h2><a class="toc-backref" href="#id5">How</a><a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>探测时会设置一个初始带宽, 乘以不同的比例系数来发送</p></li>
+</ul>
+<p>例如初始带宽为 300k, p1(first_exponential_probe_scale)=3, p2(second_exponential_probe_scale)=6</p>
+<p>然后，每当我们得到一个比特率估计值至少是上一次发送探测的大小的 further_probe_threshold 倍时，我们将发送另一个大小为 step_size 乘以新估计值的比特率。</p>
+<blockquote>
+<div><p>第一次为 300 3 = 900 kbps
+第二次为 300 6 = 1800 kbps</p>
+</div></blockquote>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ProbeControllerConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">explicit</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">WebRtcKeyValueConfig</span><span class="o">*</span><span class="w"> </span><span class="n">key_value_config</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="o">~</span><span class="n">ProbeControllerConfig</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// These parameters configure the initial probes. First we send one or two</span>
+<span class="w">   </span><span class="c1">// probes of sizes p1 * start_bitrate_bps_ and p2 * start_bitrate_bps_.</span>
+<span class="w">   </span><span class="c1">// Then whenever we get a bitrate estimate of at least further_probe_threshold</span>
+<span class="w">   </span><span class="c1">// times the size of the last sent probe we&#39;ll send another one of size</span>
+<span class="w">   </span><span class="c1">// step_size times the new estimate.</span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_exponential_probe_scale</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second_exponential_probe_scale</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">further_exponential_probe_scale</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">further_probe_threshold</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Configures how often we send ALR probes and how big they are.</span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="n">TimeDelta</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alr_probing_interval</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alr_probe_scale</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">   </span><span class="c1">// Configures the probes emitted by changed to the allocated bitrate.</span>
+<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_allocation_probe_scale</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second_allocation_probe_scale</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialFlag</span><span class="w"> </span><span class="n">allocation_allow_further_probing</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocation_probe_max</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>初始的缺省值如下</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// The minimum number probing packets used. 最少发送的探测包个数 5 个包</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kMinProbePacketsSent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// The minimum probing duration in ms. 最短探测的时间 15ms</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kMinProbeDurationMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Maximum waiting time from the time of initiating probing to getting</span>
+<span class="c1">// the measured results back.</span>
+<span class="c1">// 对发起的探测结果的最长等待时间, 默认为 1000ms</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kMaxWaitingTimeForProbingResultMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Value of `min_bitrate_to_probe_further_bps_` that indicates</span>
+<span class="c1">// further probing is disabled.</span>
+<span class="c1">// 是否进行进一步的探测</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kExponentialProbingDisabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Default probing bitrate limit. Applied only when the application didn&#39;t</span>
+<span class="c1">// specify max bitrate.</span>
+<span class="c1">// 默认的探测带宽限制, 如果应用程序没有指定最大带宽,默认为 5m bps</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kDefaultMaxProbingBitrateBps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000000</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// If the bitrate drops to a factor `kBitrateDropThreshold` or lower</span>
+<span class="c1">// and we recover within `kBitrateDropTimeoutMs`, then we&#39;ll send</span>
+<span class="c1">// a probe at a fraction `kProbeFractionAfterDrop` of the original bitrate.</span>
+<span class="c1">// 如果带宽在 kBitrateDropTimeoutMs(默认为 5000ms) 时长下降到原先的 kBitrateDropThreshold（默认为 66%)　或更低，</span>
+<span class="c1">// 我们会发送一个大小为原先带宽的 kProbeFractionAfterDrop(默认系数为 0.85) 比率的探测包.</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kBitrateDropThreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.66</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kBitrateDropTimeoutMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kProbeFractionAfterDrop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.85</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Timeout for probing after leaving ALR. If the bitrate drops significantly,</span>
+<span class="c1">// (as determined by the delay based estimator) and we leave ALR, then we will</span>
+<span class="c1">// send a probe if we recover within `kLeftAlrTimeoutMs` ms.</span>
+<span class="c1">// 在离开应用受限区间(ALR) 的超时 kAlrEndedTimeoutMs(默认为 3 秒) 后, 如果带宽显著降低,而且我们离开了 ALR, 那么到达 kLeftAlrTimeoutMs 的时长 我们会发送一个探测包</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kAlrEndedTimeoutMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3000</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// This is a limit on how often probing can be done when there is a BW</span>
+<span class="c1">// drop detected in ALR.</span>
+<span class="c1">//  在 ALR 中当有一个带宽下降时 对于探测完成频率的限制</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kMinTimeBetweenAlrProbesMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// The expected uncertainty of probe result (as a fraction of the target probe</span>
+<span class="c1">// bitrate). Used to avoid probing if the probe bitrate is close to our current</span>
+<span class="c1">// estimate.</span>
+<span class="c1">// 不确定的探测结果, 它是对于目标探测带宽的比率, 用来在探测带宽接近当前估计时避免还在探测</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kProbeUncertainty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Use probing to recover faster after large bitrate estimate drops.</span>
+<span class="c1">// 特性开关: 在有大幅带宽下降时用探测来快速恢复</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">kBweRapidRecoveryExperiment</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">   </span><span class="s">&quot;WebRTC-BweRapidRecoveryExperiment&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// 特性开关: 在到达配置的最大分配带宽后不再探测</span>
+<span class="c1">// Never probe higher than configured by OnMaxTotalAllocatedBitrate().</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">kCappedProbingFieldTrialName</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;WebRTC-BweCappedProbing&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="related-code">
+<h3><a class="toc-backref" href="#id6">Related Code</a><a class="headerlink" href="#related-code" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>ProbeControllerConfig</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">ProbeControllerConfig</span><span class="o">::</span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">WebRtcKeyValueConfig</span><span class="o">*</span><span class="w"> </span><span class="n">key_value_config</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">first_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">second_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">further_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;step_size&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">further_probe_threshold</span><span class="p">(</span><span class="s">&quot;further_probe_threshold&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">alr_probing_interval</span><span class="p">(</span><span class="s">&quot;alr_interval&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span><span class="w"></span>
+<span class="w">         </span><span class="n">alr_probe_scale</span><span class="p">(</span><span class="s">&quot;alr_scale&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">first_allocation_probe_scale</span><span class="p">(</span><span class="s">&quot;alloc_p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">second_allocation_probe_scale</span><span class="p">(</span><span class="s">&quot;alloc_p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">allocation_allow_further_probing</span><span class="p">(</span><span class="s">&quot;alloc_probe_further&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">),</span><span class="w"></span>
+<span class="w">         </span><span class="n">allocation_probe_max</span><span class="p">(</span><span class="s">&quot;alloc_probe_max&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">//...</span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>ProbeController 根据当前网络状况控制何时,如何进行带宽探测</p></li>
+<li><p>ProbeBitrateEstimator 根据探测包的反馈消息,估算带宽</p></li>
+</ul>
+<p>A probe cluster consists of a set of probes. Each probe in turn can be divided into a number of packets to accommodate the MTU on the network.</p>
+<p>Probe Cluster 探测集合包含一组探测，每一个探测依次可被分割成一些包来符合网络中的 MTU 限制，</p>
+<p>发送的探测包中会有包信息块,包含了探测的信息</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">PacedPacketInfo</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">PacedPacketInfo</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">PacedPacketInfo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacedPacketInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// TODO(srte): Move probing info to a separate, optional struct.</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">send_bitrate_bps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="application-limited-region">
+<h2><a class="toc-backref" href="#id7">Application Limited Region</a><a class="headerlink" href="#application-limited-region" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="reference">
+<h2><a class="toc-backref" href="#id8">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://codereview.webrtc.org/2504023002">https://codereview.webrtc.org/2504023002</a></p></li>
+<li><p><a class="reference external" href="https://bugs.chromium.org/p/webrtc/issues/detail?id=4350">https://bugs.chromium.org/p/webrtc/issues/detail?id=4350</a></p></li>
+<li><p><a class="reference external" href="https://chromium.googlesource.com/external/webrtc.git/+/01b488831bf7cb3276d8bdfbe0204dfbdbbba725">https://chromium.googlesource.com/external/webrtc.git/+/01b488831bf7cb3276d8bdfbe0204dfbdbbba725</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

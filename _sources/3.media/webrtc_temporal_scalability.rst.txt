@@ -35,6 +35,11 @@ In video coding, temporal scalability is the option to decode only some of the f
 * It is available for WebRTC in VP8 without the implementation of SVC.
 
 
+for example
+* layer t1: discardable  ~ 30% 
+* layer t0: cannot discardable ~ 70%
+
+
 参考
 ==========================
 * [1] “Advanced Video Coding for Generic Audiovisual Services,” ITU-T, Tech. Rep. Recommendation H.264 & ISO/IEC 14496-10 AVC, v3,2005.

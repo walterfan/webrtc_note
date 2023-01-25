@@ -20,8 +20,8 @@ Video Lip Sync
 
 概述
 =========
-来自同一个终端用户的音频和视频，在编码发送的 RTP 包中有一个 timestamp, 这个时间戳表示媒体流的捕捉时间。
-同时，作为发送者也会发送 RTCP Sender Report
+来自同一个终端用户的音频和视频, 在编码发送的 RTP 包中有一个 timestamp, 这个时间戳表示媒体流的捕捉时间。
+同时, 作为发送者也会发送 RTCP Sender Report
 
 
 两个问题：
@@ -102,10 +102,10 @@ The sender calculates the relationship between its NTP timebase and the RTP medi
 
 
 注意 NTP timestamp 和 RTP timestamp 之间的映射, 我们可以知道 audio 包的时间和 video 包的时间
-一般我们会以 audio 为主， video 向 audio 靠拢，两者时间一致也就会达到 lip sync 音视频同步
+一般我们会以 audio 为主,  video 向 audio 靠拢, 两者时间一致也就会达到 lip sync 音视频同步
 
-1. audio 包先来，video 包后来: audio 包放在 jitter buffer 时等一会儿，但是这个时间是有限的，音频的流畅是首先要保证的，视频跟不上可能降低视频的码率
-2. video 包先来，audio 包后来: video 包始终要等 audio 包来，这是为了让音视频同步要付出的
+1. audio 包先来, video 包后来: audio 包放在 jitter buffer 时等一会儿, 但是这个时间是有限的, 音频的流畅是首先要保证的, 视频跟不上可能降低视频的码率
+2. video 包先来, audio 包后来: video 包始终要等 audio 包来, 这是为了让音视频同步要付出的
 
 
 具体步骤如下:

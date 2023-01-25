@@ -68,6 +68,7 @@
 <li class="toctree-l2"><a class="reference internal" href="screen_capture.html">WebRTC API 之 Screen Capture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="media_record.html">WebRTC API 之 Media Record</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_extension.html">WebRTC extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_capacity.html">WebRTC 客户端能力</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_signal.html">WebRTC 的信令</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp.html">WebRTC SDP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_stats.html">WebRTC stats</a></li>
@@ -126,7 +127,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-12-09</p></td>
+<td><p>2023-01-25</p></td>
 </tr>
 </tbody>
 </table>
@@ -217,103 +218,103 @@
 </pre></div>
 </div>
 <p>输入参数为 MediaStreamConstraints</p>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">MediaStreamConstraints</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="kr">boolean</span><span class="w"> </span><span class="nx">or</span><span class="w"> </span><span class="nx">MediaTrackConstraints</span><span class="p">)</span><span class="w"> </span><span class="nx">video</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="kr">boolean</span><span class="w"> </span><span class="nx">or</span><span class="w"> </span><span class="nx">MediaTrackConstraints</span><span class="p">)</span><span class="w"> </span><span class="nx">audio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span> <span class="nx">MediaStreamConstraints</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kr">boolean</span> <span class="nx">or</span> <span class="nx">MediaTrackConstraints</span><span class="p">)</span> <span class="nx">video</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">(</span><span class="kr">boolean</span> <span class="nx">or</span> <span class="nx">MediaTrackConstraints</span><span class="p">)</span> <span class="nx">audio</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">};</span>
 
-<span class="nx">dictionary</span><span class="w"> </span><span class="nx">MediaTrackConstraints</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">MediaTrackConstraintSet</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaTrackConstraintSet</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">advanced</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="nx">dictionary</span> <span class="nx">MediaTrackConstraints</span> <span class="o">:</span> <span class="nx">MediaTrackConstraintSet</span> <span class="p">{</span>
+    <span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaTrackConstraintSet</span><span class="o">&gt;</span> <span class="nx">advanced</span><span class="p">;</span>
+<span class="p">};</span>
 
-<span class="nx">dictionary</span><span class="w"> </span><span class="nx">MediaTrackConstraintSet</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainULong</span><span class="w"> </span><span class="nx">width</span><span class="p">;</span><span class="w">  </span><span class="c1">//视频帧高度</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainULong</span><span class="w"> </span><span class="nx">height</span><span class="p">;</span><span class="w"> </span><span class="c1">//视频帧宽度</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDouble</span><span class="w"> </span><span class="nx">aspectRatio</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDouble</span><span class="w"> </span><span class="nx">frameRate</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDOMString</span><span class="w"> </span><span class="nx">facingMode</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDOMString</span><span class="w"> </span><span class="nx">resizeMode</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainULong</span><span class="w"> </span><span class="nx">sampleRate</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainULong</span><span class="w"> </span><span class="nx">sampleSize</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainBoolean</span><span class="w"> </span><span class="nx">echoCancellation</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainBoolean</span><span class="w"> </span><span class="nx">autoGainControl</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainBoolean</span><span class="w"> </span><span class="nx">noiseSuppression</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDouble</span><span class="w"> </span><span class="nx">latency</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainULong</span><span class="w"> </span><span class="nx">channelCount</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDOMString</span><span class="w"> </span><span class="nx">deviceId</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">ConstrainDOMString</span><span class="w"> </span><span class="nx">groupId</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="nx">dictionary</span> <span class="nx">MediaTrackConstraintSet</span> <span class="p">{</span>
+    <span class="nx">ConstrainULong</span> <span class="nx">width</span><span class="p">;</span>  <span class="c1">//视频帧高度</span>
+    <span class="nx">ConstrainULong</span> <span class="nx">height</span><span class="p">;</span> <span class="c1">//视频帧宽度</span>
+    <span class="nx">ConstrainDouble</span> <span class="nx">aspectRatio</span><span class="p">;</span>
+    <span class="nx">ConstrainDouble</span> <span class="nx">frameRate</span><span class="p">;</span>
+    <span class="nx">ConstrainDOMString</span> <span class="nx">facingMode</span><span class="p">;</span>
+    <span class="nx">ConstrainDOMString</span> <span class="nx">resizeMode</span><span class="p">;</span>
+    <span class="nx">ConstrainULong</span> <span class="nx">sampleRate</span><span class="p">;</span>
+    <span class="nx">ConstrainULong</span> <span class="nx">sampleSize</span><span class="p">;</span>
+    <span class="nx">ConstrainBoolean</span> <span class="nx">echoCancellation</span><span class="p">;</span>
+    <span class="nx">ConstrainBoolean</span> <span class="nx">autoGainControl</span><span class="p">;</span>
+    <span class="nx">ConstrainBoolean</span> <span class="nx">noiseSuppression</span><span class="p">;</span>
+    <span class="nx">ConstrainDouble</span> <span class="nx">latency</span><span class="p">;</span>
+    <span class="nx">ConstrainULong</span> <span class="nx">channelCount</span><span class="p">;</span>
+    <span class="nx">ConstrainDOMString</span> <span class="nx">deviceId</span><span class="p">;</span>
+    <span class="nx">ConstrainDOMString</span> <span class="nx">groupId</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <p>返回值是一个 Promise, 成功执行后返回 MediaStream</p>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="nx">Window</span><span class="p">]</span><span class="w"></span>
-<span class="kr">interface</span><span class="w"> </span><span class="nx">MediaStream</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">EventTarget</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">MediaStream</span><span class="w"> </span><span class="nx">stream</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">tracks</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">id</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">getAudioTracks</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">getVideoTracks</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">getTracks</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">MediaStreamTrack</span><span class="o">?</span><span class="w"> </span><span class="nx">getTrackById</span><span class="p">(</span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">trackId</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">addTrack</span><span class="p">(</span><span class="nx">MediaStreamTrack</span><span class="w"> </span><span class="nx">track</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">removeTrack</span><span class="p">(</span><span class="nx">MediaStreamTrack</span><span class="w"> </span><span class="nx">track</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nx">MediaStream</span><span class="w"> </span><span class="nx">clone</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">boolean</span><span class="w"> </span><span class="nx">active</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">EventHandler</span><span class="w"> </span><span class="nx">onaddtrack</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">EventHandler</span><span class="w"> </span><span class="nx">onremovetrack</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="nx">Window</span><span class="p">]</span>
+<span class="kr">interface</span> <span class="nx">MediaStream</span> <span class="o">:</span> <span class="nx">EventTarget</span> <span class="p">{</span>
+    <span class="kr">constructor</span><span class="p">();</span>
+    <span class="kr">constructor</span><span class="p">(</span><span class="nx">MediaStream</span> <span class="nx">stream</span><span class="p">);</span>
+    <span class="kr">constructor</span><span class="p">(</span><span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">tracks</span><span class="p">);</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">DOMString</span> <span class="nx">id</span><span class="p">;</span>
+    <span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">getAudioTracks</span><span class="p">();</span>
+    <span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">getVideoTracks</span><span class="p">();</span>
+    <span class="nx">sequence</span><span class="o">&lt;</span><span class="nx">MediaStreamTrack</span><span class="o">&gt;</span> <span class="nx">getTracks</span><span class="p">();</span>
+    <span class="nx">MediaStreamTrack</span><span class="o">?</span> <span class="nx">getTrackById</span><span class="p">(</span><span class="nx">DOMString</span> <span class="nx">trackId</span><span class="p">);</span>
+    <span class="kc">undefined</span> <span class="nx">addTrack</span><span class="p">(</span><span class="nx">MediaStreamTrack</span> <span class="nx">track</span><span class="p">);</span>
+    <span class="kc">undefined</span> <span class="nx">removeTrack</span><span class="p">(</span><span class="nx">MediaStreamTrack</span> <span class="nx">track</span><span class="p">);</span>
+    <span class="nx">MediaStream</span> <span class="nx">clone</span><span class="p">();</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="kr">boolean</span> <span class="nx">active</span><span class="p">;</span>
+    <span class="nx">attribute</span> <span class="nx">EventHandler</span> <span class="nx">onaddtrack</span><span class="p">;</span>
+    <span class="nx">attribute</span> <span class="nx">EventHandler</span> <span class="nx">onremovetrack</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <p>The MediaStreamTrack object represents media of a single type that originates from one media source in the User Agent, e.g. video produced by a web camera. A MediaStream is used to group several MediaStreamTrack objects into one unit that can be recorded or rendered in a media element.</p>
 <p>Each MediaStream can contain zero or more MediaStreamTrack objects. All tracks in a MediaStream are intended to be synchronized when rendered. This is not a hard requirement, since it might not be possible to synchronize tracks from sources that have different clocks. Different MediaStream objects do not need to be synchronized.</p>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="nx">Window</span><span class="p">]</span><span class="w"></span>
-<span class="kr">interface</span><span class="w"> </span><span class="nx">MediaStreamTrack</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">EventTarget</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">kind</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">id</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">label</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">boolean</span><span class="w"> </span><span class="nx">enabled</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="kr">boolean</span><span class="w"> </span><span class="nx">muted</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">EventHandler</span><span class="w"> </span><span class="nx">onmute</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">EventHandler</span><span class="w"> </span><span class="nx">onunmute</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">readonly</span><span class="w"> </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">MediaStreamTrackState</span><span class="w"> </span><span class="nx">readyState</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">attribute</span><span class="w"> </span><span class="nx">EventHandler</span><span class="w"> </span><span class="nx">onended</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">MediaStreamTrack</span><span class="w"> </span><span class="nx">clone</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="kc">undefined</span><span class="w"> </span><span class="nx">stop</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">MediaTrackCapabilities</span><span class="w"> </span><span class="nx">getCapabilities</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">MediaTrackConstraints</span><span class="w"> </span><span class="nx">getConstraints</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">MediaTrackSettings</span><span class="w"> </span><span class="nx">getSettings</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span><span class="w"> </span><span class="nx">applyConstraints</span><span class="p">(</span><span class="nx">optional</span><span class="w"> </span><span class="nx">MediaTrackConstraints</span><span class="w"> </span><span class="nx">constraints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="nx">Window</span><span class="p">]</span>
+<span class="kr">interface</span> <span class="nx">MediaStreamTrack</span> <span class="o">:</span> <span class="nx">EventTarget</span> <span class="p">{</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">DOMString</span> <span class="nx">kind</span><span class="p">;</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">DOMString</span> <span class="nx">id</span><span class="p">;</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">DOMString</span> <span class="nx">label</span><span class="p">;</span>
+    <span class="nx">attribute</span> <span class="kr">boolean</span> <span class="nx">enabled</span><span class="p">;</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="kr">boolean</span> <span class="nx">muted</span><span class="p">;</span>
+    <span class="nx">attribute</span> <span class="nx">EventHandler</span> <span class="nx">onmute</span><span class="p">;</span>
+    <span class="nx">attribute</span> <span class="nx">EventHandler</span> <span class="nx">onunmute</span><span class="p">;</span>
+    <span class="nx">readonly</span> <span class="nx">attribute</span> <span class="nx">MediaStreamTrackState</span> <span class="nx">readyState</span><span class="p">;</span>
+    <span class="nx">attribute</span> <span class="nx">EventHandler</span> <span class="nx">onended</span><span class="p">;</span>
+    <span class="nx">MediaStreamTrack</span> <span class="nx">clone</span><span class="p">();</span>
+    <span class="kc">undefined</span> <span class="nx">stop</span><span class="p">();</span>
+    <span class="nx">MediaTrackCapabilities</span> <span class="nx">getCapabilities</span><span class="p">();</span>
+    <span class="nx">MediaTrackConstraints</span> <span class="nx">getConstraints</span><span class="p">();</span>
+    <span class="nx">MediaTrackSettings</span> <span class="nx">getSettings</span><span class="p">();</span>
+    <span class="nb">Promise</span><span class="o">&lt;</span><span class="kc">undefined</span><span class="o">&gt;</span> <span class="nx">applyConstraints</span><span class="p">(</span><span class="nx">optional</span> <span class="nx">MediaTrackConstraints</span> <span class="nx">constraints</span> <span class="o">=</span> <span class="p">{});</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <section id="example">
 <h3><a class="toc-backref" href="#id9">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">constraints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">video</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">deviceId</span><span class="o">:</span><span class="w"> </span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">camId</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">min</span><span class="o">:</span><span class="w"> </span><span class="mf">640</span><span class="p">,</span><span class="w"> </span><span class="nx">ideal</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">,</span><span class="w"> </span><span class="nx">max</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="nx">height</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">min</span><span class="o">:</span><span class="w"> </span><span class="mf">480</span><span class="p">,</span><span class="w"> </span><span class="nx">ideal</span><span class="o">:</span><span class="w"> </span><span class="mf">720</span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="nx">aspectRatio</span><span class="o">:</span><span class="w"> </span><span class="mf">3</span><span class="o">/</span><span class="mf">2</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nx">frameRate</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="nx">min</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nx">audio</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">deviceId</span><span class="o">:</span><span class="w"> </span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">micId</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nx">channelCount</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">constraints</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">video</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">deviceId</span><span class="o">:</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">camId</span><span class="p">,</span>
+        <span class="nx">width</span><span class="o">:</span> <span class="p">{</span><span class="nx">min</span><span class="o">:</span> <span class="mf">640</span><span class="p">,</span> <span class="nx">ideal</span><span class="o">:</span> <span class="mf">1280</span><span class="p">,</span> <span class="nx">max</span><span class="o">:</span> <span class="mf">1280</span><span class="p">},</span>
+        <span class="nx">height</span><span class="o">:</span> <span class="p">{</span><span class="nx">min</span><span class="o">:</span> <span class="mf">480</span><span class="p">,</span> <span class="nx">ideal</span><span class="o">:</span> <span class="mf">720</span><span class="p">},</span>
+        <span class="nx">aspectRatio</span><span class="o">:</span> <span class="mf">3</span><span class="o">/</span><span class="mf">2</span><span class="p">,</span>
+        <span class="nx">frameRate</span><span class="o">:</span> <span class="p">{</span><span class="nx">min</span><span class="o">:</span> <span class="mf">20</span><span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nx">audio</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">deviceId</span><span class="o">:</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">micId</span><span class="p">,</span>
+        <span class="nx">channelCount</span><span class="o">:</span> <span class="mf">2</span>
+    <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">handleSuccess</span><span class="p">(</span><span class="nx">stream</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;video&#39;</span><span class="p">).</span><span class="nx">srcObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">stream</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">function</span> <span class="nx">handleSuccess</span><span class="p">(</span><span class="nx">stream</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;video&#39;</span><span class="p">).</span><span class="nx">srcObject</span> <span class="o">=</span> <span class="nx">stream</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">handleError</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;getUserMedia error: &#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">function</span> <span class="nx">handleError</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;getUserMedia error: &#39;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="nx">navigator</span><span class="p">.</span><span class="nx">mediaDevices</span><span class="p">.</span><span class="nx">getUserMedia</span><span class="p">(</span><span class="nx">constraints</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">handleSuccess</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">handleError</span><span class="p">);</span><span class="w"></span>
+<span class="nx">navigator</span><span class="p">.</span><span class="nx">mediaDevices</span><span class="p">.</span><span class="nx">getUserMedia</span><span class="p">(</span><span class="nx">constraints</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">handleSuccess</span><span class="p">)</span>
+        <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">handleError</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -336,81 +337,81 @@ RTCRtpDecodingParameters used by RTCRtpReceiver.setParameters()</p>
 <p>采用探测法，给 getUserMedia 方法传入不同的分辨率，看是否能成功获取到媒体流，参见 <a class="reference external" href="https://www.w3.org/TR/mediacapture-streams">W3C Media Capture and Streams Spec</a>。</p>
 <p>具体方法这里有详细讨论： <a class="reference external" href="https://webrtchacks.com/how-to-figure-out-webrtc-camera-resolutions/">https://webrtchacks.com/how-to-figure-out-webrtc-camera-resolutions/</a>
 代码实例： <a class="reference external" href="https://stackoverflow.com/questions/27420581/get-maximum-video-resolution-with-getusermedia/43148358#43148358">https://stackoverflow.com/questions/27420581/get-maximum-video-resolution-with-getusermedia/43148358#43148358</a>?newreg=c036061436d64b2a8c1317870fb8e160</p>
-<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">160</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">120</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">320</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">180</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">320</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">240</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">640</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">360</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">640</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">480</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">768</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">576</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1024</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">576</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">720</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">768</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">800</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">900</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1280</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">1000</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1920</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">1080</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">1920</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">1200</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">2560</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">1440</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">3840</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">2160</span><span class="p">},</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="nx">width</span><span class="o">:</span><span class="w"> </span><span class="mf">4096</span><span class="p">,</span><span class="w"> </span><span class="nx">height</span><span class="o">:</span><span class="mf">2160</span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="p">];</span><span class="w"></span>
+<div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ResolutionsToCheck</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">160</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">120</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">320</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">180</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">320</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">240</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">640</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">360</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">640</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">480</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">768</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">576</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1024</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">576</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1280</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">720</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1280</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">768</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1280</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">800</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1280</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">900</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1280</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">1000</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1920</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">1080</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">1920</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">1200</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">2560</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">1440</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">3840</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">2160</span><span class="p">},</span>
+            <span class="p">{</span><span class="nx">width</span><span class="o">:</span> <span class="mf">4096</span><span class="p">,</span> <span class="nx">height</span><span class="o">:</span><span class="mf">2160</span><span class="p">}</span>
+        <span class="p">];</span>
 
-<span class="kd">var</span><span class="w"> </span><span class="nx">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">selectedWidth</span><span class="p">;</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">selectedHeight</span><span class="p">;</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">mid</span><span class="p">;</span><span class="w"></span>
+<span class="kd">var</span> <span class="nx">left</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">ResolutionsToCheck</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">selectedWidth</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">selectedHeight</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">mid</span><span class="p">;</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">FindMaximum_WidthHeight_ForCamera</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;left:right = &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">left</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">right</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">left</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">right</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Selected Height:Width = &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">selectedWidth</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">selectedHeight</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="kd">function</span> <span class="nx">FindMaximum_WidthHeight_ForCamera</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;left:right = &quot;</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">right</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">left</span> <span class="o">&gt;</span> <span class="nx">right</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Selected Height:Width = &quot;</span><span class="p">,</span> <span class="nx">selectedWidth</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="nx">selectedHeight</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
 
-<span class="w">    </span><span class="nx">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">right</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span><span class="w"></span>
+    <span class="nx">mid</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">right</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2</span><span class="p">);</span>
 
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">temporaryConstraints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="s2">&quot;audio&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="s2">&quot;video&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;mandatory&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;minWidth&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">width</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;minHeight&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">height</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;maxWidth&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">width</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="s2">&quot;maxHeight&quot;</span><span class="o">:</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">height</span><span class="w"></span>
-<span class="w">            </span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="s2">&quot;optional&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[]</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+    <span class="kd">var</span> <span class="nx">temporaryConstraints</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;audio&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s2">&quot;video&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mandatory&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;minWidth&quot;</span><span class="o">:</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">width</span><span class="p">,</span>
+            <span class="s2">&quot;minHeight&quot;</span><span class="o">:</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">height</span><span class="p">,</span>
+            <span class="s2">&quot;maxWidth&quot;</span><span class="o">:</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">width</span><span class="p">,</span>
+            <span class="s2">&quot;maxHeight&quot;</span><span class="o">:</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">height</span>
+            <span class="p">},</span>
+        <span class="s2">&quot;optional&quot;</span><span class="o">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-<span class="w">    </span><span class="nx">navigator</span><span class="p">.</span><span class="nx">mediaDevices</span><span class="p">.</span><span class="nx">getUserMedia</span><span class="p">(</span><span class="nx">temporaryConstraints</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">checkSuccess</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">checkError</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+    <span class="nx">navigator</span><span class="p">.</span><span class="nx">mediaDevices</span><span class="p">.</span><span class="nx">getUserMedia</span><span class="p">(</span><span class="nx">temporaryConstraints</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">checkSuccess</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">checkError</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">checkSuccess</span><span class="p">(</span><span class="nx">stream</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Success for --&gt; &quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="nx">mid</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">]);</span><span class="w"></span>
-<span class="w">    </span><span class="nx">selectedWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">width</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">selectedHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">height</span><span class="p">;</span><span class="w"></span>
+<span class="kd">function</span> <span class="nx">checkSuccess</span><span class="p">(</span><span class="nx">stream</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Success for --&gt; &quot;</span> <span class="p">,</span> <span class="nx">mid</span> <span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">]);</span>
+    <span class="nx">selectedWidth</span> <span class="o">=</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">width</span><span class="p">;</span>
+    <span class="nx">selectedHeight</span> <span class="o">=</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">].</span><span class="nx">height</span><span class="p">;</span>
 
-<span class="w">    </span><span class="nx">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mid</span><span class="o">+</span><span class="mf">1</span><span class="p">;</span><span class="w"></span>
+    <span class="nx">left</span> <span class="o">=</span> <span class="nx">mid</span><span class="o">+</span><span class="mf">1</span><span class="p">;</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">track</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">stream</span><span class="p">.</span><span class="nx">getTracks</span><span class="p">())</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">track</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">track</span> <span class="k">of</span> <span class="nx">stream</span><span class="p">.</span><span class="nx">getTracks</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nx">track</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+    <span class="p">}</span>
 
-<span class="w">    </span><span class="nx">FindMaximum_WidthHeight_ForCamera</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">checkError</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Failed for --&gt; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">mid</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">],</span><span class="w">  </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nx">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mid</span><span class="o">-</span><span class="mf">1</span><span class="p">;</span><span class="w"></span>
+    <span class="nx">FindMaximum_WidthHeight_ForCamera</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">checkError</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Failed for --&gt; &quot;</span> <span class="o">+</span> <span class="nx">mid</span> <span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nx">ResolutionsToCheck</span><span class="p">[</span><span class="nx">mid</span><span class="p">],</span>  <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">right</span> <span class="o">=</span> <span class="nx">mid</span><span class="o">-</span><span class="mf">1</span><span class="p">;</span>
 
-<span class="w">    </span><span class="nx">FindMaximum_WidthHeight_ForCamera</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+    <span class="nx">FindMaximum_WidthHeight_ForCamera</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>

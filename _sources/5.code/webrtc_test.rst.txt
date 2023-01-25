@@ -141,8 +141,8 @@ And here are two filter criteria for future reference:
 
 .. code-block::
 
-   NACK: ‘rtcp.rtpfb.fmt == 1’
-   PLI: ‘rtcp.psfb.fmt == 1’
+   NACK: rtcp.rtpfb.fmt == 1
+   PLI: rtcp.psfb.fmt == 1
 
 * Update
 

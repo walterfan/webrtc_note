@@ -69,12 +69,21 @@
 <li class="toctree-l4"><a class="reference internal" href="#packet-filter">packet filter</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">参考资料</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">其他常用工具</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mosh-mobile-shell">Mosh(mobile shell)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#better-touch-tool">Better Touch Tool</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#midnight-commander">Midnight Commander</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">参考资料</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selenium.html">selenium</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fuzzer.html">Fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kitty.html">Kitty</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
@@ -123,50 +132,61 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-12-09</p></td>
+<td><p>2023-01-25</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#binutils" id="id5">binutils</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id6">如何阻塞端口</a></p>
+<li><p><a class="reference internal" href="#binutils" id="id6">binutils</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id7">如何阻塞端口</a></p>
 <ul>
-<li><p><a class="reference internal" href="#packet-filter" id="id7">packet filter</a></p></li>
+<li><p><a class="reference internal" href="#packet-filter" id="id8">packet filter</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id4" id="id8">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">其他常用工具</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mosh-mobile-shell" id="id10">Mosh(mobile shell)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#common-steps" id="id11">common steps</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#better-touch-tool" id="id12">Better Touch Tool</a></p></li>
+<li><p><a class="reference internal" href="#midnight-commander" id="id13">Midnight Commander</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id5" id="id14">参考资料</a></p></li>
 </ul>
 </div>
 <section id="binutils">
-<h2><a class="toc-backref" href="#id5">binutils</a><a class="headerlink" href="#binutils" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">binutils</a><a class="headerlink" href="#binutils" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>addr2line 把程序地址转换为文件名和行号。在命令行中给它一个地址和一个可执行文件名，它就会使用这个可执行文件的调试信息指出在给出的地址上是哪个文件以及行号。</p></li>
-<li><p>ar 建立、修改、提取归档文件。归档文件是包含多个文件内容的一个大文件，其结构保证了可以恢复原始文件内容。</p></li>
-<li><p>as 主要用来编译GNU C编译器gcc输出的汇编文件，产生的目标文件由连接器ld连接。</p></li>
-<li><p>c++filt 连接器使用它来过滤 C++ 和 Java 符号，防止重载函数冲突。</p></li>
-<li><p>gprof 显示程序调用段的各种数据。</p></li>
-<li><p>ld 是连接器，它把一些目标和归档文件结合在一起，重定位数据，并链接符号引用。通常，建立一个新编译程序的最后一步就是调用ld。</p></li>
-<li><p>nm 列出目标文件中的符号。</p></li>
+<li><p>addr2line 把程序地址转换为文件名和行号.在命令行中给它一个地址和一个可执行文件名, 它就会使用这个可执行文件的调试信息指出在给出的地址上是哪个文件以及行号.</p></li>
+<li><p>ar 建立、修改、提取归档文件.归档文件是包含多个文件内容的一个大文件, 其结构保证了可以恢复原始文件内容.</p></li>
+<li><p>as 主要用来编译GNU C编译器gcc输出的汇编文件, 产生的目标文件由连接器ld连接.</p></li>
+<li><p>c++filt 连接器使用它来过滤 C++ 和 Java 符号, 防止重载函数冲突.</p></li>
+<li><p>gprof 显示程序调用段的各种数据.</p></li>
+<li><p>ld 是连接器, 它把一些目标和归档文件结合在一起, 重定位数据, 并链接符号引用.通常, 建立一个新编译程序的最后一步就是调用ld.</p></li>
+<li><p>nm 列出目标文件中的符号.</p></li>
 <li><p>objcopy把一种目标文件中的内容复制到另一种类型的目标文件中.</p></li>
-<li><p>objdump 显示一个或者更多目标文件的信息。显示一个或者更多目标文件的信息。使用选项来控制其显示的信息。它所显示的信息通常只有编写编译工具的人才感兴趣。</p></li>
-<li><p>ranlib 产生归档文件索引，并将其保存到这个归档文件中。在索引中列出了归档文件各成员所定义的可重分配目标文件。</p></li>
-<li><p>readelf 显示ebf格式可执行文件的信息。</p></li>
-<li><p>size 列出目标文件每一段的大小以及总体的大小。默认情况下，对于每个目标文件或者一个归档文件中的每个模块只产生一行输出。</p></li>
-<li><p>strings 打印某个文件的可打印字符串，这些字符串最少4个字符长，也可以使用选项-n设置字符串的最小长度。默认情况下，它只打印目标文件初始化和可加载段中的可打印字符；对于其它类型的文件它打印整个文件的可打印字符，这个程序对于了解非文本文件的内容很有帮助。</p></li>
-<li><p>strip 丢弃目标文件中的全部或者特定符号。</p></li>
-<li><p>libiberty 包含许多GNU程序都会用到的函数，这些程序有： getopt, obstack, strerror, strtol 和 strtoul.</p></li>
+<li><p>objdump 显示一个或者更多目标文件的信息.显示一个或者更多目标文件的信息.使用选项来控制其显示的信息.它所显示的信息通常只有编写编译工具的人才感兴趣.</p></li>
+<li><p>ranlib 产生归档文件索引, 并将其保存到这个归档文件中.在索引中列出了归档文件各成员所定义的可重分配目标文件.</p></li>
+<li><p>readelf 显示ebf格式可执行文件的信息.</p></li>
+<li><p>size 列出目标文件每一段的大小以及总体的大小.默认情况下, 对于每个目标文件或者一个归档文件中的每个模块只产生一行输出.</p></li>
+<li><p>strings 打印某个文件的可打印字符串, 这些字符串最少4个字符长, 也可以使用选项-n设置字符串的最小长度.默认情况下, 它只打印目标文件初始化和可加载段中的可打印字符；对于其它类型的文件它打印整个文件的可打印字符, 这个程序对于了解非文本文件的内容很有帮助.</p></li>
+<li><p>strip 丢弃目标文件中的全部或者特定符号.</p></li>
+<li><p>libiberty 包含许多GNU程序都会用到的函数, 这些程序有： getopt, obstack, strerror, strtol 和 strtoul.</p></li>
 <li><p>libbfd 二进制文件描述库.</p></li>
 <li><p>libopcodes 用来处理opcodes的库, 在生成一些应用程序的时候也会用到它, 比如objdump.Opcodes是文本格式可读的处理器操作指令.</p></li>
 </ul>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id6">如何阻塞端口</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">如何阻塞端口</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <section id="packet-filter">
-<h3><a class="toc-backref" href="#id7">packet filter</a><a class="headerlink" href="#packet-filter" title="Permalink to this headline">¶</a></h3>
-<p>在 macos 系统中， pfctl 可以用来阻塞端口</p>
+<h3><a class="toc-backref" href="#id8">packet filter</a><a class="headerlink" href="#packet-filter" title="Permalink to this headline">¶</a></h3>
+<p>在 macos 系统中,  pfctl 可以用来阻塞端口</p>
 <ol class="arabic simple">
-<li><p>编辑配置文件，添加规则</p></li>
+<li><p>编辑配置文件, 添加规则</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo cp /etc/pf.conf /etc/pf_bak.conf
 
@@ -204,7 +224,38 @@ block on en0 proto tcp from any to any port 5004    # block TCP port 5004
 </section>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id8">参考资料</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">其他常用工具</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<section id="mosh-mobile-shell">
+<h3><a class="toc-backref" href="#id10">Mosh(mobile shell)</a><a class="headerlink" href="#mosh-mobile-shell" title="Permalink to this headline">¶</a></h3>
+<p>Remote terminal application that allows roaming, supports intermittent connectivity, and provides intelligent local echo and line editing of user keystrokes.</p>
+<p>Mosh is a replacement for interactive SSH terminals. It’s more robust and responsive, especially over Wi-Fi, cellular, and long-distance links.</p>
+<p>Mosh is free software, available for GNU/Linux, BSD, macOS, Solaris, Android, Chrome, and iOS.</p>
+<p>refer to <a class="reference external" href="https://mosh.org/">https://mosh.org/</a></p>
+<section id="common-steps">
+<h4><a class="toc-backref" href="#id11">common steps</a><a class="headerlink" href="#common-steps" title="Permalink to this headline">¶</a></h4>
+<p>在服务器安装 mosh</p>
+<ol class="arabic simple">
+<li><p><cite>apt install mosh</cite></p></li>
+<li><p>ufw allow 60000:61000/udp</p></li>
+</ol>
+<p>打开了服务器的端口限制，在客户端安装 mosh</p>
+<ol class="arabic simple" start="3">
+<li><p>brew install mosh</p></li>
+<li><p>mosh <a class="reference external" href="mailto:walter&#37;&#52;&#48;www&#46;fanyamin&#46;com">walter<span>&#64;</span>www<span>&#46;</span>fanyamin<span>&#46;</span>com</a></p></li>
+</ol>
+</section>
+</section>
+<section id="better-touch-tool">
+<h3><a class="toc-backref" href="#id12">Better Touch Tool</a><a class="headerlink" href="#better-touch-tool" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://folivora.ai/">https://folivora.ai/</a></p>
+</section>
+<section id="midnight-commander">
+<h3><a class="toc-backref" href="#id13">Midnight Commander</a><a class="headerlink" href="#midnight-commander" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://midnight-commander.org/">https://midnight-commander.org/</a></p>
+</section>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id14">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Windows Defender Firewall with Advanced Security</p></li>
 <li><p><a class="reference external" href="https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf">https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf</a></p></li>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC Bandwidth Probe &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC REMB Code" href="webrtc_bwe_remb.html" />
+    <link rel="prev" title="WebRTC Congestion Control" href="webrtc_bwe_gcc.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_tools.html">WebRTC 构建工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_browser.html">WebRTC 构建浏览器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Bandwidth Probe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">触发探测的条件</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#flow">Flow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#handle-transportpacketsfeedback">handle TransportPacketsFeedback</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#structures">structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#handleprobeandestimatebitrate">HandleProbeAndEstimateBitrate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC Bandwidth Probe</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/5.code/webrtc_bwe_probe.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-bandwidth-probe">
+<h1>WebRTC Bandwidth Probe<a class="headerlink" href="#webrtc-bandwidth-probe" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC Bandwidth Probe</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Category</strong></p></td>
+<td><p>LearningNote</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-01-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id5">触发探测的条件</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#flow" id="id6">Flow</a></p>
+<ul>
+<li><p><a class="reference internal" href="#handle-transportpacketsfeedback" id="id7">handle TransportPacketsFeedback</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#structures" id="id8">structures</a></p>
+<ul>
+<li><p><a class="reference internal" href="#handleprobeandestimatebitrate" id="id9">HandleProbeAndEstimateBitrate</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>在会话刚建立时需要确定远端的一个初始带宽，congestion_controller 通过</p>
+<ul class="simple">
+<li><p>ProbeController 控制何时进行启动探测</p></li>
+<li><p>ProbeBitrateEstimator 基于探测包进行带宽估算</p></li>
+</ul>
+<p>带宽探测的基本思路是以 cluster 为单位按照一定的速度来发送RTP包，然后在收到RTP包的反馈消息时计算发送速度和接收端的接收速度，取这两个速度的最小值为远端带宽速度。</p>
+<p>一次探测为一个cluster, 在同一个cluster内RTP包的cluster_id都相同。ProbeController类用来控制探测行为，例如设定开始探测比特率、分配cluster_id等。</p>
+<p>用于探测带宽的RTP包其实就是音视频的RTP包，如果没有发送过音视频RTP包那么探测行为不会发生。音视频编码出生的RTP数量有限，在探测带宽时为满足以一定的速度发送数据的要求，很可能会对已经发送过的RTP包进行填充发送。</p>
+<p>和所有的RTP、RTCP包的发送一样，探测包的发送也是通过pacing模块来进行的，所有发送的RTP包都会被保存到congestion_controller模块</p>
+<p>在收到feedback消息时，如果此RTP包是用来探测带宽的，那么就会调用到ProbeBitrateEstimator::HandleProbeAndEstimateBitrate函数进行处理。</p>
+<p>会话刚建立时会探测两次，以及编码器配置改变时会探测两次，一个cluster为一次探测，</p>
+<p>会话刚建立时进行两次探测的bps分别为900000、1800000，一般连续的两次探测，第二次的bps为第一次的两倍。</p>
+<section id="id3">
+<h3><a class="toc-backref" href="#id5">触发探测的条件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>1）network available at startup
+2）enable periodic alr probing
+3）large drop in estimated bandwidth
+4) probing results indicate channel has greater capacity.</p>
+</section>
+</section>
+<section id="flow">
+<h2><a class="toc-backref" href="#id6">Flow</a><a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
+<section id="handle-transportpacketsfeedback">
+<h3><a class="toc-backref" href="#id7">handle TransportPacketsFeedback</a><a class="headerlink" href="#handle-transportpacketsfeedback" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>GoogCcNetworkController::OnTransportPacketsFeedback</p></li>
+</ul>
+</section>
+</section>
+<section id="structures">
+<h2><a class="toc-backref" href="#id8">structures</a><a class="headerlink" href="#structures" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">SentPacket</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">send_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Size of packet with overhead up to IP layer.</span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Size of preceeding packets that are not part of feedback.</span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">prior_unacked_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Probe cluster id and parameters including bitrate, number of packets and</span>
+<span class="w">     </span><span class="c1">// number of bytes.</span>
+<span class="w">     </span><span class="n">PacedPacketInfo</span><span class="w"> </span><span class="n">pacing_info</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// True if the packet is an audio packet, false for video, padding, RTX etc.</span>
+<span class="w">     </span><span class="kt">bool</span><span class="w"> </span><span class="n">audio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Transport independent sequence number, any tracked packet should have a</span>
+<span class="w">     </span><span class="c1">// sequence number that is unique over the whole call and increasing by 1 for</span>
+<span class="w">     </span><span class="c1">// each packet.</span>
+<span class="w">     </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">sequence_number</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="c1">// Tracked data in flight when the packet was sent, excluding unacked data.</span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">data_in_flight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PacedPacketInfo</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="n">PacedPacketInfo</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">PacedPacketInfo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="p">,</span><span class="w"></span>
+<span class="w">                     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">     </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacedPacketInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">     </span><span class="c1">// TODO(srte): Move probing info to a separate, optional struct.</span>
+<span class="w">     </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">send_bitrate_bps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+
+<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PacketResult</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">class</span><span class="w"> </span><span class="nc">ReceiveTimeOrder</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">         </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="p">()(</span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lhs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">     </span><span class="n">PacketResult</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">PacketResult</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="o">~</span><span class="n">PacketResult</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">     </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsReceived</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="n">receive_time</span><span class="p">.</span><span class="n">IsPlusInfinity</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">     </span><span class="n">SentPacket</span><span class="w"> </span><span class="n">sent_packet</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">receive_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="p">};</span><span class="w"></span>
+
+<span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">AggregatedCluster</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">num_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">first_send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">last_send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">MinusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">first_receive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">last_receive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">MinusInfinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size_last_send</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size_first_receive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="n">DataSize</span><span class="w"> </span><span class="n">size_total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSize</span><span class="o">::</span><span class="n">Zero</span><span class="p">();</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="handleprobeandestimatebitrate">
+<h3><a class="toc-backref" href="#id9">HandleProbeAndEstimateBitrate</a><a class="headerlink" href="#handleprobeandestimatebitrate" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>HandleProbeAndEstimateBitrate</p></li>
+</ul>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ProbeBitrateEstimator</span><span class="o">::</span><span class="n">HandleProbeAndEstimateBitrate</span><span class="w"></span>
+<span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacketResult</span><span class="o">&amp;</span><span class="w"> </span><span class="n">packet_feedback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//...</span>
+
+<span class="w">    </span><span class="n">DataSize</span><span class="w"> </span><span class="n">send_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_last_send</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">DataRate</span><span class="w"> </span><span class="n">send_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">send_size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">send_interval</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">DataSize</span><span class="w"> </span><span class="n">receive_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cluster</span><span class="o">-&gt;</span><span class="n">size_first_receive</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">DataRate</span><span class="w"> </span><span class="n">receive_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">receive_size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">receive_interval</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">DataRate</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">send_rate</span><span class="p">,</span><span class="w"> </span><span class="n">receive_rate</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//...</span>
+<span class="w">    </span><span class="n">estimated_data_rate_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">res</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">estimated_data_rate_</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="webrtc_bwe_gcc.html" class="btn btn-neutral float-left" title="WebRTC Congestion Control" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_bwe_remb.html" class="btn btn-neutral float-right" title="WebRTC REMB Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
