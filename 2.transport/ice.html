@@ -50,6 +50,8 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Interactive Connectivity Establishment</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ovewview">Ovewview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nat">NAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ice-procedure">ICE procedure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ice-candidae">ICE candidae</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tcp-candidates-with-interactive-connectivity-establishment-ice">TCP Candidates with Interactive Connectivity Establishment (ICE)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#framing-rtp-and-rtcp-packets-over-tcp">Framing RTP and RTCP Packets over TCP</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
@@ -60,7 +62,9 @@
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_ndi.html">Network Device Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
@@ -126,9 +130,11 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#ovewview" id="id3">Ovewview</a></p></li>
 <li><p><a class="reference internal" href="#nat" id="id4">NAT</a></p></li>
-<li><p><a class="reference internal" href="#tcp-candidates-with-interactive-connectivity-establishment-ice" id="id5">TCP Candidates with Interactive Connectivity Establishment (ICE)</a></p></li>
-<li><p><a class="reference internal" href="#framing-rtp-and-rtcp-packets-over-tcp" id="id6">Framing RTP and RTCP Packets over TCP</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id7">Reference</a></p></li>
+<li><p><a class="reference internal" href="#ice-procedure" id="id5">ICE procedure</a></p></li>
+<li><p><a class="reference internal" href="#ice-candidae" id="id6">ICE candidae</a></p></li>
+<li><p><a class="reference internal" href="#tcp-candidates-with-interactive-connectivity-establishment-ice" id="id7">TCP Candidates with Interactive Connectivity Establishment (ICE)</a></p></li>
+<li><p><a class="reference internal" href="#framing-rtp-and-rtcp-packets-over-tcp" id="id8">Framing RTP and RTCP Packets over TCP</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
 </ul>
 </div>
 <section id="ovewview">
@@ -147,8 +153,40 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
 <li><p>Symmetric（对称型）</p></li>
 </ul>
 </section>
+<section id="ice-procedure">
+<h2><a class="toc-backref" href="#id5">ICE procedure</a><a class="headerlink" href="#ice-procedure" title="Permalink to this headline">¶</a></h2>
+<p>1. Candidate gathering
+* STUN
+* TURN
+2. Prioritisation
+3. Exchange
+4. Connectivity checks
+5. Coordination
+6. Communication</p>
+</section>
+<section id="ice-candidae">
+<h2><a class="toc-backref" href="#id6">ICE candidae</a><a class="headerlink" href="#ice-candidae" title="Permalink to this headline">¶</a></h2>
+<p>ICE candiate type</p>
+<ul>
+<li><p>host: Host Candidate</p>
+<p>A candidate obtained by binding to a specific port from an IP address on the host.
+This includes IP addresses on physical interfaces and logical ones, such as ones obtained through VPNs.</p>
+</li>
+<li><p>srflx: Server-Reflexive Candidate</p>
+<p>A candidate whose IP address and port are a binding allocated by a NAT for an ICE agent after it sends a
+packet through the NAT to a server, such as a STUN server.</p>
+</li>
+<li><p>prflx: Peer-Reflexive Candidate</p>
+<p>A candidate whose IP address and port are a binding allocated by a NAT for an ICE agent after it sends a
+packet through the NAT to its peer.</p>
+</li>
+<li><p>relay: Relayed Candidate</p>
+<p>A candidate obtained from a relay server, such as a TURN server.</p>
+</li>
+</ul>
+</section>
 <section id="tcp-candidates-with-interactive-connectivity-establishment-ice">
-<h2><a class="toc-backref" href="#id5">TCP Candidates with Interactive Connectivity Establishment (ICE)</a><a class="headerlink" href="#tcp-candidates-with-interactive-connectivity-establishment-ice" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">TCP Candidates with Interactive Connectivity Establishment (ICE)</a><a class="headerlink" href="#tcp-candidates-with-interactive-connectivity-establishment-ice" title="Permalink to this headline">¶</a></h2>
 <p>ICE defines a mechanism for  NAT traversal for multimedia communication protocols based on the offer/answer model of session negotiation.</p>
 <p>The ICE Candidate can also be TCP-based , refer to RFC6544 and RFC4571</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>           <span class="o">+----------+</span>
@@ -173,7 +211,7 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
 </div>
 </section>
 <section id="framing-rtp-and-rtcp-packets-over-tcp">
-<h2><a class="toc-backref" href="#id6">Framing RTP and RTCP Packets over TCP</a><a class="headerlink" href="#framing-rtp-and-rtcp-packets-over-tcp" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Framing RTP and RTCP Packets over TCP</a><a class="headerlink" href="#framing-rtp-and-rtcp-packets-over-tcp" title="Permalink to this headline">¶</a></h2>
 <p>参见 RFC4571</p>
 <ul class="simple">
 <li><p>The Framing Method</p></li>
@@ -214,7 +252,7 @@ ICE/STUN/TURN 主要是解决如何在各自内网中的客户端之间如何连
 </div>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id7">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8445">RFC8445</a>: Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal</p></li>
 <li><p>_RFC8445: <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8445">https://datatracker.ietf.org/doc/html/rfc8445</a></p></li>
