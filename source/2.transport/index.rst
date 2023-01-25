@@ -19,8 +19,10 @@
    dtls
    sctp
    srtp
+   whip
 
    webrtc_multiplex
+   webrtc_ndi
 
    rtp
    rtcp
