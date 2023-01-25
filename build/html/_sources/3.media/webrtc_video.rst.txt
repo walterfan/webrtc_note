@@ -29,7 +29,8 @@ WebRTC 视频
    video_process
    video_lip_sync
    yuv
-   h264
+   video_codec_h264
+   video_codec_av1
 
 Overview
 ===================

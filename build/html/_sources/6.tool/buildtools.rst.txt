@@ -22,17 +22,17 @@ Build Tools
 Overview
 ====================
 
-WebRTC 没有使用传统的 make 和 autotools，原因是其性能不够，写起来也比较麻烦。 它主要用到了以下三种主要的构建工具，
+WebRTC 没有使用传统的 make 和 autotools, 原因是其性能不够, 写起来也比较麻烦。 它主要用到了以下三种主要的构建工具, 
 
-* Ninja：Ninja 原意是忍者的意思，它是一个专注于速度的小型构建工具，它是一个构建系统。 它将文件的相互依赖关系（通常是源代码和输出可执行文件）作为输入，并快速编排构建它们。
+* Ninja: Ninja 原意是忍者的意思, 它是一个专注于速度的小型构建工具, 它是一个构建系统。 它将文件的相互依赖关系（通常是源代码和输出可执行文件）作为输入, 并快速编排构建它们。
 
-运行Ninja，默认情况下，它会在当前目录中查找名为 build.ninja 的文件并构建所有过时的目标。 您可以指定要构建的目标（文件）作为命令行参数。
+运行Ninja, 默认情况下, 它会在当前目录中查找名为 build.ninja 的文件并构建所有过时的目标。 您可以指定要构建的目标（文件）作为命令行参数。
 
-还有一个特殊的语法 target^ 用于将目标指定为某个规则的第一个输出，其中包含您在命令行中输入的源（如果存在）。 例如，如果您将目标指定为 foo.c^，那么 foo.o 将被构建（假设您的构建文件中有这些目标）。
+还有一个特殊的语法 target^ 用于将目标指定为某个规则的第一个输出, 其中包含您在命令行中输入的源（如果存在）。 例如, 如果您将目标指定为 foo.c^, 那么 foo.o 将被构建（假设您的构建文件中有这些目标）。
 
-* gn: 用于为 Google Chrome 和相关项目（v8、node.js）以及 Google Fuchsia 生成构建文件的元构建系统。 gn 可以为 Chrome 支持的所有平台生成 Ninja 文件。
+* gn: 用于为 Google Chrome 和相关项目 (v8、node.js) 以及 Google Fuchsia 生成构建文件的元构建系统。 gn 可以为 Chrome 支持的所有平台生成 Ninja 文件。
 
-* CMake: 自 CMake 版本 2.8.8 起，可以在 Linux 上生成 Ninja 文件的广泛使用的元构建系统。 较新版本的 CMake 也支持在 Windows 和 Mac OS X 上生成 Ninja 文件。
+* CMake: 自 CMake 版本 2.8.8 起, 可以在 Linux 上生成 Ninja 文件的广泛使用的元构建系统。 较新版本的 CMake 也支持在 Windows 和 Mac OS X 上生成 Ninja 文件。
 
 参见 `Cmake quick guide <cmake_quick_guide.html>`_
 
@@ -71,6 +71,37 @@ Set build arguments on your build directory by running:
 .. code-block::
 
     gn args out/my_build
+
+
+clang
+====================
+
+`docker pull bowery/clang`
+
+Dockerfile example (https://github.com/rsmmr/install-clang.git)
+
+.. code-block::
+
+#https://hub.docker.com/r/rsmmr/clang/dockerfile/
+FROM        ubuntu:trusty
+MAINTAINER  Robin Sommer <robin@icir.org>
+
+# Setup environment.
+ENV PATH /opt/llvm/bin:$PATH
+
+# Default command on startup.
+CMD bash
+
+# Setup packages.
+RUN apt-get update && apt-get -y install cmake git build-essential vim python
+
+# Copy install-clang over.
+ADD . /opt/install-clang
+
+# Compile and install LLVM/clang. We delete the source directory to
+# avoid committing it to the image.
+RUN /opt/install-clang/install-clang -j 4 -C /opt/llvm
+
 
 
 

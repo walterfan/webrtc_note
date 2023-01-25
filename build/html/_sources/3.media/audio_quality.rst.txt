@@ -119,11 +119,41 @@ ViSQOL(Virtual Speech Quality Objective Listener)虚拟语音质量目标监听�
 
 MOS-LQO 分数范围从 1（最差）到 5（最好）。
 
+SoX
+---------------------
+* play audio in sender side:
+
+.. code-block::
+
+   play example.wav trim 0 10
+
+* record audio in receiver side
+
+.. code-block::
+
+   rec example.wav
+
+* add some network impair: loss, delay
+
+.. code-block::
+
+   tc qdisc add dev eth0 root handle 1: tbf rate 500kbit buffer 1600 latency 100ms
+
+* enable/disable FEC
+
+
+
+* calculate mos value for multiple times, check the mean,max and min score
 
 
 
 Reference
 ==============
+* https://telecom.altanai.com/2018/04/17/voip-call-metric-monitoring
+* https://www.twilio.com/docs/glossary/what-is-mean-opinion-score-mos
+* https://obkio.com/blog/measuring-voip-quality-with-mos-score-mean-opinion-score
+* https://github.com/google/visqol
+
 
 * `MOS`_
 

@@ -23,6 +23,22 @@ Overview
 将要发的包追加到一个队列中，由 Pacer 这个模块按照设定的速率将媒体包发送出去
 
 
+主要类
+
+PacingController
+-----------------------
+
+This class implements a leaky-bucket packet pacing algorithm.
+
+It handles the logic of determining which packets to send when, but the actual timing of the processing is done externally
+(e.g. RtpPacketPacer).
+
+
+
+RtpPacketPacer
+---------------------------
+
+
 主要方法：
 
 * PacketRouter::SendPacket(...)

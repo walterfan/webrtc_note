@@ -269,10 +269,10 @@ GPL/LGPL , 在商业产品代码中使用要注意
    }
 
 Reference
----------
-
--  主页: http://sox.sourceforge.net/
--  文档: http://sox.sourceforge.net/sox.html
--  代码: git clone git://git.code.sf.net/p/sox/code sox
+-----------------------
+- 主页: http://sox.sourceforge.net/
+- 文档: http://sox.sourceforge.net/sox.html
+- 代码: git clone git://git.code.sf.net/p/sox/code sox
+- http://billposer.org/Linguistics/Computation/SoxTutorial.html
 
 .. _reference: #reference

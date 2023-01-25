@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sphinx &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Jenkins" href="jenkins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">6. WebRTC 关联技术</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="signal.html">信号处理基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsp.html">数字信号处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kalman.html">卡尔曼滤波笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matlab.html">Matlab 科学计算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multimedia.html">多媒体技术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">数理基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html">概率与统计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scientific_calculation.html">科学计算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jenkins.html">Jenkins</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#flow-chart">Flow chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#class-diagram">Class diagram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#state-diagram">State diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">6. WebRTC 关联技术</a> &raquo;</li>
+      <li>Sphinx</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/7.misc/sphinx.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sphinx">
+<h1>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>Sphinx and restructuredText</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-01-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id4">Example</a></p>
+<ul>
+<li><p><a class="reference internal" href="#flow-chart" id="id5">Flow chart</a></p></li>
+<li><p><a class="reference internal" href="#class-diagram" id="id6">Class diagram</a></p></li>
+<li><p><a class="reference internal" href="#state-diagram" id="id7">State diagram</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id8">Reference</a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Sphinx 是我用过的最强大的文本构建系统, 众多的开源项目用它来编写用户文档, 帮助手册, 它不但支持 restructuredText 和 Markdown
+还有众多强大的插件可供使用.</p>
+</section>
+<section id="example">
+<h2><a class="toc-backref" href="#id4">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<section id="flow-chart">
+<h3><a class="toc-backref" href="#id5">Flow chart</a><a class="headerlink" href="#flow-chart" title="Permalink to this headline">¶</a></h3>
+<div class="graphviz"><img src="../_images/graphviz-c70f332a2d61523b37a07a2bb3c31f552da4e5c1.png" alt="digraph {
+    start -&gt; a;
+    a -&gt; b[label=&quot;yes&quot;];
+    a -&gt; c[label=&quot;no&quot;];
+    b -&gt; end;
+    c -&gt; end;
+}" class="graphviz" /></div>
+<ul class="simple">
+<li><p>mindmap</p></li>
+</ul>
+<div class="graphviz"><img src="../_images/graphviz-2740394ac2c52f2ccd11f97607bb40c764a92fea.png" alt="graph {
+
+    cql[label=&quot;CQL&quot;];
+    trait[label=&quot;Trait: No Joins, No referential integrity, denormalization&quot;];
+    cas[label=&quot;Cassandra&quot;];
+    arch[label=&quot;Architecture&quot;];
+    mod[label=&quot;Data Modeling&quot;];
+
+    cas -- cql;
+    cas -- mod;
+    cas -- arch;
+    mod -- trait;
+}" class="graphviz" /></div>
+</section>
+<section id="class-diagram">
+<h3><a class="toc-backref" href="#id6">Class diagram</a><a class="headerlink" href="#class-diagram" title="Permalink to this headline">¶</a></h3>
+<p class="plantuml">
+<img src="../_images/plantuml-82a7dab42cf55965b46ddc3eaf1e941043890629.png" alt="class task {
+    worker_id text,
+    time_slot text,
+    time timeuuid,
+    attributes text,
+    PRIMARY KEY ((worker_id, time_slot), time)
+}
+
+class task_time_slot {
+    worker_id text,
+    time_slot text,
+    PRIMARY KEY (worker_id, time_slot)
+}"/>
+</p>
+</section>
+<section id="state-diagram">
+<h3><a class="toc-backref" href="#id7">State diagram</a><a class="headerlink" href="#state-diagram" title="Permalink to this headline">¶</a></h3>
+<p class="plantuml">
+<img src="../_images/plantuml-a06495aef82e8cce5cdd53b0df08492dcc12d3e6.png" alt="[*] --&gt; IDLE
+IDLE -&gt; COMPLETE
+IDLE -&gt; COMPLETE_REPEATED
+COMPLETE_REPEATED -&gt; IDLE
+IDLE -&gt; FAILURE
+IDLE -&gt; INTERRUPTED
+FAILURE --&gt; [*]
+INTERRUPTED --&gt; [*]
+COMPLETE --&gt; [*]"/>
+</p>
+<p class="plantuml">
+<img src="../_images/plantuml-dadd71ecaaa06c8b66fb56baa0487d233e2c11b4.png" alt="&#64;startuml
+actor &quot;Main Database&quot; as DB &lt;&lt; Application &gt;&gt;
+
+note left of DB
+   This actor
+   has a &quot;name with spaces&quot;,
+   an alias
+   and a stereotype
+end note
+
+actor User &lt;&lt; Human &gt;&gt;
+actor SpecialisedUser
+actor Administrator
+
+User &lt;|--- SpecialisedUser
+User &lt;|--- Administrator
+
+usecase (Use the application) as (Use) &lt;&lt; Main &gt;&gt;
+usecase (Configure the application) as (Config)
+Use ..&gt; Config : &lt;&lt;includes&gt;&gt;
+
+User --&gt; Use
+DB --&gt; Use
+
+Administrator --&gt; Config
+
+note &quot;This note applies to\nboth actors.&quot; as MyNote
+MyNote .. Administrator
+MyNote .. SpecialisedUser
+
+'  this is a text comment and won't be displayed
+AnotherActor ---&gt; (AnotherUseCase)
+
+'  to increase the length of the edges, just add extras dashes, like this:
+ThirdActor ----&gt; (LowerCase)
+
+'  The direction of the edge can also be reversed, like this:
+(UpperCase) &lt;---- FourthActor
+
+&#64;enduml"/>
+</p>
+</section>
+</section>
+<section id="reference">
+<h2><a class="toc-backref" href="#id8">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/DOT_(graph_description_language">https://en.wikipedia.org/wiki/DOT_(graph_description_language</a>)</p></li>
+<li><p><a class="reference external" href="http://www.graphviz.org/pdf/dotguide.pdf">http://www.graphviz.org/pdf/dotguide.pdf</a></p></li>
+<li><p><a class="reference external" href="http://graphs.grevian.org/example.html">http://graphs.grevian.org/example.html</a></p></li>
+<li><p><a class="reference external" href="https://build-me-the-docs-please.readthedocs.io/en/latest/Using_Sphinx/UsingGraphicsAndDiagramsInSphinx.html">https://build-me-the-docs-please.readthedocs.io/en/latest/Using_Sphinx/UsingGraphicsAndDiagramsInSphinx.html</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jenkins.html" class="btn btn-neutral float-left" title="Jenkins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

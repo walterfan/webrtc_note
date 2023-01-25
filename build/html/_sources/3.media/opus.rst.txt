@@ -50,6 +50,8 @@ Opus可以处理各种音频应用，包括IP语音，视频会议，游戏内�
 * 良好的稳健性和隐蔽性
 * 浮点和定点实现
 
+
+
 互联网音频编码需求
 =====================
 
@@ -58,10 +60,10 @@ Opus可以处理各种音频应用，包括IP语音，视频会议，游戏内�
 定义
 ----------------------------------
 
-* Narrowband: 8 kilohertz (kHz)
-* Wideband: 16 kHz
-* Super-wideband: 24/32 kHz
-* Full-band: 44.1/48 kHz
+* 窄带音频 Narrowband: 8 kilohertz (kHz)
+* 宽带音频 Wideband: 16 kHz
+* 超宽带音频 Super-wideband: 24/32 kHz
+* 全宽带音频 Full-band: 44.1/48 kHz
 
 应用场景
 ----------------------------------
@@ -124,7 +126,12 @@ Opus Architecture
 
 Opus 的整体架构
 
-
+* Opus Encoder
+* Opus Decoder
+* Repacketizer
+* Opus Multistream API
+* Opus library information functions
+* Opus Custom
 
 Opus Codec bandwidth
 -----------------------------------
@@ -181,8 +188,53 @@ FEC
 
 In-band Forward Error Correction (FEC)
 
+Opus 编码自身支持的是带内前向纠错 In-band FEC
+
 Packets that are determined to contain perceptually important speech information, such as onsets or transients,
 are encoded again at a lower bitrate and this re-encoded information is added to a subsequent packet.
+
+
+In order to make OPUS encoder to add FEC a user has to set the following configuration:
+
+* Packet time(ptime) has to be not less than 10ms otherwise OPUS works in the CELT mode and not in SILK.
+* Don’t use very high bitrates. For example, use 24 kbps.
+* In order to use FEC, your bitrate should be higher.
+  For example, if sample rate is 8kHz then bitrate has to be 12 kbps or 24 kbps.
+  The encoder needs higher bitrate to have a room for LBRR packets containing FEC.
+* FEC must be enabled via OPUS_SET_INBAND_FEC.
+* The encoder must be told to expect packet loss via OPUS_SET_PACKET_LOSS_PERC.
+
+
+Encoder change
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: c
+
+    opus_encoder_ctl(encoder, OPUS_SET_INBAND_FEC(TRUE));
+    opus_encoder_ctl(encoder,OPUS_SET_PACKET_LOSS_PERC(opus_packet_loss));
+
+Decoder change
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: c
+
+    /* Decode the lost packet */
+    opus_decoder_ctl(decoder, OPUS_GET_LAST_PACKET_DURATION(frame_size));
+    opus_decode(	decoder,
+            buffer, /* buffer to decode */,
+            length, /* number of bytes in buffer */
+            sampv,  /* output buffer */
+            frame_size,
+            1);   /* in-band FEC is turned on */
+    play_buffer(buffer);
+    /*Decode the current packet*/
+    opus_decode(	decoder,
+            buffer, /* buffer to decode */,
+            length, /* number of bytes in buffer */
+            sampv,  /* output buffer */
+            frame_size,
+            0);   /* in-band FEC is turned off */
+    play_buffer(buffer);
 
 
 Discontinuous Transmission (DTX)

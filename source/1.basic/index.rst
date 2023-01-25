@@ -29,6 +29,8 @@
 
    webrtc_extension
 
+   webrtc_capacity
+
    webrtc_signal
 
    webrtc_sdp

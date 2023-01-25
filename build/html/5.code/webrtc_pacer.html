@@ -60,7 +60,11 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Pacer</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pacingcontroller">PacingController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rtppacketpacer">RtpPacketPacer</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#types">Types</a></li>
 </ul>
 </li>
@@ -72,6 +76,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
@@ -126,19 +131,33 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2022-12-09</p></td>
+<td><p>2023-01-25</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
-<li><p><a class="reference internal" href="#types" id="id4">Types</a></p></li>
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pacingcontroller" id="id4">PacingController</a></p></li>
+<li><p><a class="reference internal" href="#rtppacketpacer" id="id5">RtpPacketPacer</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#types" id="id6">Types</a></p></li>
 </ul>
 </div>
 <section id="overview">
 <h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>将要发的包追加到一个队列中，由 Pacer 这个模块按照设定的速率将媒体包发送出去</p>
+<p>主要类</p>
+<section id="pacingcontroller">
+<h3><a class="toc-backref" href="#id4">PacingController</a><a class="headerlink" href="#pacingcontroller" title="Permalink to this headline">¶</a></h3>
+<p>This class implements a leaky-bucket packet pacing algorithm.</p>
+<p>It handles the logic of determining which packets to send when, but the actual timing of the processing is done externally
+(e.g. RtpPacketPacer).</p>
+</section>
+<section id="rtppacketpacer">
+<h3><a class="toc-backref" href="#id5">RtpPacketPacer</a><a class="headerlink" href="#rtppacketpacer" title="Permalink to this headline">¶</a></h3>
 <p>主要方法：</p>
 <ul class="simple">
 <li><p>PacketRouter::SendPacket(…)</p></li>
@@ -146,8 +165,9 @@
 <li><p>std::vector&lt;std::unique_ptr&lt;RtpPacketToSend&gt;&gt; RTPSender::GeneratePadding(…)</p></li>
 </ul>
 </section>
+</section>
 <section id="types">
-<h2><a class="toc-backref" href="#id4">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>RtpPacketMediaType 表示 RTP 包的类型，共有 5 种</p></li>
 </ul>

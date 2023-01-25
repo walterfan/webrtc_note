@@ -48,6 +48,6 @@ components
 ================
 对于 P2P 应用，我们可以只实现 1 和 2, 省略掉 3 和 4
 
-
-
+我写了一个小例子 - https://github.com/walterfan/webrtc_video_chat
+用的是比较陈旧的 Javascript 语法, 未来有时间改写为 ES6 语法
 
