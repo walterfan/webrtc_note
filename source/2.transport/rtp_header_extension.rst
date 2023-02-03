@@ -147,6 +147,39 @@ Contact chxg@google.com for more info.
 
 RTP header extension format
 
+* Data layout of the shortened version of abs-capture-time with a 1-byte header + 8 bytes of data:
+
+.. code-block::
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  ID   | len=7 |     absolute capture timestamp (bit 0-23)     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |             absolute capture timestamp (bit 24-55)            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  ... (56-63)  |
+    +-+-+-+-+-+-+-+-+
+
+
+* Data layout of the extended version of abs-capture-time with a 1-byte header + 16 bytes of data:
+
+.. code-block::
+    
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  ID   | len=15|     absolute capture timestamp (bit 0-23)     |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |             absolute capture timestamp (bit 24-55)            |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  ... (56-63)  |   estimated capture clock offset (bit 0-23)   |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |           estimated capture clock offset (bit 24-55)          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  ... (56-63)  |
+    +-+-+-+-+-+-+-+-+
+
 
 Transport-Wide Congestion Control
 ============================================================

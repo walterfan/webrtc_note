@@ -29,21 +29,16 @@ WebRTC E2E Delay
 
 端到端延迟 = 接收端的播放时间 - 发送端的捕获时间
 
-麻烦的事情在于, 时间在发送端和接收端的时间基准是不一致的, 这就要参考 RTCP SR 中给出了发送端的 NTP 时间与 RTP 包中的时间戳之间的映射
+麻烦的事情在于, 时间在发送端和接收端的时间基准是不一致的, 这就要参考 RTCP SR 中给出了发送端的 NTP 时间, 通过这个时间， 将接收端的 NTP 时间基准转换为发送端的
 
-端到端延迟 = 接收端的播放时间 - 接收端转换过的发送端捕获时间
+端到端延迟 = (接收端的播放时间 - delta - RTT/2) - 发送端的捕获时间
 
 .. code-block:: javascript
 
-
    e2e_delay = receiver_playout_time - sender_capture_time
-
+   receiver_capture_time = sender_capture_time + ntp_delta
    e2e_delay = receiver_playout_time - receiver_capture_time
-
-   receiver_capture_time = latest_capture_time + captureReceiverTimeOffset;
-
-   captureReceiverTimeOffset = senderReceiverTimeOffset + latestSenderCaptureTimeOffset;
-
+   ntp_delta = received_time - ntp_time_in_sr - rtt/2
 
 
 Media Stats
