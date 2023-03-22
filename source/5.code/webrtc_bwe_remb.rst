@@ -26,8 +26,74 @@ Overview
 * delay based controller on receiver side
 * loss based controller on sender side
 
-Flow
+Controller
 =======================================
+* ReceiveSideCongestionController
+* RembThrottler
+* RembSender
+
+.. code-block::
+
+
+   // This class represents the congestion control state for receive
+   // streams. For send side bandwidth estimation, this is simply
+   // relaying for each received RTP packet back to the sender. While for
+   // receive side bandwidth estimation, we do the estimation locally and
+   // send our results back to the sender.
+   class ReceiveSideCongestionController : public CallStatsObserver {
+   public:
+   ReceiveSideCongestionController(
+         Clock* clock,
+         RemoteEstimatorProxy::TransportFeedbackSender feedback_sender,
+         RembThrottler::RembSender remb_sender,
+         NetworkStateEstimator* network_state_estimator);
+
+   ~ReceiveSideCongestionController() override {}
+
+   void OnReceivedPacket(const RtpPacketReceived& packet, MediaType media_type);
+
+   // TODO(perkj, bugs.webrtc.org/14859): Remove all usage. This method is
+   // currently not used by PeerConnections.
+   virtual void OnReceivedPacket(int64_t arrival_time_ms,
+                                 size_t payload_size,
+                                 const RTPHeader& header);
+   // Implements CallStatsObserver.
+   void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) override;
+
+   // This is send bitrate, used to control the rate of feedback messages.
+   void OnBitrateChanged(int bitrate_bps);
+
+   // Ensures the remote party is notified of the receive bitrate no larger than
+   // `bitrate` using RTCP REMB.
+   void SetMaxDesiredReceiveBitrate(DataRate bitrate);
+
+   void SetTransportOverhead(DataSize overhead_per_packet);
+
+   // Returns latest receive side bandwidth estimation.
+   // Returns zero if receive side bandwidth estimation is unavailable.
+   DataRate LatestReceiveSideEstimate() const;
+
+   // Removes stream from receive side bandwidth estimation.
+   // Noop if receive side bwe is not used or stream doesn't participate in it.
+   void RemoveStream(uint32_t ssrc);
+
+   // Runs periodic tasks if it is time to run them, returns time until next
+   // call to `MaybeProcess` should be non idle.
+   TimeDelta MaybeProcess();
+
+   private:
+   void PickEstimator(bool has_absolute_send_time)
+         RTC_EXCLUSIVE_LOCKS_REQUIRED(mutex_);
+
+   Clock& clock_;
+   RembThrottler remb_throttler_;
+   RemoteEstimatorProxy remote_estimator_proxy_;
+
+   mutable Mutex mutex_;
+   std::unique_ptr<RemoteBitrateEstimator> rbe_ RTC_GUARDED_BY(mutex_);
+   bool using_absolute_send_time_ RTC_GUARDED_BY(mutex_);
+   uint32_t packets_since_absolute_send_time_ RTC_GUARDED_BY(mutex_);
+   };
 
 
 生成和发送 REMB 消息

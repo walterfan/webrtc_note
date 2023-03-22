@@ -27,6 +27,18 @@ Chrome testing
 
 * Chrome command line flags that are useful for WebRTC-related testing:
 
+
+for example
+
+.. code-block::
+
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging=stderr --v=1 \
+
+   > log.txt 2>&1 
+
+some other options:
+
+
 .. code-block::
 
    --allow-file-access-from-files allows getUserMedia() to be called from file:// URLs.

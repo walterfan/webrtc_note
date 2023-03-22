@@ -118,7 +118,7 @@ Log file 位于 `~/.config/chromium/chrome_debug.log`
    cd src
    ./build/install-build-deps.sh
    gclient runhooks
-   gn args out/Default
+   gn args out/Default # make args.gn as below
    gn gen out/Default
    autoninja -C out/Default chrome
 
@@ -129,6 +129,10 @@ Log file 位于 `~/.config/chromium/chrome_debug.log`
    is_debug = false
    dcheck_always_on = false
    is_official_build = true
+
+   symbol_level=1
+   blink_symbol_level=0
+   v8_symbol_level=0
 
    is_debug = false
    enable_nacl = false
@@ -146,7 +150,65 @@ Log file 位于 `~/.config/chromium/chrome_debug.log`
    out/Default/unit_tests --gtest_filter="PushClientTest.*"
 
 
+Build Chrome on mac
+=======================
+
+
+Building Chrome on a Mac can be a complex process, but here are the basic steps you can follow:
+
+1. Install Xcode: Before you start, make sure you have Xcode installed on your Mac. You can download Xcode from the App Store or from the Apple Developer website.
+
+2. Install depot_tools: depot_tools is a set of tools that you'll need to download the Chrome source code and manage the build process. You can install depot_tools by following these steps:
+
+  - Open Terminal and navigate to the folder where you want to install depot_tools.
+
+  - Run the following command: git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+
+  - Add depot_tools to your PATH environment variable by running the following command: export PATH=$PATH:/path/to/depot_tools
+
+3. Download the Chrome source code: Once you have depot_tools installed, you can download the Chrome source code by running the following command in Terminal: fetch --nohooks chromium
+
+4. Install the build dependencies: Before you can build Chrome, you'll need to install the build dependencies by running the following command in Terminal: cd chromium && ./build/install-build-deps.sh
+
+5. Generate the build files: Once the build dependencies are installed, you can generate the build files by running the following command in Terminal: gn gen out/Default
+
+6. Build Chrome: Finally, you can build Chrome by running the following command in Terminal: ninja -C out/Default chrome
+
+The build process can take a long time, depending on your computer's performance. Once the build is complete, you should have a fully functional version of Chrome that you built yourself.
+
 构建 Firefox
 =======================
+
+1. Install Xcode: Before you start, make sure you have Xcode installed on your Mac. You can download Xcode from the App Store or from the Apple Developer website.
+
+2. Install Mercurial: Mercurial is a version control system that you'll need to download the Firefox source code. You can install Mercurial by running the following command in Terminal: brew install mercurial
+
+.. code-block::
+
+   brew install autoconf@2.13 mercurial ccache rustup-init gpg nodejs npm
+
+3. Download the Firefox source code: Once you have Mercurial installed, you can download the Firefox source code by running the following command in Terminal:
+
+.. code-block::
+
+   hg clone https://hg.mozilla.org/mozilla-central
+
+4. Install the build dependencies: Before you can build Firefox, you'll need to install the build dependencies by running the following command in Terminal:
+
+.. code-block::
+
+   ./mach bootstrap
+
+5. Generate the build files: Once the build dependencies are installed, you can generate the build files by running the following command in Terminal:
+
+.. code-block::
+
+    ./mach configure
+
+6. Build Firefox: Finally, you can build Firefox by running the following command in Terminal:
+
+.. code-block::
+
+   ./mach build
 
 https://firefox-source-docs.mozilla.org/setup/macos_build.html
