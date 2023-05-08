@@ -21,10 +21,11 @@ Video Lip Sync
 概述
 =========
 来自同一个终端用户的音频和视频, 在编码发送的 RTP 包中有一个 timestamp, 这个时间戳表示媒体流的捕捉时间。
-同时, 作为发送者也会发送 RTCP Sender Report
+同时, 作为发送者也会发送 RTCP Sender Report, 包含发送的 RTP timestamp 和 NTP timestamp 的映射
 
 
 两个问题：
+
 1. 如何关联来自同一个人或设备的多路 audio 及 video stream?
 
 For multimedia sessions, each type of media (e.g., audio or video) is sent in a separate RTP session,
@@ -123,7 +124,7 @@ The receiver now ensures that the video frame with RTP time stamp RTPv will play
 
 .. code-block::
 
-      AtoV = Vtime - ATime/(audio sample rate)
+      AtoV = V_time - A_Time/(audio sample rate)
 
 * ATB: Audio device TimeBase
 * VTB: Video device TimeBase
@@ -132,5 +133,7 @@ Reference
 ===============
 * https://www.ciscopress.com/articles/article.asp?p=705533&seqNum=6
 * https://www.ccexpert.us/video-conferencing/using-rtcp-for-media-synchronization.html
+* https://testrtc.com/docs/how-do-you-find-lip-sync-issues-in-webrtc/
+
 
 * `RFC6051`_: Rapid Synchronisation of RTP Flows
