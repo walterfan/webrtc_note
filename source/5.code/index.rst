@@ -30,6 +30,7 @@
    webrtc_rtp_rtcp_module
    webrtc_rtp_sender
    webrtc_sdp_offer_answer
+   webrtc_packet_buffer
 
    webrtc_rtx_code
    webrtc_nack_code

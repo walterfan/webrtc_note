@@ -19,7 +19,7 @@ WebRTC 拥塞控制
    webrtc_cc_evaluation
 
 ============ ==========================
-**Abstract** WebRTC RTP 拥塞控制
+**Abstract** WebRTC Congestion Control
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|
@@ -33,7 +33,8 @@ WebRTC 拥塞控制
 
 简介
 =========================
-视频会议需要低延迟和高带宽，可是实际情况中，高带宽是难以保证的，一旦网络出现拥塞，原本就不宽阔的“马路” 堵得更窄，延迟更大。这时候，就需要做拥塞控制
+视频会议需要低延迟和高带宽，可是实际情况中，高带宽是难以保证的，一旦网络出现拥塞，原本就不宽阔的“马路” 堵得更窄，延迟更大。
+这时候，就需要做拥塞控制.
 
 在网络会议中，如果延迟太大，对在线交流就会产生影响。据研究，大致的关系如下
 
@@ -54,7 +55,11 @@ WebRTC 拥塞控制
 * 基于延迟的控制器 delay-based controller
 * 基于丢包的控制器 loss-based controller
 
-例如 Google 所提出的 `GCC 算法 <webrtc_gcc.html>`_, `REMB 扩展 <webrtc_remb.html>`_， `TCC 算法 <webrtc_twcc.html>`_
+例如 Google 所提出的
+
+* `GCC 算法 <webrtc_gcc.html>`_
+* `REMB 扩展 <webrtc_remb.html>`_
+* `TCC 算法 <webrtc_twcc.html>`_
 
 基本架构
 =========================

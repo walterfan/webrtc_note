@@ -26,13 +26,13 @@ H.264 编码
 概述
 ===============
 
-高级视频编码 (AVC)，也称为 H.264 或 MPEG-4 第 10 部分，高级视频编码 (MPEG-4 AVC)，是一种基于面向块的，采用运动补偿和整数 DCT 编码的视频压缩标准。
+高级视频编码 (AVC), 也称为 H.264 或 MPEG-4 第 10 部分, 高级视频编码 (MPEG-4 AVC), 是一种基于面向块的, 采用运动补偿和整数 DCT 编码的视频压缩标准。
 
-截止2021 年末，尽管H.265, AV1 已经冒出头来，H.264 依然是市场上最流行的视频编解码标准，它成熟可靠，而且相当灵活，可适应不同的带宽，既适用于在线视频服务和视频会议，也适用于文件存储。
+截止2021 年末, 尽管H.265, AV1 已经冒出头来, H.264 依然是市场上最流行的视频编解码标准, 它成熟可靠, 而且相当灵活, 可适应不同的带宽, 既适用于在线视频服务和视频会议, 也适用于文件存储。
 
-H.264 定义了 1 ~ 6.2 一系列的 Profile 等级，每个 Profile 都有不同的分辨率，码率，帧率等范围
+H.264 定义了 1 ~ 6.2 一系列的 Profile 等级, 每个 Profile 都有不同的分辨率, 码率, 帧率等范围
 
-H.264 当前主要支持 YUV420 和 8bit 精度，它支持固定和图像自适应帧编码（PAFF），每一帧可以分为多个 Slice, 每个 Slice 又可以分成多个宏块，每个宏块包含 16*16 个亮度像素， 8*8 和 U 分量，8*8 的 V 分量。
+H.264 当前主要支持 YUV420 和 8bit 精度, 它支持固定和图像自适应帧编码 (PAFF) , 每一帧可以分为多个 Slice, 每个 Slice 又可以分成多个宏块, 每个宏块包含 16*16 个亮度像素,  8*8 和 U 分量, 8*8 的 V 分量。
 
 主要特性有
 
@@ -41,14 +41,14 @@ H.264 当前主要支持 YUV420 和 8bit 精度，它支持固定和图像自适
 * 改进的熵编码
 * I帧的帧内预测编码
 
-* 4 * 4 的整数变换，复杂度低，无漂移
+* 4 * 4 的整数变换, 复杂度低, 无漂移
 * 能够对从 16*16 到 4*4 的亮度图像进行可变块大小的运动补偿
 * 通过内插实现了运动向量的四分之一像素精度
 * 能鋔
 
 * 网络抽象层 NAL
-* 渐进式解码器刷新（GDR: Gradual Decoder Refresh）帧
-* 长期参考图片（LTRP: Long-Term Reference Picture）帧
+* 渐进式解码器刷新 (GDR: Gradual Decoder Refresh) 帧
+* 长期参考图片 (LTRP: Long-Term Reference Picture) 帧
 
 
 .. image:: ../_static/h264-encoder.png
@@ -64,19 +64,19 @@ H.264/AVC 应用的主要技术
 2. 预测
 
 * 帧内预测: 邻近宏块
-* 帧间预测: 邻近帧预测，运动估计和补偿
+* 帧间预测: 邻近帧预测, 运动估计和补偿
 
 3. 变换:  基于 4*4像素块的整数 DCT 变换
    
 4. 量化:  多对一的映射来降低码率
    
-量化参数 QP 是量化步长 Qstep 的序号, QP 取最小值 0 时，表示量化最精细；相反，QP 取最大值 51 时，表示量化是最粗糙的。
-对于亮度（Luma）编码而言，量化步长 Qstep 共有 52 个值，QP取值 0~51
-对于色度（Chroma）编码，Q的取值0~39
+量化参数 QP 是量化步长 Qstep 的序号, QP 取最小值 0 时, 表示量化最精细；相反, QP 取最大值 51 时, 表示量化是最粗糙的。
+对于亮度 (Luma) 编码而言, 量化步长 Qstep 共有 52 个值, QP取值 0~51
+对于色度 (Chroma) 编码, Q的取值0~39
 
 1. 环路滤波: De-blocking Filter, Reconstruction Filter
    
-2. 熵编码:  通用可变长编码（UVLC）和基于文本的自适应二进制算术编码（CABAC）
+2. 熵编码:  通用可变长编码 (UVLC) 和基于文本的自适应二进制算术编码 (CABAC) 
 https://www.youtube.com/watch?v=PmoEsPWEdOA&t=265s 
 
 参见 https://en.wikipedia.org/wiki/Advanced_Video_Coding
@@ -114,7 +114,7 @@ https://www.youtube.com/watch?v=PmoEsPWEdOA&t=265s
 
 H264 encoder
 ========================================
-H.264 采用混合编码技术，即把画面间运动预测和画面内空间预测组合，并对残差进行变换编码
+H.264 采用混合编码技术, 即把画面间运动预测和画面内空间预测组合, 并对残差进行变换编码
 
 
 .. image:: ../_static/H264-encoder.png
@@ -200,17 +200,17 @@ H264 over RTP 大体上分为三种:
 RTP header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-针对 H264视频帧，RTP 头中的某些字段有如下设置
+针对 H264视频帧, RTP 头中的某些字段有如下设置
 
 -  Marker bit (M): 1 bit
 
-为 RTP 包中时间戳所指示的访问单元的最后一个数据包中设置 marker=1，这样可以用来进行有效的播放缓冲区处理。
+为 RTP 包中时间戳所指示的访问单元的最后一个数据包中设置 marker=1, 这样可以用来进行有效的播放缓冲区处理。
 
-在FU-A中的 marker 设定为只有最后一包才会设定 marker=1，其它则为 0
+在FU-A中的 marker 设定为只有最后一包才会设定 marker=1, 其它则为 0
 
 -  Sequence number (SN): 16 bits
 
-根据 RFC 3550 的定义来设置和使用，对于单NALU和非交错打包模式，序列号用于确定NALU的解码顺序。
+根据 RFC 3550 的定义来设置和使用, 对于单NALU和非交错打包模式, 序列号用于确定NALU的解码顺序。
 
 -  Timestamp: 32 bits
 
@@ -247,9 +247,9 @@ RTP payload
 
 NAL Unit 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Single NALU: 如果一个视频帧包含1个NALU，可以单独打包成一个 RTP 包，那么RTP时间戳就对应这个帧的采集时间；
-* FU-A: 如果一个视频帧的 NALU 过大(超过 MTU)需要拆分成多个包，可以使用 FU-A 方式来拆分并打到不同的 RTP 包里，那么这几个包的 RTP 时间戳是一样的；
-* STAP-A: 如果某帧较大不能单独打包，但是该帧内部单独的 NALU 比较小，可以使用STAP-A方式合并多个NALU打包发送，但是这些NALU的时间戳必须一致，打包后的RTP时间戳也必须一致
+* Single NALU: 如果一个视频帧包含1个NALU, 可以单独打包成一个 RTP 包, 那么RTP时间戳就对应这个帧的采集时间；
+* FU-A: 如果一个视频帧的 NALU 过大(超过 MTU)需要拆分成多个包, 可以使用 FU-A 方式来拆分并打到不同的 RTP 包里, 那么这几个包的 RTP 时间戳是一样的；
+* STAP-A: 如果某帧较大不能单独打包, 但是该帧内部单独的 NALU 比较小, 可以使用STAP-A方式合并多个NALU打包发送, 但是这些NALU的时间戳必须一致, 打包后的RTP时间戳也必须一致
 
 
 NAL Unit Header:
@@ -313,7 +313,7 @@ NAL Type   Definition
 
 
 
-RFC6184 还定义了 聚合包 STAP 单一时间聚合包， MTAP 多时间聚合包, FU 片断单元包
+RFC6184 还定义了 聚合包 STAP 单一时间聚合包,  MTAP 多时间聚合包, FU 片断单元包
 
 .. code-block::
 
@@ -371,8 +371,8 @@ RFC6184 还定义了 聚合包 STAP 单一时间聚合包， MTAP 多时间聚�
     Figure 3.  RTP payload format for aggregation packets
 
 
-例如一个 STAP 包, "STAP-A NAL HDR" 随后跟随一个 "NALU SIZE", 它是一个 16bit 的无符号整数，
-表示随后的 NALU 的大小（除去自身的2个字节，但包含所指的 NALU 的头）
+例如一个 STAP 包, "STAP-A NAL HDR" 随后跟随一个 "NALU SIZE", 它是一个 16bit 的无符号整数, 
+表示随后的 NALU 的大小 (除去自身的2个字节, 但包含所指的 NALU 的头) 
 
 .. code-block::
 
@@ -510,7 +510,7 @@ H.264 相关的 SDP 属性
 
 
 
-* max-fs: max frame size 最大帧尺寸， 宏块的个数
+* max-fs: max frame size 最大帧尺寸,  宏块的个数
 
 The value of max-fs is an integer indicating the maximum  frame size in units of macroblocks.
 The max-fs parameter signals that the receiver is capable of decoding larger picture sizes than are required by the signaled highest level conveyed in the value of the profile-level-id parameter or the max-recv-
@@ -537,9 +537,9 @@ in the signaled highest level.
    32400, 3840, 2160, Standard 4K
 
 
-* microblock: 宏块，H264 将整个图片分为若干个区域，这些区域称为宏块
+* microblock: 宏块, H264 将整个图片分为若干个区域, 这些区域称为宏块
 
-H264默认是使用 16X16 大小的区域作为一个宏块，也可以划分成 8X8 大小。
+H264默认是使用 16X16 大小的区域作为一个宏块, 也可以划分成 8X8 大小。
 
 
 * max-mbps: 每秒的最大宏块处理速率
@@ -644,8 +644,8 @@ profile-level-id
 A base16  (hexadecimal) representation of the following three bytes in the sequence parameter set NAL unit , e.g. profile-level-id=42e01f
 
 1) profile_idc: 0x42 = 66 --> Baseline Profile (BP, 66)
-2) profile-iop: constraint_set{0,1,2,3,4,5}_flag，2 reserved bits 0
-3) level_idc: 0x1f = 31，--> Level 3.1
+2) profile-iop: constraint_set{0,1,2,3,4,5}_flag, 2 reserved bits 0
+3) level_idc: 0x1f = 31, --> Level 3.1
 
 
 packetization-mode
@@ -671,7 +671,7 @@ max-fs
 max-fs=9000
 
 Max Frame Size = 9000 Macroblocks (Baseline profile level 2.2 value = 1620)
-接收端能够解码的一帧图像的最大尺寸，这个尺寸用这帧图像包含的宏块数来量化，即max-fs的数值。
+接收端能够解码的一帧图像的最大尺寸, 这个尺寸用这帧图像包含的宏块数来量化, 即max-fs的数值。
 
 * 720p的max-fs典型值是3600
 * 1080p的max-fs典型值是8100
@@ -693,7 +693,7 @@ decoded picture buffer
 max-fps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 max-fps=6000
-接收端能够处理的最大帧率。如果发送端发送的帧率高于接收端设置的值，那么接受端会在解码后丢掉多余的帧。
+接收端能够处理的最大帧率。如果发送端发送的帧率高于接收端设置的值, 那么接受端会在解码后丢掉多余的帧。
 Max Frames Per Second in 1/100s of a frame/second = 60 fps (Baseline profile level 2.2 value = 30 fps)
 
 max-rcmd-nalu-size
@@ -710,7 +710,7 @@ max-br
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 max-br=5000
 Max video bit rate = 5000 kbps, Baseline profile level 2.2 value = 4000 kbps
-max-br表示最大比特率，对VCL HRD参数是以1000bit为单位，对NAL HRD参数是以1200bit为单位。例子中max-br=1500，表示VCL HRD参数的最大比特率是1500 kbits/s，NAL HRD参数的最大比特率是1800 kbits/s。
+max-br表示最大比特率, 对VCL HRD参数是以1000bit为单位, 对NAL HRD参数是以1200bit为单位。例子中max-br=1500, 表示VCL HRD参数的最大比特率是1500 kbits/s, NAL HRD参数的最大比特率是1800 kbits/s。
 
 
 

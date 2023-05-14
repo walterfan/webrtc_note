@@ -21,11 +21,37 @@ WebRTC test
 Overview
 =============
 
+chrome tools
+====================
+chrome://about
+chrome://webrtc-internals
+chrome://webrtc-logs
+
+chrome://tracing
+-------------------------
+* Open chrome://tracing in a separate tab or window
+* Click Record
+* Edit categories
+* Deselect all providers and select the WebRTC provider (you can also select other providers as well for more views into the system)
+* Finally, click the Record button.
+
 
 Chrome testing
 ====================
 
 * Chrome command line flags that are useful for WebRTC-related testing:
+
+
+for example
+
+.. code-block::
+
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --enable-logging=stderr --v=1 \
+
+   > log.txt 2>&1
+
+some other options:
+
 
 .. code-block::
 
@@ -217,6 +243,8 @@ Test scenarios
 ===============================
 * `WebRTC test suite`_
 * `The web-platform-tests Project`_ 
+* https://webrtchacks.com/optimizing-webrtc-power-consumption-markus-handell/
+
 
 .. _The web-platform-tests Project: https://github.com/web-platform-tests/wpt
 .. _WebRTC test suite: https://github.com/web-platform-tests/wpt/tree/master/webrtc/

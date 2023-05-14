@@ -21,4 +21,5 @@
    mediasoup
    pion
 
-   troubleshooting
+   video_quality
+   audio_quality
