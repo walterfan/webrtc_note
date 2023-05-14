@@ -75,6 +75,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
@@ -134,7 +135,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-01-25</p></td>
+<td><p>2023-05-14</p></td>
 </tr>
 </tbody>
 </table>
@@ -191,7 +192,7 @@
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="n">packet_history_</span><span class="o">-&gt;</span><span class="n">SetRtt</span><span class="p">(</span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Millis</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">));</span><span class="w"></span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">seq_no</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="nl">seq_no</span> <span class="p">:</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReSendPacket</span><span class="p">(</span><span class="n">seq_no</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">        </span><span class="c1">// Failed to send one Sequence number. Give up the rest in this nack.</span>

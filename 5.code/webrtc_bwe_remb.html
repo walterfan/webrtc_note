@@ -59,7 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC REMB Code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#flow">Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#controller">Controller</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id3">生成和发送 REMB 消息</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">接收和解析 REMB 消息</a></li>
 </ul>
@@ -81,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
@@ -140,14 +141,14 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-01-25</p></td>
+<td><p>2023-05-14</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
-<li><p><a class="reference internal" href="#flow" id="id6">Flow</a></p>
+<li><p><a class="reference internal" href="#controller" id="id6">Controller</a></p>
 <ul>
 <li><p><a class="reference internal" href="#id3" id="id7">生成和发送 REMB 消息</a></p></li>
 <li><p><a class="reference internal" href="#id4" id="id8">接收和解析 REMB 消息</a></p></li>
@@ -175,8 +176,74 @@
 <li><p>loss based controller on sender side</p></li>
 </ul>
 </section>
-<section id="flow">
-<h2><a class="toc-backref" href="#id6">Flow</a><a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
+<section id="controller">
+<h2><a class="toc-backref" href="#id6">Controller</a><a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>ReceiveSideCongestionController</p></li>
+<li><p>RembThrottler</p></li>
+<li><p>RembSender</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// This class represents the congestion control state for receive
+// streams. For send side bandwidth estimation, this is simply
+// relaying for each received RTP packet back to the sender. While for
+// receive side bandwidth estimation, we do the estimation locally and
+// send our results back to the sender.
+class ReceiveSideCongestionController : public CallStatsObserver {
+public:
+ReceiveSideCongestionController(
+      Clock* clock,
+      RemoteEstimatorProxy::TransportFeedbackSender feedback_sender,
+      RembThrottler::RembSender remb_sender,
+      NetworkStateEstimator* network_state_estimator);
+
+~ReceiveSideCongestionController() override {}
+
+void OnReceivedPacket(const RtpPacketReceived&amp; packet, MediaType media_type);
+
+// TODO(perkj, bugs.webrtc.org/14859): Remove all usage. This method is
+// currently not used by PeerConnections.
+virtual void OnReceivedPacket(int64_t arrival_time_ms,
+                              size_t payload_size,
+                              const RTPHeader&amp; header);
+// Implements CallStatsObserver.
+void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) override;
+
+// This is send bitrate, used to control the rate of feedback messages.
+void OnBitrateChanged(int bitrate_bps);
+
+// Ensures the remote party is notified of the receive bitrate no larger than
+// `bitrate` using RTCP REMB.
+void SetMaxDesiredReceiveBitrate(DataRate bitrate);
+
+void SetTransportOverhead(DataSize overhead_per_packet);
+
+// Returns latest receive side bandwidth estimation.
+// Returns zero if receive side bandwidth estimation is unavailable.
+DataRate LatestReceiveSideEstimate() const;
+
+// Removes stream from receive side bandwidth estimation.
+// Noop if receive side bwe is not used or stream doesn&#39;t participate in it.
+void RemoveStream(uint32_t ssrc);
+
+// Runs periodic tasks if it is time to run them, returns time until next
+// call to `MaybeProcess` should be non idle.
+TimeDelta MaybeProcess();
+
+private:
+void PickEstimator(bool has_absolute_send_time)
+      RTC_EXCLUSIVE_LOCKS_REQUIRED(mutex_);
+
+Clock&amp; clock_;
+RembThrottler remb_throttler_;
+RemoteEstimatorProxy remote_estimator_proxy_;
+
+mutable Mutex mutex_;
+std::unique_ptr&lt;RemoteBitrateEstimator&gt; rbe_ RTC_GUARDED_BY(mutex_);
+bool using_absolute_send_time_ RTC_GUARDED_BY(mutex_);
+uint32_t packets_since_absolute_send_time_ RTC_GUARDED_BY(mutex_);
+};
+</pre></div>
+</div>
 <section id="id3">
 <h3><a class="toc-backref" href="#id7">生成和发送 REMB 消息</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>根据所接收到的 RTP packet 中的 abs_send_time, 以及所接收到的时间</p>

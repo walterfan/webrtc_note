@@ -128,3 +128,5 @@ Reference
 * https://datatracker.ietf.org/doc/html/rfc2198
 * https://blog.jianchihu.net/webrtc-research-redundant-rtp-payload-fec.html
 * https://www.meetecho.com/blog/opus-red/
+* https://webrtchacks.com/red-improving-audio-quality-with-redundancy/
+* https://webrtc.github.io/samples/src/content/peerconnection/audio/

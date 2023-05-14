@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="WebRTC NACK code" href="webrtc_nack_code.html" />
-    <link rel="prev" title="WebRTC SDP Offer Answer" href="webrtc_sdp_offer_answer.html" /> 
+    <link rel="prev" title="WebRTC Packet Buffer" href="webrtc_packet_buffer.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -64,6 +64,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC RTX Code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rtx-config">RTX Config</a></li>
@@ -141,7 +142,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-01-25</p></td>
+<td><p>2023-05-14</p></td>
 </tr>
 </tbody>
 </table>
@@ -439,11 +440,11 @@
 <span class="w">                </span><span class="n">call_</span><span class="o">-&gt;</span><span class="n">Receiver</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">DeliverPacket</span><span class="p">(</span><span class="n">webrtc</span><span class="o">::</span><span class="n">MediaType</span><span class="o">::</span><span class="n">VIDEO</span><span class="p">,</span><span class="w"> </span><span class="n">packet</span><span class="p">,</span><span class="w"></span>
 <span class="w">                                                </span><span class="n">packet_time_us</span><span class="p">);</span><span class="w"></span>
 <span class="w">            </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">delivery_result</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">webrtc</span><span class="o">::</span><span class="n">PacketReceiver</span><span class="o">::</span><span class="n">DELIVERY_OK</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">webrtc</span><span class="o">::</span><span class="n">PacketReceiver</span><span class="o">::</span><span class="nl">DELIVERY_OK</span><span class="p">:</span><span class="w"></span>
 <span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">webrtc</span><span class="o">::</span><span class="n">PacketReceiver</span><span class="o">::</span><span class="n">DELIVERY_PACKET_ERROR</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">webrtc</span><span class="o">::</span><span class="n">PacketReceiver</span><span class="o">::</span><span class="nl">DELIVERY_PACKET_ERROR</span><span class="p">:</span><span class="w"></span>
 <span class="w">                </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">webrtc</span><span class="o">::</span><span class="n">PacketReceiver</span><span class="o">::</span><span class="n">DELIVERY_UNKNOWN_SSRC</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">webrtc</span><span class="o">::</span><span class="n">PacketReceiver</span><span class="o">::</span><span class="nl">DELIVERY_UNKNOWN_SSRC</span><span class="p">:</span><span class="w"></span>
 <span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="w">            </span><span class="p">}</span><span class="w"></span>
 <span class="w">    </span><span class="c1">//...</span>
@@ -454,7 +455,7 @@
 <section id="videoreceivestreaminterface-config">
 <h3><a class="toc-backref" href="#id11">VideoReceiveStreamInterface::Config</a><a class="headerlink" href="#videoreceivestreaminterface-config" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Receive-stream specific RTP settings.</span>
-<span class="k">struct</span><span class="w"> </span><span class="nc">Rtp</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ReceiveStreamRtpConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">Rtp</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ReceiveStreamRtpConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="n">Rtp</span><span class="p">();</span><span class="w"></span>
 <span class="w">  </span><span class="n">Rtp</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Rtp</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="o">~</span><span class="n">Rtp</span><span class="p">();</span><span class="w"></span>
@@ -467,7 +468,7 @@
 <span class="w">  </span><span class="n">RtcpMode</span><span class="w"> </span><span class="n">rtcp_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RtcpMode</span><span class="o">::</span><span class="n">kCompound</span><span class="p">;</span><span class="w"></span>
 
 <span class="w">  </span><span class="c1">// Extended RTCP settings.</span>
-<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="nc">RtcpXr</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">struct</span> <span class="nc">RtcpXr</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="c1">// True if RTCP Receiver Reference Time Report Block extension</span>
 <span class="w">    </span><span class="c1">// (RFC 3611) should be enabled.</span>
 <span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">receiver_reference_time_report</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
@@ -565,7 +566,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="webrtc_sdp_offer_answer.html" class="btn btn-neutral float-left" title="WebRTC SDP Offer Answer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_packet_buffer.html" class="btn btn-neutral float-left" title="WebRTC Packet Buffer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="webrtc_nack_code.html" class="btn btn-neutral float-right" title="WebRTC NACK code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

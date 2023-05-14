@@ -1,5 +1,5 @@
 ######################
-Troubleshooting
+Audio Quality
 ######################
 
 
@@ -8,7 +8,7 @@ Troubleshooting
 .. include:: ../abbrs.ref
 
 ============ =============================
-**Abstract** Troubleshooting
+**Abstract** Audio Quality
 **Authors**  Walter Fan
 **Status**   WIP
 **Updated**  |date|
@@ -23,10 +23,6 @@ Troubleshooting
 Overview
 ========================
 
-
-Tools
-========================
-* https://mediaarea.net/en/MediaInfo
-* https://docs.agora.io/en/All/faq/web-native_video_issues
-* https://github.com/muaz-khan/RecordRTC/issues/725
-* https://bugs.chromium.org/p/chromium/issues/detail?id=1156408
+* 声音断断续续,有卡顿, 可以用Jitter Buffer, 丢包恢复和丢包隐藏技术改善
+* 声音太小或太大, 可以用 AGC 改善
+* 声音不清晰, 有杂音或回声, 可以用 AEC 和 BNR 改善

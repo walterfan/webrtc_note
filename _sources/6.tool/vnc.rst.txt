@@ -52,7 +52,7 @@ Tight VNC on Ubuntu
    mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
    vim +x ~/.vnc/xstartup # set GUI
    chmod +x ~/.vnc/xstartup
-
+   vncserver # start it again
 
 xstartup 内容如下
 
@@ -62,6 +62,20 @@ xstartup 内容如下
    xrdb $HOME/.Xresources
    startxfce4 &
 
+
+you may need to use xfe-terminal instead of the terminal emulator because it needs d-bus
+
+
+novnc
+=========================
+
+* quick steps
+
+.. code-block::
+
+   apt -y install novnc python3-websockify python3-numpy
+   openssl req -x509 -nodes -newkey rsa:3072 -keyout novnc.pem -out novnc.pem -days 3650
+   websockify -D --web=/usr/share/novnc/ --cert=/home/ubuntu/novnc.pem 6080 localhost:5901
 
 Reference
 =========================

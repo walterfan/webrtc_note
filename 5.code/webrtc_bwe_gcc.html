@@ -87,6 +87,7 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
@@ -149,7 +150,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-01-25</p></td>
+<td><p>2023-05-14</p></td>
 </tr>
 </tbody>
 </table>
@@ -210,7 +211,7 @@
 </section>
 <section id="id3">
 <h2><a class="toc-backref" href="#id6">核心接口</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">NetworkControllerInterface</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NetworkControllerInterface</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="k">public</span><span class="o">:</span><span class="w"></span>
 <span class="w">  </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">NetworkControllerInterface</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"></span>
 
@@ -355,7 +356,7 @@
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use StreamsConfig for information about streams that is required for specific</span>
 <span class="c1">// adjustments to the algorithms in network controllers. Especially useful</span>
 <span class="c1">// for experiments.</span>
-<span class="k">struct</span><span class="w"> </span><span class="nc">StreamsConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">StreamsConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">   </span><span class="n">StreamsConfig</span><span class="p">();</span><span class="w"></span>
 <span class="w">   </span><span class="n">StreamsConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">StreamsConfig</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
 <span class="w">   </span><span class="o">~</span><span class="n">StreamsConfig</span><span class="p">();</span><span class="w"></span>
@@ -369,7 +370,7 @@
 <span class="w">   </span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">max_total_allocated_bitrate</span><span class="p">;</span><span class="w"></span>
 <span class="p">};</span><span class="w"></span>
 
-<span class="k">struct</span><span class="w"> </span><span class="nc">TargetRateConstraints</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">TargetRateConstraints</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">   </span><span class="n">TargetRateConstraints</span><span class="p">();</span><span class="w"></span>
 <span class="w">   </span><span class="n">TargetRateConstraints</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TargetRateConstraints</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
 <span class="w">   </span><span class="o">~</span><span class="n">TargetRateConstraints</span><span class="p">();</span><span class="w"></span>
@@ -383,7 +384,7 @@
 
 <span class="c1">// Configuration sent to factory create function. The parameters here are</span>
 <span class="c1">// optional to use for a network controller implementation.</span>
-<span class="k">struct</span><span class="w"> </span><span class="nc">NetworkControllerConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">struct</span> <span class="nc">NetworkControllerConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">   </span><span class="c1">// The initial constraints to start with, these can be changed at any later</span>
 <span class="w">   </span><span class="c1">// time by calls to OnTargetRateConstraints. Note that the starting rate</span>
 <span class="w">   </span><span class="c1">// has to be set initially to provide a starting state for the network</span>
@@ -404,7 +405,7 @@
 <ul class="simple">
 <li><p>GoogCcConfig</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">GoogCcConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">GoogCcConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NetworkStateEstimator</span><span class="o">&gt;</span><span class="w"> </span><span class="n">network_state_estimator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
 <span class="w">   </span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NetworkStatePredictor</span><span class="o">&gt;</span><span class="w"> </span><span class="n">network_state_predictor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
 <span class="w">   </span><span class="kt">bool</span><span class="w"> </span><span class="n">feedback_only</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
