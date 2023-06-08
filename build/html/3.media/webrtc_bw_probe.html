@@ -94,7 +94,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -139,89 +139,89 @@ We did not know whether there is enough bandwidth that we want if we do not prob
 <div><p>第一次为 300 3 = 900 kbps
 第二次为 300 6 = 1800 kbps</p>
 </div></blockquote>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">ProbeControllerConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="k">explicit</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">WebRtcKeyValueConfig</span><span class="o">*</span><span class="w"> </span><span class="n">key_value_config</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="o">~</span><span class="n">ProbeControllerConfig</span><span class="p">();</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ProbeControllerConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">explicit</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">WebRtcKeyValueConfig</span><span class="o">*</span><span class="w"> </span><span class="n">key_value_config</span><span class="p">);</span>
+<span class="w">   </span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="w">   </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ProbeControllerConfig</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span>
+<span class="w">   </span><span class="o">~</span><span class="n">ProbeControllerConfig</span><span class="p">();</span>
 
 <span class="w">   </span><span class="c1">// These parameters configure the initial probes. First we send one or two</span>
 <span class="w">   </span><span class="c1">// probes of sizes p1 * start_bitrate_bps_ and p2 * start_bitrate_bps_.</span>
 <span class="w">   </span><span class="c1">// Then whenever we get a bitrate estimate of at least further_probe_threshold</span>
 <span class="w">   </span><span class="c1">// times the size of the last sent probe we&#39;ll send another one of size</span>
 <span class="w">   </span><span class="c1">// step_size times the new estimate.</span>
-<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_exponential_probe_scale</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second_exponential_probe_scale</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">further_exponential_probe_scale</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">further_probe_threshold</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_exponential_probe_scale</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second_exponential_probe_scale</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">further_exponential_probe_scale</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">further_probe_threshold</span><span class="p">;</span>
 
 <span class="w">   </span><span class="c1">// Configures how often we send ALR probes and how big they are.</span>
-<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="n">TimeDelta</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alr_probing_interval</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alr_probe_scale</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="n">TimeDelta</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alr_probing_interval</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alr_probe_scale</span><span class="p">;</span>
 
 <span class="w">   </span><span class="c1">// Configures the probes emitted by changed to the allocated bitrate.</span>
-<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_allocation_probe_scale</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second_allocation_probe_scale</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialFlag</span><span class="w"> </span><span class="n">allocation_allow_further_probing</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocation_probe_max</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_allocation_probe_scale</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialOptional</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">second_allocation_probe_scale</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialFlag</span><span class="w"> </span><span class="n">allocation_allow_further_probing</span><span class="p">;</span>
+<span class="w">   </span><span class="n">FieldTrialParameter</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">allocation_probe_max</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <p>初始的缺省值如下</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// The minimum number probing packets used. 最少发送的探测包个数 5 个包</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kMinProbePacketsSent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kMinProbePacketsSent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
 
 <span class="c1">// The minimum probing duration in ms. 最短探测的时间 15ms</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kMinProbeDurationMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kMinProbeDurationMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span>
 
 <span class="c1">// Maximum waiting time from the time of initiating probing to getting</span>
 <span class="c1">// the measured results back.</span>
 <span class="c1">// 对发起的探测结果的最长等待时间, 默认为 1000ms</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kMaxWaitingTimeForProbingResultMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kMaxWaitingTimeForProbingResultMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
 
 <span class="c1">// Value of `min_bitrate_to_probe_further_bps_` that indicates</span>
 <span class="c1">// further probing is disabled.</span>
 <span class="c1">// 是否进行进一步的探测</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kExponentialProbingDisabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kExponentialProbingDisabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="c1">// Default probing bitrate limit. Applied only when the application didn&#39;t</span>
 <span class="c1">// specify max bitrate.</span>
 <span class="c1">// 默认的探测带宽限制, 如果应用程序没有指定最大带宽,默认为 5m bps</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kDefaultMaxProbingBitrateBps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000000</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kDefaultMaxProbingBitrateBps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000000</span><span class="p">;</span>
 
 <span class="c1">// If the bitrate drops to a factor `kBitrateDropThreshold` or lower</span>
 <span class="c1">// and we recover within `kBitrateDropTimeoutMs`, then we&#39;ll send</span>
 <span class="c1">// a probe at a fraction `kProbeFractionAfterDrop` of the original bitrate.</span>
 <span class="c1">// 如果带宽在 kBitrateDropTimeoutMs(默认为 5000ms) 时长下降到原先的 kBitrateDropThreshold（默认为 66%)　或更低，</span>
 <span class="c1">// 我们会发送一个大小为原先带宽的 kProbeFractionAfterDrop(默认系数为 0.85) 比率的探测包.</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kBitrateDropThreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.66</span><span class="p">;</span><span class="w"></span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kBitrateDropTimeoutMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span><span class="w"></span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kProbeFractionAfterDrop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.85</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kBitrateDropThreshold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.66</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kBitrateDropTimeoutMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kProbeFractionAfterDrop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.85</span><span class="p">;</span>
 
 <span class="c1">// Timeout for probing after leaving ALR. If the bitrate drops significantly,</span>
 <span class="c1">// (as determined by the delay based estimator) and we leave ALR, then we will</span>
 <span class="c1">// send a probe if we recover within `kLeftAlrTimeoutMs` ms.</span>
 <span class="c1">// 在离开应用受限区间(ALR) 的超时 kAlrEndedTimeoutMs(默认为 3 秒) 后, 如果带宽显著降低,而且我们离开了 ALR, 那么到达 kLeftAlrTimeoutMs 的时长 我们会发送一个探测包</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kAlrEndedTimeoutMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3000</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kAlrEndedTimeoutMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3000</span><span class="p">;</span>
 
 <span class="c1">// This is a limit on how often probing can be done when there is a BW</span>
 <span class="c1">// drop detected in ALR.</span>
 <span class="c1">//  在 ALR 中当有一个带宽下降时 对于探测完成频率的限制</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kMinTimeBetweenAlrProbesMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">kMinTimeBetweenAlrProbesMs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span>
 
 <span class="c1">// The expected uncertainty of probe result (as a fraction of the target probe</span>
 <span class="c1">// bitrate). Used to avoid probing if the probe bitrate is close to our current</span>
 <span class="c1">// estimate.</span>
 <span class="c1">// 不确定的探测结果, 它是对于目标探测带宽的比率, 用来在探测带宽接近当前估计时避免还在探测</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kProbeUncertainty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">kProbeUncertainty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span>
 
 <span class="c1">// Use probing to recover faster after large bitrate estimate drops.</span>
 <span class="c1">// 特性开关: 在有大幅带宽下降时用探测来快速恢复</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">kBweRapidRecoveryExperiment</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">   </span><span class="s">&quot;WebRTC-BweRapidRecoveryExperiment&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">kBweRapidRecoveryExperiment</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="s">&quot;WebRTC-BweRapidRecoveryExperiment&quot;</span><span class="p">;</span>
 <span class="c1">// 特性开关: 在到达配置的最大分配带宽后不再探测</span>
 <span class="c1">// Never probe higher than configured by OnMaxTotalAllocatedBitrate().</span>
-<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">kCappedProbingFieldTrialName</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;WebRTC-BweCappedProbing&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="k">constexpr</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">kCappedProbingFieldTrialName</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;WebRTC-BweCappedProbing&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 <section id="related-code">
@@ -229,20 +229,20 @@ We did not know whether there is enough bandwidth that we want if we do not prob
 <ul class="simple">
 <li><p>ProbeControllerConfig</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">ProbeControllerConfig</span><span class="o">::</span><span class="n">ProbeControllerConfig</span><span class="p">(</span><span class="w"></span>
-<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">WebRtcKeyValueConfig</span><span class="o">*</span><span class="w"> </span><span class="n">key_value_config</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">first_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">second_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">further_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;step_size&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">further_probe_threshold</span><span class="p">(</span><span class="s">&quot;further_probe_threshold&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">alr_probing_interval</span><span class="p">(</span><span class="s">&quot;alr_interval&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span><span class="w"></span>
-<span class="w">         </span><span class="n">alr_probe_scale</span><span class="p">(</span><span class="s">&quot;alr_scale&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">first_allocation_probe_scale</span><span class="p">(</span><span class="s">&quot;alloc_p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">second_allocation_probe_scale</span><span class="p">(</span><span class="s">&quot;alloc_p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">allocation_allow_further_probing</span><span class="p">(</span><span class="s">&quot;alloc_probe_further&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">),</span><span class="w"></span>
-<span class="w">         </span><span class="n">allocation_probe_max</span><span class="p">(</span><span class="s">&quot;alloc_probe_max&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">ProbeControllerConfig</span><span class="o">::</span><span class="n">ProbeControllerConfig</span><span class="p">(</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">WebRtcKeyValueConfig</span><span class="o">*</span><span class="w"> </span><span class="n">key_value_config</span><span class="p">)</span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">first_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">),</span>
+<span class="w">         </span><span class="n">second_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">),</span>
+<span class="w">         </span><span class="n">further_exponential_probe_scale</span><span class="p">(</span><span class="s">&quot;step_size&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">         </span><span class="n">further_probe_threshold</span><span class="p">(</span><span class="s">&quot;further_probe_threshold&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">),</span>
+<span class="w">         </span><span class="n">alr_probing_interval</span><span class="p">(</span><span class="s">&quot;alr_interval&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span>
+<span class="w">         </span><span class="n">alr_probe_scale</span><span class="p">(</span><span class="s">&quot;alr_scale&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">         </span><span class="n">first_allocation_probe_scale</span><span class="p">(</span><span class="s">&quot;alloc_p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">         </span><span class="n">second_allocation_probe_scale</span><span class="p">(</span><span class="s">&quot;alloc_p2&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span>
+<span class="w">         </span><span class="n">allocation_allow_further_probing</span><span class="p">(</span><span class="s">&quot;alloc_probe_further&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">),</span>
+<span class="w">         </span><span class="n">allocation_probe_max</span><span class="p">(</span><span class="s">&quot;alloc_probe_max&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="c1">//...</span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -252,22 +252,22 @@ We did not know whether there is enough bandwidth that we want if we do not prob
 <p>A probe cluster consists of a set of probes. Each probe in turn can be divided into a number of packets to accommodate the MTU on the network.</p>
 <p>Probe Cluster 探测集合包含一组探测，每一个探测依次可被分割成一些包来符合网络中的 MTU 限制，</p>
 <p>发送的探测包中会有包信息块,包含了探测的信息</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">PacedPacketInfo</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">PacedPacketInfo</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">PacedPacketInfo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="p">,</span><span class="w"></span>
-<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="p">,</span><span class="w"></span>
-<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">PacedPacketInfo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">PacedPacketInfo</span><span class="p">();</span>
+<span class="w">    </span><span class="n">PacedPacketInfo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="p">,</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="p">,</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="p">);</span>
 
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacedPacketInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PacedPacketInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// TODO(srte): Move probing info to a separate, optional struct.</span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">send_bitrate_bps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">send_bitrate_bps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kNotAProbe</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_probes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_min_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">probe_cluster_bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </section>

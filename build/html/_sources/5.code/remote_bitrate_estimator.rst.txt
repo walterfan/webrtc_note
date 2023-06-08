@@ -23,6 +23,22 @@ Remote Bitrate Estimator
 Overview
 =============
 
+
+Classes
+==============
+
+带宽的使用情况
+
+.. code-block:: c++
+
+    enum class BandwidthUsage {
+        kBwNormal = 0,
+        kBwUnderusing = 1,
+        kBwOverusing = 2,
+        kLast
+    };
+
+
 Code
 =============
 

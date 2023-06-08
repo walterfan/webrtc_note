@@ -135,7 +135,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -179,7 +179,7 @@
 <h3><a class="toc-backref" href="#id6">Packet History</a><a class="headerlink" href="#packet-history" title="Permalink to this headline">¶</a></h3>
 <p>RtpSender 维护了一个用来存储发送过的包的队列，称为 Packet History, 根据 sequence  number 来排序
 老包放在队首，新包放在队尾</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">RtpPacketHistory</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">packet_history_</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">RtpPacketHistory</span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">packet_history_</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>由于存在 sequence number 回滚的情况，队尾的包的 sequence  number 有可能比之前的包小。</p>
@@ -188,20 +188,20 @@
 <section id="nack">
 <h3><a class="toc-backref" href="#id7">对 NACK 的处理</a><a class="headerlink" href="#nack" title="Permalink to this headline">¶</a></h3>
 <p>收到  NACK 请求，根据 sequence number 从发送缓存中找到相应的包重发</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">RTPSender::OnReceivedNack</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="n">packet_history_</span><span class="o">-&gt;</span><span class="n">SetRtt</span><span class="p">(</span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Millis</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">));</span><span class="w"></span>
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="nl">seq_no</span> <span class="p">:</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReSendPacket</span><span class="p">(</span><span class="n">seq_no</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">RTPSender::OnReceivedNack</span><span class="p">(</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="n">packet_history_</span><span class="o">-&gt;</span><span class="n">SetRtt</span><span class="p">(</span><span class="n">TimeDelta</span><span class="o">::</span><span class="n">Millis</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">avg_rtt</span><span class="p">));</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">seq_no</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">nack_sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReSendPacket</span><span class="p">(</span><span class="n">seq_no</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bytes_sent</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// Failed to send one Sequence number. Give up the rest in this nack.</span>
-<span class="w">        </span><span class="n">RTC_LOG</span><span class="p">(</span><span class="n">LS_WARNING</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed resending RTP packet &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">seq_no</span><span class="w"></span>
-<span class="w">                            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, Discard rest of packets.&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">RTC_LOG</span><span class="p">(</span><span class="n">LS_WARNING</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Failed resending RTP packet &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">seq_no</span>
+<span class="w">                            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;, Discard rest of packets.&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>

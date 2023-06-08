@@ -128,7 +128,7 @@
 <td><p>v1</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -160,17 +160,17 @@
 </section>
 <section id="tight-vnc-on-ubuntu">
 <h2><a class="toc-backref" href="#id6">Tight VNC on Ubuntu</a><a class="headerlink" href="#tight-vnc-on-ubuntu" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
 <span class="c1"># select default display manager</span>
-sudo apt install -y xfce4 xfce4-goodies
-sudo apt install -y tightvncserver
-vncserver   <span class="c1">#set password</span>
-vncserver -kill :1
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>xfce4<span class="w"> </span>xfce4-goodies
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>tightvncserver
+vncserver<span class="w">   </span><span class="c1">#set password</span>
+vncserver<span class="w"> </span>-kill<span class="w"> </span>:1
 
-mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
-vim +x ~/.vnc/xstartup <span class="c1"># set GUI</span>
-chmod +x ~/.vnc/xstartup
-vncserver <span class="c1"># start it again</span>
+mv<span class="w"> </span>~/.vnc/xstartup<span class="w"> </span>~/.vnc/xstartup.bak
+vim<span class="w"> </span>+x<span class="w"> </span>~/.vnc/xstartup<span class="w"> </span><span class="c1"># set GUI</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>~/.vnc/xstartup
+vncserver<span class="w"> </span><span class="c1"># start it again</span>
 </pre></div>
 </div>
 <p>xstartup 内容如下</p>

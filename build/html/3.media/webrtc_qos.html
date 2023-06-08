@@ -154,7 +154,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -257,17 +257,17 @@
 <li><p>MAINTAIN_RESOLUTION: 保分辨率降帧率，使用场景为屏幕共享或者文档模式，对清晰度要求较高的场景</p></li>
 <li><p>BALANCED: 平衡帧率与分辨率</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="k">class</span><span class="w"> </span><span class="nc">DegradationPreference</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">DegradationPreference</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// Don&#39;t take any actions based on over-utilization signals. Not part of the</span>
 <span class="w">  </span><span class="c1">// web API.</span>
-<span class="w">  </span><span class="n">DISABLED</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">DISABLED</span><span class="p">,</span>
 <span class="w">  </span><span class="c1">// On over-use, request lower resolution, possibly causing down-scaling.</span>
-<span class="w">  </span><span class="n">MAINTAIN_FRAMERATE</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">MAINTAIN_FRAMERATE</span><span class="p">,</span>
 <span class="w">  </span><span class="c1">// On over-use, request lower frame rate, possibly causing frame drops.</span>
-<span class="w">  </span><span class="n">MAINTAIN_RESOLUTION</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">MAINTAIN_RESOLUTION</span><span class="p">,</span>
 <span class="w">  </span><span class="c1">// Try to strike a &quot;pleasing&quot; balance between frame rate or resolution.</span>
-<span class="w">  </span><span class="n">BALANCED</span><span class="p">,</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">BALANCED</span><span class="p">,</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <p>WebRTC 提供一个接口 MediaStreamTrack Content Hints 用来告知当前所使用的模式</p>
@@ -376,23 +376,23 @@
 <p>参见 <a class="reference external" href="https://chromium.googlesource.com/external/webrtc/+/master/media/engine/webrtc_video_engine.cc#326">https://chromium.googlesource.com/external/webrtc/+/master/media/engine/webrtc_video_engine.cc#326</a></p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// The selected thresholds for QVGA and VGA corresponded to a QP around 10.</span>
 <span class="c1">// The change in QP declined above the selected bitrates.</span>
-<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">GetMaxDefaultVideoBitrateKbps</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                        </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                        </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_screenshare</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">max_bitrate</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">320</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">240</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">600</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">640</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">480</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1700</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">960</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">540</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2500</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_screenshare</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">max_bitrate</span><span class="p">,</span><span class="w"> </span><span class="mi">1200</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">max_bitrate</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">GetMaxDefaultVideoBitrateKbps</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_screenshare</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">max_bitrate</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">320</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">240</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">600</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">640</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">480</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1700</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">960</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">540</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2500</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_screenshare</span><span class="p">)</span>
+<span class="w">    </span><span class="n">max_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">max_bitrate</span><span class="p">,</span><span class="w"> </span><span class="mi">1200</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">max_bitrate</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>

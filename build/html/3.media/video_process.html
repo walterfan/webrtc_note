@@ -55,8 +55,8 @@
 <li class="toctree-l3"><a class="reference internal" href="video_pipeline.html">Video Pipeline</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Video Process</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id3">概述</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#look-up-table">Look-up Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#color-space">Color Space</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#library">Library</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="video_lip_sync.html">Video Lip Sync</a></li>
@@ -64,6 +64,8 @@
 <li class="toctree-l3"><a class="reference internal" href="video_codec_h264.html">H.264 编码</a></li>
 <li class="toctree-l3"><a class="reference internal" href="video_codec_av1.html">视频编码 AV1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_video.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_video.html#terms">Terms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webrtc_video.html#video-file-format">Video File Format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_video.html#reference">Reference</a></li>
 </ul>
 </li>
@@ -134,15 +136,19 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id4">概述</a></p></li>
-<li><p><a class="reference internal" href="#look-up-table" id="id5">Look-up Table</a></p></li>
-<li><p><a class="reference internal" href="#color-space" id="id6">Color Space</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id5">Example</a></p>
+<ul>
+<li><p><a class="reference internal" href="#add-a-watermark-to-a-webrtc-video-stream" id="id6">add a watermark to a WebRTC video stream</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#library" id="id7">Library</a></p></li>
 </ul>
 </div>
 <section id="id3">
@@ -155,15 +161,66 @@
 <li><p>Transform</p></li>
 <li><p>Inject</p></li>
 </ul>
-</section>
-<section id="look-up-table">
-<h2><a class="toc-backref" href="#id5">Look-up Table</a><a class="headerlink" href="#look-up-table" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="color-space">
-<h2><a class="toc-backref" href="#id6">Color Space</a><a class="headerlink" href="#color-space" title="Permalink to this headline">¶</a></h2>
+<p>常用的操作有颜色空间的转换, 图像像素的重新采样(上采样,下采样), 各种滤镜的应用</p>
 <ul class="simple">
-<li><p>HUE</p></li>
-<li><p>YUV Space</p></li>
+<li><p>Histogram equalization</p></li>
+<li><p>Color correction</p></li>
+<li><p>video filter apply</p></li>
+<li><p>face recogtion and beauty</p></li>
+</ul>
+</section>
+<section id="example">
+<h2><a class="toc-backref" href="#id5">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<section id="add-a-watermark-to-a-webrtc-video-stream">
+<h3><a class="toc-backref" href="#id6">add a watermark to a WebRTC video stream</a><a class="headerlink" href="#add-a-watermark-to-a-webrtc-video-stream" title="Permalink to this headline">¶</a></h3>
+<p>We can use the Canvas API to overlay an image on top of the video stream.</p>
+<p>例如:</p>
+<p>Get the video element: Use JavaScript to get a reference to the video element in your HTML page.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">video</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;video&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Create a canvas element: Use JavaScript to create a new canvas element and set its size to match the video element.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Get the canvas context: Use JavaScript to get a reference to the 2D rendering context of the canvas element.</p></li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Draw the video frame: Use JavaScript to draw the current video frame onto the canvas.</p></li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Add the watermark: Use JavaScript to draw the watermark image onto the canvas.</p></li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">watermark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Image</span><span class="p">();</span>
+<span class="nx">watermark</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;path/to/watermark.png&#39;</span><span class="p">;</span>
+<span class="nx">watermark</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">watermark</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Replace the video element with the canvas element: Use JavaScript to replace the video element with the canvas element.</p></li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">video</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span><span class="w"> </span><span class="nx">video</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This code will replace the video element with a canvas element that has the video frame and the watermark image overlaid on top. You can customize the position and opacity of the watermark by adjusting the parameters of the drawImage function.</p>
+</section>
+</section>
+<section id="library">
+<h2><a class="toc-backref" href="#id7">Library</a><a class="headerlink" href="#library" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>opencv</p></li>
+<li><p>Scikit-video</p></li>
 </ul>
 </section>
 </section>

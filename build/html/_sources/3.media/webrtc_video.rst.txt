@@ -36,6 +36,29 @@ Overview
 ===================
 
 
+Terms
+====================
+* pixel 像素
+* PPI(Pixels Per Inch)
+* Color Space: RGB, YUV, HSV
+* Depth
+* Frame
+* GOP
+* Resolution
+* Frame rate
+* Refresh rate
+
+Video File Format
+======================
+* AVI: `*.avi`
+* WMV: `*.wmv`
+* MPEG: `*.mp4`
+* Matroska: `*.mkv`
+* Real Video: `*.rm`
+* Quick Time: `*.mov`
+* Flash Video: `*.flv`
+
+
 Reference
 ===================
-* `RFC7742`_ "WebRTC Video Processing and Codec Requirements" 
+* `RFC7742`_ "WebRTC Video Processing and Codec Requirements"

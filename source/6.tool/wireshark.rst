@@ -58,14 +58,14 @@ tshark is a command line tool of wireshark , we can create a symbol link like be
 
 Basic Usage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-具体用法参见 `tshark --help`
+具体用法参见 `tshark --help` 或者 https://www.wireshark.org/docs/man-pages/tshark.html
 
 例如将 pcapng 文件中的前 100 包按以下条件过滤出来，并导出为 json 文件
 
 .. code-block::
 
    tshark -r 2022-03-30-cc.pcapng -2 -Y "ip.addr == 10.140.202.120 and rtp.p_type == 123" -V -c 100 -T json >
-   packet_sample.json"
+   packet_sample.json
 
 
 输出结果如下
@@ -73,7 +73,7 @@ Basic Usage
 
 .. code-block::
 
-        //省略 1 ~ 4 层的信息： 1）frame, 2）eth, 3）ip, 4）udp
+        //省略 1 ~ 4 层的信息： 1) frame, 2) eth, 3) ip, 4) udp
         "rtp": {
           "rtp.setup": "",
           "rtp.setup_tree": {

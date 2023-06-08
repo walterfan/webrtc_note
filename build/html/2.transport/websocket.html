@@ -61,13 +61,14 @@
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="webrtc_ndi.html">Network Device Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp_keepalive.html">RTP Keepalive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_ndi.html">Network Device Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bundle.html">WebRTC Bundle</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
@@ -107,9 +108,9 @@
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
-            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">websocket</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
-    <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">springframework</span><span class="p">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+<span class="w">            </span><span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">websocket</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -118,24 +119,24 @@
 <ul class="simple">
 <li><p>nodejs</p></li>
 </ul>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ws&#39;</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
-  <span class="nx">port</span><span class="o">:</span> <span class="mf">8080</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">WebSocket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ws&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">Server</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">port</span><span class="o">:</span><span class="w"> </span><span class="mf">8080</span>
 <span class="p">});</span>
 
-<span class="kd">let</span> <span class="nx">connections</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">connection</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">connections</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">connection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">connections</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">socket</span><span class="p">);</span>
 
-  <span class="c1">// When you receive a message, send that message to every socket.</span>
-  <span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">connections</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">s</span> <span class="p">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">));</span>
-  <span class="p">});</span>
+<span class="w">  </span><span class="c1">// When you receive a message, send that message to every socket.</span>
+<span class="w">  </span><span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">connections</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">));</span>
+<span class="w">  </span><span class="p">});</span>
 
-  <span class="c1">// When a socket closes, or disconnects, remove it from the array.</span>
-  <span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">connections</span> <span class="o">=</span> <span class="nx">connections</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">s</span> <span class="p">=&gt;</span> <span class="nx">s</span> <span class="o">!==</span> <span class="nx">connection</span><span class="p">);</span>
-  <span class="p">});</span>
+<span class="w">  </span><span class="c1">// When a socket closes, or disconnects, remove it from the array.</span>
+<span class="w">  </span><span class="nx">connection</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;close&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">connections</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">connection</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
 <span class="p">});</span>
 </pre></div>
 </div>
