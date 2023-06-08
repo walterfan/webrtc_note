@@ -153,7 +153,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -185,10 +185,10 @@
 <p>端到端延迟 = 接收端的播放时间 - 发送端的捕获时间</p>
 <p>麻烦的事情在于, 时间在发送端和接收端的时间基准是不一致的, 这就要参考 RTCP SR 中给出了发送端的 NTP 时间, 通过这个时间， 将接收端的 NTP 时间基准转换为发送端的</p>
 <p>端到端延迟 = (接收端的播放时间 - delta - RTT/2) - 发送端的捕获时间</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">e2e_delay</span> <span class="o">=</span> <span class="nx">receiver_playout_time</span> <span class="o">-</span> <span class="nx">sender_capture_time</span>
-<span class="nx">receiver_capture_time</span> <span class="o">=</span> <span class="nx">sender_capture_time</span> <span class="o">+</span> <span class="nx">ntp_delta</span>
-<span class="nx">e2e_delay</span> <span class="o">=</span> <span class="nx">receiver_playout_time</span> <span class="o">-</span> <span class="nx">receiver_capture_time</span>
-<span class="nx">ntp_delta</span> <span class="o">=</span> <span class="nx">received_time</span> <span class="o">-</span> <span class="nx">ntp_time_in_sr</span> <span class="o">-</span> <span class="nx">rtt</span><span class="o">/</span><span class="mf">2</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">e2e_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">receiver_playout_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">sender_capture_time</span>
+<span class="nx">receiver_capture_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sender_capture_time</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">ntp_delta</span>
+<span class="nx">e2e_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">receiver_playout_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">receiver_capture_time</span>
+<span class="nx">ntp_delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">received_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">ntp_time_in_sr</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">rtt</span><span class="o">/</span><span class="mf">2</span>
 </pre></div>
 </div>
 </section>

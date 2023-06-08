@@ -58,7 +58,9 @@ WebRTC 拥塞控制
 例如 Google 所提出的
 
 * `GCC 算法 <webrtc_gcc.html>`_
+
 * `REMB 扩展 <webrtc_remb.html>`_
+
 * `TCC 算法 <webrtc_twcc.html>`_
 
 基本架构
@@ -351,8 +353,9 @@ RTP 头里带的 timestamp 是根据采样所算的步进, 接收方和发送方
 -------------------------------------------------
 Google Congestion Control (GCC) 被应用于 Chrome 浏览器，是相对比较成熟的算法，详见
 
-* `GCC 算法详解 <webrtc_gcc.html>`_, `REMB 简介 <webrtc_remb.html>`_ 
-* `TCC 算法详解 <webrtc_tcc.html>`_
+* `GCC 算法详解 <webrtc_gcc.html>`_,
+* `REMB 简介 <webrtc_remb.html>`_
+* `TWCC 算法详解 <webrtc_twcc.html>`_
 
 2. NADA by Cisco
 -----------------------------------------------------------------------------------

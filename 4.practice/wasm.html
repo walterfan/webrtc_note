@@ -69,6 +69,8 @@
 <li class="toctree-l2"><a class="reference internal" href="pion.html">Pion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="video_quality.html">Video Quality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="audio_quality.html">Audio Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_sharing.html">Remote Sharing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_control.html">Remote Control</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
@@ -119,7 +121,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -196,14 +198,14 @@ Wasm 规范共定义了 12 种段 , 并分配了不同的 ID</p>
 <ul class="simple">
 <li><p>测试</p></li>
 </ul>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="o">/</span><span class="n">emcc</span><span class="w"> </span><span class="n">hello_world</span><span class="p">.</span><span class="n">c</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="o">/</span><span class="n">emcc</span><span class="w"> </span><span class="n">hello_world</span><span class="p">.</span><span class="n">c</span>
 <span class="c1">//--------------------</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>

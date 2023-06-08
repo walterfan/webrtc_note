@@ -23,3 +23,5 @@
 
    video_quality
    audio_quality
+   remote_sharing
+   remote_control

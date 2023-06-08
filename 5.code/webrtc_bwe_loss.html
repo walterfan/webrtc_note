@@ -128,7 +128,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -143,6 +143,18 @@
 </section>
 <section id="classes">
 <h2><a class="toc-backref" href="#id4">classes</a><a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<p>我们需要考虑的因素很多, 什么时候增加/减小带宽, 增加/减小多少, 调整的频率, 调整的幅度都需要仔细考量.</p>
+<p>输入因素:</p>
+<ol class="arabic simple">
+<li><p>发送的比特率 sendBitrate</p></li>
+<li><p>请求的比特率 requestBitrate</p></li>
+<li><p>丢包率: packetLossRatio = (sendBitrate - receiveBitrate)/sendBitrate</p></li>
+<li><p>延迟: RTT 及 QueueDelay 排队延迟</p></li>
+<li><p>当前状态 overuse, underuse or normal 以及持续了多少时间</p></li>
+<li><p>之前状态, 以及切换到当前状态的时间</p></li>
+<li><p>上次调整的行为</p></li>
+<li><p>上次调整的时间</p></li>
+</ol>
 <p>配置类</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">LossBasedControlConfig</span> <span class="p">{</span>
    <span class="n">explicit</span> <span class="n">LossBasedControlConfig</span><span class="p">(</span><span class="n">const</span> <span class="n">FieldTrialsView</span><span class="o">*</span> <span class="n">key_value_config</span><span class="p">);</span>

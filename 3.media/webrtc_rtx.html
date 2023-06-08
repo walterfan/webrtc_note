@@ -154,7 +154,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -298,23 +298,23 @@ sequence number to detect lost packets.</p>
 </ul>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Settings for ULPFEC forward error correction.</span>
 <span class="c1">// Set the payload types to &#39;-1&#39; to disable.</span>
-<span class="k">struct</span> <span class="nc">UlpfecConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">UlpfecConfig</span><span class="p">()</span><span class="w"></span>
-<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">ulpfec_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">),</span><span class="w"></span>
-<span class="w">        </span><span class="n">red_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">),</span><span class="w"></span>
-<span class="w">        </span><span class="n">red_rtx_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UlpfecConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">UlpfecConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">UlpfecConfig</span><span class="p">()</span>
+<span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">ulpfec_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">),</span>
+<span class="w">        </span><span class="n">red_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">),</span>
+<span class="w">        </span><span class="n">red_rtx_payload_type</span><span class="p">(</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UlpfecConfig</span><span class="o">&amp;</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Payload type used for ULPFEC packets.</span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ulpfec_payload_type</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ulpfec_payload_type</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Payload type used for RED packets.</span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">red_payload_type</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">red_payload_type</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// RTX payload type for RED payload.</span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">red_rtx_payload_type</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">red_rtx_payload_type</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -322,34 +322,34 @@ sequence number to detect lost packets.</p>
 </ul>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Settings for RTP retransmission payload format, see RFC 4588 for</span>
 <span class="c1">// details.</span>
-<span class="k">struct</span> <span class="nc">Rtx</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">Rtx</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">Rtx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Rtx</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="o">~</span><span class="n">Rtx</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Rtx</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Rtx</span><span class="p">();</span>
+<span class="w">  </span><span class="n">Rtx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Rtx</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="w">  </span><span class="o">~</span><span class="n">Rtx</span><span class="p">();</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 <span class="w">  </span><span class="c1">// SSRCs to use for the RTX streams.</span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// Payload type to use for the RTX stream.</span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">rtx</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">rtx</span><span class="p">;</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>RtpRtcpInterface</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RtpRtcpInterface</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">RtcpFeedbackSenderInterface</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RtpRtcpInterface</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">RtcpFeedbackSenderInterface</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
 <span class="w">  </span><span class="c1">//...</span>
 
-<span class="w">    </span><span class="k">struct</span> <span class="nc">Configuration</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">Configuration</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">      </span><span class="c1">// Called when the receiver sends a loss notification.</span>
-<span class="w">      </span><span class="n">RtcpLossNotificationObserver</span><span class="o">*</span><span class="w"> </span><span class="n">rtcp_loss_notification_observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">RtcpLossNotificationObserver</span><span class="o">*</span><span class="w"> </span><span class="n">rtcp_loss_notification_observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
 
 <span class="w">      </span><span class="c1">// Called when we receive a changed estimate from the receiver of out</span>
 <span class="w">      </span><span class="c1">// stream.</span>
-<span class="w">      </span><span class="n">RtcpBandwidthObserver</span><span class="o">*</span><span class="w"> </span><span class="n">bandwidth_callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">RtcpBandwidthObserver</span><span class="o">*</span><span class="w"> </span><span class="n">bandwidth_callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
 
 
 <span class="w">      </span><span class="c1">// If true, the RTP sender will always annotate outgoing packets with</span>
@@ -357,7 +357,7 @@ sequence number to detect lost packets.</p>
 <span class="w">      </span><span class="c1">// If false, the RTP sender will stop sending MID and RID header extensions,</span>
 <span class="w">      </span><span class="c1">// when it knows that the receiver is ready to demux based on SSRC. This is</span>
 <span class="w">      </span><span class="c1">// done by RTCP RR acking.</span>
-<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">always_send_mid_and_rid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">always_send_mid_and_rid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 
 
 <span class="w">      </span><span class="c1">// If true, the RTP packet history will select RTX packets based on</span>
@@ -365,41 +365,41 @@ sequence number to detect lost packets.</p>
 <span class="w">      </span><span class="c1">// make padding potentially more useful.</span>
 <span class="w">      </span><span class="c1">// If false, the last packet will always be picked. This may reduce CPU</span>
 <span class="w">      </span><span class="c1">// overhead.</span>
-<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">enable_rtx_padding_prioritization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">};</span><span class="w"></span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">enable_rtx_padding_prioritization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
 
 
 <span class="w">      </span><span class="c1">// Turns on/off sending RTX (RFC 4588). The modes can be set as a combination</span>
 <span class="w">      </span><span class="c1">// of values of the enumerator RtxMode.</span>
-<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetRtxSendStatus</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">modes</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetRtxSendStatus</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">modes</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="w">      </span><span class="c1">// Returns status of sending RTX (RFC 4588). The returned value can be</span>
 <span class="w">      </span><span class="c1">// a combination of values of the enumerator RtxMode.</span>
-<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">RtxSendStatus</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">RtxSendStatus</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="w">      </span><span class="c1">// Returns the SSRC used for RTX if set, otherwise a nullopt.</span>
-<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RtxSsrc</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RtxSsrc</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="w">      </span><span class="c1">// Sets the payload type to use when sending RTX packets. Note that this</span>
 <span class="w">      </span><span class="c1">// doesn&#39;t enable RTX, only the payload type is set.</span>
-<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetRtxSendPayloadType</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                        </span><span class="kt">int</span><span class="w"> </span><span class="n">associated_payload_type</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetRtxSendPayloadType</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kt">int</span><span class="w"> </span><span class="n">associated_payload_type</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 
 <span class="w">      </span><span class="c1">// (REMB) Receiver Estimated Max Bitrate.</span>
 <span class="w">      </span><span class="c1">// Schedules sending REMB on next and following sender/receiver reports.</span>
-<span class="w">      </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetRemb</span><span class="p">(</span><span class="kt">int64_t</span><span class="w"> </span><span class="n">bitrate_bps</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetRemb</span><span class="p">(</span><span class="kt">int64_t</span><span class="w"> </span><span class="n">bitrate_bps</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="w">      </span><span class="c1">// Stops sending REMB on next and following sender/receiver reports.</span>
-<span class="w">      </span><span class="kt">void</span><span class="w"> </span><span class="nf">UnsetRemb</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">void</span><span class="w"> </span><span class="nf">UnsetRemb</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="w">      </span><span class="c1">// (NACK)</span>
 
 <span class="w">      </span><span class="c1">// Sends NACK for the packets specified.</span>
 <span class="w">      </span><span class="c1">// Note: This assumes the caller keeps track of timing and doesn&#39;t rely on</span>
 <span class="w">      </span><span class="c1">// the RTP module to do this.</span>
-<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SendNack</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SendNack</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">sequence_numbers</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <section id="build-rtx-packet">

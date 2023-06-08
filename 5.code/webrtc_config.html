@@ -127,7 +127,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-05-14</p></td>
+<td><p>2023-06-08</p></td>
 </tr>
 </tbody>
 </table>
@@ -139,13 +139,13 @@
 </div>
 <section id="rtp-config">
 <h2><a class="toc-backref" href="#id3">RTP Config</a><a class="headerlink" href="#rtp-config" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">RtpConfig</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="n">RtpConfig</span><span class="p">();</span><span class="w"></span>
-<span class="n">RtpConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RtpConfig</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
-<span class="o">~</span><span class="n">RtpConfig</span><span class="p">();</span><span class="w"></span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">RtpConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="n">RtpConfig</span><span class="p">();</span>
+<span class="n">RtpConfig</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RtpConfig</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="o">~</span><span class="n">RtpConfig</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">;</span>
 
 <span class="c1">// The Rtp Stream Ids (aka RIDs) to send in the RID RTP header extension</span>
 <span class="c1">// if the extension is included in the list of extensions.</span>
@@ -153,23 +153,23 @@
 <span class="c1">// This means that:</span>
 <span class="c1">// 1. rids.size() == 0 || rids.size() == ssrcs.size().</span>
 <span class="c1">// 2. If rids is not empty, then `rids[i]` should use `ssrcs[i]`.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">rids</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">rids</span><span class="p">;</span>
 
 <span class="c1">// The value to send in the MID RTP header extension if the extension is</span>
 <span class="c1">// included in the list of extensions.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">mid</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">mid</span><span class="p">;</span>
 
 <span class="c1">// See RtcpMode for description.</span>
-<span class="n">RtcpMode</span><span class="w"> </span><span class="n">rtcp_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RtcpMode</span><span class="o">::</span><span class="n">kCompound</span><span class="p">;</span><span class="w"></span>
+<span class="n">RtcpMode</span><span class="w"> </span><span class="n">rtcp_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RtcpMode</span><span class="o">::</span><span class="n">kCompound</span><span class="p">;</span>
 
 <span class="c1">// Max RTP packet size delivered to send transport from VideoEngine.</span>
-<span class="kt">size_t</span><span class="w"> </span><span class="n">max_packet_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kDefaultMaxPacketSize</span><span class="p">;</span><span class="w"></span>
+<span class="kt">size_t</span><span class="w"> </span><span class="n">max_packet_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kDefaultMaxPacketSize</span><span class="p">;</span>
 
 <span class="c1">// Corresponds to the SDP attribute extmap-allow-mixed.</span>
-<span class="kt">bool</span><span class="w"> </span><span class="n">extmap_allow_mixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">extmap_allow_mixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 
 <span class="c1">// RTP header extensions to use for this send stream.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">RtpExtension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">extensions</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">RtpExtension</span><span class="o">&gt;</span><span class="w"> </span><span class="n">extensions</span><span class="p">;</span>
 
 <span class="c1">// TODO(nisse): For now, these are fixed, but we&#39;d like to support</span>
 <span class="c1">// changing codec without recreating the VideoSendStream. Then these</span>
@@ -178,31 +178,31 @@
 <span class="c1">// RtpTransportControllerSend, with a reference from RtpVideoSender, where</span>
 <span class="c1">// the latter would be responsible for mapping the codec type of encoded</span>
 <span class="c1">// images to the right payload type.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">payload_name</span><span class="p">;</span><span class="w"></span>
-<span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">payload_name</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
 <span class="c1">// Payload should be packetized using raw packetizer (payload header will</span>
 <span class="c1">// not be added, additional meta data is expected to be present in generic</span>
 <span class="c1">// frame descriptor RTP header extension).</span>
-<span class="kt">bool</span><span class="w"> </span><span class="n">raw_payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">raw_payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 
 <span class="c1">// See LntfConfig for description.</span>
-<span class="n">LntfConfig</span><span class="w"> </span><span class="n">lntf</span><span class="p">;</span><span class="w"></span>
+<span class="n">LntfConfig</span><span class="w"> </span><span class="n">lntf</span><span class="p">;</span>
 
 <span class="c1">// See NackConfig for description.</span>
-<span class="n">NackConfig</span><span class="w"> </span><span class="n">nack</span><span class="p">;</span><span class="w"></span>
+<span class="n">NackConfig</span><span class="w"> </span><span class="n">nack</span><span class="p">;</span>
 
 <span class="c1">// See UlpfecConfig for description.</span>
-<span class="n">UlpfecConfig</span><span class="w"> </span><span class="n">ulpfec</span><span class="p">;</span><span class="w"></span>
+<span class="n">UlpfecConfig</span><span class="w"> </span><span class="n">ulpfec</span><span class="p">;</span>
 
-<span class="k">struct</span> <span class="nc">Flexfec</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">Flexfec</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">Flexfec</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Flexfec</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="o">~</span><span class="n">Flexfec</span><span class="p">();</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Flexfec</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Flexfec</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Flexfec</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Flexfec</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="w">    </span><span class="o">~</span><span class="n">Flexfec</span><span class="p">();</span>
 <span class="w">    </span><span class="c1">// Payload type of FlexFEC. Set to -1 to disable sending FlexFEC.</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// SSRC of FlexFEC stream.</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// Vector containing a single element, corresponding to the SSRC of the</span>
 <span class="w">    </span><span class="c1">// media stream being protected by this FlexFEC stream.</span>
@@ -210,35 +210,35 @@
 <span class="w">    </span><span class="c1">//</span>
 <span class="w">    </span><span class="c1">// TODO(brandtr): Update comment above when we support</span>
 <span class="w">    </span><span class="c1">// multistream protection.</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">protected_media_ssrcs</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">flexfec</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">protected_media_ssrcs</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">flexfec</span><span class="p">;</span>
 
 <span class="c1">// Settings for RTP retransmission payload format, see RFC 4588 for</span>
 <span class="c1">// details.</span>
-<span class="k">struct</span> <span class="nc">Rtx</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">Rtx</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">Rtx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Rtx</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="o">~</span><span class="n">Rtx</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Rtx</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Rtx</span><span class="p">();</span>
+<span class="w">    </span><span class="n">Rtx</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Rtx</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="w">    </span><span class="o">~</span><span class="n">Rtx</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">ToString</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 <span class="w">    </span><span class="c1">// SSRCs to use for the RTX streams.</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ssrcs</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// Payload type to use for the RTX stream.</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">rtx</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">rtx</span><span class="p">;</span>
 
 <span class="c1">// RTCP CNAME, see RFC 3550.</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">c_name</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">c_name</span><span class="p">;</span>
 
-<span class="kt">bool</span><span class="w"> </span><span class="nf">IsMediaSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="kt">bool</span><span class="w"> </span><span class="nf">IsRtxSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="kt">bool</span><span class="w"> </span><span class="nf">IsFlexfecSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetRtxSsrcAssociatedWithMediaSsrc</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">media_ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">GetMediaSsrcAssociatedWithRtxSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">rtx_ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">GetMediaSsrcAssociatedWithFlexfecSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">flexfec_ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetRidForSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">IsMediaSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">IsRtxSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">IsFlexfecSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetRtxSsrcAssociatedWithMediaSsrc</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">media_ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">GetMediaSsrcAssociatedWithRtxSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">rtx_ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">GetMediaSsrcAssociatedWithFlexfecSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">flexfec_ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetRidForSsrc</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ssrc</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </section>

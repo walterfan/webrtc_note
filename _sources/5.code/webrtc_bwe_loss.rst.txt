@@ -25,6 +25,22 @@ Overview
 
 classes
 ======================================
+我们需要考虑的因素很多, 什么时候增加/减小带宽, 增加/减小多少, 调整的频率, 调整的幅度都需要仔细考量.
+
+输入因素:
+
+1. 发送的比特率 sendBitrate
+2. 请求的比特率 requestBitrate
+3. 丢包率: packetLossRatio = (sendBitrate - receiveBitrate)/sendBitrate
+4. 延迟: RTT 及 QueueDelay 排队延迟
+5. 当前状态 overuse, underuse or normal 以及持续了多少时间
+6. 之前状态, 以及切换到当前状态的时间
+7. 上次调整的行为
+8. 上次调整的时间
+
+
+
+
 
 配置类
 

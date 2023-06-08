@@ -87,8 +87,6 @@ A Mean Opinion Score (MOS) is a numerical measure of the human-judged overall qu
 Most often judged on a scale of 1 (bad) to 5 (excellent), Mean Opinion Scores are the average of a number of other human-scored individual parameters.  Although originally Mean Opinion Scores were derived from surveys of expert observers, today a MOS is often produced by an Objective Measurement Method approximating a human ranking.
 
 
-
-
 ITU-T's P.800.1 discusses objective and subjective scoring of telephone transmission quality, while recommendations such as P.863 and J.247 cover speech and video quality, respectively.
 
 The most commonly used rating scale is the Absolute Category Ranking (ACR) scale, which ranges from 1 to 5. The levels of the Absolute Category Ranking are:
@@ -115,9 +113,9 @@ Tools
 
 ViSQOL(Virtual Speech Quality Objective Listener)虚拟语音质量目标监听器是感知音频质量的客观、完整的参考指标。
 
-它使用参考和测试语音信号之间相似性的空间-时间(spectro-temporal)度量来产生 MOS-LQO（平均意见分数 - 听力质量目标）分数。 
+它使用参考和测试语音信号之间相似性的空间-时间(spectro-temporal)度量来产生 MOS-LQO (平均意见分数 - 听力质量目标) 分数。 
 
-MOS-LQO 分数范围从 1（最差）到 5（最好）。
+MOS-LQO 分数范围从 1 (最差) 到 5 (最好) 。
 
 SoX
 ---------------------
