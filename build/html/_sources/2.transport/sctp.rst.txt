@@ -446,7 +446,7 @@ SCTP Chunk data definition
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-1.   Cookie Echo (COOKIE ECHO) (10)
+11.   Cookie Echo (COOKIE ECHO) (10)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -463,7 +463,7 @@ SCTP Chunk data definition
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-1.   Cookie Acknowledgement (COOKIE ACK) (11)
+12.   Cookie Acknowledgement (COOKIE ACK) (11)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -478,7 +478,7 @@ SCTP Chunk data definition
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-1.   Shutdown Complete (SHUTDOWN COMPLETE) (14)
+13.   Shutdown Complete (SHUTDOWN COMPLETE) (14)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -617,28 +617,21 @@ o  Multiple SCTP associations MAY be multiplexed over a single DTLS connection.
 
 The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
 
-o  All SCTP associations are single-homed, because DTLS does not expose any address management to its upper layer.
+*  All SCTP associations are single-homed, because DTLS does not expose any address management to its upper layer.
 
 Therefore, it is RECOMMENDED to set the SCTP parameter path.max.retrans to association.max.retrans.
 
-o  The INIT and INIT-ACK chunk MUST NOT contain any IPv4 Address or IPv6 Address parameters.
+*  The INIT and INIT-ACK chunk MUST NOT contain any IPv4 Address or IPv6 Address parameters.
 
 The INIT chunk MUST NOT contain the Supported Address Types parameter.
 
-o  The implementation MUST NOT rely on processing ICMP or ICMPv6 packets, since the SCTP layer most likely is unable to access the
+*  The implementation MUST NOT rely on processing ICMP or ICMPv6 packets, since the SCTP layer most likely is unable to access the
    SCTP common header in the plain text of the packet, which triggered the sending of the ICMP or ICMPv6 packet.
 
    This applies in particular to path MTU discovery when performed by SCTP.
 
 
-
-
-Tuexen, et al.               Standards Track                    [Page 5]
-
-RFC 8261                     SCTP over DTLS                November 2017
-
-
-   o  If the SCTP layer is notified about a path change by its lower
+*  If the SCTP layer is notified about a path change by its lower
       layers, SCTP SHOULD retest the path MTU and reset the congestion
       state to the initial state.  The window-based congestion control
       method specified in [RFC4960] resets the congestion window and
@@ -753,12 +746,7 @@ A simple example based on https://github.com/P1sec/pysctp
 
 Reference
 ========================
-RFC4960: Stream Control Transmission Protocol
-
-RFC6083: Datagram Transport Layer Security (DTLS) for Stream Control Transmission Protocol (SCTP)
-
-RFC8261: Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets
-RFC8841: Session Description Protocol (SDP) Offer/Answer Procedures for Stream Control Transmission Protocol (SCTP) over Datagram Transport Layer Security (DTLS) Transport
-RFC8831: WebRTC Data Channels", RFC 8831
-RFC8832: WebRTC Data Channel Establishment Protocol
-RFC8864: Negotiation Data Channels Using the Session Description Protocol (SDP)
+* RFC4960: Stream Control Transmission Protocol
+* RFC6083: Datagram Transport Layer Security (DTLS) for Stream Control Transmission Protocol (SCTP)
+* RFC8261: Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets
+* RFC8841: Session Description Protocol (SDP) Offer/Answer Procedures for Stream Control Transmission Protocol (SCTP) over Datagram Transport Layer Security (DTLS) Transport

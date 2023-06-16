@@ -26,14 +26,18 @@ DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥�
 
 不对称加密的原理就是通过张三的公钥加密的数据，只能通过张三自己的私钥来解密
 
-公钥从哪里来？
---------------------------------------
-一般是通过服务器上下载下来的证书中获取的
+相比于 TLS , DTLS 复用了所有的 handshake 消息和流程, 不同的是有如下三个主要的改动:
+
+1. A stateless cookie exchange has been added to prevent denial-of-service attacks.
 
 
+2. Modifications to the handshake header to handle message loss, reordering, and DTLS message fragmentation
+   (in order to avoid IP fragmentation).
 
-在 WebRTC 中，DTLS 主要用来传输 SRTP 密钥， 以及传输用于 Datat Channel 的 SCTP 消息
+3. Retransmission timers to handle message los
 
+Packet structure
+===========================
 
 * UDP packet
 
@@ -142,6 +146,30 @@ DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥�
 
 
 
+DTLS handshake messages are grouped into a series of message flights.
+
+A flight starts with the handshake message transmission of one peer and ends with the expected response from the other peer.
+
+* Table 1 contains a complete list of message combinations that constitute flights.
+
+.. code-block::
+
+      +======+========+========+===================================+
+      | Note | Client | Server | Handshake Messages                |
+      +======+========+========+===================================+
+      |      | x      |        | ClientHello                       |
+      +------+--------+--------+-----------------------------------+
+      |      |        | x      | HelloRetryRequest                 |
+      +------+--------+--------+-----------------------------------+
+      |      |        | x      | ServerHello, EncryptedExtensions, |
+      |      |        |        | CertificateRequest, Certificate,  |
+      |      |        |        | CertificateVerify, Finished       |
+      +------+--------+--------+-----------------------------------+
+      | 1    | x      |        | Certificate, CertificateVerify,   |
+      |      |        |        | Finished                          |
+      +------+--------+--------+-----------------------------------+
+      | 1    |        | x      | NewSessionTicket                  |
+      +------+--------+--------+-----------------------------------+
 
 
 丢包的处理

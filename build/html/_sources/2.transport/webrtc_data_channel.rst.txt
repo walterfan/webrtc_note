@@ -369,3 +369,5 @@ The SCTP port numbers are used for multiplexing and demultiplexing the SCTP asso
 * `RFC8261`_ : Datagram Transport Layer Security (DTLS) Encapsulation of SCTP Packets
 * `RFC3758`_ : Stream Control Transmission Protocol (SCTP) Partial Reliability Extension
 * `RFC7496`_ : Additional Policies for the Partially Reliable Stream Control Transmission Protocol Extension
+
+* `RFC8864`_: Negotiation Data Channels Using the Session Description Protocol (SDP)

@@ -5,11 +5,8 @@ import markdown
 import codecs
 from datetime import date
 from sys import platform
-from m2r import convert
 from fabric import task
 from fabric import Connection
-#from m2r import convert
-
 
 BASE_PATH = os.path.dirname(__file__)
 default_hosts = ["localhost"]
@@ -25,17 +22,6 @@ def md_to_html(md_file, html_file ):
     output_file = codecs.open(html_file, "w", encoding="utf-8")
     output_file.write(html)
 
-
-def md_to_rst(md_file, rst_file):
-
-    input_file = codecs.open(md_file, mode="r", encoding="utf-8")
-    text = input_file.read()
-
-    rst = convert(text)
-
-    output_file = codecs.open(rst_file, "w", encoding="utf-8")
-    output_file.write(rst)
-
 @task(hosts=default_hosts)
 def usage(c):
     print("usage: fab make_note|publish_note|md2rst|rst2md")
@@ -45,9 +31,9 @@ def usage(c):
 def md2rst(c, src, dest=None):
     if not dest:
         dest = src[:-3] + ".rst";
-    #cmd = "pandoc --to RST --reference-links {} > {}".format(src, dest)
-    #c.local(cmd)
-    md_to_rst(src, dest)
+    cmd = "pandoc --to RST --reference-links {} > {}".format(src, dest)
+    c.local(cmd)
+
 
 @task(hosts=default_hosts)
 def rst2md(c, src, dest=None):
