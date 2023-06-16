@@ -51,13 +51,11 @@
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">DTLS 协议</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">公钥从哪里来？</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">基本流程</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">握手</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">丢包的处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#packet-structure">Packet structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">基本流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">握手</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">丢包的处理</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine">DTLS Timeout and Retransmission State Machine</a></li>
 </ul>
 </li>
@@ -128,36 +126,39 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-06-08</p></td>
+<td><p>2023-06-16</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id7">Overview</a></p>
+<li><p><a class="reference internal" href="#overview" id="id6">Overview</a></p></li>
+<li><p><a class="reference internal" href="#packet-structure" id="id7">Packet structure</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id8">基本流程</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id3" id="id8">公钥从哪里来？</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">握手</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id10">丢包的处理</a></p></li>
+<li><p><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine" id="id11">DTLS Timeout and Retransmission State Machine</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id4" id="id9">基本流程</a></p>
-<ul>
-<li><p><a class="reference internal" href="#id5" id="id10">握手</a></p></li>
-<li><p><a class="reference internal" href="#id6" id="id11">丢包的处理</a></p></li>
-<li><p><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine" id="id12">DTLS Timeout and Retransmission State Machine</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#example" id="id13">Example</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id14">Reference</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id12">Example</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id13">Reference</a></p></li>
 </ul>
 </div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id7">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥，再通过对称加密算法来加密数据</p>
 <p>不对称加密的原理就是通过张三的公钥加密的数据，只能通过张三自己的私钥来解密</p>
-<section id="id3">
-<h3><a class="toc-backref" href="#id8">公钥从哪里来？</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>一般是通过服务器上下载下来的证书中获取的</p>
-<p>在 WebRTC 中，DTLS 主要用来传输 SRTP 密钥， 以及传输用于 Datat Channel 的 SCTP 消息</p>
+<p>相比于 TLS , DTLS 复用了所有的 handshake 消息和流程, 不同的是有如下三个主要的改动:</p>
+<ol class="arabic simple">
+<li><p>A stateless cookie exchange has been added to prevent denial-of-service attacks.</p></li>
+<li><p>Modifications to the handshake header to handle message loss, reordering, and DTLS message fragmentation
+(in order to avoid IP fragmentation).</p></li>
+<li><p>Retransmission timers to handle message los</p></li>
+</ol>
+</section>
+<section id="packet-structure">
+<h2><a class="toc-backref" href="#id7">Packet structure</a><a class="headerlink" href="#packet-structure" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>UDP packet</p></li>
 </ul>
@@ -206,11 +207,10 @@
 </pre></div>
 </div>
 </section>
-</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id8">基本流程</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <section id="id4">
-<h2><a class="toc-backref" href="#id9">基本流程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<section id="id5">
-<h3><a class="toc-backref" href="#id10">握手</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">握手</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Message Flights for Full Handshake</p></li>
 </ul>
@@ -255,9 +255,32 @@
 <span class="n">Finished</span>                 <span class="o">--------&gt;</span>                         <span class="o">/</span>
 </pre></div>
 </div>
+<p>DTLS handshake messages are grouped into a series of message flights.</p>
+<p>A flight starts with the handshake message transmission of one peer and ends with the expected response from the other peer.</p>
+<ul class="simple">
+<li><p>Table 1 contains a complete list of message combinations that constitute flights.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+======+========+========+===================================+</span>
+<span class="o">|</span> <span class="n">Note</span> <span class="o">|</span> <span class="n">Client</span> <span class="o">|</span> <span class="n">Server</span> <span class="o">|</span> <span class="n">Handshake</span> <span class="n">Messages</span>                <span class="o">|</span>
+<span class="o">+======+========+========+===================================+</span>
+<span class="o">|</span>      <span class="o">|</span> <span class="n">x</span>      <span class="o">|</span>        <span class="o">|</span> <span class="n">ClientHello</span>                       <span class="o">|</span>
+<span class="o">+------+--------+--------+-----------------------------------+</span>
+<span class="o">|</span>      <span class="o">|</span>        <span class="o">|</span> <span class="n">x</span>      <span class="o">|</span> <span class="n">HelloRetryRequest</span>                 <span class="o">|</span>
+<span class="o">+------+--------+--------+-----------------------------------+</span>
+<span class="o">|</span>      <span class="o">|</span>        <span class="o">|</span> <span class="n">x</span>      <span class="o">|</span> <span class="n">ServerHello</span><span class="p">,</span> <span class="n">EncryptedExtensions</span><span class="p">,</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span>        <span class="o">|</span>        <span class="o">|</span> <span class="n">CertificateRequest</span><span class="p">,</span> <span class="n">Certificate</span><span class="p">,</span>  <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span>        <span class="o">|</span>        <span class="o">|</span> <span class="n">CertificateVerify</span><span class="p">,</span> <span class="n">Finished</span>       <span class="o">|</span>
+<span class="o">+------+--------+--------+-----------------------------------+</span>
+<span class="o">|</span> <span class="mi">1</span>    <span class="o">|</span> <span class="n">x</span>      <span class="o">|</span>        <span class="o">|</span> <span class="n">Certificate</span><span class="p">,</span> <span class="n">CertificateVerify</span><span class="p">,</span>   <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span>        <span class="o">|</span>        <span class="o">|</span> <span class="n">Finished</span>                          <span class="o">|</span>
+<span class="o">+------+--------+--------+-----------------------------------+</span>
+<span class="o">|</span> <span class="mi">1</span>    <span class="o">|</span>        <span class="o">|</span> <span class="n">x</span>      <span class="o">|</span> <span class="n">NewSessionTicket</span>                  <span class="o">|</span>
+<span class="o">+------+--------+--------+-----------------------------------+</span>
+</pre></div>
+</div>
 </section>
-<section id="id6">
-<h3><a class="toc-backref" href="#id11">丢包的处理</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<section id="id5">
+<h3><a class="toc-backref" href="#id10">丢包的处理</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>DTLS uses a simple retransmission timer to handle packet loss.</p>
 <p>The following figure demonstrates the basic concept, using the first phase of the DTLS handshake:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Client</span>                                   <span class="n">Server</span>
@@ -275,7 +298,7 @@
 </div>
 </section>
 <section id="dtls-timeout-and-retransmission-state-machine">
-<h3><a class="toc-backref" href="#id12">DTLS Timeout and Retransmission State Machine</a><a class="headerlink" href="#dtls-timeout-and-retransmission-state-machine" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">DTLS Timeout and Retransmission State Machine</a><a class="headerlink" href="#dtls-timeout-and-retransmission-state-machine" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              <span class="o">+-----------+</span>
               <span class="o">|</span> <span class="n">PREPARING</span> <span class="o">|</span>
         <span class="o">+---&gt;</span> <span class="o">|</span>           <span class="o">|</span> <span class="o">&lt;--------------------+</span>
@@ -327,20 +350,20 @@
 </section>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id13">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>openssl example</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>//<span class="w"> </span>Generate<span class="w"> </span>a<span class="w"> </span>certificate
-openssl<span class="w"> </span>ecparam<span class="w"> </span>-out<span class="w"> </span>key.pem<span class="w"> </span>-name<span class="w"> </span>prime256v1<span class="w"> </span>-genkey
-openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-sha256<span class="w"> </span>-key<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>server.csr
-openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-sha256<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-in<span class="w"> </span>server.csr<span class="w"> </span>-signkey<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>cert.pem
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>// Generate a certificate
+openssl ecparam -out key.pem -name prime256v1 -genkey
+openssl req -new -sha256 -key key.pem -out server.csr
+openssl x509 -req -sha256 -days <span class="m">365</span> -in server.csr -signkey key.pem -out cert.pem
 
-//<span class="w"> </span>Use<span class="w"> </span>with<span class="w"> </span>examples/dial/selfsign/main.go
-openssl<span class="w"> </span>s_server<span class="w"> </span>-dtls1_2<span class="w"> </span>-cert<span class="w"> </span>cert.pem<span class="w"> </span>-key<span class="w"> </span>key.pem<span class="w"> </span>-accept<span class="w"> </span><span class="m">4444</span>
+// Use with examples/dial/selfsign/main.go
+openssl s_server -dtls1_2 -cert cert.pem -key key.pem -accept <span class="m">4444</span>
 
-//<span class="w"> </span>Use<span class="w"> </span>with<span class="w"> </span>examples/listen/selfsign/main.go
-openssl<span class="w"> </span>s_client<span class="w"> </span>-dtls1_2<span class="w"> </span>-connect<span class="w"> </span><span class="m">127</span>.0.0.1:4444<span class="w"> </span>-debug<span class="w"> </span>-cert<span class="w"> </span>cert.pem<span class="w"> </span>-key<span class="w"> </span>key.pem
+// Use with examples/listen/selfsign/main.go
+openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug -cert cert.pem -key key.pem
 </pre></div>
 </div>
 <ul class="simple">
@@ -360,7 +383,7 @@ openssl<span class="w"> </span>s_client<span class="w"> </span>-dtls1_2<span cla
 </div>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id14">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6347">RFC6347</a>: Datagram Transport Layer Security Version 1.2</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc9147">RFC9147</a>: The Datagram Transport Layer Security (DTLS) Protocol Version 1.3</p></li>
