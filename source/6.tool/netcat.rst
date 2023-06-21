@@ -21,7 +21,18 @@ netcat
 
 简介
 ====================
-netcat 
+netcat
+
+UDP server and client
+========================
+
+
+.. code
+netcat -ulzp 8125
+
+
+echo "my-app.node.timer:102522|ms" | netcat -nuc 127.0.0.1 8125
+
 
 
 Samples
