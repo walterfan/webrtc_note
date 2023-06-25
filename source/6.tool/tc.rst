@@ -22,7 +22,38 @@ Linux Traffic Control
 
 简介
 =========================
-Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题
+Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题, 例如丢包，延迟，抖动等。
+
+在网络控制时有两个方向
+
+* inbound 进来的流量 --> uplink 入口
+* outbound 出去的流量 --> downlink 出口
+
+tc 可以通过本地的发送队列，很容易地控制出去的流量，而对于进来的流量，需要结合虚拟设备 ifb(Intermediate Functional Block device) 来做流量控制。
+可以认为 ifb 是虚拟的网卡设备
+
+执行 `modprobe ifb` 会创建出来两块虚拟的网卡 ifb0 和 ifb1, 可以用 `ip link list` 来查看
+
+
+IFB is an alternative to tc filters for handling ingress traffic, by redirecting it to a virtual interface and treat is as egress traffic there.
+You need one ifb interface per physical interface, to redirect ingress traffic from eth0 to ifb0, eth1 to ifb1 and so on.
+
+When inserting the ifb module, tell it the number of virtual interfaces you need. The default is 2:
+
+`modprobe ifb numifbs=1`
+
+Now, enable all ifb interfaces:
+
+`ip link set dev ifb0 up # repeat for ifb1, ifb2, ...`
+
+And redirect ingress traffic from the physical interfaces to corresponding ifb interface.
+For eth0 -> ifb0:
+
+.. code-block::
+
+    tc qdisc add dev eth0 handle ffff: ingress
+    tc filter add dev eth0 parent ffff: protocol ip u32 match u32 0 0 action mirred egress redirect dev ifb0
+
 
 TC 中的基本概念
 =========================
@@ -735,6 +766,7 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 netimpair
 ==========================
 tc 实在太强大，也太复杂了，netimpair 是对 tc 命令进行封装的一个 python 脚本
+https://github.com/urbenlegend/netimpair
 
 Features
 ------------------------
