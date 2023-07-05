@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TLS 协议 &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DTLS 协议" href="dtls.html" />
+    <link rel="prev" title="HTTP Live Streaming" href="hls.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">2. WebRTC 传输</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 传输概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websocket.html">WebSocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stun.html">STUN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">TLS 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#protocol">Protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#handshake-protocol">handshake protocol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tls-session-resumption-without-server-side-state">TLS Session Resumption without Server-Side State</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-is-ssl-handshake-failed">What is SSL Handshake Failed?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#alert-protocol">Alert Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp_keepalive.html">RTP Keepalive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_ndi.html">Network Device Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bundle.html">WebRTC Bundle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
+      <li>TLS 协议</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/2.transport/tls.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tls">
+<h1>TLS 协议<a class="headerlink" href="#tls" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>TLS protocol</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP as draft</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-05</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#protocol" id="id4">Protocol</a></p>
+<ul>
+<li><p><a class="reference internal" href="#handshake-protocol" id="id5">handshake protocol</a></p></li>
+<li><p><a class="reference internal" href="#tls-session-resumption-without-server-side-state" id="id6">TLS Session Resumption without Server-Side State</a></p></li>
+<li><p><a class="reference internal" href="#what-is-ssl-handshake-failed" id="id7">What is SSL Handshake Failed?</a></p></li>
+<li><p><a class="reference internal" href="#alert-protocol" id="id8">Alert Protocol</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>协议细节参见</p>
+<ul class="simple">
+<li><p>TLS v1.2 <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5246">https://datatracker.ietf.org/doc/html/rfc5246</a></p></li>
+<li><p>TLS v1.3 <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8446">https://datatracker.ietf.org/doc/html/rfc8446</a></p></li>
+</ul>
+</section>
+<section id="protocol">
+<h2><a class="toc-backref" href="#id4">Protocol</a><a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h2>
+<section id="handshake-protocol">
+<h3><a class="toc-backref" href="#id5">handshake protocol</a><a class="headerlink" href="#handshake-protocol" title="Permalink to this headline">¶</a></h3>
+<p>SSL Handshake Steps</p>
+<ol class="arabic simple">
+<li><p>The client says hello. This “client hello” message lists cryptographic information, including the SSL version to use to communicate with each other. It also lists which encryption algorithms it supports, which are known as Cipher Suites.</p></li>
+<li><p>The server responds hello. This “server hello” message contains important information, like which CipherSuite it chose, and its digital certificate. It might also request the client’s certificate.</p></li>
+<li><p>The client verifies the server’s certificate. It also sends several byte strings, including one for allowing both the client and the server to compute a secret key for encrypting subsequent messages, including the “finished” messages. If the server sends a client certificate request, it will also send a byte string encrypted with its own private key and digital certificate.</p></li>
+<li><p>The server verifies the client’s certificate. This step only takes place if client authentication is required.</p></li>
+<li><p>The client says “I’m finished.” This “finished” message indicates that the client has completed its part of the handshake.</p></li>
+<li><p>The server says “I’m finished, too.” This “finished” message indicates that the sever has completed its part of the handshake.</p></li>
+</ol>
+</section>
+<section id="tls-session-resumption-without-server-side-state">
+<h3><a class="toc-backref" href="#id6">TLS Session Resumption without Server-Side State</a><a class="headerlink" href="#tls-session-resumption-without-server-side-state" title="Permalink to this headline">¶</a></h3>
+<p>refer to <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5077">https://datatracker.ietf.org/doc/html/rfc5077</a></p>
+<ul class="simple">
+<li><p>Figure 1: Message Flow for Full Handshake Issuing New Session Ticket</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>     <span class="n">Client</span>                                               <span class="n">Server</span>
+
+ <span class="n">ClientHello</span>
+<span class="p">(</span><span class="n">empty</span> <span class="n">SessionTicket</span> <span class="n">extension</span><span class="p">)</span><span class="o">--------&gt;</span>
+                                                 <span class="n">ServerHello</span>
+                             <span class="p">(</span><span class="n">empty</span> <span class="n">SessionTicket</span> <span class="n">extension</span><span class="p">)</span>
+                                                <span class="n">Certificate</span><span class="o">*</span>
+                                          <span class="n">ServerKeyExchange</span><span class="o">*</span>
+                                         <span class="n">CertificateRequest</span><span class="o">*</span>
+                              <span class="o">&lt;--------</span>      <span class="n">ServerHelloDone</span>
+ <span class="n">Certificate</span><span class="o">*</span>
+ <span class="n">ClientKeyExchange</span>
+ <span class="n">CertificateVerify</span><span class="o">*</span>
+ <span class="p">[</span><span class="n">ChangeCipherSpec</span><span class="p">]</span>
+ <span class="n">Finished</span>                     <span class="o">--------&gt;</span>
+                                            <span class="n">NewSessionTicket</span>
+                                          <span class="p">[</span><span class="n">ChangeCipherSpec</span><span class="p">]</span>
+                              <span class="o">&lt;--------</span>             <span class="n">Finished</span>
+ <span class="n">Application</span> <span class="n">Data</span>             <span class="o">&lt;-------&gt;</span>     <span class="n">Application</span> <span class="n">Data</span>
+</pre></div>
+</div>
+</section>
+<section id="what-is-ssl-handshake-failed">
+<h3><a class="toc-backref" href="#id7">What is SSL Handshake Failed?</a><a class="headerlink" href="#what-is-ssl-handshake-failed" title="Permalink to this headline">¶</a></h3>
+<p>possible reason:</p>
+<ul class="simple">
+<li><p>The client is using the wrong date or time.</p></li>
+<li><p>The client is a browser and its specific configuration is causing the error.</p></li>
+<li><p>The connection is being intercepted by a third party on the client-side.</p></li>
+<li><p>The client and server do not support the same SSL version.</p></li>
+<li><p>The client and server are using different Cipher Suites.</p></li>
+<li><p>The client or server’s certificate is invalid.</p></li>
+</ul>
+</section>
+<section id="alert-protocol">
+<h3><a class="toc-backref" href="#id8">Alert Protocol</a><a class="headerlink" href="#alert-protocol" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="p">{</span> <span class="n">warning</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">fatal</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="p">}</span> <span class="n">AlertLevel</span><span class="p">;</span>
+
+  <span class="n">enum</span> <span class="p">{</span>
+      <span class="n">close_notify</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+      <span class="n">unexpected_message</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+      <span class="n">bad_record_mac</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+      <span class="n">decryption_failed_RESERVED</span><span class="p">(</span><span class="mi">21</span><span class="p">),</span>
+      <span class="n">record_overflow</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span>
+      <span class="n">decompression_failure</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+      <span class="n">handshake_failure</span><span class="p">(</span><span class="mi">40</span><span class="p">),</span>
+      <span class="n">no_certificate_RESERVED</span><span class="p">(</span><span class="mi">41</span><span class="p">),</span>
+      <span class="n">bad_certificate</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span>
+      <span class="n">unsupported_certificate</span><span class="p">(</span><span class="mi">43</span><span class="p">),</span>
+      <span class="n">certificate_revoked</span><span class="p">(</span><span class="mi">44</span><span class="p">),</span>
+      <span class="n">certificate_expired</span><span class="p">(</span><span class="mi">45</span><span class="p">),</span>
+      <span class="n">certificate_unknown</span><span class="p">(</span><span class="mi">46</span><span class="p">),</span>
+      <span class="n">illegal_parameter</span><span class="p">(</span><span class="mi">47</span><span class="p">),</span>
+      <span class="n">unknown_ca</span><span class="p">(</span><span class="mi">48</span><span class="p">),</span>
+      <span class="n">access_denied</span><span class="p">(</span><span class="mi">49</span><span class="p">),</span>
+      <span class="n">decode_error</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+      <span class="n">decrypt_error</span><span class="p">(</span><span class="mi">51</span><span class="p">),</span>
+      <span class="n">export_restriction_RESERVED</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span>
+      <span class="n">protocol_version</span><span class="p">(</span><span class="mi">70</span><span class="p">),</span>
+      <span class="n">insufficient_security</span><span class="p">(</span><span class="mi">71</span><span class="p">),</span>
+      <span class="n">internal_error</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span>
+      <span class="n">user_canceled</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span>
+      <span class="n">no_renegotiation</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+      <span class="n">unsupported_extension</span><span class="p">(</span><span class="mi">110</span><span class="p">),</span>
+      <span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+  <span class="p">}</span> <span class="n">AlertDescription</span><span class="p">;</span>
+
+  <span class="n">struct</span> <span class="p">{</span>
+      <span class="n">AlertLevel</span> <span class="n">level</span><span class="p">;</span>
+      <span class="n">AlertDescription</span> <span class="n">description</span><span class="p">;</span>
+  <span class="p">}</span> <span class="n">Alert</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="reference">
+<h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>High Performance Browser Networking</p>
+<p><a class="reference external" href="https://www.oreilly.com/library/view/high-performance-browser/9781449344757/ch04.html">https://www.oreilly.com/library/view/high-performance-browser/9781449344757/ch04.html</a></p>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hls.html" class="btn btn-neutral float-left" title="HTTP Live Streaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dtls.html" class="btn btn-neutral float-right" title="DTLS 协议" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

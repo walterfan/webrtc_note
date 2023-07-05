@@ -36,15 +36,44 @@ Mac 系统
 -------------------
 https://chromium.googlesource.com/chromium/src/+/master/docs/mac_build_instructions.md
 
-Mac 上需要 Xcode `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
+Mac 上需要运行
+
+.. code-block::
+
+   sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+
+
 
 .. code-block::
 
    mkdir chromium && cd chromium
    caffeinate fetch chromium
    cd src
+   gclient runhooks
+   gn args out/Default
    gn gen out/Default
    autoninja -C out/Default chrome
+
+
+其中, `gn args out/Default` 这一步中编辑如下的配置文件， 以回忆编译速度
+
+.. code-block::
+
+   # Set build arguments here. See `gn help buildargs`.
+   is_debug = false
+   dcheck_always_on = false
+   is_official_build = true
+
+   symbol_level=1
+   blink_symbol_level=0
+   v8_symbol_level=0
+
+   enable_nacl = false
+
+   proprietary_codecs = true
+   ffmpeg_branding = "Chrome"
+   chrome_pgo_phase = 0
 
 启动时可以使用
 

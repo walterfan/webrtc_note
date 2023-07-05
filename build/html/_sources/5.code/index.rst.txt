@@ -18,7 +18,9 @@
 
    webrtc_demux
    webrtc_thread
+   webrtc_call
 
+   webrtc_gcc
    webrtc_bwe_gcc
    webrtc_bwe_probe
    webrtc_bwe_remb
@@ -26,6 +28,7 @@
 
    webrtc_pacer
 
+   webrtc_dtls
    webrtc_sctp
    webrtc_rtp_rtcp_module
    webrtc_rtp_sender
@@ -42,6 +45,8 @@
    webrtc_pc_example
    webrtc_video_flow
    webrtc_config
+
+
 
    janus_code_1
    aiortc

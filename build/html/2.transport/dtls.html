@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SCTP 协议" href="sctp.html" />
-    <link rel="prev" title="HTTP Live Streaming" href="hls.html" /> 
+    <link rel="prev" title="TLS 协议" href="tls.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,10 +46,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">2. WebRTC 传输</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 传输概论</a></li>
 <li class="toctree-l2"><a class="reference internal" href="websocket.html">WebSocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stun.html">STUN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">DTLS 协议</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#packet-structure">Packet structure</a></li>
@@ -60,6 +62,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">最后一组消息丢失问题</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -126,27 +132,32 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-06-16</p></td>
+<td><p>2023-07-05</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id6">Overview</a></p></li>
-<li><p><a class="reference internal" href="#packet-structure" id="id7">Packet structure</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id8">基本流程</a></p>
+<li><p><a class="reference internal" href="#overview" id="id7">Overview</a></p></li>
+<li><p><a class="reference internal" href="#packet-structure" id="id8">Packet structure</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">基本流程</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id4" id="id9">握手</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id10">丢包的处理</a></p></li>
-<li><p><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine" id="id11">DTLS Timeout and Retransmission State Machine</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id10">握手</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id11">丢包的处理</a></p></li>
+<li><p><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine" id="id12">DTLS Timeout and Retransmission State Machine</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#example" id="id12">Example</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id13">Reference</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id13">Example</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id14">Troubleshooting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id15">最后一组消息丢失问题</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id16">Reference</a></p></li>
 </ul>
 </div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id6">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥，再通过对称加密算法来加密数据</p>
 <p>不对称加密的原理就是通过张三的公钥加密的数据，只能通过张三自己的私钥来解密</p>
 <p>相比于 TLS , DTLS 复用了所有的 handshake 消息和流程, 不同的是有如下三个主要的改动:</p>
@@ -154,11 +165,18 @@
 <li><p>A stateless cookie exchange has been added to prevent denial-of-service attacks.</p></li>
 <li><p>Modifications to the handshake header to handle message loss, reordering, and DTLS message fragmentation
 (in order to avoid IP fragmentation).</p></li>
-<li><p>Retransmission timers to handle message los</p></li>
+<li><p>Retransmission timers to handle message loss</p></li>
 </ol>
+<p>具体的定义参见</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6347">RFC6347</a>: The Datagram Transport Layer Security (DTLS) Version 1.2</p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc9147">RFC9147</a>: The Datagram Transport Layer Security (DTLS) Version 1.3</p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5246">RFC5246</a>: The Transport Layer Security (TLS) Protocol Version 1.2</p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5077">RFC5077</a>: TLS Session Resumption without Server-Side State</p></li>
+</ul>
 </section>
 <section id="packet-structure">
-<h2><a class="toc-backref" href="#id7">Packet structure</a><a class="headerlink" href="#packet-structure" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Packet structure</a><a class="headerlink" href="#packet-structure" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>UDP packet</p></li>
 </ul>
@@ -173,6 +191,30 @@
 <span class="o">|</span>                        <span class="n">data</span> <span class="n">octets</span> <span class="o">...</span>                        <span class="o">|</span>
 <span class="o">|</span>                                                               <span class="o">|</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>TLS Record</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="p">{</span>
+    <span class="n">uint8</span> <span class="n">major</span><span class="p">;</span>
+    <span class="n">uint8</span> <span class="n">minor</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">ProtocolVersion</span><span class="p">;</span>
+
+<span class="n">enum</span> <span class="p">{</span>
+    <span class="n">change_cipher_spec</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">alert</span><span class="p">(</span><span class="mi">21</span><span class="p">),</span>
+    <span class="n">handshake</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span>
+    <span class="n">application_data</span><span class="p">(</span><span class="mi">23</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">255</span><span class="p">)</span>
+<span class="p">}</span> <span class="n">ContentType</span><span class="p">;</span>
+
+<span class="n">struct</span> <span class="p">{</span>
+    <span class="n">ContentType</span> <span class="nb">type</span><span class="p">;</span>
+    <span class="n">ProtocolVersion</span> <span class="n">version</span><span class="p">;</span>
+    <span class="n">uint16</span> <span class="n">length</span><span class="p">;</span>
+    <span class="n">opaque</span> <span class="n">fragment</span><span class="p">[</span><span class="n">TLSPlaintext</span><span class="o">.</span><span class="n">length</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">TLSPlaintext</span><span class="p">;</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -208,9 +250,9 @@
 </div>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id8">基本流程</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">基本流程</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <section id="id4">
-<h3><a class="toc-backref" href="#id9">握手</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">握手</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Message Flights for Full Handshake</p></li>
 </ul>
@@ -280,7 +322,7 @@
 </div>
 </section>
 <section id="id5">
-<h3><a class="toc-backref" href="#id10">丢包的处理</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">丢包的处理</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>DTLS uses a simple retransmission timer to handle packet loss.</p>
 <p>The following figure demonstrates the basic concept, using the first phase of the DTLS handshake:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Client</span>                                   <span class="n">Server</span>
@@ -298,7 +340,7 @@
 </div>
 </section>
 <section id="dtls-timeout-and-retransmission-state-machine">
-<h3><a class="toc-backref" href="#id11">DTLS Timeout and Retransmission State Machine</a><a class="headerlink" href="#dtls-timeout-and-retransmission-state-machine" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">DTLS Timeout and Retransmission State Machine</a><a class="headerlink" href="#dtls-timeout-and-retransmission-state-machine" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              <span class="o">+-----------+</span>
               <span class="o">|</span> <span class="n">PREPARING</span> <span class="o">|</span>
         <span class="o">+---&gt;</span> <span class="o">|</span>           <span class="o">|</span> <span class="o">&lt;--------------------+</span>
@@ -350,7 +392,7 @@
 </section>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id12">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>openssl example</p></li>
 </ul>
@@ -381,9 +423,107 @@ openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug 
 <span class="n">go</span> <span class="n">run</span> <span class="n">examples</span><span class="o">/</span><span class="n">dial</span><span class="o">/</span><span class="n">selfsign</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">go</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li><p>another example</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># setup a server key + certificate:</span>
+<span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">x509</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">nodes</span> <span class="o">-</span><span class="n">keyout</span> <span class="n">key</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">out</span> <span class="n">server</span><span class="o">.</span><span class="n">pem</span><span class="o">.</span>
+<span class="c1"># start the server:</span>
+<span class="n">openssl</span> <span class="n">s_server</span> <span class="o">-</span><span class="n">dtls1</span> <span class="o">-</span><span class="n">key</span> <span class="n">key</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">port</span> <span class="mi">4433</span> <span class="o">-</span><span class="n">msg</span><span class="o">.</span>
+<span class="c1"># connect to it with a client:</span>
+<span class="n">openssl</span> <span class="n">s_client</span> <span class="o">-</span><span class="n">dtls1</span> <span class="o">-</span><span class="n">connect</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">4433</span> <span class="o">-</span><span class="n">msg</span>
+
+<span class="n">sudo</span> <span class="n">tcpdump</span> <span class="n">udp</span> <span class="o">-</span><span class="n">i</span> <span class="n">lo0</span> <span class="o">-</span><span class="n">s</span> <span class="mi">65535</span> <span class="o">-</span><span class="n">w</span> <span class="n">handshake</span><span class="o">.</span><span class="n">pcap</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>DTLS Record</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//DTLS record raw data structure</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">DtlsHandshakeRawData</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">u8</span><span class="w">  </span><span class="n">handshakeType</span><span class="p">;</span><span class="w"> </span><span class="c1">// ssl3_mt_*</span>
+<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u16</span><span class="w"> </span><span class="n">msgSeq</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">fragOffset</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">fragLen</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u8</span><span class="w">  </span><span class="n">fragBuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">stDtlsHandshakeRawData</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">DtlsRecordLayerRawData</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">u8</span><span class="w">   </span><span class="n">contentType</span><span class="p">;</span><span class="w"> </span><span class="c1">// ssl3_rt_*</span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">dtlsVer</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">epoch</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">seqNoH</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u32</span><span class="w">  </span><span class="n">seqNoL</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">stDtlsHandshakeRawData</span><span class="w"> </span><span class="n">fragData</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">stDtlsRecordLayerRawData</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="troubleshooting">
+<h2><a class="toc-backref" href="#id14">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<section id="id6">
+<h3><a class="toc-backref" href="#id15">最后一组消息丢失问题</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>DTLS messages are grouped into a series of message flights, according to the diagrams of handshake.</p>
+<p>Although each flight of messages may consist of a number of messages, they should be viewed as monolithic for the
+purpose of timeout and retransmission.</p>
+<p>In addition, for at least twice the default MSL defined for [TCP],
+when in the FINISHED state, the node that transmits the last flight
+(the server in an ordinary handshake or the client in a resumed
+handshake) MUST respond to a retransmit of the peer’s last flight</p>
+<p>with a retransmit of the last flight.  This avoids deadlock
+conditions if the last flight gets lost.  This requirement applies to
+DTLS 1.0 as well, and though not explicit in [DTLS1], it was always
+required for the state machine to function correctly.  To see why
+this is necessary, consider what happens in an ordinary handshake if
+the server’s Finished message is lost: the server believes the
+handshake is complete but it actually is not.  As the client is
+waiting for the Finished message, the client’s retransmit timer will
+fire and it will retransmit the client’s Finished message.  This will
+cause the server to respond with its own Finished message, completing
+the handshake.  The same logic applies on the server side for the
+resumed handshake.</p>
+<p>Note that because of packet loss, it is possible for one side to be
+sending application data even though the other side has not received
+the first side’s Finished message.  Implementations MUST either
+discard or buffer all application data packets for the new epoch
+until they have received the Finished message for that epoch.
+Implementations MAY treat receipt of application data with a new
+epoch prior to receipt of the corresponding Finished message as
+evidence of reordering or packet loss and retransmit their final
+flight immediately, shortcutting the retransmission timer.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="n">DTLS</span> <span class="n">handshake</span> <span class="n">failed</span> <span class="k">with</span> <span class="mi">20</span><span class="o">%</span> <span class="n">packet</span> <span class="n">loss</span> <span class="n">on</span> <span class="n">downlink</span>
+
+<span class="n">participant</span> <span class="n">Client</span> <span class="k">as</span> <span class="n">C</span>
+<span class="n">participant</span> <span class="n">Server</span> <span class="k">as</span> <span class="n">S</span>
+
+<span class="c1">#autonumber</span>
+
+<span class="n">C</span> <span class="o">-&gt;</span> <span class="n">S</span><span class="p">:</span> <span class="n">ClientHello</span>
+<span class="n">S</span> <span class="o">--&gt;</span><span class="n">C</span><span class="p">:</span> <span class="n">Hello</span> <span class="n">Verify</span> <span class="n">Request</span>
+<span class="n">C</span> <span class="o">-&gt;</span> <span class="n">S</span><span class="p">:</span> <span class="n">ClientHello</span> <span class="k">with</span> <span class="n">cookie</span>
+<span class="n">S</span> <span class="o">--&gt;</span> <span class="n">C</span><span class="p">:</span> <span class="n">ServerHello</span><span class="p">,</span> <span class="n">Certificate</span><span class="p">,</span> <span class="n">Server</span> <span class="n">Key</span> <span class="n">Exchange</span><span class="p">,</span> <span class="n">Certificate</span> <span class="n">Request</span><span class="p">,</span> <span class="n">ServerHelloDone</span>
+<span class="n">C</span> <span class="o">-&gt;</span> <span class="n">S</span><span class="p">:</span> <span class="n">Certificate</span><span class="p">,</span> <span class="n">Certificate</span> <span class="n">Key</span> <span class="n">Exchange</span><span class="p">,</span> <span class="n">Certificate</span> <span class="n">Verify</span><span class="p">,</span> <span class="n">ChangeCipherSpec</span> <span class="o">...</span>
+<span class="n">S</span> <span class="o">--&gt;</span> <span class="n">C</span><span class="p">:</span> <span class="n">NewSessionTicket</span><span class="p">,</span> <span class="n">ChangeCipherSpec</span><span class="p">,</span> <span class="o">...</span>
+<span class="n">note</span> <span class="n">left</span> <span class="n">of</span> <span class="n">S</span><span class="p">:</span> <span class="n">handshake</span> <span class="ow">is</span> <span class="n">done</span> <span class="ow">in</span> <span class="n">server</span> <span class="n">side</span>
+<span class="n">S</span> <span class="o">-&gt;</span> <span class="n">S</span><span class="p">:</span> <span class="n">cache</span> <span class="n">the</span> <span class="n">last</span> <span class="n">flight</span>
+<span class="n">note</span> <span class="n">right</span> <span class="n">of</span> <span class="n">C</span><span class="p">:</span> <span class="n">Client</span> <span class="n">side</span> <span class="n">found</span> <span class="n">write_alert</span> <span class="n">fatal</span> <span class="n">unknown</span> <span class="n">TLS</span> <span class="n">client</span> <span class="n">read_session_ticket</span>
+<span class="n">C</span> <span class="o">-&gt;</span> <span class="n">S</span><span class="p">:</span> <span class="n">Certificate</span><span class="p">,</span>  <span class="n">Certificate</span> <span class="n">Key</span> <span class="n">Exchange</span><span class="p">,</span> <span class="n">Certificate</span> <span class="n">Verify</span><span class="p">,</span><span class="n">ChangeCipherSpec</span> <span class="o">...</span>
+<span class="c1">#C -&gt; S: Certificate,  Certificate Key Exchange, Certificate Verify,ChangeCipherSpec ...</span>
+<span class="c1">#note right of C: Client resent Certificates to Server ... more than 10 times ...</span>
+<span class="c1">#C -&gt; S: Certificate,  Certificate Key Exchange, Certificate Verify,ChangeCipherSpec ...</span>
+<span class="c1">#C -&gt; S: Encrypted Alert</span>
+<span class="c1">#note right of C: client mark the transport&#39;s dtlsState as &quot;Failed&quot;</span>
+<span class="n">S</span> <span class="o">--&gt;</span> <span class="n">C</span><span class="p">:</span> <span class="n">NewSessionTicket</span><span class="p">,</span> <span class="n">ChangeCipherSpec</span><span class="p">,</span> <span class="o">...</span>
+<span class="n">note</span> <span class="n">right</span> <span class="n">of</span> <span class="n">C</span><span class="p">:</span> <span class="n">handshake</span> <span class="ow">is</span> <span class="n">done</span> <span class="ow">in</span> <span class="n">client</span> <span class="n">side</span>
+<span class="n">C</span> <span class="o">-&gt;</span> <span class="n">S</span><span class="p">:</span> <span class="n">Application</span> <span class="n">Data</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id13">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6347">RFC6347</a>: Datagram Transport Layer Security Version 1.2</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc9147">RFC9147</a>: The Datagram Transport Layer Security (DTLS) Protocol Version 1.3</p></li>
@@ -395,7 +535,7 @@ openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="hls.html" class="btn btn-neutral float-left" title="HTTP Live Streaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tls.html" class="btn btn-neutral float-left" title="TLS 协议" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="sctp.html" class="btn btn-neutral float-right" title="SCTP 协议" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

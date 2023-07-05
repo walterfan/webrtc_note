@@ -11,6 +11,7 @@
 
    webrtc_audio
    webrtc_video
+   webrtc_sharing
 
    webrtc_qos
    webrtc_cc

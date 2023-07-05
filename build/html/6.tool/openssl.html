@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenSSL &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VNC vs. RDP" href="vnc.html" />
+    <link rel="prev" title="GStreamer Development" href="gstreamer_dev.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 工具</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 常用工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Devtools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="netcat.html">netcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scapy.html">scapy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sox.html">SoX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ffmpeg.html">FFmpeg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html">GStreamer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">OpenSSL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snippets">Snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bio">BIO</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-is-openssl-bio">What is OpenSSL BIO?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-is-a-filter-bio-source-bio-and-sink-bio">What is a filter BIO, source BIO and sink BIO?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bio-usage-in-openssl">BIO usage in openssl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bio-methods">BIO methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="vnc.html">VNC vs. RDP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tc.html">Linux Traffic Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iperf.html">iPerf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf.html">Linux Performance tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcpdump.html">tcpdump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wireshark.html">wireshark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_simulator.html">Network Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analytics.html">Data Analytics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selenium.html">selenium</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fuzzer.html">Fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kitty.html">Kitty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 工具</a> &raquo;</li>
+      <li>OpenSSL</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/6.tool/openssl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="openssl">
+<h1>OpenSSL<a class="headerlink" href="#openssl" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>OpenSSL</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Category</strong></p></td>
+<td><p>LearningNote</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-05</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#snippets" id="id4">Snippets</a></p></li>
+<li><p><a class="reference internal" href="#bio" id="id5">BIO</a></p>
+<ul>
+<li><p><a class="reference internal" href="#what-is-openssl-bio" id="id6">What is OpenSSL BIO?</a></p></li>
+<li><p><a class="reference internal" href="#what-is-a-filter-bio-source-bio-and-sink-bio" id="id7">What is a filter BIO, source BIO and sink BIO?</a></p></li>
+<li><p><a class="reference internal" href="#bio-usage-in-openssl" id="id8">BIO usage in openssl</a></p></li>
+<li><p><a class="reference internal" href="#bio-methods" id="id9">BIO methods</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id10">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id11">Reference</a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="snippets">
+<h2><a class="toc-backref" href="#id4">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>ssl3.h</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp"># define SSL3_RT_CHANGE_CIPHER_SPEC      20</span>
+<span class="cp"># define SSL3_RT_ALERT                   21</span>
+<span class="cp"># define SSL3_RT_HANDSHAKE               22</span>
+<span class="cp"># define SSL3_RT_APPLICATION_DATA        23</span>
+
+<span class="cp"># define SSL3_MT_HELLO_REQUEST                   0</span>
+<span class="cp"># define SSL3_MT_CLIENT_HELLO                    1</span>
+<span class="cp"># define SSL3_MT_SERVER_HELLO                    2</span>
+<span class="cp"># define SSL3_MT_NEWSESSION_TICKET               4</span>
+<span class="cp"># define SSL3_MT_END_OF_EARLY_DATA               5</span>
+<span class="cp"># define SSL3_MT_ENCRYPTED_EXTENSIONS            8</span>
+<span class="cp"># define SSL3_MT_CERTIFICATE                     11</span>
+<span class="cp"># define SSL3_MT_SERVER_KEY_EXCHANGE             12</span>
+<span class="cp"># define SSL3_MT_CERTIFICATE_REQUEST             13</span>
+<span class="cp"># define SSL3_MT_SERVER_DONE                     14</span>
+<span class="cp"># define SSL3_MT_CERTIFICATE_VERIFY              15</span>
+<span class="cp"># define SSL3_MT_CLIENT_KEY_EXCHANGE             16</span>
+<span class="cp"># define SSL3_MT_FINISHED                        20</span>
+<span class="cp"># define SSL3_MT_CERTIFICATE_URL                 21</span>
+<span class="cp"># define SSL3_MT_CERTIFICATE_STATUS              22</span>
+<span class="cp"># define SSL3_MT_SUPPLEMENTAL_DATA               23</span>
+<span class="cp"># define SSL3_MT_KEY_UPDATE                      24</span>
+<span class="cp"># ifndef OPENSSL_NO_NEXTPROTONEG</span>
+<span class="cp">#  define SSL3_MT_NEXT_PROTO                     67</span>
+<span class="cp"># endif</span>
+<span class="cp"># define SSL3_MT_MESSAGE_HASH                    254</span>
+<span class="cp"># define DTLS1_MT_HELLO_VERIFY_REQUEST           3</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>set SSLInfoCallback to dump the internal state</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">SSL_CTX_set_info_callback</span><span class="p">(</span><span class="n">mCTX</span><span class="p">,</span><span class="w"> </span><span class="n">SSLInfoCallback</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">SSLInfoCallback</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">SSL</span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">where</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">type</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">alert_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">where</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_EXIT</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;exit&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_ALERT</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">alert_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;alert&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_READ_ALERT</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">alert_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;read_alert&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_WRITE_ALERT</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">alert_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;write_alert&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_ACCEPT_LOOP</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;accept_loop&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_ACCEPT_EXIT</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;accept_exit&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_CONNECT_LOOP</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;connect_loop&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_CONNECT_EXIT</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;connect_exit&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_HANDSHAKE_START</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;handshake_start&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_HANDSHAKE_DONE</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="n">info_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;handshake_done&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_LOOP</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_READ</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="nl">SSL_CB_WRITE</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">default</span><span class="o">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">info_log</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">RTC_LOG</span><span class="p">(</span><span class="n">LS_INFO</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SSL_state_string_long</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">alert_log</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">RTC_LOG</span><span class="p">(</span><span class="n">LS_INFO</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;type: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SSL_alert_type_string_long</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SSL_alert_desc_string_long</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"></span>
+<span class="w">                            </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SSL_state_string_long</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="bio">
+<h2><a class="toc-backref" href="#id5">BIO</a><a class="headerlink" href="#bio" title="Permalink to this headline">¶</a></h2>
+<section id="what-is-openssl-bio">
+<h3><a class="toc-backref" href="#id6">What is OpenSSL BIO?</a><a class="headerlink" href="#what-is-openssl-bio" title="Permalink to this headline">¶</a></h3>
+<p>BIO 也就是  Basic Input Output 的缩写, 是 openssl 所封装的 API, 提供基本的输入输出功能.</p>
+<p>A BIO is an I/O abstraction, it hides many of the underlying I/O details from an application.
+If an application uses a BIO for its I/O it can transparently handle SSL connections, unencrypted network connections and file I/O.</p>
+<p>There are two type of BIO, a source/sink BIO and a filter BIO.</p>
+<ul class="simple">
+<li><p>SSL_read() read unencrypted data which is stored in the input BIO.</p></li>
+<li><p>SSL_write() write unencrypted data into the output BIO.</p></li>
+<li><p>BIO_write() write encrypted data into the input BIO.</p></li>
+<li><p>BIO_read() read encrypted data from the output BIO.</p></li>
+</ul>
+<p>Use BIO_write() to store encrypted data you receive from e.g. a tcp/udp socket.
+Once you’ve written to an input BIO, you use SSL_read() to get the unencrypted data, but only after the handshake is ready.</p>
+<p>Use BIO_read() to check if there is any data in the output BIO.
+The output BIO will be filled by openSSL when it’s handling the handshake or when you call SSL_write().
+When there is data in your output BIO, use BIO_read to get the data and send it to</p>
+<p>e.g. a client. Use BIO_ctrl_pending() to check how many bytes there are stored in the output bio.</p>
+<p>The BIO_METHOD type is a structure used for the implementation of new BIO types.
+It provides a set of functions used by OpenSSL for the implementation of the various BIO capabilities.</p>
+<p>BIO_meth_new() creates a new BIO_METHOD structure.
+It should be given a unique integer type and a string that represents its name.
+Use BIO_get_new_index() to get the value for type.</p>
+</section>
+<section id="what-is-a-filter-bio-source-bio-and-sink-bio">
+<h3><a class="toc-backref" href="#id7">What is a filter BIO, source BIO and sink BIO?</a><a class="headerlink" href="#what-is-a-filter-bio-source-bio-and-sink-bio" title="Permalink to this headline">¶</a></h3>
+<p>An OpenSSL filter BIO is a BIO that takes data, processes it and passes it to another BIO.</p>
+<p>An OpenSSL source BIO is a BIO that doesn’t take data from another BIO but takes it from somewhere else
+(from a file, network, etc.).</p>
+<p>An OpenSSL sink BIO is a BIO that doesn’t pass data to another BIO but transfers it to somewhere else
+(to a file, network, etc.).</p>
+<p>If you put data to a filter using the BIO_write function, you can’t get processed data by simply calling the BIO_read function on the BIO. Filter BIOs work in a different way.</p>
+<p>A filter BIO may avoid storing processed data in a buffer. It may just take the input data, process it and immediately pass it to the next BIO in the chain using the same BIO_write function you used to put your data to the BIO.</p>
+<p>The next BIO, in turn, may, after processing, write the data to the next BIO in the chain. The process stops if either some BIO stores the data in its internal buffer (if it doesn’t have enough data to generate output for the next BIO) or if the data reaches the sink.</p>
+<p>If you need just run data through a filter BIO without sending it over network or without writing it to a file, you can attach the filter BIO to an OpenSSL memory BIO (i.e. make the following chain: filter bio &lt;-&gt; memory bio).</p>
+<p>A memory BIO is a source-sink BIO, but it doesn’t send data to anywhere, it just stores the data in a memory buffer.</p>
+<p>After writing the data to the filter BIO, the data will be written to the memory BIO which will store it in the memory buffer.</p>
+<p>A memory BIO has special interface to get the data directly from the buffer (though you can use BIO_read to get the data that was written to a memory BIO, see below).</p>
+<p>Reading from a filter BIO works in an opposite way. If you request to read data from a filter BIO, the filter BIO may, in turn, request to read data from the next BIO in the chain.
+The process stops if either some BIO has enough buffered data to return or if the process reaches the source BIO.
+A single call to the BIO_read function on a filter BIO may result in multiple calls to the BIO_read function inside the filter BIO to get data from the next BIO.
+A filter BIO will continue to call BIO_read until it gets enough data to generate processed result.</p>
+<p>The situation is more complicated if the source-sink BIO of a chain works in non-blocking mode.</p>
+<p>For example, non-blocking sockets are used or memory BIO is used (memory BIOs are non-blocking by nature).</p>
+<p>Also note that reading from a filter BIO does reversed data processing as compared to processing done when writing to that BIO.</p>
+<p>For example, if you use a cipher BIO, then writing to the BIO will encipher the written data, but reading from that BIO will decipher the input data.
+This allows to make a such chain: your code &lt;-&gt; cipher BIO &lt;-&gt; socket BIO.</p>
+<p>You write unencrypted data to the cipher BIO which encrypts it and sends it to the socket.</p>
+<p>When you read from the cipher BIO it, at first, gets encrypted data from the socket, then decrypts it and return unencrypted data to you.</p>
+<p>This allows you to set up encrypted channel through network. You just use BIO_write and BIO_read and all encryption/decryption is done automatically by the BIO chain.</p>
+<p>In general a BIO chain looks like on the following diagram:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/------</span>\                 <span class="o">/--------</span>\                 <span class="o">/---------</span>\                 <span class="o">/-------------</span>\
+<span class="o">|</span> <span class="n">your</span> <span class="o">|</span> <span class="o">--</span> <span class="n">BIO_write</span> <span class="o">-&gt;</span> <span class="o">|</span> <span class="nb">filter</span> <span class="o">|</span> <span class="o">--</span> <span class="n">BIO_write</span> <span class="o">-&gt;</span> <span class="o">|</span> <span class="n">another</span> <span class="o">|</span> <span class="o">--</span> <span class="n">BIO_write</span> <span class="o">-&gt;</span> <span class="o">|</span> <span class="n">source</span><span class="o">/</span><span class="n">sink</span> <span class="o">|</span>
+<span class="o">|</span>      <span class="o">|</span>                 <span class="o">|</span>        <span class="o">|</span>                 <span class="o">|</span>  <span class="nb">filter</span> <span class="o">|</span>                 <span class="o">|</span>             <span class="o">|</span>
+<span class="o">|</span> <span class="n">code</span> <span class="o">|</span> <span class="o">&lt;-</span> <span class="n">BIO_read</span>  <span class="o">--</span> <span class="o">|</span>  <span class="n">BIO</span>   <span class="o">|</span> <span class="o">&lt;-</span> <span class="n">BIO_read</span>  <span class="o">--</span> <span class="o">|</span>   <span class="n">BIO</span>   <span class="o">|</span> <span class="o">&lt;-</span> <span class="n">BIO_read</span>  <span class="o">--</span> <span class="o">|</span>     <span class="n">BIO</span>     <span class="o">|</span>
+\<span class="o">------/</span>                 \<span class="o">--------/</span>                 \<span class="o">---------/</span>                 \<span class="o">-------------/</span>
+</pre></div>
+</div>
+</section>
+<section id="bio-usage-in-openssl">
+<h3><a class="toc-backref" href="#id8">BIO usage in openssl</a><a class="headerlink" href="#bio-usage-in-openssl" title="Permalink to this headline">¶</a></h3>
+<p>OpenSSL uses BIOs for communicating with the remote side when operating SSL/TLS protocol.</p>
+<p>The SSL_set_bio function is used to set up BIOs for communicating in a concrete instance of an SSL/TLS link. You can use socket BIO, for example, to run SSL/TLS protocol via network connection.</p>
+<p>But you may also develop your own BIO (yes, it is possible) or use memory BIO to run SSL/TLS protocol via your own type of link.</p>
+<p>You can also wrap an instance of an SSL/TLS link as a BIO itself (BIO_f_ssl). Calling BIO_write on an SSL BIO will result in calling SSL_write. Calling BIO_read will result in calling SSL_read.</p>
+<p>Although SSL BIO is a filter BIO, it is a little different from other filter BIOs. Calling BIO_write on SSL BIO may result in series of both BIO_read and BIO_write calls on the next BIO in the chain. Because SSL_write (that is used inside of BIO_write of SSL BIO) not only sends data, but also provides operating SSL/TLS protocol which may require multiple data exchanging steps between sides to perform some negotiation. The same is true for BIO_read of SSL BIO. That is how SSL BIOs are different from ordinary filter BIOs.</p>
+<p>Also note, that you are not required to use SSL BIO. You can still use SSL_read and SSL_write directly.</p>
+<p>Here is examples of source-sink BIOs that OpenSSL provides:</p>
+<ul class="simple">
+<li><p>A file BIO (BIO_s_file). It is a wrapper around stdio’s FILE* object. It used for writing to and reading from a file.</p></li>
+<li><p>A file descriptor BIO (BIO_s_fd). It is similar to file BIO but works with POSIX file descriptors instead stdio files.</p></li>
+<li><p>A socket BIO (BIO_s_socket). It is a wrapper around POSIX sockets. It is used for communicating over network.</p></li>
+<li><p>A null BIO (BIO_s_null). It is similar to the /dev/null device in POSIX systems. Writing to this BIO just discards data, reading from it results in EOF (end of file).</p></li>
+<li><p>A memory BIO (BIO_s_mem ). It is a loopback BIO in essence. Reading from this type of BIO returns the data that was previously written to the BIO. But the data can also be extracted from (or placed to) internal buffer by calling functions that are specific to this type of BIO (every type of BIO has functions that are specific only for this type of BIO).</p></li>
+<li><p>A “bio” BIO (BIO_s_bio). It is a pipe-like BIO. A pair of such BIOs can be created. Data written to one BIO in the pair will be placed for reading to the second BIO in the pair. And vice versa. It is similar to memory BIO, but memory BIO places data to itself and pipe BIO places data to the BIO which it is paired with.</p></li>
+</ul>
+<p>And here is examples of filter BIOs:</p>
+<ul class="simple">
+<li><p>A base64 BIO (BIO_f_base64). BIO_write through this BIO encodes data to base64 format. BIO_read through this BIO decodes data from base64 format.</p></li>
+<li><p>A cipher BIO (BIO_f_cipher). It encrypts/decrypts data passed through it. Different cryptographic algorithms can be used.</p></li>
+<li><p>A digest calculation BIO (BIO_f_md). It doesn’t modify data passed through it. It only calculates digest of data that flows through it, leaving the data itself unchanged. Different digest calculation algorithms can be used. The calculated digest can be retrieved using special functions.</p></li>
+<li><p>A buffering BIO (BIO_f_buffer). It also doesn’t change data passed through it. Data written to this BIO is buffered and therefore not every write operation to this BIO results in writing the data to the next BIO. As for reading, it is a similar situation. This allows to reduce number of IO operations on BIOs that are located behind buffering IO.</p></li>
+<li><p>An SSL BIO (BIO_f_ssl). This type of BIO was described above. It wraps SSL link inside.</p></li>
+</ul>
+</section>
+<section id="bio-methods">
+<h3><a class="toc-backref" href="#id9">BIO methods</a><a class="headerlink" href="#bio-methods" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;openssl/bio.h&gt;</span><span class="cp"></span>
+
+<span class="c1">//All other functions return either the amount of data successfully read or written</span>
+<span class="c1">//(if the return value is positive)</span>
+<span class="c1">//or that no data was successfully read or written if the result is 0 or -1.</span>
+<span class="c1">//If the return value is -2 then the operation is not implemented in the specific BIO type.</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_read_ex</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">dlen</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">readbytes</span><span class="p">);</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_write_ex</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">dlen</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">written</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">//BIO_read() attempts to read len bytes from BIO b and places the data in buf.</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_read</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dlen</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_gets</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_get_line</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">//BIO_write() attempts to write len bytes from buf to BIO b.</span>
+<span class="c1">//BIO_write() returns -2 if the &quot;write&quot; operation is not implemented by the BIO or -1 on other errors.</span>
+<span class="c1">//Otherwise it returns the number of bytes written. This may be 0 if the BIO b is NULL or dlen &lt;= 0.</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_write</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dlen</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">BIO_puts</span><span class="p">(</span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="example">
+<h3><a class="toc-backref" href="#id10">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">SSL_CTX</span><span class="o">*</span> <span class="n">mContext</span><span class="p">;</span>
+    <span class="n">SSL</span> <span class="o">*</span><span class="n">mSsl</span><span class="p">;</span>
+    <span class="n">BIO</span> <span class="o">*</span><span class="n">mInBio</span><span class="p">;</span>
+    <span class="n">BIO</span> <span class="o">*</span><span class="n">mOutBio</span><span class="p">;</span>
+
+<span class="n">mInBio</span> <span class="o">=</span> <span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_mem</span><span class="p">());</span>
+<span class="n">mOutBio</span> <span class="o">=</span> <span class="n">BIO_new</span><span class="p">(</span><span class="n">BIO_s_mem</span><span class="p">());</span>
+
+<span class="n">BIO_puts</span><span class="p">(</span><span class="n">mOutBio</span><span class="p">,</span> <span class="s2">&quot;Hello World</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="reference">
+<h2><a class="toc-backref" href="#id11">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/51672133/what-are-openssl-bios-how-do-they-work-how-are-bios-used-in-openssl">https://stackoverflow.com/questions/51672133/what-are-openssl-bios-how-do-they-work-how-are-bios-used-in-openssl</a></p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/rfc9147/">https://datatracker.ietf.org/doc/rfc9147/</a></p></li>
+<li><p><a class="reference external" href="https://developer.ibm.com/tutorials/l-openssl/">https://developer.ibm.com/tutorials/l-openssl/</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gstreamer_dev.html" class="btn btn-neutral float-left" title="GStreamer Development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vnc.html" class="btn btn-neutral float-right" title="VNC vs. RDP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

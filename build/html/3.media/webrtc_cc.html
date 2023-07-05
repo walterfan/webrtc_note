@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sharing.html">WebRTC Sharing</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="webrtc_qos.html">WebRTC QoS</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">WebRTC 拥塞控制</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="webrtc_gcc.html">Google Congestion Control v1</a></li>
@@ -187,7 +188,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-06-16</p></td>
+<td><p>2023-07-05</p></td>
 </tr>
 </tbody>
 </table>
@@ -282,6 +283,15 @@
 <li><p><a class="reference external" href="webrtc_gcc.html">GCC 算法</a></p></li>
 <li><p><a class="reference external" href="webrtc_remb.html">REMB 扩展</a></p></li>
 <li><p><a class="reference external" href="webrtc_twcc.html">TCC 算法</a></p></li>
+</ul>
+<p>带宽总是有限的, 当我们通过丢包, 延迟的度量指标估算出一个带宽值, 我们就要控制我们的发送速率, 确保它不会大于带宽而超发,
+让发送速率不超过 SFU 或接收端的接收速率, 让发送的数据包不会因为超发而丢包, 从而保证接收的视频质量和流畅度.</p>
+<p>同时我们在分配带宽时也需要考虑媒体类型, 原则上按如下优先级</p>
+<ul class="simple">
+<li><p>Main Audio 来自麦克风的通话质量是需要优先保证的, 所以要优先发送音频媒体包</p></li>
+<li><p>Sharing Audio 音频流的分享, 其音频媒体数据包优先级也比较高</p></li>
+<li><p>Sharing Video 屏幕或视频流的分享的优先级仅次于音频</p></li>
+<li><p>Main Video 来自摄像头的视频通常来说优先级最低</p></li>
 </ul>
 </section>
 <section id="id6">
