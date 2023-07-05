@@ -34,7 +34,15 @@ DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥�
 2. Modifications to the handshake header to handle message loss, reordering, and DTLS message fragmentation
    (in order to avoid IP fragmentation).
 
-3. Retransmission timers to handle message los
+3. Retransmission timers to handle message loss
+
+
+具体的定义参见
+
+* `RFC6347`_: The Datagram Transport Layer Security (DTLS) Version 1.2
+* `RFC9147`_: The Datagram Transport Layer Security (DTLS) Version 1.3
+* `RFC5246`_: The Transport Layer Security (TLS) Protocol Version 1.2
+* `RFC5077`_: TLS Session Resumption without Server-Side State
 
 Packet structure
 ===========================
@@ -55,6 +63,31 @@ Packet structure
      |                                                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+
+* TLS Record
+
+.. code-block::
+
+
+      struct {
+          uint8 major;
+          uint8 minor;
+      } ProtocolVersion;
+
+      enum {
+          change_cipher_spec(20),
+          alert(21),
+          handshake(22),
+          application_data(23), 
+          (255)
+      } ContentType;
+
+      struct {
+          ContentType type;
+          ProtocolVersion version;
+          uint16 length;
+          opaque fragment[TLSPlaintext.length];
+      } TLSPlaintext;
 
 * DTLS Record
 
@@ -286,7 +319,111 @@ Example
    go run examples/dial/selfsign/main.go
 
 
+* another example
 
+.. code-block::
+
+
+      # setup a server key + certificate:
+      openssl req -x509 -new -nodes -keyout key.pem -out server.pem.
+      # start the server:
+      openssl s_server -dtls1 -key key.pem -port 4433 -msg.
+      # connect to it with a client:
+      openssl s_client -dtls1 -connect localhost:4433 -msg
+
+      sudo tcpdump udp -i lo0 -s 65535 -w handshake.pcap
+
+* DTLS Record
+
+.. code-block:: c++
+
+      //DTLS record raw data structure
+      typedef struct DtlsHandshakeRawData {
+            u8  handshakeType; // ssl3_mt_*
+            u24 len;
+            u16 msgSeq;
+            u24 fragOffset;
+            u24 fragLen;
+            u8  fragBuf[1];
+      } stDtlsHandshakeRawData;
+
+      typedef struct DtlsRecordLayerRawData {
+            u8   contentType; // ssl3_rt_*
+            u16  dtlsVer;
+            u16  epoch;
+            u16  seqNoH;
+            u32  seqNoL;
+            u16  len;
+            stDtlsHandshakeRawData fragData;
+      } stDtlsRecordLayerRawData;
+
+Troubleshooting
+========================
+
+最后一组消息丢失问题
+------------------------
+
+DTLS messages are grouped into a series of message flights, according to the diagrams of handshake.
+
+Although each flight of messages may consist of a number of messages, they should be viewed as monolithic for the
+purpose of timeout and retransmission.
+
+In addition, for at least twice the default MSL defined for [TCP],
+when in the FINISHED state, the node that transmits the last flight
+(the server in an ordinary handshake or the client in a resumed
+handshake) MUST respond to a retransmit of the peer's last flight
+
+
+with a retransmit of the last flight.  This avoids deadlock
+conditions if the last flight gets lost.  This requirement applies to
+DTLS 1.0 as well, and though not explicit in [DTLS1], it was always
+required for the state machine to function correctly.  To see why
+this is necessary, consider what happens in an ordinary handshake if
+the server's Finished message is lost: the server believes the
+handshake is complete but it actually is not.  As the client is
+waiting for the Finished message, the client's retransmit timer will
+fire and it will retransmit the client's Finished message.  This will
+cause the server to respond with its own Finished message, completing
+the handshake.  The same logic applies on the server side for the
+resumed handshake.
+
+Note that because of packet loss, it is possible for one side to be
+sending application data even though the other side has not received
+the first side's Finished message.  Implementations MUST either
+discard or buffer all application data packets for the new epoch
+until they have received the Finished message for that epoch.
+Implementations MAY treat receipt of application data with a new
+epoch prior to receipt of the corresponding Finished message as
+evidence of reordering or packet loss and retransmit their final
+flight immediately, shortcutting the retransmission timer.
+
+.. code-block::
+
+      title DTLS handshake failed with 20% packet loss on downlink
+
+      participant Client as C
+      participant Server as S
+
+      #autonumber
+
+      C -> S: ClientHello
+      S -->C: Hello Verify Request
+      C -> S: ClientHello with cookie
+      S --> C: ServerHello, Certificate, Server Key Exchange, Certificate Request, ServerHelloDone
+      C -> S: Certificate, Certificate Key Exchange, Certificate Verify, ChangeCipherSpec ...
+      S --> C: NewSessionTicket, ChangeCipherSpec, ...
+      note left of S: handshake is done in server side
+      S -> S: cache the last flight
+      note right of C: Client side found write_alert fatal unknown TLS client read_session_ticket
+      C -> S: Certificate,  Certificate Key Exchange, Certificate Verify,ChangeCipherSpec ...
+      #C -> S: Certificate,  Certificate Key Exchange, Certificate Verify,ChangeCipherSpec ...
+      #note right of C: Client resent Certificates to Server ... more than 10 times ... 
+      #C -> S: Certificate,  Certificate Key Exchange, Certificate Verify,ChangeCipherSpec ...
+      #C -> S: Encrypted Alert
+      #note right of C: client mark the transport's dtlsState as "Failed"
+      S --> C: NewSessionTicket, ChangeCipherSpec, ...
+      note right of C: handshake is done in client side
+      C -> S: Application Data
 
 
 Reference

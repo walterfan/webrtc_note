@@ -8,7 +8,7 @@ TURN
 .. include:: ../abbrs.ref
 
 ============ =========================================
-**Abstract** Interactive Connectivity Establishment 
+**Abstract** Interactive Connectivity Establishment
 **Authors**  Walter Fan
 **Status**   WIP as draft
 **Updated**  |date|
@@ -33,6 +33,22 @@ TURN (Traversal Using Relays around NAT), that allows a host behind a NAT (calle
 
 
 If TURN is used with ICE [RFC8445], then the relayed transport address and the IP addresses and ports of the peers are included in  the ICE candidate information that the rendezvous protocol must  carry.
+
+
+
+TURN specs
+------------------------------
+* RFC 5766 - base TURN specs
+* RFC 6062 - TCP relaying TURN extension
+* RFC 6156 - IPv6 extension for TURN
+* RFC 7443 - ALPN support for STUN & TURN
+* RFC 7635 - oAuth third-party TURN/STUN authorization
+* DTLS support (http://tools.ietf.org/html/draft-petithuguenin-tram-turn-dtls-00)
+* Mobile ICE (MICE) support (http://tools.ietf.org/html/draft-wing-tram-turn-mobility-02)
+* TURN REST API (http://tools.ietf.org/html/draft-uberti-behave-turn-rest-00)
+* Origin field in TURN (Multi-tenant TURN Server) (https://tools.ietf.org/html/draft-ietf-tram-stun-origin-06)
+* TURN Bandwidth draft specs (http://tools.ietf.org/html/draft-thomson-tram-turn-bandwidth-01)
+* TURN-bis (with dual allocation) draft specs (http://tools.ietf.org/html/draft-ietf-tram-turnbis-04)
 
 
 Terminology

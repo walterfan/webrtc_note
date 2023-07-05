@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STUN &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="TURN" href="turn.html" />
+    <link rel="prev" title="WebSocket" href="websocket.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">2. WebRTC 传输</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 传输概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websocket.html">WebSocket</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">STUN</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ovewview">Ovewview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stun-specs">STUN specs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stun-message-structure">STUN Message structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stun-protocol-attributes-present-in-stun-requests-and-responses">STUN Protocol Attributes present in STUN requests and responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp_header_extension.html">WebRTC RTP Header extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtp_keepalive.html">RTP Keepalive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_multiplex.html">WebRTC 传输的多路复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_ndi.html">Network Device Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bundle.html">WebRTC Bundle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
+      <li>STUN</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/2.transport/stun.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="stun">
+<h1>STUN<a class="headerlink" href="#stun" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP as draft</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-05</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#ovewview" id="id3">Ovewview</a></p></li>
+<li><p><a class="reference internal" href="#stun-specs" id="id4">STUN specs</a></p></li>
+<li><p><a class="reference internal" href="#stun-message-structure" id="id5">STUN Message structure</a></p>
+<ul>
+<li><p><a class="reference internal" href="#stun-protocol-attributes-present-in-stun-requests-and-responses" id="id6">STUN Protocol Attributes present in STUN requests and responses</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="ovewview">
+<h2><a class="toc-backref" href="#id3">Ovewview</a><a class="headerlink" href="#ovewview" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="stun-specs">
+<h2><a class="toc-backref" href="#id4">STUN specs</a><a class="headerlink" href="#stun-specs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>RFC 3489 - “classic” STUN</p></li>
+<li><p>RFC 5389 - base “new” STUN specs</p></li>
+<li><p>RFC 5769 - test vectors for STUN protocol testing</p></li>
+<li><p>RFC 5780 - NAT behavior discovery support</p></li>
+<li><p>RFC 7443 - ALPN support for STUN &amp; TURN</p></li>
+<li><p>RFC 7635 - oAuth third-party TURN/STUN authorization</p></li>
+</ul>
+</section>
+<section id="stun-message-structure">
+<h2><a class="toc-backref" href="#id5">STUN Message structure</a><a class="headerlink" href="#stun-message-structure" title="Permalink to this headline">¶</a></h2>
+<p>STUN messages are encoded in binary using network-oriented format
+(most significant byte or octet first, also commonly known as big-
+endian).  The transmission order is described in detail in Appendix B
+of [RFC0791].  Unless otherwise noted, numeric constants are in
+decimal (base 10).</p>
+<p>All STUN messages comprise a 20-byte header followed by zero or more
+attributes.  The STUN header contains a STUN message type, message
+length, magic cookie, and transaction ID.</p>
+<p>STUN messages are TLV (type-length-value) encoded using big endian (network ordered) binary.
+All STUN messages start with a STUN header, followed by a STUN payload.</p>
+<p>stun message type which typically is one of the below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mh">0x0001</span> <span class="p">:</span> <span class="n">Binding</span> <span class="n">Request</span>
+<span class="mh">0x0101</span> <span class="p">:</span> <span class="n">Binding</span> <span class="n">Response</span>
+<span class="mh">0x0111</span> <span class="p">:</span> <span class="n">Binding</span> <span class="n">Error</span> <span class="n">Response</span>
+<span class="mh">0x0002</span> <span class="p">:</span> <span class="n">Shared</span> <span class="n">Secret</span> <span class="n">Request</span>
+<span class="mh">0x0102</span> <span class="p">:</span> <span class="n">Shared</span> <span class="n">Secret</span> <span class="n">Response</span>
+<span class="mh">0x0112</span> <span class="p">:</span> <span class="n">Shared</span> <span class="n">Secret</span> <span class="n">Error</span> <span class="n">Response</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Message length – Indicates the total length of the STUN payload in bytes but does not include the 20 bytes header.</p></li>
+<li><p>Transaction id –Is used to correlate requests and responses.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
+ <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span><span class="mi">0</span> <span class="mi">0</span><span class="o">|</span>     <span class="n">STUN</span> <span class="n">Message</span> <span class="n">Type</span>     <span class="o">|</span>         <span class="n">Message</span> <span class="n">Length</span>        <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                         <span class="n">Magic</span> <span class="n">Cookie</span>                          <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">|</span>                     <span class="n">Transaction</span> <span class="n">ID</span> <span class="p">(</span><span class="mi">96</span> <span class="n">bits</span><span class="p">)</span>                  <span class="o">|</span>
+<span class="o">|</span>                                                               <span class="o">|</span>
+<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
+</pre></div>
+</div>
+<section id="stun-protocol-attributes-present-in-stun-requests-and-responses">
+<h3><a class="toc-backref" href="#id6">STUN Protocol Attributes present in STUN requests and responses</a><a class="headerlink" href="#stun-protocol-attributes-present-in-stun-requests-and-responses" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>0x0001: MAPPED-ADDRESS – This attribute contains an IP address and port. It is always placed in the Binding Response, and it indicates the source IP address and port the server saw in the Binding Request sent from the client, i.e.; the STUN client’s public IP address and port where it can be reached from the internet.</p></li>
+<li><p>0x0002: RESPONSE-ADDRESS – This attribute contains an IP address and port and is an optional attribute, typically in the Binding Request (sent from the STUN client to the STUN server). It indicates where the Binding Response (sent from the STUN server to the STUN client) is to be sent. If this attribute is not present in the Binding Request, the Binding Response is sent to the source IP address and port of the Binding Request which is attribute 0x0001: MAPPED-ADDRESS.</p></li>
+<li><p>0x0003: CHANGE-REQUEST – This attribute, which is only allowed in the Binding Request and optional, contains two flags; to control the IP address and port used to send the response. These flags are called “change IP” and “change Port” flags. The “change IP” and “change Port” flags are useful for determining whether the client is behind a restricted cone NAT or restricted port cone NAT. They instruct the server to send the Binding Responses from a different source IP address and port.</p></li>
+<li><p>0x0004: SOURCE-ADDRESS – This attribute is usually present in Binding Responses; it indicates the source IP address and port where the response was sent from, i.e. the IP address of the machine the client is running on (typically an internal private IP address). It is very useful as from this attribute the STUN server can detect twice NAT configurations.</p></li>
+<li><p>0x0005: CHANGED-ADDRESS – This attribute is usually present in Binding Responses; it informs the client of the source IP address and port that would be used if the client requested the “change IP” and “change port” behaviour.</p></li>
+<li><p>0x0006: USERNAME – This attribute is optional and is present in a Shared Secret Response with the PASSWORD attribute. It serves as a means to identify the shared secret used in the message integrity check.</p></li>
+<li><p>0x0007: PASSWORD – This attribute is optional and only present in Shared Secret Response along with the USERNAME attribute. The value of the PASSWORD attribute is of variable length and used as a shared secret between the STUN server and the STUN client.</p></li>
+<li><p>0x0008: MESSAGE-INTEGRITY – This attribute must be the last attribute in a STUN message and can be present in both Binding Request and Binding Response. It contains HMAC-SHA1 of the STUN message.</p></li>
+<li><p>0x0009: ERROR-CODE – This attribute is present in the Binding Error Response and Shared Secret Error Response only. It indicates that an error has occurred and indicates also the type of error which has occurred. It contains a numerical value in the range of 100 to 699; which is the error code and also a textual reason phrase encoded in UTF-8 describing the error code, which is meant for the client.</p></li>
+<li><p>0x000a: UNKNOWN-ATTRIBUTES – This attribute is present in the Binding Error Response or Shared Secret Error response when the error code is 420; some attributes sent from the client in the Request are unknown and the server does not understand them.</p></li>
+<li><p>0x000b: REFLECTED-FROM – This attribute is present only in Binding Response and its use is to provide traceability so the STUN server cannot be used as part of a denial of service attack. It contains the IP address of the source from where the request came from, i.e. the IP address of the STUN client.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="websocket.html" class="btn btn-neutral float-left" title="WebSocket" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="turn.html" class="btn btn-neutral float-right" title="TURN" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

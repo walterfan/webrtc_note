@@ -14,7 +14,8 @@
    sox
    ffmpeg
    gstreamer
-
+   openssl
+   
    vnc
    tc
    iperf

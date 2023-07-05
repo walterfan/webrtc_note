@@ -55,6 +55,7 @@
 <li class="toctree-l2"><a class="reference internal" href="sox.html">SoX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ffmpeg.html">FFmpeg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gstreamer.html">GStreamer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openssl.html">OpenSSL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vnc.html">VNC vs. RDP</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Linux Traffic Control</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">简介</a></li>
@@ -146,7 +147,7 @@
 <td><p>v1</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-06-16</p></td>
+<td><p>2023-07-05</p></td>
 </tr>
 </tbody>
 </table>
@@ -265,7 +266,27 @@
 </div>
 <section id="id3">
 <h2><a class="toc-backref" href="#id12">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题</p>
+<p>Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题, 例如丢包，延迟，抖动等。</p>
+<p>在网络控制时有两个方向</p>
+<ul class="simple">
+<li><p>inbound 进来的流量 –&gt; uplink 入口</p></li>
+<li><p>outbound 出去的流量 –&gt; downlink 出口</p></li>
+</ul>
+<p>tc 可以通过本地的发送队列，很容易地控制出去的流量，而对于进来的流量，需要结合虚拟设备 ifb(Intermediate Functional Block device) 来做流量控制。
+可以认为 ifb 是虚拟的网卡设备</p>
+<p>执行 <cite>modprobe ifb</cite> 会创建出来两块虚拟的网卡 ifb0 和 ifb1, 可以用 <cite>ip link list</cite> 来查看</p>
+<p>IFB is an alternative to tc filters for handling ingress traffic, by redirecting it to a virtual interface and treat is as egress traffic there.
+You need one ifb interface per physical interface, to redirect ingress traffic from eth0 to ifb0, eth1 to ifb1 and so on.</p>
+<p>When inserting the ifb module, tell it the number of virtual interfaces you need. The default is 2:</p>
+<p><cite>modprobe ifb numifbs=1</cite></p>
+<p>Now, enable all ifb interfaces:</p>
+<p><cite>ip link set dev ifb0 up # repeat for ifb1, ifb2, …</cite></p>
+<p>And redirect ingress traffic from the physical interfaces to corresponding ifb interface.
+For eth0 -&gt; ifb0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">handle</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">ingress</span>
+<span class="n">tc</span> <span class="nb">filter</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">parent</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">protocol</span> <span class="n">ip</span> <span class="n">u32</span> <span class="n">match</span> <span class="n">u32</span> <span class="mi">0</span> <span class="mi">0</span> <span class="n">action</span> <span class="n">mirred</span> <span class="n">egress</span> <span class="n">redirect</span> <span class="n">dev</span> <span class="n">ifb0</span>
+</pre></div>
+</div>
 </section>
 <section id="tc">
 <h2><a class="toc-backref" href="#id13">TC 中的基本概念</a><a class="headerlink" href="#tc" title="Permalink to this headline">¶</a></h2>
@@ -842,7 +863,8 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 </section>
 <section id="netimpair">
 <h2><a class="toc-backref" href="#id78">netimpair</a><a class="headerlink" href="#netimpair" title="Permalink to this headline">¶</a></h2>
-<p>tc 实在太强大，也太复杂了，netimpair 是对 tc 命令进行封装的一个 python 脚本</p>
+<p>tc 实在太强大，也太复杂了，netimpair 是对 tc 命令进行封装的一个 python 脚本
+<a class="reference external" href="https://github.com/urbenlegend/netimpair">https://github.com/urbenlegend/netimpair</a></p>
 <section id="features">
 <h3><a class="toc-backref" href="#id79">Features</a><a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <p>netimpair.py can do the following things:</p>

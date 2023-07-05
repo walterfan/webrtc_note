@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC Sharing &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC QoS" href="webrtc_qos.html" />
+    <link rel="prev" title="视频编码 AV1" href="video_codec_av1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Sharing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">示例1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">测试</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">示例2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">服务器端</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#html-javascript">客户端还是 html + JavaScript</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">测试</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#wireshark">Wireshark 抓包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_qos.html">WebRTC QoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_red.html">WebRTC RED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_feedback.html">WebRTC Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_svc.html">WebRTC SVC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_metrics.html">WebRTC Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcast</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
+      <li>WebRTC Sharing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/3.media/webrtc_sharing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-sharing">
+<h1>WebRTC Sharing<a class="headerlink" href="#webrtc-sharing" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC Sharing</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Category</strong></p></td>
+<td><p>Learning note</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-05</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#id3" id="id12">简介</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id13">示例1</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id14">测试</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id15">示例2</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id16">服务器端</a></p></li>
+<li><p><a class="reference internal" href="#html-javascript" id="id17">客户端还是 html + JavaScript</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id18">测试</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#wireshark" id="id19">Wireshark 抓包</a></p></li>
+</ul>
+</div>
+<section id="id3">
+<h2><a class="toc-backref" href="#id12">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>网络会议中常用的屏幕共享功能使用 WebRTC 提供的 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia">getDisplayMedia</a> API
+就能轻松实现，接口如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">promise</span> <span class="o">=</span> <span class="n">navigator</span><span class="o">.</span><span class="n">mediaDevices</span><span class="o">.</span><span class="n">getDisplayMedia</span><span class="p">(</span><span class="n">constraints</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>MediaDevices 接口的 <code class="docutils literal notranslate"><span class="pre">getDisplayMedia</span></code>
+方法提示用户选择并授予将显示屏幕或其部分（如浏览器窗口和标签页）的内容捕获为
+MediaStream 的权限。然后，可以使用媒体流录制 API 录制， 或作为 WebRTC
+会话的一部分传输所生成的媒体流。这个媒体流传输到网络的对端，这样就可以共享屏幕的内容了。</p>
+<p>例如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="n">function</span> <span class="n">startCapture</span><span class="p">(</span><span class="n">displayMediaOptions</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">let</span> <span class="n">captureStream</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">captureStream</span> <span class="o">=</span> <span class="k">await</span> <span class="n">navigator</span><span class="o">.</span><span class="n">mediaDevices</span><span class="o">.</span><span class="n">getDisplayMedia</span><span class="p">(</span><span class="n">displayMediaOptions</span><span class="p">);</span>
+  <span class="p">}</span> <span class="n">catch</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error: &quot;</span> <span class="o">+</span> <span class="n">err</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">captureStream</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id13">示例1</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<img alt="https://upload-images.jianshu.io/upload_images/1598924-3b094b70f234c64d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-3b094b70f234c64d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<ul class="simple">
+<li><p>HTML 文件</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;!-- 省略引入的 JS 和 CSS --&gt;
+&lt;body&gt;
+
+&lt;!-- &lt;a href=&quot;https://github.com/walterfan/webrtc-primer&quot;&gt;&lt;img style=&quot;position: absolute; top: 0; left: 0; border: 0; z-index: 1001;&quot; src=&quot;https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png&quot; alt=&quot;Fork me on GitHub&quot;&gt;&lt;/a&gt;
+ --&gt;
+&lt;nav class=&quot;navbar navbar-default navbar-static-top&quot;&gt;
+&lt;/nav&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;col-lg-12&quot;&gt;
+            &lt;div class=&quot;page-header&quot;&gt;
+                &lt;h1&gt;WebRTC example of Desktop Sharing &lt;/h1&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;container&quot; id=&quot;details&quot;&gt;
+          &lt;div class=&quot;row&quot;&gt;
+
+              &lt;div class=&quot;col-lg-12&quot;&gt;
+
+                &lt;p&gt;Click the button to open or close connection&lt;/p&gt;
+                &lt;div&gt;
+
+                    &lt;button class=&quot;btn btn-default&quot; autocomplete=&quot;off&quot; id=&quot;startButton&quot;&gt;Share Something&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;br/&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;col-lg-12&quot;&gt;
+                    &lt;div class=&quot;col-lg-6&quot;&gt;
+                        &lt;video id=&quot;localVideo&quot; autoplay playsinline muted&gt;&lt;/video&gt;
+                    &lt;/div&gt;
+               &lt;/div&gt;
+          &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;div class=&quot;footer&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/desktop_sharing_demo.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>JS 文件</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&#39;use strict&#39;;
+
+// Polyfill in Firefox.
+// See https://blog.mozilla.org/webrtc/getdisplaymedia-now-available-in-adapter-js/
+if (adapter.browserDetails.browser == &#39;firefox&#39;) {
+  adapter.browserShim.shimGetDisplayMedia(window, &#39;screen&#39;);
+}
+
+const gdmOptions = {
+  video: {
+    cursor: &quot;always&quot;
+  },
+  audio: {
+    echoCancellation: true,
+    noiseSuppression: true,
+    sampleRate: 44100
+  }
+}
+
+function handleSuccess(stream) {
+  startButton.disabled = true;
+  const video = document.querySelector(&#39;video&#39;);
+  video.srcObject = stream;
+
+  // demonstrates how to detect that the user has stopped
+  // sharing the screen via the browser UI.
+  stream.getVideoTracks()[0].addEventListener(&#39;ended&#39;, () =&gt; {
+    errorMsg(&#39;The user has ended sharing the screen&#39;);
+    startButton.disabled = false;
+  });
+}
+
+function handleError(error) {
+  errorMsg(`getDisplayMedia error: ${error.name}`, error);
+}
+
+function errorMsg(msg, error) {
+  const errorElement = document.querySelector(&#39;#errorMsg&#39;);
+  errorElement.innerHTML += `&lt;p&gt;${msg}&lt;/p&gt;`;
+  if (typeof error !== &#39;undefined&#39;) {
+    console.error(error);
+  }
+}
+
+const startButton = document.getElementById(&#39;startButton&#39;);
+startButton.addEventListener(&#39;click&#39;, () =&gt; {
+  navigator.mediaDevices.getDisplayMedia(gdmOptions)
+      .then(handleSuccess, handleError);
+});
+
+if ((navigator.mediaDevices &amp;&amp; &#39;getDisplayMedia&#39; in navigator.mediaDevices)) {
+  startButton.disabled = false;
+} else {
+  errorMsg(&#39;getDisplayMedia is not supported&#39;);
+}
+</pre></div>
+</div>
+<section id="id5">
+<h3><a class="toc-backref" href="#id14">测试</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>点击 share 按键，可以选择 为文本 还是
+运动共享，后者的帧率会高点。然后再选择屏幕，应用或标签页。</p>
+</section>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id15">示例2</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id16">服务器端</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>使用 nodejs + socket.io 充当web服务器，并用来传递 sdp</p>
+<p>代码：<a class="reference external" href="https://github.com/walterfan/webrtc_remote_sharing">https://github.com/walterfan/webrtc_remote_sharing</a></p>
+<p>启动命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">node</span> <span class="n">screen_share_server</span><span class="o">.</span><span class="n">js</span>
+<span class="p">[</span><span class="mi">2021</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">21</span><span class="n">T20</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mf">41.018</span><span class="p">]</span> <span class="p">[</span><span class="n">INFO</span><span class="p">]</span> <span class="n">screen_share</span> <span class="o">-</span> <span class="n">screen</span> <span class="n">shares</span> <span class="n">server</span> <span class="n">listen</span> <span class="n">on</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8183</span>
+</pre></div>
+</div>
+</section>
+<section id="html-javascript">
+<h3><a class="toc-backref" href="#id17">客户端还是 html + JavaScript</a><a class="headerlink" href="#html-javascript" title="Permalink to this headline">¶</a></h3>
+<p>详细代码： *
+<a class="reference external" href="https://github.com/walterfan/webrtc_primer/blob/main/examples/screen_share_demo.html">https://github.com/walterfan/webrtc_primer/blob/main/examples/screen_share_demo.html</a>
+*
+<a class="reference external" href="https://github.com/walterfan/webrtc_primer/blob/main/examples/js/screen_share_client.js">https://github.com/walterfan/webrtc_primer/blob/main/examples/js/screen_share_client.js</a></p>
+</section>
+<section id="id8">
+<span id="id9"></span><h3><a class="toc-backref" href="#id18">测试</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>将 getDisplayMedia 得到的媒体流 MediaStream 通过 PeerConnection
+传送给对方</p>
+<img alt="https://upload-images.jianshu.io/upload_images/1598924-aeeb665e6267b758.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-aeeb665e6267b758.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<ol class="arabic simple">
+<li><p>张三进入会议室 “Join room”</p></li>
+<li><p>李四进入会议室 “Join room”</p></li>
+<li><p>张三分享屏幕 “start share”</p></li>
+</ol>
+<figure class="align-default" id="id10">
+<img alt="本地屏幕" src="https://upload-images.jianshu.io/upload_images/1598924-68b28dc7f3ae82c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<figcaption>
+<p><span class="caption-text">本地屏幕</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="4">
+<li><p>李四就会看到分享的屏幕内容</p></li>
+</ol>
+<figure class="align-default" id="id11">
+<img alt="远端屏幕" src="https://upload-images.jianshu.io/upload_images/1598924-d5eef15f0b31f35d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<figcaption>
+<p><span class="caption-text">远端屏幕</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>注意我们需要观察 RTP 包的荷载内容，所以要关掉 SRTP ，只用 RTP 来传输
+出于测试目的， Chrome Canary 及 Chrome Developer 有一个选项
+<code class="docutils literal notranslate"><span class="pre">--disable-webrtc-encryption</span></code> 可以关掉 SRTP</p>
+<p>在我的 macbook 上步骤如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Google</span>\ <span class="n">Chrome</span>\ <span class="n">Canary</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span>
+<span class="o">./</span><span class="n">Google</span>\ <span class="n">Chrome</span>\ <span class="n">Canary</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">webrtc</span><span class="o">-</span><span class="n">encryption</span>
+</pre></div>
+</div>
+<p>于是在创建 RTP 连接时的 SDP 就从:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">video</span> <span class="mi">9</span> <span class="n">RTP</span><span class="o">/</span><span class="n">SAVPF</span> <span class="mi">96</span> <span class="mi">97</span> <span class="mi">98</span> <span class="mi">99</span> <span class="mi">100</span> <span class="mi">101</span> <span class="mi">102</span> <span class="mi">121</span> <span class="mi">127</span> <span class="mi">120</span> <span class="mi">125</span> <span class="mi">107</span> <span class="mi">108</span> <span class="mi">109</span> <span class="mi">35</span> <span class="mi">36</span> <span class="mi">124</span> <span class="mi">119</span> <span class="mi">123</span> <span class="mi">118</span> <span class="mi">114</span> <span class="mi">115</span> <span class="mi">116</span>
+</pre></div>
+</div>
+<p>就变成了</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">video</span> <span class="mi">9</span> <span class="n">RTP</span><span class="o">/</span><span class="n">AVPF</span> <span class="mi">96</span> <span class="mi">97</span> <span class="mi">98</span> <span class="mi">99</span> <span class="mi">100</span> <span class="mi">101</span> <span class="mi">102</span> <span class="mi">121</span> <span class="mi">127</span> <span class="mi">120</span> <span class="mi">125</span> <span class="mi">107</span> <span class="mi">108</span> <span class="mi">109</span> <span class="mi">35</span> <span class="mi">36</span> <span class="mi">124</span> <span class="mi">119</span> <span class="mi">123</span> <span class="mi">118</span> <span class="mi">114</span> <span class="mi">115</span> <span class="mi">116</span>
+</pre></div>
+</div>
+<p>完整sdp如下</p>
+<ul class="simple">
+<li><p>offer sdp 消息：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="s1">&#39;offer&#39;</span><span class="p">,</span>
+  <span class="n">sdp</span><span class="p">:</span> <span class="s1">&#39;v=0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;o=- 2151254633287699884 2 IN IP4 127.0.0.1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;s=-</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;t=0 0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=group:BUNDLE 0 1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap-allow-mixed</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=msid-semantic: WMS VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;m=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 110 112 113 126</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;c=IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp:9 IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-ufrag:wkaf</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-pwd:2PI01Rh/wf4JKpfM0pr6LJ+d</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-options:trickle</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fingerprint:sha-256 86:BC:0B:F2:AB:2F:A2:A0:7F:FC:5B:5E:16:B8:61:62:E6:E6:18:FF:B6:85:6C:F0:DD:65:01:72:C1:16:88:E8</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=setup:actpass</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=mid:0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:5 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:6 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=sendrecv</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=msid:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz cd1c92ae-7d05-4ee8-9e21-3e2993c1c254</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-mux</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:111 opus/48000/2</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:111 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:111 minptime=10;useinbandfec=1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:103 ISAC/16000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:104 ISAC/32000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:9 G722/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:0 PCMU/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:8 PCMA/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:106 CN/32000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:105 CN/16000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:13 CN/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:110 telephone-event/48000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:112 telephone-event/32000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:113 telephone-event/16000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:126 telephone-event/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3060416220 cname:C9N45apy7vfT4Waq</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3060416220 msid:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz cd1c92ae-7d05-4ee8-9e21-3e2993c1c254</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3060416220 mslabel:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3060416220 label:cd1c92ae-7d05-4ee8-9e21-3e2993c1c254</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;m=video 9 UDP/TLS/RTP/SAVPF 96 97 98 99 100 101 102 121 127 120 125 107 108 109 124 119 123 118 114 115 116</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;c=IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp:9 IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-ufrag:wkaf</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-pwd:2PI01Rh/wf4JKpfM0pr6LJ+d</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-options:trickle</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fingerprint:sha-256 86:BC:0B:F2:AB:2F:A2:A0:7F:FC:5B:5E:16:B8:61:62:E6:E6:18:FF:B6:85:6C:F0:DD:65:01:72:C1:16:88:E8</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=setup:actpass</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=mid:1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:14 urn:ietf:params:rtp-hdrext:toffset</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:13 urn:3gpp:video-orientation</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:12 http://www.webrtc.org/experiments/rtp-hdrext/playout-delay</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:11 http://www.webrtc.org/experiments/rtp-hdrext/video-content-type</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:7 http://www.webrtc.org/experiments/rtp-hdrext/video-timing</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:8 http://www.webrtc.org/experiments/rtp-hdrext/color-space</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:5 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:6 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=sendrecv</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=msid:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz 95173d41-de5c-4864-8745-a8573f23f3d8</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-mux</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-rsize</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:102 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:102 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:121 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:121 apt=102</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:127 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:127 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42001f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:120 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:120 apt=127</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:125 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:125 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:107 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:107 apt=125</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:108 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:108 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42e01f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:109 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:109 apt=108</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:124 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:124 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=4d0032</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:119 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:119 apt=124</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:123 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:123 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=640032</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:118 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:118 apt=123</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:114 red/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:115 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:115 apt=114</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:116 ulpfec/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc-group:FID 3194951553 658670364</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3194951553 cname:C9N45apy7vfT4Waq</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3194951553 msid:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz 95173d41-de5c-4864-8745-a8573f23f3d8</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3194951553 mslabel:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:3194951553 label:95173d41-de5c-4864-8745-a8573f23f3d8</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:658670364 cname:C9N45apy7vfT4Waq</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:658670364 msid:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz 95173d41-de5c-4864-8745-a8573f23f3d8</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:658670364 mslabel:VLvw0Ec4NwiXKVzTZyzl1m5aSLGW9EPe50Mz</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ssrc:658670364 label:95173d41-de5c-4864-8745-a8573f23f3d8</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Answer SDP 消息</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="p">{</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="s1">&#39;answer&#39;</span><span class="p">,</span>
+  <span class="n">sdp</span><span class="p">:</span> <span class="s1">&#39;v=0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;o=- 6808421739235470893 2 IN IP4 127.0.0.1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;s=-</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;t=0 0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=group:BUNDLE 0 1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap-allow-mixed</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=msid-semantic: WMS</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;m=audio 9 UDP/TLS/RTP/SAVPF 111 103 104 9 0 8 106 105 13 110 112 113 126</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;c=IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp:9 IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-ufrag:8fbZ</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-pwd:r/ZnPQzn6uh8LIKW1gfaacu6</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-options:trickle</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fingerprint:sha-256 3A:5E:40:E4:BD:31:64:74:86:41:5A:62:1B:CA:0A:0A:4A:A4:0D:59:68:D5:47:15:B6:53:FE:BE:0F:3C:8D:D6</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=setup:active</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=mid:0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:5 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:6 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=recvonly</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-mux</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:111 opus/48000/2</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:111 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:111 minptime=10;useinbandfec=1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:103 ISAC/16000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:104 ISAC/32000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:9 G722/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:0 PCMU/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:8 PCMA/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:106 CN/32000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:105 CN/16000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:13 CN/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:110 telephone-event/48000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:112 telephone-event/32000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:113 telephone-event/16000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:126 telephone-event/8000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;m=video 9 UDP/TLS/RTP/SAVPF 102 121 127 120 125 107 108 109 124 119 123 118 114 115 116</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;c=IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp:9 IN IP4 0.0.0.0</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-ufrag:8fbZ</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-pwd:r/ZnPQzn6uh8LIKW1gfaacu6</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=ice-options:trickle</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fingerprint:sha-256 3A:5E:40:E4:BD:31:64:74:86:41:5A:62:1B:CA:0A:0A:4A:A4:0D:59:68:D5:47:15:B6:53:FE:BE:0F:3C:8D:D6</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=setup:active</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=mid:1</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:14 urn:ietf:params:rtp-hdrext:toffset</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:13 urn:3gpp:video-orientation</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:3 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:12 http://www.webrtc.org/experiments/rtp-hdrext/playout-delay</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:11 http://www.webrtc.org/experiments/rtp-hdrext/video-content-type</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:7 http://www.webrtc.org/experiments/rtp-hdrext/video-timing</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:8 http://www.webrtc.org/experiments/rtp-hdrext/color-space</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:4 urn:ietf:params:rtp-hdrext:sdes:mid</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:5 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=extmap:6 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=recvonly</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-mux</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-rsize</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:102 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:102 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:102 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:121 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:121 apt=102</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:127 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:127 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:127 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42001f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:120 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:120 apt=127</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:125 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:125 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:125 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:107 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:107 apt=125</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:108 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:108 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:108 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42e01f</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:109 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:109 apt=108</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:124 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:124 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:124 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=4d0015</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:119 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:119 apt=124</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:123 H264/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 goog-remb</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 transport-cc</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 ccm fir</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 nack</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtcp-fb:123 nack pli</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:123 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=640015</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:118 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:118 apt=123</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:114 red/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:115 rtx/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=fmtp:115 apt=114</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+    <span class="s1">&#39;a=rtpmap:116 ulpfec/90000</span><span class="se">\r\n</span><span class="s1">&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="wireshark">
+<h2><a class="toc-backref" href="#id19">Wireshark 抓包</a><a class="headerlink" href="#wireshark" title="Permalink to this headline">¶</a></h2>
+<p>1.首先安装wireshark软件，这个地球人都知道</p>
+<p>2.用wireshark抓取H264视频码流，最好过滤掉其他码流</p>
+<p>3.右键点击H264的udp包，选择”Decode
+as…“，再选择Transport中的rtp选项，就解析成rtp包了</p>
+<p>4.查看rtp包的payload type，比如说type是
+102，那么在wireshark工具栏选择Edit-&gt;preferences-&gt;protocols-&gt;H264, 把H264
+dynamic payload types设成 102</p>
+<ul class="simple">
+<li><p>RTP 流</p></li>
+</ul>
+<img alt="https://upload-images.jianshu.io/upload_images/1598924-a6755f3106366cf1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-a6755f3106366cf1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<ul class="simple">
+<li><p>RTP 包 <img alt="image1" src="https://upload-images.jianshu.io/upload_images/1598924-4da42c2d2bbacf10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></p></li>
+<li><p>H.264 荷载</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>SPS</p></li>
+</ol>
+<img alt="https://upload-images.jianshu.io/upload_images/1598924-42b1134893d8cb04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-42b1134893d8cb04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+<ol class="arabic simple" start="2">
+<li><p>FU-A</p></li>
+</ol>
+<img alt="https://upload-images.jianshu.io/upload_images/1598924-a9a9a57386cb5a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-a9a9a57386cb5a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="video_codec_av1.html" class="btn btn-neutral float-left" title="视频编码 AV1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_qos.html" class="btn btn-neutral float-right" title="WebRTC QoS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

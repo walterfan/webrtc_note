@@ -70,6 +70,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sharing.html">WebRTC Sharing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_qos.html">WebRTC QoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
@@ -138,6 +139,7 @@
 <li><p><a class="reference internal" href="#id3" id="id11">差错检测与恢复</a></p>
 <ul>
 <li><p><a class="reference internal" href="#id4" id="id12">抗丢包方案</a></p></li>
+<li><p><a class="reference internal" href="#audio-plc" id="id13">Audio PLC</a></p></li>
 </ul>
 </li>
 </ul>
@@ -195,6 +197,17 @@
 <li><p>交织及前身纠错技术</p></li>
 <li><p>丢包隐藏技术</p></li>
 </ol>
+</section>
+<section id="audio-plc">
+<h3><a class="toc-backref" href="#id13">Audio PLC</a><a class="headerlink" href="#audio-plc" title="Permalink to this headline">¶</a></h3>
+<p>For the most part, audio packets are decoded frame-by-frame and usually also packet-by-packet.
+If one is lost, we can try various ways to solve that. There are the most common approaches:</p>
+<ul class="simple">
+<li><p>Play nothing, causing ugly robotic/metallic tint to the audio</p></li>
+<li><p>Duplicate the previous audio frame, sometimes reducing its volume level</p></li>
+<li><p>Try to predict what the lost frame sounds like.
+Today, using machine learning, maybe with something like Google’s proprietary WaveNetEQ algorithm</p></li>
+</ul>
 </section>
 </section>
 </section>

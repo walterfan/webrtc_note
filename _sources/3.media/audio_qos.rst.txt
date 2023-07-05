@@ -72,3 +72,14 @@ Noise reduction techniques exist for audio and images. Noise reduction algorithm
 3. 滑动窗算法
 4. 交织及前身纠错技术
 5. 丢包隐藏技术
+
+
+Audio PLC
+------------------------
+For the most part, audio packets are decoded frame-by-frame and usually also packet-by-packet.
+If one is lost, we can try various ways to solve that. There are the most common approaches:
+
+* Play nothing, causing ugly robotic/metallic tint to the audio
+* Duplicate the previous audio frame, sometimes reducing its volume level
+* Try to predict what the lost frame sounds like.
+  Today, using machine learning, maybe with something like Google’s proprietary WaveNetEQ algorithm
