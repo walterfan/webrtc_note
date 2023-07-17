@@ -20,7 +20,7 @@ TURN
    :local:
 
 
-Ovewview
+Overview
 ================
 
 As described in [RFC5128] and [RFC4787], hole punching techniques will fail if both hosts are behind NATs that are not well behaved.
@@ -57,8 +57,17 @@ Terminology
 
 This address is allocated by the NAT to correspond to a specific host transport address.
 
-* Allocation: The relayed transport address granted to a client through an Allocate request, along with related state, such as permissions and expiration timers.
+* Allocation:
 
+The relayed transport address granted to a client through an Allocate request, along with related state, such as permissions and expiration timers.
+
+* Channel:
+
+A channel number and associated peer transport address. Once a channel number is bound to a peer's transport address, the client and server can use the more bandwidth-efficient ChannelData message to exchange data.
+
+* Permission:
+
+The IP address and transport protocol (but not the port) of a peer that is permitted to send traffic to the TURN server and have that traffic relayed to the TURN client. The TURN server will only forward traffic to its client from peers that match an existing permission.
 
 Basic flow
 ==================
@@ -217,7 +226,8 @@ TURN specs
 * RFC 6062 - TCP relaying TURN extension
 * RFC 6156 - IPv6 extension for TURN
 
-* `RFC 8656`_ - Traversal Using Relays around NAT (TURN): Relay Extensions to Session  Traversal Utilities for NAT (STUN)
+* `RFC 8656`_ - Traversal Using Relays around NAT (TURN):
+  Relay Extensions to Session  Traversal Utilities for NAT (STUN)
 
 * RFC 7443 - ALPN support for STUN & TURN
 * RFC 7635 - oAuth third-party TURN/STUN authorization
