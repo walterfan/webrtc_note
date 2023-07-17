@@ -13,7 +13,8 @@
    coturn
    apprtc
    aiortc
-
+   recordrtc
+   
    sfu
    janus
    janus_plugins

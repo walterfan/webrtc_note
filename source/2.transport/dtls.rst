@@ -30,11 +30,10 @@ DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥�
 
 1. A stateless cookie exchange has been added to prevent denial-of-service attacks.
 
-
 2. Modifications to the handshake header to handle message loss, reordering, and DTLS message fragmentation
    (in order to avoid IP fragmentation).
 
-3. Retransmission timers to handle message loss
+3. Retransmission timers to handle message loss 重传计时器以处理消息丢失
 
 
 具体的定义参见
@@ -44,7 +43,12 @@ DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥�
 * `RFC5246`_: The Transport Layer Security (TLS) Protocol Version 1.2
 * `RFC5077`_: TLS Session Resumption without Server-Side State
 
-Packet structure
+术语
+==========================
+
+
+
+Packet structure 包结构
 ===========================
 
 * UDP packet

@@ -135,7 +135,9 @@ Reference
 =========================
 * `AudioWorkletNode`_
 * `Enter Audio Worklet`_
+* `MDN AudioWorklet`_
 
+.. _MDN AudioWorklet: https://developer.mozilla.org/en-US/docs/Web/API/AudioWorklet
 .. _Audio Worklet Design Pattern: https://developers.google.com/web/updates/2018/06/audio-worklet-design-pattern
 .. _AudioWorkletNode: https://webaudio.github.io/web-audio-api/#AudioWorkletNode
 .. _Enter Audio Worklet: https://developers.google.com/web/updates/2017/12/audio-worklet

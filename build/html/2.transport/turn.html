@@ -48,7 +48,7 @@
 <li class="toctree-l2"><a class="reference internal" href="websocket.html">WebSocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stun.html">STUN</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">TURN</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ovewview">Ovewview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#turn-specs">TURN specs</a></li>
 </ul>
 </li>
@@ -132,13 +132,13 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-05</p></td>
+<td><p>2023-07-17</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#ovewview" id="id4">Ovewview</a></p>
+<li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p>
 <ul>
 <li><p><a class="reference internal" href="#turn-specs" id="id5">TURN specs</a></p></li>
 </ul>
@@ -155,8 +155,8 @@
 <li><p><a class="reference internal" href="#supported-relay-protocols" id="id15">Supported relay protocols</a></p></li>
 </ul>
 </div>
-<section id="ovewview">
-<h2><a class="toc-backref" href="#id4">Ovewview</a><a class="headerlink" href="#ovewview" title="Permalink to this headline">¶</a></h2>
+<section id="overview">
+<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>As described in [RFC5128] and [RFC4787], hole punching techniques will fail if both hosts are behind NATs that are not well behaved.</p>
 <p>For example, if both hosts are behind NATs that have a mapping behavior of “address-dependent mapping” or “address- and port- dependent mapping” (see Section 4.1 of [RFC4787]), then hole punching  techniques generally fail.</p>
 <p>TURN (Traversal Using Relays around NAT), that allows a host behind a NAT (called the “TURN client”) to request that another host (called the “TURN server”) act as a relay.  The client can arrange for the server to relay packets to and from certain other hosts (called “peers”), and the client can control aspects of how the relaying is done.</p>
@@ -185,8 +185,17 @@
 </ul>
 <p>This address is allocated by the NAT to correspond to a specific host transport address.</p>
 <ul class="simple">
-<li><p>Allocation: The relayed transport address granted to a client through an Allocate request, along with related state, such as permissions and expiration timers.</p></li>
+<li><p>Allocation:</p></li>
 </ul>
+<p>The relayed transport address granted to a client through an Allocate request, along with related state, such as permissions and expiration timers.</p>
+<ul class="simple">
+<li><p>Channel:</p></li>
+</ul>
+<p>A channel number and associated peer transport address. Once a channel number is bound to a peer’s transport address, the client and server can use the more bandwidth-efficient ChannelData message to exchange data.</p>
+<ul class="simple">
+<li><p>Permission:</p></li>
+</ul>
+<p>The IP address and transport protocol (but not the port) of a peer that is permitted to send traffic to the TURN server and have that traffic relayed to the TURN client. The TURN server will only forward traffic to its client from peers that match an existing permission.</p>
 </section>
 <section id="basic-flow">
 <h2><a class="toc-backref" href="#id7">Basic flow</a><a class="headerlink" href="#basic-flow" title="Permalink to this headline">¶</a></h2>
@@ -328,7 +337,8 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
 <li><p>RFC 5766 - base TURN specs</p></li>
 <li><p>RFC 6062 - TCP relaying TURN extension</p></li>
 <li><p>RFC 6156 - IPv6 extension for TURN</p></li>
-<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8656">RFC 8656</a> - Traversal Using Relays around NAT (TURN): Relay Extensions to Session  Traversal Utilities for NAT (STUN)</p></li>
+<li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8656">RFC 8656</a> - Traversal Using Relays around NAT (TURN):
+Relay Extensions to Session  Traversal Utilities for NAT (STUN)</p></li>
 <li><p>RFC 7443 - ALPN support for STUN &amp; TURN</p></li>
 <li><p>RFC 7635 - oAuth third-party TURN/STUN authorization</p></li>
 <li><p>DTLS support (<a class="reference external" href="http://tools.ietf.org/html/draft-petithuguenin-tram-turn-dtls-00">http://tools.ietf.org/html/draft-petithuguenin-tram-turn-dtls-00</a>).</p></li>

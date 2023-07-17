@@ -21,7 +21,6 @@
    webrtc_temporal_scalability
    webrtc_feedback
 
-   jitter_buffer
    insertable_stream
    web_codec
    web_transport

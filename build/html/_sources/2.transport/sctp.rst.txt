@@ -44,6 +44,95 @@ SCTP 的设计包括适当的拥塞避免行为以及对洪水和伪装攻击的
 
 
 
+SCTP packets consist of a common header and one or more chunks, each of which serves a specific purpose.
+
+#. DATA chunk — carries user data
+#. INIT chunk — initiates an association between SCTP endpoints
+#. INIT ACK chunk — acknowledges association establishment
+#. SACK chunk — acknowledges received DATA chunks and informs the peer endpoint of gaps in the received subsequences of DATA chunks
+#. HEARTBEAT chunk — tests the reachability of an SCTP endpoint
+#. HEARTBEAT ACK chunk — acknowledges reception of a HEARTBEAT chunk
+#. ABORT chunk — forces an immediate close of an association
+#. SHUTDOWN chunk — initiates a graceful close of an association
+#. SHUTDOWN ACK chunk — acknowledges reception of a SHUTDOWN chunk
+#. ERROR chunk — reports various error conditions
+#. COOKIE ECHO chunk — used during the association establishment process
+#. COOKIE ACK chunk — acknowledges reception of a COOKIE ECHO chunk
+#. SHUTDOWN COMPLETE chunk — completes a graceful association close
+
+
+术语
+=========
+
+* Active destination transport address: A transport address on a peer endpoint that a transmitting endpoint considers available for receiving user messages
+* Bundling: An optional multiplexing operation, whereby more than one user message may be carried in the same SCTP packet. Each user message occupies its own DATA chunk.
+* Chunk: A unit of information within an SCTP packet, consisting of a chunk header and chunk-specific content.
+* Congestion window (cwnd): An SCTP variable that limits the data, in number of bytes, a sender can send to a particular destination transport address before receiving an acknowledgement
+
+
+* Cumulative TSN Ack Point: The TSN of the last DATA chunk acknowledged via the Cumulative TSN Ack field of a SACK.
+* Idle destination address: An address that has not had user messages sent to it within some length of time, normally the HEARTBEAT interval or greater.
+* Inactive destination transport address: An address that is considered inactive due to errors and unavailable to transport user messages.
+
+* Path: The route taken by the SCTP packets sent by one SCTP endpoint to a specific destination transport address of its peer SCTP endpoint. Sending to different destination transport addresses does not necessarily guarantee getting separate paths.
+* Primary Path: The primary path is the destination and source address that will be put into a packet outbound to the peer endpoint by default. The definition includes the source address since an implementation MAY wish to specify both destination and source address to better control the return path taken by reply chunks and on which interface the packet is transmitted when the data sender is multi-homed.
+* Receiver Window (rwnd): An SCTP variable a data sender uses to store the most recently calculated receiver window of its peer, in number of bytes. This gives the sender an indication of the space available in the receiver's inbound buffer.
+
+* SCTP association: A protocol relationship between SCTP endpoints, composed of the two SCTP endpoints and protocol state information including Verification Tags and the currently active set of Transmission Sequence Numbers (TSNs), etc. An association can be uniquely identified by the transport addresses used by the endpoints in the association. Two SCTP endpoints MUST NOT have more than one SCTP association between them at any given time.
+* SCTP endpoint: The logical sender/receiver of SCTP packets. On a multi-homed host, an SCTP endpoint is represented to its peers as a combination of a set of eligible destination transport addresses to which SCTP packets can be sent and a set of eligible source transport addresses from which SCTP packets can be received. All transport addresses used by an SCTP endpoint must use the same port number, but can use multiple IP addresses. A transport address used by an SCTP endpoint must not be used by another SCTP endpoint. In other words, a transport address is unique to an SCTP endpoint.
+* SCTP packet (or packet): The unit of data delivery across the interface between SCTP and the connectionless packet network (e.g., IP). An SCTP packet includes the common SCTP header, possible SCTP control chunks, and user data encapsulated within SCTP DATA chunks.
+* SCTP user application (SCTP user): The logical higher-layer application entity which uses the services of SCTP, also called the Upper-Layer Protocol (ULP). 
+
+* Slow-Start Threshold (ssthresh): An SCTP variable. This is the threshold that the endpoint will use to determine whether to perform slow start or congestion avoidance on a particular destination transport address. Ssthresh is in number of bytes.
+* Stream: A unidirectional logical channel established from one to another associated SCTP endpoint, within which all user messages are delivered in sequence except for those submitted to the unordered delivery service. Note: The relationship between stream numbers in opposite directions is strictly a matter of how the applications use them. It is the responsibility of the SCTP user to create and manage these correlations if they are so desired.
+* Stream Sequence Number: A 16-bit sequence number used internally by SCTP to ensure sequenced delivery of the user messages within a given stream. One Stream Sequence Number is attached to each user message.
+* Tie-Tags: Two 32-bit random numbers that together make a 64-bit nonce. These tags are used within a State Cookie and TCB so that a newly restarting association can be linked to the original association within the endpoint that did not restart and yet not reveal the true Verification Tags of an existing association. and is not an old or stale packet from a previous association.
+
+* Transmission Control Block (TCB): An internal data structure created by an SCTP endpoint for each of its existing SCTP associations to other SCTP endpoints. TCB contains all the status and operational information for the endpoint to maintain and manage the corresponding association.
+* Transmission Sequence Number (TSN): A 32-bit sequence number used internally by SCTP. One TSN is attached to each chunk containing user data to permit the receiving SCTP endpoint to acknowledge its receipt and detect duplicate deliveries.
+* Transport address: A transport address is traditionally defined by a network-layer address, a transport-layer protocol, and a transport-layer port number. In the case of SCTP running over IP, a transport address is defined by the combination of an IP address and an SCTP port number (where SCTP is the transport protocol).
+
+* Unacknowledged TSN (at an SCTP endpoint): A TSN (and the associated DATA chunk) that has been received by the endpoint but for which an acknowledgement has not yet been sent. Or in the opposite case, for a packet that has been sent but no acknowledgement has been received. Stewart Standards Track [Page 9] RFC 4960 Stream Control Transmission Protocol September 2007
+* Unordered Message: Unordered messages are "unordered" with respect to any other message; this includes both other unordered messages as well as other ordered messages. An unordered message might be delivered prior to or later than ordered messages sent on the same stream.
+* User message: The unit of data delivery across the interface between SCTP and its user.
+* Verification Tag: A 32-bit unsigned integer that is randomly generated. The Verification Tag provides a key that allows a receiver to verify that the SCTP packet belongs to the current association
+
+
+
+SCTP Association
+----------------------
+SCTP 关联是指 SCTP 端点之间的连接
+
+An SCTP association is uniquely identified by the transport addresses used by the endpoints in the association.
+
+An SCTP association can be represented as a pair of SCTP endpoints, for example, assoc = { [IPv4Addr : PORT1], [IPv4Addr1, IPv4Addr2: PORT2]}.
+
+Only one association can be established between any two SCTP endpoints.
+
+SCTP Endpoint
+-----------------------
+is a sender or receiver of SCTP packets. An SCTP endpoint may have one or more IP address but it always has one and only one SCTP port number. An SCTP endpoint can be represented as a list of SCTP transport addresses with the same port, for example, endpoint = [IPv6Addr, IPv6Addr: PORT].
+
+An SCTP endpoint may have multiple associations.
+
+SCTP Path
+-----------------------
+is the route taken by the SCTP packets sent by one SCTP endpoint to a specific destination transport address or its peer SCTP endpoint. Sending to different destination transport addresses does not necessarily guarantee separate routes.
+
+SCTP Primary Path
+-----------------------
+is the default destination source address, the IPv4 or IPv6 address of the association initiator. For retransmissions however, another active path may be selected, if one is available.
+
+SCTP Stream
+-----------------------
+is a unidirectional logical channel established between two associated SCTP endpoints. SCTP distinguishes different streams of messages within one SCTP association. SCTP makes no correlation between an inbound and outbound stream.
+
+SCTP Transport Address
+-----------------------
+is the combination of an SCTP port and an IP address. For the current release, the IP address portion of an SCTP Transport Address must be a routable, unicast IPv4 or IPv6 address.
+
+An SCTP transport address binds to a single SCTP endpoint.
+
 基于消息的多流协议
 ===============================
 
@@ -51,6 +140,21 @@ SCTP applications submit data for transmission in messages (groups of bytes) to 
 
 The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).
 
+
+SCTP Flow
+----------------------------------------
+
+.. code-block::
+
+       participant Client as c
+       participant Server as s
+
+       autonumber
+
+       c->s: INIT
+       s-->c: INIT ACK
+       c->s: COOKIE ECHO
+       s-->c: COOKIE ACK
 
 
 SCTP packet format

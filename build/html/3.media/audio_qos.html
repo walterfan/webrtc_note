@@ -52,6 +52,7 @@
 <li class="toctree-l3"><a class="reference internal" href="audio_level.html">Audio Level</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_api.html">Web Audio API</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Audio QoS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#a">3A</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">差错检测与恢复</a></li>
 </ul>
@@ -60,10 +61,11 @@
 <li class="toctree-l3"><a class="reference internal" href="audio_vad.html">Voice Activity Detector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_agc.html">Automatic Gain Control</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_ans.html">Automatic Noise Suppression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_worklet.html">Audio worklet</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_quality.html">Audio Quality</a></li>
 <li class="toctree-l3"><a class="reference internal" href="audio_analysis.html">Audio Analysis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="opus.html">Opus Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="audio_opus.html">Opus Codec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_audio.html#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_audio.html#plc">PLC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webrtc_audio.html#reference">Reference</a></li>
@@ -78,7 +80,6 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_red.html">WebRTC RED</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_feedback.html">WebRTC Feedback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
@@ -124,35 +125,73 @@
 <h1>Audio QoS<a class="headerlink" href="#audio-qos" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#a" id="id5">3A</a></p>
+<li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
+<li><p><a class="reference internal" href="#a" id="id6">3A</a></p>
 <ul>
-<li><p><a class="reference internal" href="#agc" id="id6">AGC</a></p></li>
-<li><p><a class="reference internal" href="#aec" id="id7">AEC</a></p>
+<li><p><a class="reference internal" href="#agc" id="id7">AGC</a></p></li>
+<li><p><a class="reference internal" href="#aec" id="id8">AEC</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id1" id="id8">线路回声抵消</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id9">声学回声抵消</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id9">线路回声抵消</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">声学回声抵消</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#ans" id="id10">ANS</a></p></li>
+<li><p><a class="reference internal" href="#ans" id="id11">ANS</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id3" id="id11">差错检测与恢复</a></p>
+<li><p><a class="reference internal" href="#id3" id="id12">差错检测与恢复</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id4" id="id12">抗丢包方案</a></p></li>
-<li><p><a class="reference internal" href="#audio-plc" id="id13">Audio PLC</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id13">抗丢包方案</a></p></li>
+<li><p><a class="reference internal" href="#audio-plc" id="id14">Audio PLC</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id5">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Audio Quality of Service (QoS) refers to the techniques and mechanisms used to ensure that audio data is transmitted and delivered with consistent and reliable quality, especially in real-time communication applications. Here are some steps to implement Audio QoS:</p>
+<ol class="arabic">
+<li><p>Identify QoS requirements: Determine the specific quality parameters that are important for your audio application.</p>
+<p>This could include metrics such as latency, packet loss, jitter, and audio quality.</p>
+</li>
+<li><p>Prioritize audio traffic: Assign a higher priority to audio packets over other types of network traffic.</p>
+<p>This can be done by setting the appropriate Differentiated Services Code Point (DSCP) or Quality of Service (QoS) markings in the IP headers of the audio packets.</p>
+</li>
+<li><p>Traffic shaping and bandwidth allocation: Implement traffic shaping techniques to manage the flow of audio packets.</p>
+<p>This involves controlling the rate at which packets are transmitted to match the available bandwidth and minimize congestion. Allocate sufficient bandwidth to prioritize audio traffic and ensure a smooth and consistent audio stream.</p>
+</li>
+<li><p>Buffer management: Use a buffer to compensate for network delays and fluctuations.</p>
+<p>The buffer size should be carefully optimized to balance latency and jitter. A larger buffer can absorb variations in packet arrival times but introduces additional latency. Monitor the buffer occupancy and adjust its size dynamically based on network conditions.</p>
+</li>
+<li><p>Error resilience mechanisms:</p>
+<p>Implement error resilience techniques to handle packet loss or corruption. This can include forward error correction (FEC), where redundant data is added to the audio packets to enable recovery from lost or damaged packets. Retransmission mechanisms can also be employed to request retransmission of lost packets.</p>
+</li>
+<li><p>Congestion control:</p>
+<p>Use congestion control mechanisms to prevent network congestion and ensure the smooth transmission of audio packets. This can involve techniques such as congestion window management, packet pacing, or adaptive bitrate control.</p>
+</li>
+<li><p>Network monitoring and measurement:</p>
+<p>Continuously monitor the network conditions and measure key QoS parameters such as latency, packet loss, and jitter. Use this information to adapt the QoS mechanisms and optimize the audio transmission.</p>
+</li>
+<li><p>Quality assessment and feedback:</p>
+<p>Implement mechanisms to assess the perceived audio quality at the receiver’s end. This can involve techniques such as calculating the Mean Opinion Score (MOS) or using objective quality metrics like the Perceptual Evaluation of Speech Quality (PESQ). Use the quality assessment results to provide feedback and make further improvements to the QoS mechanisms.</p>
+</li>
+<li><p>Test and optimize:</p>
+<p>Thoroughly test your Audio QoS implementation under various network conditions to ensure its effectiveness and reliability. Measure and fine-tune parameters such as buffer size, traffic shaping algorithms, and error resilience mechanisms.</p>
+</li>
+<li><p>Interoperability and standards compliance:</p></li>
+</ol>
+<blockquote>
+<div><p>Ensure that your implementation complies with relevant audio and network standards to ensure compatibility and interoperability with other systems and devices.</p>
+</div></blockquote>
+</section>
 <section id="a">
-<h2><a class="toc-backref" href="#id5">3A</a><a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">3A</a><a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h2>
 <section id="agc">
-<h3><a class="toc-backref" href="#id6">AGC</a><a class="headerlink" href="#agc" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">AGC</a><a class="headerlink" href="#agc" title="Permalink to this headline">¶</a></h3>
 <p>语音增强是为了解决噪声污染干扰的一种预处理手段。
 理论基础是语音特性，噪声特性以及人耳的感知特性。</p>
 </section>
 <section id="aec">
-<h3><a class="toc-backref" href="#id7">AEC</a><a class="headerlink" href="#aec" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">AEC</a><a class="headerlink" href="#aec" title="Permalink to this headline">¶</a></h3>
 <p>回声抵消</p>
 <p>回声有</p>
 <ul class="simple">
@@ -160,10 +199,10 @@
 <li><p>声学回声: 延时长，噪声干扰严重，语音信号动态范围大</p></li>
 </ul>
 <section id="id1">
-<h4><a class="toc-backref" href="#id8">线路回声抵消</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id9">线路回声抵消</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 </section>
 <section id="id2">
-<h4><a class="toc-backref" href="#id9">声学回声抵消</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id10">声学回声抵消</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>方法有</p>
 <ol class="arabic simple">
 <li><p>麦克风阵列</p></li>
@@ -173,14 +212,14 @@
 </section>
 </section>
 <section id="ans">
-<h3><a class="toc-backref" href="#id10">ANS</a><a class="headerlink" href="#ans" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">ANS</a><a class="headerlink" href="#ans" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Noise_reduction">Noise reduction</a> is the process of removing noise from a signal.</p>
 <p>Audio noise reduction is for audio noise.</p>
 <p>Noise reduction techniques exist for audio and images. Noise reduction algorithms may distort the signal to some degree.</p>
 </section>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id11">差错检测与恢复</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">差错检测与恢复</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>纠错码
 * 线性分组码
 * 卷积码
@@ -189,7 +228,7 @@
 * RCPC 码
 * LDPC 码</p>
 <section id="id4">
-<h3><a class="toc-backref" href="#id12">抗丢包方案</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">抗丢包方案</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>语音算法本身的丢包健壮性</p></li>
 <li><p>多描述语音编码 MDSC(Multiple Description Speech Coding)</p></li>
@@ -199,7 +238,7 @@
 </ol>
 </section>
 <section id="audio-plc">
-<h3><a class="toc-backref" href="#id13">Audio PLC</a><a class="headerlink" href="#audio-plc" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Audio PLC</a><a class="headerlink" href="#audio-plc" title="Permalink to this headline">¶</a></h3>
 <p>For the most part, audio packets are decoded frame-by-frame and usually also packet-by-packet.
 If one is lost, we can try various ways to solve that. There are the most common approaches:</p>
 <ul class="simple">

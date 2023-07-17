@@ -22,6 +22,9 @@ WebAssembly
 Overview
 ========================
 
+WebAssembly (abbreviated Wasm) is a binary instruction format for a stack-based virtual machine.
+
+Wasm is designed as a portable compilation target for programming languages, enabling deployment on the web for client and server application
 
 WebAssembly 的基本想法就是让浏览器加载由其他语言编译而成的二进制模块,并高效地解释和执行, 从而提高性能。
 
@@ -40,7 +43,11 @@ wasm 描述一个内存安全的沙箱执行环境，可在 JavaScript 虚拟机
 
 所有变量存储的数据类型都是在程序运行之前就已经确定，并在后续运行过程中无法更改。
 
-
+Why
+----------
+* Fast : We can trun other code to binary format and execute at native speed
+* Easy:  Its much easy if we already have c or cpp source codes
+* Safe:  References in Memory cannot be read or write directly
 
 核心原理
 ==================
@@ -108,8 +115,25 @@ Emscripten is a complete compiler toolchain to WebAssembly, using LLVM, with a s
    }
 
 
-SIMD
-==================
+
+
+
+3rd party /open source components
+=========================================
+* TensorFlow.js is a library for machine learning in JavaScript.
+
+* BodyPix, an open-source machine learning model which allows for person and body-part segmentation in the browser with TensorFlow.js.
+
+Useful links
+----------------------------
+* https://www.tensorflow.org/js
+* https://blog.tensorflow.org/2019/11/updated-bodypix-2.html
+* https://github.com/tensorflow/tfjs-models/tree/master/body-pix
+* https://blog.tensorflow.org/2020/03/introducing-webassembly-backend-for-tensorflow-js.html
+* https://github.com/google/XNNPACK
+* https://github.com/WXSD-Sales/BlurBackground
+
+
 
 Reference
 ==================

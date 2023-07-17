@@ -46,7 +46,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC 媒体概论</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#media-stream-and-track">Media Stream and track</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rtp-extension">RTP Extension</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#protocols">Protocols</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
@@ -59,7 +63,6 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_red.html">WebRTC RED</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_temporal_scalability.html">Temporal scalability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_feedback.html">WebRTC Feedback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="jitter_buffer.html">Jitter Buffer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="insertable_stream.html">Insertable Stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_codec.html">Web Codecs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="web_transport.html">Web Transport</a></li>
@@ -104,15 +107,148 @@
 <h1>WebRTC 媒体概论<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#media-stream-and-track" id="id1">Media Stream and track</a></p></li>
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rtp-extension" id="id2">RTP Extension</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#protocols" id="id3">Protocols</a></p></li>
 </ul>
 </div>
-<section id="media-stream-and-track">
-<h2><a class="toc-backref" href="#id1">Media Stream and track</a><a class="headerlink" href="#media-stream-and-track" title="Permalink to this headline">¶</a></h2>
+<section id="overview">
+<h2><a class="toc-backref" href="#id1">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Audio</p></li>
-<li><p>Video</p></li>
-<li><p>Sharing</p></li>
+<li><p>Audio Encode/decode(Opus, g.711), mixing, ASA, ASN, 3A(AGC, AEC, ANS), BNR, ASR, TTS. etc.</p></li>
+<li><p>Video Encode/decode(H264, AV1), compose/annotation, watermarking, virtual background, video stream pub-sub</p></li>
+<li><p>Sharing : slide audio, high frame</p></li>
+<li><p>Adaptive Jitter buffer</p></li>
+<li><p>Smooth sending(Pacer)</p></li>
+<li><p>Recording</p></li>
+<li><p>Device manage: audio device(mic, speaker), video device(camera, monitor)</p></li>
+<li><p>Web Assembly, WebCodecs, Insertable stream support</p></li>
+</ul>
+<section id="rtp-extension">
+<h3><a class="toc-backref" href="#id2">RTP Extension</a><a class="headerlink" href="#rtp-extension" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>abs-send-time</p></li>
+<li><p>abs-capture-time</p></li>
+<li><p>mid</p></li>
+<li><p>rid</p></li>
+<li><p>rrid</p></li>
+<li><p>transport-wide-cc-01</p></li>
+<li><p>transport-wide-cc-02</p></li>
+<li><p>color-space</p></li>
+<li><p>playout-delay</p></li>
+<li><p>video-content-type</p></li>
+<li><p>video-timing</p></li>
+<li><p>inband-cn</p></li>
+<li><p>video-layers-allocation00</p></li>
+<li><p>RTCP Extensions</p></li>
+<li><p>NACK, PLI, FIR</p></li>
+<li><p>REMB</p></li>
+<li><p>Transport CC</p></li>
+<li><p>FEC: ULP/FLEX FEC</p></li>
+<li><p>RTX</p></li>
+</ul>
+<p>refer to RTPExtensionType, RTCPPacketType, KeyFrameReqMethod and RtxMode</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">RTPExtensionType</span> <span class="p">:</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="n">kRtpExtensionNone</span><span class="p">,</span>
+    <span class="n">kRtpExtensionTransmissionTimeOffset</span><span class="p">,</span>
+    <span class="n">kRtpExtensionAudioLevel</span><span class="p">,</span>
+    <span class="n">kRtpExtensionCsrcAudioLevel</span><span class="p">,</span>
+    <span class="n">kRtpExtensionInbandComfortNoise</span><span class="p">,</span>
+    <span class="n">kRtpExtensionAbsoluteSendTime</span><span class="p">,</span>
+    <span class="n">kRtpExtensionAbsoluteCaptureTime</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoRotation</span><span class="p">,</span>
+    <span class="n">kRtpExtensionTransportSequenceNumber</span><span class="p">,</span>
+    <span class="n">kRtpExtensionTransportSequenceNumber02</span><span class="p">,</span>
+    <span class="n">kRtpExtensionPlayoutDelay</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoContentType</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoLayersAllocation</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoTiming</span><span class="p">,</span>
+    <span class="n">kRtpExtensionRtpStreamId</span><span class="p">,</span>
+    <span class="n">kRtpExtensionRepairedRtpStreamId</span><span class="p">,</span>
+    <span class="n">kRtpExtensionMid</span><span class="p">,</span>
+    <span class="n">kRtpExtensionGenericFrameDescriptor00</span><span class="p">,</span>
+    <span class="n">kRtpExtensionGenericFrameDescriptor</span> <span class="o">=</span> <span class="n">kRtpExtensionGenericFrameDescriptor00</span><span class="p">,</span>
+    <span class="n">kRtpExtensionGenericFrameDescriptor02</span><span class="p">,</span>
+    <span class="n">kRtpExtensionColorSpace</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoFrameTrackingId</span><span class="p">,</span>
+    <span class="n">kRtpExtensionNumberOfExtensions</span>  <span class="o">//</span> <span class="n">Must</span> <span class="n">be</span> <span class="n">the</span> <span class="n">last</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">enum</span><span class="o">.</span>
+<span class="p">};</span>
+
+<span class="n">enum</span> <span class="n">RTCPPacketType</span> <span class="p">:</span> <span class="n">uint32_t</span> <span class="p">{</span>
+    <span class="n">kRtcpReport</span> <span class="o">=</span> <span class="mh">0x0001</span><span class="p">,</span>
+    <span class="n">kRtcpSr</span> <span class="o">=</span> <span class="mh">0x0002</span><span class="p">,</span>
+    <span class="n">kRtcpRr</span> <span class="o">=</span> <span class="mh">0x0004</span><span class="p">,</span>
+    <span class="n">kRtcpSdes</span> <span class="o">=</span> <span class="mh">0x0008</span><span class="p">,</span>
+    <span class="n">kRtcpBye</span> <span class="o">=</span> <span class="mh">0x0010</span><span class="p">,</span>
+    <span class="n">kRtcpPli</span> <span class="o">=</span> <span class="mh">0x0020</span><span class="p">,</span>
+    <span class="n">kRtcpNack</span> <span class="o">=</span> <span class="mh">0x0040</span><span class="p">,</span>
+    <span class="n">kRtcpFir</span> <span class="o">=</span> <span class="mh">0x0080</span><span class="p">,</span>
+    <span class="n">kRtcpTmmbr</span> <span class="o">=</span> <span class="mh">0x0100</span><span class="p">,</span>
+    <span class="n">kRtcpTmmbn</span> <span class="o">=</span> <span class="mh">0x0200</span><span class="p">,</span>
+    <span class="n">kRtcpSrReq</span> <span class="o">=</span> <span class="mh">0x0400</span><span class="p">,</span>
+    <span class="n">kRtcpLossNotification</span> <span class="o">=</span> <span class="mh">0x2000</span><span class="p">,</span>
+    <span class="n">kRtcpRemb</span> <span class="o">=</span> <span class="mh">0x10000</span><span class="p">,</span>
+    <span class="n">kRtcpTransmissionTimeOffset</span> <span class="o">=</span> <span class="mh">0x20000</span><span class="p">,</span>
+    <span class="n">kRtcpXrReceiverReferenceTime</span> <span class="o">=</span> <span class="mh">0x40000</span><span class="p">,</span>
+    <span class="n">kRtcpXrDlrrReportBlock</span> <span class="o">=</span> <span class="mh">0x80000</span><span class="p">,</span>
+    <span class="n">kRtcpTransportFeedback</span> <span class="o">=</span> <span class="mh">0x100000</span><span class="p">,</span>
+    <span class="n">kRtcpXrTargetBitrate</span> <span class="o">=</span> <span class="mh">0x200000</span>
+<span class="p">};</span>
+
+<span class="n">enum</span> <span class="k">class</span> <span class="nc">KeyFrameReqMethod</span> <span class="p">:</span> <span class="n">uint8_t</span> <span class="p">{</span>
+    <span class="n">kNone</span><span class="p">,</span>     <span class="o">//</span> <span class="n">Don</span><span class="s1">&#39;t request keyframes.</span>
+    <span class="n">kPliRtcp</span><span class="p">,</span>  <span class="o">//</span> <span class="n">Request</span> <span class="n">keyframes</span> <span class="n">through</span> <span class="n">Picture</span> <span class="n">Loss</span> <span class="n">Indication</span><span class="o">.</span>
+    <span class="n">kFirRtcp</span>   <span class="o">//</span> <span class="n">Request</span> <span class="n">keyframes</span> <span class="n">through</span> <span class="n">Full</span> <span class="n">Intra</span><span class="o">-</span><span class="n">frame</span> <span class="n">Request</span><span class="o">.</span>
+<span class="p">};</span>
+
+<span class="n">enum</span> <span class="n">RtxMode</span> <span class="p">{</span>
+    <span class="n">kRtxOff</span> <span class="o">=</span> <span class="mh">0x0</span><span class="p">,</span>
+    <span class="n">kRtxRetransmitted</span> <span class="o">=</span> <span class="mh">0x1</span><span class="p">,</span>     <span class="o">//</span> <span class="n">Only</span> <span class="n">send</span> <span class="n">retransmissions</span> <span class="n">over</span> <span class="n">RTX</span><span class="o">.</span>
+    <span class="n">kRtxRedundantPayloads</span> <span class="o">=</span> <span class="mh">0x2</span>  <span class="o">//</span> <span class="n">Preventively</span> <span class="n">send</span> <span class="n">redundant</span> <span class="n">payloads</span>
+                                <span class="o">//</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">padding</span><span class="o">.</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>refer to <a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h</a></p></li>
+</ul>
+</section>
+</section>
+<section id="protocols">
+<h2><a class="toc-backref" href="#id3">Protocols</a><a class="headerlink" href="#protocols" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>[RFC3264] Rosenberg, J. and H. Schulzrinne, “An Offer/Answer Model with Session Description Protocol (SDP)”, RFC 3264, DOI 10.17487/RFC3264, June 2002, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc3264">https://www.rfc-editor.org/info/rfc3264</a>&gt;.</p></li>
+<li><p>[RFC3550] Schulzrinne, H., Casner, S., Frederick, R., and V. Jacobson, “RTP: A Transport Protocol for Real-Time Applications”, STD 64, RFC 3550, DOI 10.17487/RFC3550, July 2003, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc3550">https://www.rfc-editor.org/info/rfc3550</a>&gt;.</p></li>
+<li><p>[RFC3711] Baugher, M., McGrew, D., Naslund, M., Carrara, E., and K. Norrman, “The Secure Real-time Transport Protocol (SRTP)”, RFC 3711, DOI 10.17487/RFC3711, March 2004, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc3711">https://www.rfc-editor.org/info/rfc3711</a>&gt;.</p></li>
+<li><p>[RFC7742] Roach, A.B., “WebRTC Video Processing and Codec Requirements”, RFC 7742, DOI 10.17487/RFC7742, March 2016, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc7742">https://www.rfc-editor.org/info/rfc7742</a>&gt;.</p></li>
+<li><p>[RFC7874] Valin, JM. and C. Bran, “WebRTC Audio Codec and Processing Requirements”, RFC 7874, DOI 10.17487/RFC7874, May 2016, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc7874">https://www.rfc-editor.org/info/rfc7874</a>&gt;.</p></li>
+<li><p>[RFC8174] Leiba, B., “Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words”, BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;.</p></li>
+<li><p>[RFC8445] Keranen, A., Holmberg, C., and J. Rosenberg, “Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal”, RFC 8445, DOI 10.17487/RFC8445, July 2018, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8445">https://www.rfc-editor.org/info/rfc8445</a>&gt;.</p></li>
+<li><p>[RFC8826] Rescorla, E., “Security Considerations for WebRTC”, RFC 8826, DOI 10.17487/RFC8826, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8826">https://www.rfc-editor.org/info/rfc8826</a>&gt;.</p></li>
+<li><p>[RFC8827] Rescorla, E., “WebRTC Security Architecture”, RFC 8827, DOI 10.17487/RFC8827, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8827">https://www.rfc-editor.org/info/rfc8827</a>&gt;.</p></li>
+<li><p>[RFC8829] Uberti, J., Jennings, C., and E. Rescorla, Ed., “JavaScript Session Establishment Protocol (JSEP)”, RFC 8829, DOI 10.17487/RFC8829, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8829">https://www.rfc-editor.org/info/rfc8829</a>&gt;.</p></li>
+<li><p>[RFC8831] Jesup, R., Loreto, S., and M. Tüxen, “WebRTC Data Channels”, RFC 8831, DOI 10.17487/RFC8831, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8831">https://www.rfc-editor.org/info/rfc8831</a>&gt;.</p></li>
+<li><p>[RFC8832] Jesup, R., Loreto, S., and M. Tüxen, “WebRTC Data Channel Establishment Protocol”, RFC 8832, DOI 10.17487/RFC8832, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8832">https://www.rfc-editor.org/info/rfc8832</a>&gt;.</p></li>
+<li><p>[RFC8834] Perkins, C., Westerlund, M., and J. Ott, “Media Transport and Use of RTP in WebRTC”, RFC 8834, DOI 10.17487/RFC8834, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8834">https://www.rfc-editor.org/info/rfc8834</a>&gt;.</p></li>
+<li><p>[RFC8835] Alvestrand, H., “Transports for WebRTC”, RFC 8835, DOI 10.17487/RFC8835, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8835">https://www.rfc-editor.org/info/rfc8835</a>&gt;.</p></li>
+<li><p>[W3C.WD-mediacapture-streams] Jennings, C., Aboba, B., Bruaroey, J-I., and H. Boström, “Media Capture and Streams”, W3C Candidate Recommendation, &lt;<a class="reference external" href="https://www.w3.org/TR/mediacapture-streams/">https://www.w3.org/TR/mediacapture-streams/</a>&gt;.</p></li>
+<li><p>[W3C.WD-webrtc] Jennings, C., Boström, H., and J-I. Bruaroey, “WebRTC 1.0: Real-time Communication Between Browsers”, W3C Proposed Recommendation, &lt;<a class="reference external" href="https://www.w3.org/TR/webrtc/">https://www.w3.org/TR/webrtc/</a>&gt;. 12.2. Informative References</p></li>
+<li><p>[HTML5] WHATWG, “HTML - Living Standard”, January 2021, &lt;<a class="reference external" href="https://html.spec.whatwg.org/">https://html.spec.whatwg.org/</a>&gt;.</p></li>
+<li><p>[RFC3261] Rosenberg, J., Schulzrinne, H., Camarillo, G., Johnston, A., Peterson, J., Sparks, R., Handley, M., and E. Schooler, “SIP: Session Initiation Protocol”, RFC 3261, DOI 10.17487/RFC3261, June 2002, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc3261">https://www.rfc-editor.org/info/rfc3261</a>&gt;.</p></li>
+<li><p>[RFC3361] Schulzrinne, H., “Dynamic Host Configuration Protocol (DHCP-for-IPv4) Option for Session Initiation Protocol (SIP) Servers”, RFC 3361, DOI 10.17487/RFC3361, August 2002, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc3361">https://www.rfc-editor.org/info/rfc3361</a>&gt;.</p></li>
+<li><p>[RFC3935] Alvestrand, H., “A Mission Statement for the IETF”, BCP 95, RFC 3935, DOI 10.17487/RFC3935, October 2004, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc3935">https://www.rfc-editor.org/info/rfc3935</a>&gt;.</p></li>
+<li><p>[RFC5245] Rosenberg, J., “Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols”, RFC 5245, DOI 10.17487/RFC5245, April 2010, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc5245">https://www.rfc-editor.org/info/rfc5245</a>&gt;.</p></li>
+<li><p>[RFC5761] Perkins, C. and M. Westerlund, “Multiplexing RTP Data and Control Packets on a Single Port”, RFC 5761, DOI 10.17487/RFC5761, April 2010, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc5761">https://www.rfc-editor.org/info/rfc5761</a>&gt;.</p></li>
+<li><p>[RFC6120] Saint-Andre, P., “Extensible Messaging and Presence Protocol (XMPP): Core”, RFC 6120, DOI 10.17487/RFC6120, March 2011, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc6120">https://www.rfc-editor.org/info/rfc6120</a>&gt;.</p></li>
+<li><p>[RFC6501] Novo, O., Camarillo, G., Morgan, D., and J. Urpalainen, “Conference Information Data Model for Centralized Conferencing (XCON)”, RFC 6501, DOI 10.17487/RFC6501, March 2012, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc6501">https://www.rfc-editor.org/info/rfc6501</a>&gt;.</p></li>
+<li><p>[RFC7478] Holmberg, C., Hakansson, S., and G. Eriksson, “Web Real- Time Communication Use Cases and Requirements”, RFC 7478, DOI 10.17487/RFC7478, March 2015, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc7478">https://www.rfc-editor.org/info/rfc7478</a>&gt;.</p></li>
+<li><p>[RFC8155] Patil, P., Reddy, T., and D. Wing, “Traversal Using Relays around NAT (TURN) Server Auto Discovery”, RFC 8155, DOI 10.17487/RFC8155, April 2017, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8155">https://www.rfc-editor.org/info/rfc8155</a>&gt;. [RFC8837] Jones, P., Dhesikan, S., Jennings, C., and D. Druta, “Differentiated Services Code Point (DSCP) Packet Markings for WebRTC QoS”, RFC 8837, DOI 10.17487/RFC8837, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8837">https://www.rfc-editor.org/info/rfc8837</a>&gt;.</p></li>
+<li><p>[RFC8838] Ivov, E., Uberti, J., and P. Saint-Andre, “Trickle ICE: Incremental Provisioning of Candidates for the Interactive Connectivity Establishment (ICE) Protocol”, RFC 8838, DOI 10.17487/RFC8838, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8838">https://www.rfc-editor.org/info/rfc8838</a>&gt;.</p></li>
+<li><p>[RFC8843] Holmberg, C., Alvestrand, H., and C. Jennings, “Negotiating Media Multiplexing Using the Session Description Protocol (SDP)”, RFC 8843, DOI 10.17487/RFC8843, January 2021, &lt;<a class="reference external" href="https://www.rfc-editor.org/info/rfc8843">https://www.rfc-editor.org/info/rfc8843</a>&gt;.</p></li>
+<li><p>[WebRTC-Gateways] Alvestrand, H. and U. Rauschenbach, “WebRTC Gateways”, Work in Progress, Internet-Draft, draft-ietf-rtcweb- gateways-02, 21 January 2016, &lt;<a class="reference external" href="https://tools.ietf.org/html/draft-ietf-rtcweb-gateways">https://tools.ietf.org/html/draft-ietf-rtcweb-gateways</a>- 02&gt;.</p></li>
 </ul>
 </section>
 </section>

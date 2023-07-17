@@ -77,7 +77,13 @@ SCTP 相关的协议和扩展很多, 最主要的有两个
 ================
 * DcSctpTransport
 * DcSctpSocketInterface
-  - DcSctpSocket
+  - DcSctpSocket (`dcsctp_socket.cc`_)
+
+.. _dcsctp_socket.cc: https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/net/dcsctp/socket/dcsctp_socket.cc
+
+
+https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/net/dcsctp/socket/
+
 
 
 可以从 WebRTC 源码中单独编译出 libdcsctp, 方法是在 BUILD.gn 中添加如下这段

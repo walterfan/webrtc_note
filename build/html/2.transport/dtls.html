@@ -54,16 +54,17 @@
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">DTLS 协议</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#packet-structure">Packet structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">基本流程</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">握手</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">丢包的处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#packet-structure">Packet structure 包结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">基本流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">握手</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">丢包的处理</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine">DTLS Timeout and Retransmission State Machine</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id6">最后一组消息丢失问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">最后一组消息丢失问题</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
@@ -132,32 +133,33 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-05</p></td>
+<td><p>2023-07-17</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id7">Overview</a></p></li>
-<li><p><a class="reference internal" href="#packet-structure" id="id8">Packet structure</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id9">基本流程</a></p>
+<li><p><a class="reference internal" href="#overview" id="id8">Overview</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">术语</a></p></li>
+<li><p><a class="reference internal" href="#packet-structure" id="id10">Packet structure 包结构</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id11">基本流程</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id4" id="id10">握手</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id11">丢包的处理</a></p></li>
-<li><p><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine" id="id12">DTLS Timeout and Retransmission State Machine</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id12">握手</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id13">丢包的处理</a></p></li>
+<li><p><a class="reference internal" href="#dtls-timeout-and-retransmission-state-machine" id="id14">DTLS Timeout and Retransmission State Machine</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#example" id="id13">Example</a></p></li>
-<li><p><a class="reference internal" href="#troubleshooting" id="id14">Troubleshooting</a></p>
+<li><p><a class="reference internal" href="#example" id="id15">Example</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id16">Troubleshooting</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id6" id="id15">最后一组消息丢失问题</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id17">最后一组消息丢失问题</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#reference" id="id16">Reference</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id18">Reference</a></p></li>
 </ul>
 </div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id7">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>DTLS 和 TLS 的理念几乎一样，通过不对称加密算法来交换密钥，再通过对称加密算法来加密数据</p>
 <p>不对称加密的原理就是通过张三的公钥加密的数据，只能通过张三自己的私钥来解密</p>
 <p>相比于 TLS , DTLS 复用了所有的 handshake 消息和流程, 不同的是有如下三个主要的改动:</p>
@@ -165,7 +167,7 @@
 <li><p>A stateless cookie exchange has been added to prevent denial-of-service attacks.</p></li>
 <li><p>Modifications to the handshake header to handle message loss, reordering, and DTLS message fragmentation
 (in order to avoid IP fragmentation).</p></li>
-<li><p>Retransmission timers to handle message loss</p></li>
+<li><p>Retransmission timers to handle message loss 重传计时器以处理消息丢失</p></li>
 </ol>
 <p>具体的定义参见</p>
 <ul class="simple">
@@ -175,8 +177,11 @@
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5077">RFC5077</a>: TLS Session Resumption without Server-Side State</p></li>
 </ul>
 </section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9">术语</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
 <section id="packet-structure">
-<h2><a class="toc-backref" href="#id8">Packet structure</a><a class="headerlink" href="#packet-structure" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Packet structure 包结构</a><a class="headerlink" href="#packet-structure" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>UDP packet</p></li>
 </ul>
@@ -249,10 +254,10 @@
 </pre></div>
 </div>
 </section>
-<section id="id3">
-<h2><a class="toc-backref" href="#id9">基本流程</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <section id="id4">
-<h3><a class="toc-backref" href="#id10">握手</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id11">基本流程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<section id="id5">
+<h3><a class="toc-backref" href="#id12">握手</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Message Flights for Full Handshake</p></li>
 </ul>
@@ -321,8 +326,8 @@
 </pre></div>
 </div>
 </section>
-<section id="id5">
-<h3><a class="toc-backref" href="#id11">丢包的处理</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<section id="id6">
+<h3><a class="toc-backref" href="#id13">丢包的处理</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>DTLS uses a simple retransmission timer to handle packet loss.</p>
 <p>The following figure demonstrates the basic concept, using the first phase of the DTLS handshake:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Client</span>                                   <span class="n">Server</span>
@@ -340,7 +345,7 @@
 </div>
 </section>
 <section id="dtls-timeout-and-retransmission-state-machine">
-<h3><a class="toc-backref" href="#id12">DTLS Timeout and Retransmission State Machine</a><a class="headerlink" href="#dtls-timeout-and-retransmission-state-machine" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">DTLS Timeout and Retransmission State Machine</a><a class="headerlink" href="#dtls-timeout-and-retransmission-state-machine" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              <span class="o">+-----------+</span>
               <span class="o">|</span> <span class="n">PREPARING</span> <span class="o">|</span>
         <span class="o">+---&gt;</span> <span class="o">|</span>           <span class="o">|</span> <span class="o">&lt;--------------------+</span>
@@ -392,7 +397,7 @@
 </section>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id13">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>openssl example</p></li>
 </ul>
@@ -462,9 +467,9 @@ openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug 
 </div>
 </section>
 <section id="troubleshooting">
-<h2><a class="toc-backref" href="#id14">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
-<section id="id6">
-<h3><a class="toc-backref" href="#id15">最后一组消息丢失问题</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id16">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id17">最后一组消息丢失问题</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>DTLS messages are grouped into a series of message flights, according to the diagrams of handshake.</p>
 <p>Although each flight of messages may consist of a number of messages, they should be viewed as monolithic for the
 purpose of timeout and retransmission.</p>
@@ -523,7 +528,7 @@ flight immediately, shortcutting the retransmission timer.</p>
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id16">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6347">RFC6347</a>: Datagram Transport Layer Security Version 1.2</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc9147">RFC9147</a>: The Datagram Transport Layer Security (DTLS) Protocol Version 1.3</p></li>

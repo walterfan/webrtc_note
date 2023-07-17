@@ -353,8 +353,33 @@ The SCTP port numbers are used for multiplexing and demultiplexing the SCTP asso
       console.log(event.data);
     }
 
+DTLS Encapsulation of SCTP Packets
+-----------------------------------------------------------------------------
+详细描述参见 `RFC8261`_ , 要点如下:
 
+WebRTC 使用  SCTP [RFC4960] `RFC8261`_ with the following restrictions,which are required to reflect that the lower layer is DTLS instead of
+IPv4 and IPv6 and that SCTP does not deal with the IP addresses or the transport protocol used below DTLS:
 
+* A DTLS connection MUST be established before an SCTP association can be set up.
+
+* Multiple SCTP associations MAY be multiplexed over a single DTLS connection.
+
+  The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.
+
+* All SCTP associations are single-homed, because DTLS does not expose any address management to its upper layer.
+
+  Therefore, it is RECOMMENDED to set the SCTP parameter path.max.retrans to association.max.retrans.
+
+* The INIT and INIT-ACK chunk MUST NOT contain any IPv4 Address or IPv6 Address parameters.
+  The INIT chunk MUST NOT contain the Supported Address Types parameter.
+
+* The implementation MUST NOT rely on processing ICMP or ICMPv6 packets, since the SCTP layer most likely is unable to access the
+  SCTP common header in the plain text of the packet, which triggered the sending of the ICMP or ICMPv6 packet.
+  This applies in particular to path MTU discovery when performed by SCTP.
+
+* If the SCTP layer is notified about a path change by its lower layers, SCTP SHOULD retest the path MTU and reset the congestion
+  state to the initial state.
+  The window-based congestion control method specified in [RFC4960] resets the congestion window and slow-start threshold to their initial values.
 
 
 参考资料

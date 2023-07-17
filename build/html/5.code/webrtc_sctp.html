@@ -138,7 +138,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-05</p></td>
+<td><p>2023-07-17</p></td>
 </tr>
 </tbody>
 </table>
@@ -189,8 +189,9 @@
 <ul class="simple">
 <li><p>DcSctpTransport</p></li>
 <li><p>DcSctpSocketInterface
-- DcSctpSocket</p></li>
+- DcSctpSocket (<a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/net/dcsctp/socket/dcsctp_socket.cc">dcsctp_socket.cc</a>)</p></li>
 </ul>
+<p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/net/dcsctp/socket/">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/net/dcsctp/socket/</a></p>
 <p>可以从 WebRTC 源码中单独编译出 libdcsctp, 方法是在 BUILD.gn 中添加如下这段</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rtc_static_library</span><span class="p">(</span><span class="s2">&quot;dcsctp&quot;</span><span class="p">)</span> <span class="p">{</span>
    <span class="n">visibility</span> <span class="o">=</span> <span class="p">[</span>

@@ -410,6 +410,24 @@ API
         int decode_fec
     )
 
+Tools
+=========================
+
+Opus-tools
+--------------------------
+
+* Encode:
+
+.. code-block::
+
+    opusenc --bitrate 64 What_A_Feeling.wav What_A_Feeling_64.opus
+
+* Decode: 
+
+
+.. code-block::
+
+    opusdec What_A_Feeling_64.opus What_A_Feeling_opus64.wav
 
 
 参考资料

@@ -18,6 +18,38 @@ Jitter Buffer
 .. contents::
    :local:
 
+Overview
+======================
+
+How to implementation a jitter buffer of audio
+---------------------------------------------------------
+1. Understand the concept of jitter: Jitter refers to the variation in the arrival time of audio packets due to network congestion, packet loss, or other factors. To handle jitter, you need to buffer incoming audio packets and play them out at a steady pace.
+
+2. Design the buffer structure: Decide on the data structure for your buffer, which will store the incoming audio packets. Typically, a circular buffer is used for this purpose. The buffer should be large enough to accommodate variations in packet arrival times.
+
+3. Set the buffer size: Determine the appropriate buffer size based on your requirements. A larger buffer can handle more significant variations in packet arrival times but may introduce additional latency.
+
+4. Receive and store incoming packets: As audio packets arrive, store them in the buffer according to their sequence number or timestamp. Make sure to handle out-of-order packets correctly by reordering them in the buffer.
+
+5. Estimate the playout time: Use the timestamps or sequence numbers of the received packets to estimate the playout time for each packet. This estimation is based on the average inter-arrival time of the packets.
+
+6. Schedule packet playout: Start a playout timer based on the estimated playout time for the next packet in the buffer. When the timer expires, retrieve the packet from the buffer and play it out.
+
+7. Handle late or missing packets: If a packet arrives late or is missing, you may need to decide how to handle the situation. One approach is to interpolate or extrapolate the missing audio based on adjacent packets. Alternatively, you can introduce silence or concealment techniques to minimize the impact of missing packets.
+
+8. Adapt buffer size dynamically: Monitor the network conditions and adjust the buffer size dynamically if needed. This can help optimize the trade-off between latency and resilience to jitter.
+
+9. Continuously update the buffer: Regularly update the buffer by removing played-out packets and adding new incoming packets. Maintain the correct order of packets and ensure that the buffer does not overflow or underflow.
+
+10. Implement error resilience mechanisms: To handle severe jitter or packet loss, you can consider implementing additional error resilience mechanisms such as forward error correction (FEC) or retransmission.
+
+11. Test and optimize: Thoroughly test your audio jitter buffer implementation under various network conditions to ensure its reliability and performance. Measure and fine-tune parameters such as buffer size, playout timing, and error resilience mechanisms.
+
+Remember that developing an audio jitter buffer can be challenging, especially when considering real-time constraints and the need for low latency. It is often beneficial to refer to existing libraries or frameworks that provide audio streaming capabilities and jitter buffer implementations, such as the WebRTC library for web-based applications or specialized audio streaming frameworks.
+
+
+
+
 Jitter
 ======================
 
@@ -25,7 +57,9 @@ Jitter
 
 一般而言，在慢速或严重拥塞的链路上更可能发生更高级别的抖动。
 
-
+ITU-T G.114 recommend suggest one-way delay should be kept lower than 150ms for acceptable conversation experience.
+Delay between 150ms to 400ms areacceptable quality but user is aware of audio quality is impact.
+Latency bigger than 600ms is unacceptable
 
 Audio Quality
 ======================
@@ -85,7 +119,7 @@ Jitter is defined as a variation in the delay of received packets.
 
 Jitter buffer induces a small delay to collect a certain number of packets for rearranging them in the proper order as well as inducing equal spacing between them before sending them for decompression.
 
-The (fixed) jitter buffer implementation is quite simple.
+The (fixed) jitter buffer implementation is quite simple.
 
 For example:
 
