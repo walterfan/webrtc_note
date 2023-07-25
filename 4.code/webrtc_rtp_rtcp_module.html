@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC RTP RTCP module &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC RTP Sender" href="webrtc_rtp_sender.html" />
+    <link rel="prev" title="WebRTC SCTP library" href="webrtc_sctp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_tools.html">WebRTC 构建工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_browser.html">WebRTC 构建浏览器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_call.html">WebRTC Call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_gcc.html">WebRTC GCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_dtls.html">WebRTC DTLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC RTP RTCP module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rtcp-mode">RTCP Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#webrtc">WebRTC 中计算的汇报间隔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#webrtc-rtp">WebRTC中支持的 RTP 扩展头</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rtp">RTP 包中的媒体内容类型</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rtcp">RTCP 包</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">RTCP 包类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#senderreportstats">SenderReportStats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rtcp-sender">RTCP sender</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopus.html">libopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopenh264.html">libopenh264</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC RTP RTCP module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/4.code/webrtc_rtp_rtcp_module.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-rtp-rtcp-module">
+<h1>WebRTC RTP RTCP module<a class="headerlink" href="#webrtc-rtp-rtcp-module" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC RTP RTCP module</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rtcp-mode" id="id5">RTCP Mode</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#webrtc" id="id6">WebRTC 中计算的汇报间隔</a></p></li>
+<li><p><a class="reference internal" href="#webrtc-rtp" id="id7">WebRTC中支持的 RTP 扩展头</a></p>
+<ul>
+<li><p><a class="reference internal" href="#rtp" id="id8">RTP 包中的媒体内容类型</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#rtcp" id="id9">RTCP 包</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id10">RTCP 包类型</a></p></li>
+<li><p><a class="reference internal" href="#senderreportstats" id="id11">SenderReportStats</a></p></li>
+<li><p><a class="reference internal" href="#rtcp-sender" id="id12">RTCP sender</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>rtp_rtcp 是 libwebrtc 的一个核心模块</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">constexpr</span> <span class="n">TimeDelta</span> <span class="n">RTCP_SEND_BEFORE_KEY_FRAME</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">Millis</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">constexpr</span> <span class="nb">int</span> <span class="n">RTCP_MAX_REPORT_BLOCKS</span> <span class="o">=</span> <span class="mi">31</span><span class="p">;</span>  <span class="o">//</span> <span class="n">RFC</span> <span class="mi">3550</span> <span class="n">page</span> <span class="mi">37</span>
+</pre></div>
+</div>
+<section id="rtcp-mode">
+<h3><a class="toc-backref" href="#id5">RTCP Mode</a><a class="headerlink" href="#rtcp-mode" title="Permalink to this headline">¶</a></h3>
+<p>RtcpMode 有三种:</p>
+<ul class="simple">
+<li><p>kOff</p></li>
+<li><p>kCompound 复合包</p></li>
+<li><p>kReducedSize 缩小尺寸包</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">RTCP</span> <span class="n">mode</span> <span class="n">to</span> <span class="n">use</span><span class="o">.</span> <span class="n">Compound</span> <span class="n">mode</span> <span class="ow">is</span> <span class="n">described</span> <span class="n">by</span> <span class="n">RFC</span> <span class="mi">4585</span>
+<span class="o">//</span> <span class="ow">and</span> <span class="n">reduced</span><span class="o">-</span><span class="n">size</span> <span class="n">RTCP</span> <span class="n">mode</span> <span class="ow">is</span> <span class="n">described</span> <span class="n">by</span> <span class="n">RFC</span> <span class="mf">5506.</span>
+<span class="n">enum</span> <span class="k">class</span> <span class="nc">RtcpMode</span> <span class="p">{</span> <span class="n">kOff</span><span class="p">,</span> <span class="n">kCompound</span><span class="p">,</span> <span class="n">kReducedSize</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>RTX Mode</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">RtxMode</span> <span class="p">{</span>
+<span class="n">kRtxOff</span> <span class="o">=</span> <span class="mh">0x0</span><span class="p">,</span>
+<span class="n">kRtxRetransmitted</span> <span class="o">=</span> <span class="mh">0x1</span><span class="p">,</span>     <span class="o">//</span> <span class="n">Only</span> <span class="n">send</span> <span class="n">retransmissions</span> <span class="n">over</span> <span class="n">RTX</span><span class="o">.</span>
+<span class="n">kRtxRedundantPayloads</span> <span class="o">=</span> <span class="mh">0x2</span>  <span class="o">//</span> <span class="n">Preventively</span> <span class="n">send</span> <span class="n">redundant</span> <span class="n">payloads</span>
+                            <span class="o">//</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">padding</span><span class="o">.</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="webrtc">
+<h2><a class="toc-backref" href="#id6">WebRTC 中计算的汇报间隔</a><a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h2>
+<p>默认汇报间隔是
+* 视频会话: 1s
+* 音频会话: 5s</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">constexpr</span> <span class="n">TimeDelta</span> <span class="n">kDefaultVideoReportInterval</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">Seconds</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">constexpr</span> <span class="n">TimeDelta</span> <span class="n">kDefaultAudioReportInterval</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">Seconds</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>实际上会根据反馈的网络状态来调整发送频率</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>void RTCPSender::PrepareReport(const FeedbackState&amp; feedback_state) {
+    bool generate_report;
+    if (IsFlagPresent(kRtcpSr) || IsFlagPresent(kRtcpRr)) {
+        // Report type already explicitly set, don&#39;t automatically populate.
+        generate_report = true;
+        RTC_DCHECK(ConsumeFlag(kRtcpReport) == false);
+    } else {
+        generate_report =
+            (ConsumeFlag(kRtcpReport) &amp;&amp; method_ == RtcpMode::kReducedSize) ||
+            method_ == RtcpMode::kCompound;
+        if (generate_report)
+        SetFlag(sending_ ? kRtcpSr : kRtcpRr, true);
+    }
+
+    if (IsFlagPresent(kRtcpSr) || (IsFlagPresent(kRtcpRr) &amp;&amp; !cname_.empty()))
+        SetFlag(kRtcpSdes, true);
+
+    if (generate_report) {
+        if ((!sending_ &amp;&amp; xr_send_receiver_reference_time_enabled_) ||
+            !feedback_state.last_xr_rtis.empty() ||
+            send_video_bitrate_allocation_) {
+            SetFlag(kRtcpAnyExtendedReports, true);
+        }
+
+        // generate next time to send an RTCP report
+        TimeDelta min_interval = report_interval_;
+
+        if (!audio_ &amp;&amp; sending_) {
+            // Calculate bandwidth for video; 360 / send bandwidth in kbit/s.
+            int send_bitrate_kbit = feedback_state.send_bitrate / 1000;
+            if (send_bitrate_kbit != 0) {
+                min_interval = std::min(TimeDelta::Millis(360000 / send_bitrate_kbit),
+                                        report_interval_);
+            }
+        }
+
+        // The interval between RTCP packets is varied randomly over the
+        // range [1/2,3/2] times the calculated interval.
+        int min_interval_int = rtc::dchecked_cast&lt;int&gt;(min_interval.ms());
+        TimeDelta time_to_next = TimeDelta::Millis(
+            random_.Rand(min_interval_int * 1 / 2, min_interval_int * 3 / 2));
+
+        RTC_DCHECK(!time_to_next.IsZero());
+        SetNextRtcpSendEvaluationDuration(time_to_next);
+
+        // RtcpSender expected to be used for sending either just sender reports
+        // or just receiver reports.
+        RTC_DCHECK(!(IsFlagPresent(kRtcpSr) &amp;&amp; IsFlagPresent(kRtcpRr)));
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="webrtc-rtp">
+<h2><a class="toc-backref" href="#id7">WebRTC中支持的 RTP 扩展头</a><a class="headerlink" href="#webrtc-rtp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">This</span> <span class="n">enum</span> <span class="n">must</span> <span class="ow">not</span> <span class="n">have</span> <span class="nb">any</span> <span class="n">gaps</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="nb">all</span> <span class="n">integers</span> <span class="n">between</span>
+<span class="o">//</span> <span class="n">kRtpExtensionNone</span> <span class="ow">and</span> <span class="n">kRtpExtensionNumberOfExtensions</span> <span class="n">must</span> <span class="n">be</span> <span class="n">valid</span> <span class="n">enum</span>
+<span class="o">//</span> <span class="n">entries</span><span class="o">.</span>
+<span class="n">enum</span> <span class="n">RTPExtensionType</span> <span class="p">:</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="n">kRtpExtensionNone</span><span class="p">,</span>
+    <span class="n">kRtpExtensionTransmissionTimeOffset</span><span class="p">,</span>
+    <span class="n">kRtpExtensionAudioLevel</span><span class="p">,</span>
+    <span class="n">kRtpExtensionCsrcAudioLevel</span><span class="p">,</span>
+    <span class="n">kRtpExtensionInbandComfortNoise</span><span class="p">,</span>
+    <span class="n">kRtpExtensionAbsoluteSendTime</span><span class="p">,</span>
+    <span class="n">kRtpExtensionAbsoluteCaptureTime</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoRotation</span><span class="p">,</span>
+    <span class="n">kRtpExtensionTransportSequenceNumber</span><span class="p">,</span>
+    <span class="n">kRtpExtensionTransportSequenceNumber02</span><span class="p">,</span>
+    <span class="n">kRtpExtensionPlayoutDelay</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoContentType</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoLayersAllocation</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoTiming</span><span class="p">,</span>
+    <span class="n">kRtpExtensionRtpStreamId</span><span class="p">,</span>
+    <span class="n">kRtpExtensionRepairedRtpStreamId</span><span class="p">,</span>
+    <span class="n">kRtpExtensionMid</span><span class="p">,</span>
+    <span class="n">kRtpExtensionGenericFrameDescriptor00</span><span class="p">,</span>
+    <span class="n">kRtpExtensionGenericFrameDescriptor</span> <span class="o">=</span> <span class="n">kRtpExtensionGenericFrameDescriptor00</span><span class="p">,</span>
+    <span class="n">kRtpExtensionGenericFrameDescriptor02</span><span class="p">,</span>
+    <span class="n">kRtpExtensionColorSpace</span><span class="p">,</span>
+    <span class="n">kRtpExtensionVideoFrameTrackingId</span><span class="p">,</span>
+    <span class="n">kRtpExtensionNumberOfExtensions</span>  <span class="o">//</span> <span class="n">Must</span> <span class="n">be</span> <span class="n">the</span> <span class="n">last</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">enum</span><span class="o">.</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<section id="rtp">
+<h3><a class="toc-backref" href="#id8">RTP 包中的媒体内容类型</a><a class="headerlink" href="#rtp" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// NOTE! `kNumMediaTypes` must be kept in sync with RtpPacketMediaType!
+static constexpr size_t kNumMediaTypes = 5;
+enum class RtpPacketMediaType : size_t {
+    kAudio,                         // Audio media packets.
+    kVideo,                         // Video media packets.
+    kRetransmission,                // Retransmisions, sent as response to NACK.
+    kForwardErrorCorrection,        // FEC packets.
+    kPadding = kNumMediaTypes - 1,  // RTX or plain padding sent to maintain BWE.
+    // Again, don&#39;t forget to udate `kNumMediaTypes` if you add another value!
+};
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rtcp">
+<h2><a class="toc-backref" href="#id9">RTCP 包</a><a class="headerlink" href="#rtcp" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id10">RTCP 包类型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">RTCPPacketType</span> <span class="p">:</span> <span class="n">uint32_t</span> <span class="p">{</span>
+    <span class="n">kRtcpReport</span> <span class="o">=</span> <span class="mh">0x0001</span><span class="p">,</span>
+    <span class="n">kRtcpSr</span> <span class="o">=</span> <span class="mh">0x0002</span><span class="p">,</span>
+    <span class="n">kRtcpRr</span> <span class="o">=</span> <span class="mh">0x0004</span><span class="p">,</span>
+    <span class="n">kRtcpSdes</span> <span class="o">=</span> <span class="mh">0x0008</span><span class="p">,</span>
+    <span class="n">kRtcpBye</span> <span class="o">=</span> <span class="mh">0x0010</span><span class="p">,</span>
+    <span class="n">kRtcpPli</span> <span class="o">=</span> <span class="mh">0x0020</span><span class="p">,</span>
+    <span class="n">kRtcpNack</span> <span class="o">=</span> <span class="mh">0x0040</span><span class="p">,</span>
+    <span class="n">kRtcpFir</span> <span class="o">=</span> <span class="mh">0x0080</span><span class="p">,</span>
+    <span class="n">kRtcpTmmbr</span> <span class="o">=</span> <span class="mh">0x0100</span><span class="p">,</span>
+    <span class="n">kRtcpTmmbn</span> <span class="o">=</span> <span class="mh">0x0200</span><span class="p">,</span>
+    <span class="n">kRtcpSrReq</span> <span class="o">=</span> <span class="mh">0x0400</span><span class="p">,</span>
+    <span class="n">kRtcpLossNotification</span> <span class="o">=</span> <span class="mh">0x2000</span><span class="p">,</span>
+    <span class="n">kRtcpRemb</span> <span class="o">=</span> <span class="mh">0x10000</span><span class="p">,</span>
+    <span class="n">kRtcpTransmissionTimeOffset</span> <span class="o">=</span> <span class="mh">0x20000</span><span class="p">,</span>
+    <span class="n">kRtcpXrReceiverReferenceTime</span> <span class="o">=</span> <span class="mh">0x40000</span><span class="p">,</span>
+    <span class="n">kRtcpXrDlrrReportBlock</span> <span class="o">=</span> <span class="mh">0x80000</span><span class="p">,</span>
+    <span class="n">kRtcpTransportFeedback</span> <span class="o">=</span> <span class="mh">0x100000</span><span class="p">,</span>
+    <span class="n">kRtcpXrTargetBitrate</span> <span class="o">=</span> <span class="mh">0x200000</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="senderreportstats">
+<h3><a class="toc-backref" href="#id11">SenderReportStats</a><a class="headerlink" href="#senderreportstats" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Stats</span> <span class="k">for</span> <span class="n">RTCP</span> <span class="n">sender</span> <span class="n">reports</span> <span class="p">(</span><span class="n">SR</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="n">specific</span> <span class="n">SSRC</span><span class="o">.</span>
+<span class="o">//</span> <span class="n">Refer</span> <span class="n">to</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">tools</span><span class="o">.</span><span class="n">ietf</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">rfc3550</span><span class="c1">#section-6.4.1.</span>
+<span class="n">struct</span> <span class="n">SenderReportStats</span> <span class="p">{</span>
+    <span class="o">//</span> <span class="n">Arrival</span> <span class="n">NTP</span> <span class="n">timestamp</span> <span class="k">for</span> <span class="n">the</span> <span class="n">last</span> <span class="n">received</span> <span class="n">RTCP</span> <span class="n">SR</span><span class="o">.</span>
+    <span class="n">NtpTime</span> <span class="n">last_arrival_timestamp</span><span class="p">;</span>
+    <span class="o">//</span> <span class="n">Received</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">k</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="p">,</span> <span class="n">remote</span><span class="p">)</span> <span class="n">NTP</span> <span class="n">timestamp</span> <span class="k">for</span> <span class="n">the</span> <span class="n">last</span> <span class="n">received</span> <span class="n">RTCP</span> <span class="n">SR</span><span class="o">.</span>
+    <span class="n">NtpTime</span> <span class="n">last_remote_timestamp</span><span class="p">;</span>
+    <span class="o">//</span> <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">RTP</span> <span class="n">data</span> <span class="n">packets</span> <span class="n">transmitted</span> <span class="n">by</span> <span class="n">the</span> <span class="n">sender</span> <span class="n">since</span> <span class="n">starting</span>
+    <span class="o">//</span> <span class="n">transmission</span> <span class="n">up</span> <span class="n">until</span> <span class="n">the</span> <span class="n">time</span> <span class="n">this</span> <span class="n">SR</span> <span class="n">packet</span> <span class="n">was</span> <span class="n">generated</span><span class="o">.</span> <span class="n">The</span> <span class="n">count</span>
+    <span class="o">//</span> <span class="n">should</span> <span class="n">be</span> <span class="n">reset</span> <span class="k">if</span> <span class="n">the</span> <span class="n">sender</span> <span class="n">changes</span> <span class="n">its</span> <span class="n">SSRC</span> <span class="n">identifier</span><span class="o">.</span>
+    <span class="n">uint32_t</span> <span class="n">packets_sent</span><span class="p">;</span>
+    <span class="o">//</span> <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">payload</span> <span class="n">octets</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="ow">not</span> <span class="n">including</span> <span class="n">header</span> <span class="ow">or</span> <span class="n">padding</span><span class="p">)</span>
+    <span class="o">//</span> <span class="n">transmitted</span> <span class="ow">in</span> <span class="n">RTP</span> <span class="n">data</span> <span class="n">packets</span> <span class="n">by</span> <span class="n">the</span> <span class="n">sender</span> <span class="n">since</span> <span class="n">starting</span> <span class="n">transmission</span>
+    <span class="o">//</span> <span class="n">up</span> <span class="n">until</span> <span class="n">the</span> <span class="n">time</span> <span class="n">this</span> <span class="n">SR</span> <span class="n">packet</span> <span class="n">was</span> <span class="n">generated</span><span class="o">.</span> <span class="n">The</span> <span class="n">count</span> <span class="n">should</span> <span class="n">be</span> <span class="n">reset</span>
+    <span class="o">//</span> <span class="k">if</span> <span class="n">the</span> <span class="n">sender</span> <span class="n">changes</span> <span class="n">its</span> <span class="n">SSRC</span> <span class="n">identifier</span><span class="o">.</span>
+    <span class="n">uint64_t</span> <span class="n">bytes_sent</span><span class="p">;</span>
+    <span class="o">//</span> <span class="n">Total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">RTCP</span> <span class="n">SR</span> <span class="n">blocks</span> <span class="n">received</span><span class="o">.</span>
+    <span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">w3</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">TR</span><span class="o">/</span><span class="n">webrtc</span><span class="o">-</span><span class="n">stats</span><span class="o">/</span><span class="c1">#dom-rtcremoteoutboundrtpstreamstats-reportssent.</span>
+    <span class="n">uint64_t</span> <span class="n">reports_count</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="rtcp-sender">
+<h3><a class="toc-backref" href="#id12">RTCP sender</a><a class="headerlink" href="#rtcp-sender" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>configuration</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>struct Configuration {
+    // TODO(bugs.webrtc.org/11581): Remove this temporary conversion utility
+    // once rtc_rtcp_impl.cc/h are gone.
+    static Configuration FromRtpRtcpConfiguration(
+        const RtpRtcpInterface::Configuration&amp; config);
+
+    // True for a audio version of the RTP/RTCP module object false will create
+    // a video version.
+    bool audio = false;
+    // SSRCs for media and retransmission, respectively.
+    // FlexFec SSRC is fetched from `flexfec_sender`.
+    uint32_t local_media_ssrc = 0;
+    // The clock to use to read time. If nullptr then system clock will be used.
+    Clock* clock = nullptr;
+    // Transport object that will be called when packets are ready to be sent
+    // out on the network.
+    Transport* outgoing_transport = nullptr;
+    // Estimate RTT as non-sender as described in
+    // https://tools.ietf.org/html/rfc3611#section-4.4 and #section-4.5
+    bool non_sender_rtt_measurement = false;
+    // Optional callback which, if specified, is used by RTCPSender to schedule
+    // the next time to evaluate if RTCP should be sent by means of
+    // TimeToSendRTCPReport/SendRTCP.
+    // The RTCPSender client still needs to call TimeToSendRTCPReport/SendRTCP
+    // to actually get RTCP sent.
+    //
+    // Note: It&#39;s recommended to use the callback to ensure program design that
+    // doesn&#39;t use polling.
+    // TODO(bugs.webrtc.org/11581): Make mandatory once downstream consumers
+    // have migrated to the callback solution.
+    std::function&lt;void(TimeDelta)&gt; schedule_next_rtcp_send_evaluation_function;
+
+    RtcEventLog* event_log = nullptr;
+    absl::optional&lt;TimeDelta&gt; rtcp_report_interval;
+    ReceiveStatisticsProvider* receive_statistics = nullptr;
+    RtcpPacketTypeCounterObserver* rtcp_packet_type_counter_observer = nullptr;
+};
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="webrtc_sctp.html" class="btn btn-neutral float-left" title="WebRTC SCTP library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_rtp_sender.html" class="btn btn-neutral float-right" title="WebRTC RTP Sender" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC 源码概览 &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC 构建工具" href="build_tools.html" />
+    <link rel="prev" title="5. WebRTC 源码分析" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC 源码概览</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#domain-object">Domain object</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#call">Call</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stream">Stream</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#import-interfaces">Import Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#treasure-in-code">Treasure in code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contribution">Contribution</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#preparation">preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upload-patch">upload patch</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_tools.html">WebRTC 构建工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_browser.html">WebRTC 构建浏览器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_call.html">WebRTC Call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_gcc.html">WebRTC GCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_dtls.html">WebRTC DTLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopus.html">libopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopenh264.html">libopenh264</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC 源码概览</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/4.code/overview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc">
+<h1>WebRTC 源码概览<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC Source</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#domain-object" id="id4">Domain object</a></p>
+<ul>
+<li><p><a class="reference internal" href="#call" id="id5">Call</a></p></li>
+<li><p><a class="reference internal" href="#stream" id="id6">Stream</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#modules" id="id7">Modules</a></p></li>
+<li><p><a class="reference internal" href="#import-interfaces" id="id8">Import Interfaces</a></p></li>
+<li><p><a class="reference internal" href="#treasure-in-code" id="id9">Treasure in code</a></p></li>
+<li><p><a class="reference internal" href="#contribution" id="id10">Contribution</a></p>
+<ul>
+<li><p><a class="reference internal" href="#preparation" id="id11">preparation</a></p></li>
+<li><p><a class="reference internal" href="#upload-patch" id="id12">upload patch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id13">Reference</a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>WebRTC release notes are posted to the discuss-webrtc mailing list before the release:
+<a class="reference external" href="https://webrtc.googlesource.com/src/+/refs/heads/main/docs/release-notes.md">https://webrtc.googlesource.com/src/+/refs/heads/main/docs/release-notes.md</a></p>
+</section>
+<section id="domain-object">
+<h2><a class="toc-backref" href="#id4">Domain object</a><a class="headerlink" href="#domain-object" title="Permalink to this headline">¶</a></h2>
+<section id="call">
+<h3><a class="toc-backref" href="#id5">Call</a><a class="headerlink" href="#call" title="Permalink to this headline">¶</a></h3>
+<p>A Call represents a two-way connection carrying zero or more outgoing and incoming media streams, transported over one or more RTP transports.</p>
+<p>A Call instance can contain several send and/or receive streams.</p>
+<p>All streams are assumed to have the same remote endpoint and will share bitrate estimates etc.</p>
+<p>When using the PeerConnection API, there is an one to one relationship between the PeerConnection and the Call.</p>
+</section>
+<section id="stream">
+<h3><a class="toc-backref" href="#id6">Stream</a><a class="headerlink" href="#stream" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>AudioSendStream</p></li>
+<li><p>AudioReceiveStream</p></li>
+<li><p>VideoSendStream</p></li>
+<li><p>VideoReceiveStream</p></li>
+</ul>
+</section>
+</section>
+<section id="modules">
+<h2><a class="toc-backref" href="#id7">Modules</a><a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>async_audio_processing</p></li>
+<li><p>audio_coding</p></li>
+<li><p>audio_device</p></li>
+<li><p>audio_mixer</p></li>
+<li><p>audio_processing</p></li>
+<li><p>congestion_controller</p></li>
+<li><p>desktop_capture</p></li>
+<li><p>include</p></li>
+<li><p>pacing</p></li>
+<li><p>remote_bitrate_estimator</p></li>
+<li><p>rtp_rtcp</p></li>
+<li><p>third_party
+- fft
+- g711
+- g722
+- portaudio</p></li>
+<li><p>utility</p></li>
+<li><p>video_capture</p></li>
+<li><p>video_coding</p></li>
+<li><p>video_processing</p></li>
+</ul>
+</section>
+<section id="import-interfaces">
+<h2><a class="toc-backref" href="#id8">Import Interfaces</a><a class="headerlink" href="#import-interfaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>LossNotificationSender,</p></li>
+<li><p>RecoveredPacketReceiver,</p></li>
+<li><p>KeyFrameRequestSender,</p></li>
+<li><p>NackSender,</p></li>
+<li><p>OnDecryptedFrameCallback,</p></li>
+<li><p>OnDecryptionStatusChangeCallback,</p></li>
+<li><p>RtpVideoFrameReceiver</p></li>
+<li><p>RtpPacketSinkInterface,</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">OnRtpPacket</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">RtpPacketReceived</span><span class="o">&amp;</span><span class="w"> </span><span class="n">packet</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PacketReceiver</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">enum</span> <span class="nc">DeliveryStatus</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">DELIVERY_OK</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">DELIVERY_UNKNOWN_SSRC</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="n">DELIVERY_PACKET_ERROR</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="n">DeliveryStatus</span><span class="w"> </span><span class="nf">DeliverPacket</span><span class="p">(</span><span class="n">MediaType</span><span class="w"> </span><span class="n">media_type</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">rtc</span><span class="o">::</span><span class="n">CopyOnWriteBuffer</span><span class="w"> </span><span class="n">packet</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">packet_time_us</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">protected</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">PacketReceiver</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="treasure-in-code">
+<h2><a class="toc-backref" href="#id9">Treasure in code</a><a class="headerlink" href="#treasure-in-code" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="./webrtc_overuse_frame_decoder.html">overuse_frame_detector</a>
+- webrtc/video/adaptation</p></li>
+<li><p><a class="reference external" href="./webrtc_cc.html">congestion control</a>
+- webrtc/modules/congestion_controller/</p></li>
+<li><p>remote_bitrate_estimator
+- webrtc/modules/remote_bitrate_estimator/</p></li>
+</ul>
+</section>
+<section id="contribution">
+<h2><a class="toc-backref" href="#id10">Contribution</a><a class="headerlink" href="#contribution" title="Permalink to this headline">¶</a></h2>
+<p>The detailed stpes refer to <a class="reference external" href="https://webrtc.org/support/contributing">https://webrtc.org/support/contributing</a>
+There is an example: <a class="reference external" href="https://webrtc-review.googlesource.com/c/src/+/278682">https://webrtc-review.googlesource.com/c/src/+/278682</a></p>
+<section id="preparation">
+<h3><a class="toc-backref" href="#id11">preparation</a><a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Check out and build the code</p></li>
+<li><p>Fill in the Contributor agreement</p></li>
+</ol>
+<p>3) If you’ve never submitted code before, you must add your name and contact info to the AUTHORS file
+Go to <a class="reference external" href="https://webrtc.googlesource.com/new-password">https://webrtc.googlesource.com/new-password</a> and login with your email account. This should be the same account as returned by git config user.email</p>
+<ol class="arabic simple" start="4">
+<li><p>Then, run: git cl creds-check. If you get any errors, ask for help on discuss-webrtc</p></li>
+</ol>
+<p>You will not have to repeat the above. After all that, you’re ready to upload:</p>
+</section>
+<section id="upload-patch">
+<h3><a class="toc-backref" href="#id12">upload patch</a><a class="headerlink" href="#upload-patch" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Assuming you’re on the main branch:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">my</span><span class="o">-</span><span class="n">work</span><span class="o">-</span><span class="n">branch</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Make changes, build locally, run tests locally</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">am</span> <span class="s2">&quot;Changed x, and it is working&quot;</span>
+<span class="n">git</span> <span class="n">cl</span> <span class="n">upload</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="reference">
+<h2><a class="toc-backref" href="#id13">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src">Chromium Code Search</a></p></li>
+<li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="5. WebRTC 源码分析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="build_tools.html" class="btn btn-neutral float-right" title="WebRTC 构建工具" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

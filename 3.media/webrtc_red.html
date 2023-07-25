@@ -54,9 +54,14 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_fec.html">WebRTC FEC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_rtx.html">WebRTC RTX</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC RED</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">简介</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#opus-fec">Opus FEC</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">SDP 扩展</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#packet">Packet 数据包格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redundant-distance">Redundant distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metrics">Metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
 </ul>
 </li>
@@ -71,8 +76,8 @@
 <li class="toctree-l2"><a class="reference internal" href="webrtc_simulcast.html">WebRTC Simulcast</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../4.practice/index.html">4. WebRTC 实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../5.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4.code/index.html">5. WebRTC 源码分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">4. WebRTC 实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
 </ul>
@@ -120,29 +125,44 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-17</p></td>
+<td><p>2023-07-25</p></td>
 </tr>
 </tbody>
 </table>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id3" id="id5">简介</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id6">SDP 扩展</a></p></li>
-<li><p><a class="reference internal" href="#packet" id="id7">Packet 数据包格式</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id8">Reference</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id7">简介</a></p>
+<ul>
+<li><p><a class="reference internal" href="#opus-fec" id="id8">Opus FEC</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id9">SDP 扩展</a></p></li>
+<li><p><a class="reference internal" href="#packet" id="id10">Packet 数据包格式</a></p></li>
+<li><p><a class="reference internal" href="#redundant-distance" id="id11">Redundant distance</a></p></li>
+<li><p><a class="reference internal" href="#metrics" id="id12">Metrics</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id13">Reference</a></p></li>
 </ul>
 </div>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>RED 即 REDundant coding 冗余编码， 它是一种 RTP 荷载格式，在 RFC 2198 中定义，用于音视频数据的冗余编码. 最早它是用来</p>
-<p>The primary motivation of sending redundant data is to be able to recover packets lost under lossy network conditions.</p>
-<p>If a packet is lost then the missing information may be reconstructed at the receiver from the redundant data that arrives in the following packet(s).</p>
-<p>The use of RED is negotiated in the SDP as an additional payload type and when used the audio/video RTP packets are packaged using RED format with a 6 bytes header, before the primary and secondary payloads conveying the actual audio/video packet and the redundant information.</p>
-<p>RED was standardized more than 20 years ago in RFC 2198, and was initially conceived as a simple RTP payload format to implement Redundant Audio Data. Since then, due to its simplicity and flexibility it ended up being used for way more than just audio: we mentioned text streams already, but it’s also used in the Chrome ulpfec implementation for video, for instance. That said, audio is what it was born for, and so it made sense to see if it could still be of help in the WebRTC ecosystem as well.</p>
-<p>As a format, it’s quite trivial: it basically allows you to packetize, within the payload of a single RTP packet, multiple frames that you’d normally send in different RTP packets instead. It performs that by listing a series of block headers at the beginning, each containing some relevant information (including the block length), which are then followed by the actual frame payloads in sequence. The following diagram from the RFC shows this more clearly in a visual way:</p>
+<h2><a class="toc-backref" href="#id7">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>RED 即 REDundant coding 冗余编码,  它是一种 RTP 荷载格式, 在 RFC 2198 中定义, 用于音视频数据的冗余编码. 最早它是用来</p>
+<p>发送冗余数据的主要动机是能够恢复在有损网络条件下丢失的数据包。</p>
+<p>如果数据包丢失, 则可以在接收器处根据后续数据包中到达的冗余数据来重建丢失的信息。</p>
+<p>RED 的使用在 SDP 中协商为附加负载类型, 并且在使用时, 音频/视频 RTP 数据包使用带有 6 字节标头的 RED 格式进行打包, 然后在传送实际音频/视频数据包和冗余数据包的主要和次要负载之前 信息。</p>
+<p>RED 于 20 多年前在 RFC 2198 中进行了标准化, 最初被认为是一种简单的 RTP 有效负载格式, 用于实现冗余音频数据。</p>
+<p>从那时起, 由于其简单性和灵活性, 它最终不仅仅用于音频: 我们已经提到了文本流, 但它也用于视频的 Chrome ulpfec 实现中。 也就是说, 音频是它诞生的目的, 因此看看它是否仍然可以在 WebRTC 生态系统中提供帮助是有意义的。</p>
+<p>作为一种格式, 它非常简单: 它基本上允许您在单个 RTP 数据包的有效负载内对通常在不同 RTP 数据包中发送的多个帧进行打包。</p>
+<p>它通过在开头列出一系列块头来执行此操作, 每个块头包含一些相关信息( 包括块长度), 然后按顺序跟随实际的帧有效负载。</p>
+<section id="opus-fec">
+<h3><a class="toc-backref" href="#id8">Opus FEC</a><a class="headerlink" href="#opus-fec" title="Permalink to this headline">¶</a></h3>
+<p>Opus 中还包含来自 SILK 的 LBRR (Low Bit-Rate Redundancy)
+Opus 是一种混合编解码器, 它使用 SILK 作为比特率谱的低端。
+然而, Opus SILK 与 Skype 当年开源的原始 SILK 有很大不同, 用于前向纠错模式的 LBRR 部分也是如此。</p>
+<p>在 Opus 中, 前向纠错不是简单地附加在原始音频帧之后, 而是在其之前并编码在比特流中。</p>
+</section>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id6">SDP 扩展</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">SDP 扩展</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">audio</span> <span class="mi">12345</span> <span class="n">RTP</span><span class="o">/</span><span class="n">AVP</span> <span class="mi">121</span> <span class="mi">0</span> <span class="mi">5</span>
 <span class="n">a</span><span class="o">=</span><span class="n">rtpmap</span><span class="p">:</span><span class="mi">121</span> <span class="n">red</span><span class="o">/</span><span class="mi">8000</span><span class="o">/</span><span class="mi">1</span>
 <span class="n">a</span><span class="o">=</span><span class="n">fmtp</span><span class="p">:</span><span class="mi">121</span> <span class="mi">0</span><span class="o">/</span><span class="mi">5</span>
@@ -150,7 +170,7 @@
 </div>
 </section>
 <section id="packet">
-<h2><a class="toc-backref" href="#id7">Packet 数据包格式</a><a class="headerlink" href="#packet" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Packet 数据包格式</a><a class="headerlink" href="#packet" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                    <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>  <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -158,18 +178,20 @@
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>F： （1 bits），之后是否还有其他 RED Header</p>
 <ul>
-<li><p>1: 之后还有其他RED Header，</p></li>
+<li><p>F:  ( 1 bits), 之后是否还有其他 RED Header</p>
+<ul class="simple">
+<li><p>1: 之后还有其他RED Header,</p></li>
 <li><p>0: 最后一个RED Header</p></li>
 </ul>
 </li>
-<li><p>block PT：7 bits长度，表示该RED Header对应的冗余编码类型</p></li>
-<li><p>timeoffset： 14 bits长度，表示无符号长度时间戳偏移，该偏移是相对于RTP Header的时间戳。用无符号长度做偏移意味着冗余编码数据必须在发送完原始数据后才能发送</p></li>
-<li><p>block length: 10 bits长度，表示该RED Header对应编码数据块长度，该长度包含RED Header字段</p></li>
+<li><p>block PT: 7 bits长度, 表示该RED Header对应的冗余编码类型</p></li>
+<li><p>timeoffset:  14 bits长度, 表示无符号长度时间戳偏移, 该偏移是相对于RTP Header的时间戳。</p>
+<p>用无符号长度做偏移意味着冗余编码数据必须在发送完原始数据后才能发送</p>
+</li>
+<li><p>block length: 10 bits长度, 表示该RED Header对应编码数据块长度, 该长度包含RED Header字段</p></li>
 </ul>
-<p>对于RTP包中最后一个RED Header，可以忽略block length以及timestamp。因为它们可以从RTP Fixed Header以及整个RTP包长度计算得到。最后一个RED Header结构如下：</p>
+<p>对于RTP包中最后一个RED Header, 可以忽略block length以及timestamp。因为它们可以从RTP Fixed Header以及整个RTP包长度计算得到。最后一个RED Header结构如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span>
 <span class="o">+-+-+-+-+-+-+-+-+</span>
 <span class="o">|</span><span class="mi">0</span><span class="o">|</span>   <span class="n">Block</span> <span class="n">PT</span>  <span class="o">|</span>
@@ -217,8 +239,79 @@
 </pre></div>
 </div>
 </section>
+<section id="redundant-distance">
+<h2><a class="toc-backref" href="#id11">Redundant distance</a><a class="headerlink" href="#redundant-distance" title="Permalink to this headline">¶</a></h2>
+<p>所谓 Distance 是指冗余包的个数</p>
+<p>Philipp Hancke 在 2020.8.20 中写过一篇 <a class="reference external" href="https://webrtchacks.com/red-improving-audio-quality-with-redundancy/">RED Improving Audio Quality with Redundancy</a>
+做过一些相关的测试</p>
+<table class="colwidths-given docutils align-default" id="id5">
+<caption><span class="caption-text">In 20% loss</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 85%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Senario</p></th>
+<th class="head"><p>concealment percentage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>no RED</p></td>
+<td><p>18%</p></td>
+</tr>
+<tr class="row-odd"><td><p>no RED, OPUS FEC off</p></td>
+<td><p>20%</p></td>
+</tr>
+<tr class="row-even"><td><p>RED with distance 1, OPUS FEC on</p></td>
+<td><p>4%</p></td>
+</tr>
+<tr class="row-odd"><td><p>RED with distance 2, OPUS FEC on</p></td>
+<td><p>0.7%</p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default" id="id6">
+<caption><span class="caption-text">In 60% loss</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 85%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Senario</p></th>
+<th class="head"><p>concealment percentage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>no RED</p></td>
+<td><p>60%</p></td>
+</tr>
+<tr class="row-odd"><td><p>RED with distance 1</p></td>
+<td><p>32%</p></td>
+</tr>
+<tr class="row-even"><td><p>RED with distance 2</p></td>
+<td><p>18%</p></td>
+</tr>
+</tbody>
+</table>
+<p>这个 distance 可以是动态的, 我们在做测试时需要采用不同的丢包模式来测试</p>
+<p>参见 <a class="reference external" href="http://www.voiptroubleshooter.com/indepth/burstloss.html">http://www.voiptroubleshooter.com/indepth/burstloss.html</a>
+常见的丢包模型有:</p>
+<ul>
+<li><p>Periodic loss: 模拟周期性的丢包。按填写数量(设为x个), 每x个包, 就丢一个包(one packet is dropped per given number of packets)。</p></li>
+<li><p>Random loss(Bernoulli or Independent Model): 模拟随机丢包, 按给定丢包的概率, 随机丢包。</p></li>
+<li><p>Burst loss: 模拟根据给定的可能性进行丢包。当发生一个丢包事件时, 接着连续丢几个包( 丢包数量控制在最大(max)最小值(min)之间)。</p></li>
+<li><p>G-E loss(Gilbert-Elliott Models): 模拟发生数据包丢失遵循Gilbert-Elliot模型,</p>
+<p>由两个状态组成: 好的状态和坏的状态。可分别为这2个状态指定数据包丢失率,同时可设置网络传输在这两种状态的概率
+(And the network transit between the two states is at given transition probabilities)</p>
+</li>
+</ul>
+</section>
+<section id="metrics">
+<h2><a class="toc-backref" href="#id12">Metrics</a><a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
+<p>concealedSamples/totalSamplesReceived</p>
+</section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id8">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc2198">https://datatracker.ietf.org/doc/html/rfc2198</a></p></li>
 <li><p><a class="reference external" href="https://blog.jianchihu.net/webrtc-research-redundant-rtp-payload-fec.html">https://blog.jianchihu.net/webrtc-research-redundant-rtp-payload-fec.html</a></p></li>

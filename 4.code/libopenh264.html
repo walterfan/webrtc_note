@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>libopenh264 &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. WebRTC 实践" href="../5.practice/index.html" />
+    <link rel="prev" title="libopus" href="libopus.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_tools.html">WebRTC 构建工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_browser.html">WebRTC 构建浏览器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_call.html">WebRTC Call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_gcc.html">WebRTC GCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_dtls.html">WebRTC DTLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopus.html">libopus</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">libopenh264</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#initialize-encoder">initialize encoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encode-video-frame">encode video frame</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#initialize-decoder">initialize decoder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decode-video-frame">decode video frame</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>libopenh264</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/4.code/libopenh264.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="libopenh264">
+<h1>libopenh264<a class="headerlink" href="#libopenh264" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>libopenh264</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id4">Installation</a></p></li>
+<li><p><a class="reference internal" href="#usage" id="id5">Usage</a></p>
+<ul>
+<li><p><a class="reference internal" href="#initialize-encoder" id="id6">initialize encoder</a></p></li>
+<li><p><a class="reference internal" href="#encode-video-frame" id="id7">encode video frame</a></p></li>
+<li><p><a class="reference internal" href="#initialize-decoder" id="id8">initialize decoder</a></p></li>
+<li><p><a class="reference internal" href="#decode-video-frame" id="id9">decode video frame</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#reference" id="id10">Reference</a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>OpenH264 is a codec library which supports H.264 encoding and decoding. It is suitable for use in real time applications such as WebRTC. See <a class="reference external" href="http://www.openh264.org/">http://www.openh264.org/</a> for more details.</p>
+</section>
+<section id="installation">
+<h2><a class="toc-backref" href="#id4">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>先要安装下列工具</p>
+<ul class="simple">
+<li><p>gcc/clang</p></li>
+<li><p>NASM</p></li>
+</ul>
+<p>windows 平台需要额外安装
+* Visual Studio C++ 2019
+* MinGW    <a class="reference external" href="https://osdn.net/projects/mingw/releases/">https://osdn.net/projects/mingw/releases/</a></p>
+<p>执行下列步骤从源码编译安装</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">cisco</span><span class="o">/</span><span class="n">openh264</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">openh264</span>
+<span class="n">make</span> <span class="n">clean</span>
+<span class="n">make</span> <span class="n">gtest</span><span class="o">-</span><span class="n">bootstrap</span>
+
+<span class="c1"># architecture: arm, arm64, x86 or x86_64</span>
+<span class="n">make</span> <span class="n">OS</span><span class="o">=</span><span class="n">linux</span> <span class="n">ARCH</span><span class="o">=**</span><span class="n">ARCH</span><span class="o">**</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>linux</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="p">[</span><span class="n">OS</span><span class="o">=</span><span class="n">linux</span><span class="p">]</span> <span class="p">[</span><span class="n">BUILDTYPE</span><span class="o">=</span><span class="n">Release</span><span class="o">/</span><span class="n">Debug</span><span class="p">]</span>  <span class="p">[</span><span class="n">ARCH</span><span class="o">=</span><span class="n">x86_64</span><span class="o">/</span><span class="n">x86</span><span class="p">]</span> <span class="p">[</span><span class="n">CC</span><span class="o">=</span><span class="n">gcc</span><span class="p">]</span> <span class="p">[</span><span class="n">CXX</span><span class="o">=</span><span class="n">g</span><span class="o">++</span><span class="p">]</span> <span class="p">[</span><span class="n">USE_ASM</span><span class="o">=</span><span class="n">Yes</span><span class="o">/</span><span class="n">No</span><span class="p">]</span> <span class="p">[</span><span class="n">ENABLEPIC</span><span class="o">=</span><span class="n">Yes</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>mac</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="p">[</span><span class="n">OS</span><span class="o">=</span><span class="n">darwin</span><span class="p">]</span> <span class="p">[</span><span class="n">BUILDTYPE</span><span class="o">=</span><span class="n">Release</span><span class="o">/</span><span class="n">Debug</span><span class="p">]</span>  <span class="p">[</span><span class="n">ARCH</span><span class="o">=</span><span class="n">x86_64</span><span class="o">/</span><span class="n">x86</span><span class="p">]</span> <span class="p">[</span><span class="n">CC</span><span class="o">=</span><span class="n">gcc</span><span class="p">]</span> <span class="p">[</span><span class="n">CXX</span><span class="o">=</span><span class="n">g</span><span class="o">++</span><span class="p">]</span> <span class="p">[</span><span class="n">USE_ASM</span><span class="o">=</span><span class="n">Yes</span><span class="o">/</span><span class="n">No</span><span class="p">]</span> <span class="p">[</span><span class="n">ENABLEPIC</span><span class="o">=</span><span class="n">Yes</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>windows</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AutoBuildForWPAndWindows</span><span class="o">.</span><span class="n">bat</span> <span class="o">&lt;</span><span class="n">Win32</span><span class="o">|</span><span class="n">Win64</span><span class="o">-</span><span class="n">Debug</span><span class="o">|</span><span class="n">Release</span><span class="o">-</span><span class="n">C</span><span class="o">|</span><span class="n">ASM</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2><a class="toc-backref" href="#id5">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<section id="initialize-encoder">
+<h3><a class="toc-backref" href="#id6">initialize encoder</a><a class="headerlink" href="#initialize-encoder" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">initialize_encoder</span><span class="p">(</span><span class="n">ISVCEncoder</span><span class="o">*&amp;</span><span class="w"> </span><span class="n">encoder</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">fps</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">bitrate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">ISVCEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">encoder</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WelsCreateSVCEncoder</span><span class="p">(</span><span class="o">&amp;</span><span class="n">encoder</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">SEncParamBase</span><span class="w"> </span><span class="n">param</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">param</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">SEncParamBase</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">iUsageType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CAMERA_VIDEO_REAL_TIME</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">iPicWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">iPicHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">iTargetBitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitrate</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">iRCMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RC_BITRATE_MODE</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">fMaxFrameRate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fps</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encoder</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">param</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">videoFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoFormatI420</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encoder</span><span class="o">-&gt;</span><span class="n">SetOption</span><span class="p">(</span><span class="n">ENCODER_OPTION_DATAFORMAT</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">videoFormat</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">SBitrateInfo</span><span class="w"> </span><span class="n">bitrateInfo</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">bitrateInfo</span><span class="p">.</span><span class="n">iLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SPATIAL_LAYER_ALL</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">bitrateInfo</span><span class="p">.</span><span class="n">iBitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitrate</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encoder</span><span class="o">-&gt;</span><span class="n">SetOption</span><span class="p">(</span><span class="n">ENCODER_OPTION_MAX_BITRATE</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">bitrateInfo</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="encode-video-frame">
+<h3><a class="toc-backref" href="#id7">encode video frame</a><a class="headerlink" href="#encode-video-frame" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">encode_frame</span><span class="p">(</span><span class="n">ISVCEncoder</span><span class="o">*</span><span class="w"> </span><span class="n">encoder</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">yuv</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">timestamp</span><span class="p">,</span><span class="w"> </span><span class="n">SFrameBSInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">enc_info</span><span class="p">;)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">encoder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">enc_info</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">SFrameBSInfo</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">SSourcePicture</span><span class="w"> </span><span class="n">frame</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">SSourcePicture</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">iPicWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">iPicHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">iColorFormat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoFormatI420</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">iStride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">iStride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">iStride</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">pData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yuv</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">pData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">pData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">pData</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">pData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">frame</span><span class="p">.</span><span class="n">uiTimeStamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timestamp</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encoder</span><span class="o">-&gt;</span><span class="n">EncodeFrame</span><span class="p">(</span><span class="o">&amp;</span><span class="n">frame</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">enc_info</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="initialize-decoder">
+<h3><a class="toc-backref" href="#id8">initialize decoder</a><a class="headerlink" href="#initialize-decoder" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">initialize_decoder</span><span class="p">(</span><span class="n">ISVCDecoder</span><span class="o">*&amp;</span><span class="w"> </span><span class="n">decoder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WelsCreateDecoder</span><span class="p">(</span><span class="o">&amp;</span><span class="n">decoder</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">SDecodingParam</span><span class="w"> </span><span class="n">param</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">param</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">SDecodingParam</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">uiTargetDqLayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UCHAR_MAX</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">eEcActiveIdc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ERROR_CON_SLICE_COPY</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">param</span><span class="p">.</span><span class="n">sVideoProperty</span><span class="p">.</span><span class="n">eVideoBsType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VIDEO_BITSTREAM_DEFAULT</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decoder</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">(</span><span class="o">&amp;</span><span class="n">param</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="decode-video-frame">
+<h3><a class="toc-backref" href="#id9">decode video frame</a><a class="headerlink" href="#decode-video-frame" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">decode_frame</span><span class="p">(</span><span class="n">ISVCDecoder</span><span class="o">*</span><span class="w"> </span><span class="n">decoder</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">frameData</span><span class="p">,</span><span class="w"> </span><span class="n">SBufferInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">frameInfo</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">yuv_out</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">yuv_out</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">info_out</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">SBufferInfo</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decoder</span><span class="o">-&gt;</span><span class="n">DecodeFrame2</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="n">yuv_out</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">frameInfo</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="reference">
+<h2><a class="toc-backref" href="#id10">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.nasm.us/">http://www.nasm.us/</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cisco/openh264">https://github.com/cisco/openh264</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="libopus.html" class="btn btn-neutral float-left" title="libopus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../5.practice/index.html" class="btn btn-neutral float-right" title="4. WebRTC 实践" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

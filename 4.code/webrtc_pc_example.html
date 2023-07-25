@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC PeerConnection Example &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC Video Flow" href="webrtc_video_flow.html" />
+    <link rel="prev" title="WebRTC PeerConnection Channel" href="webrtc_pc_channel.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_tools.html">WebRTC 构建工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_browser.html">WebRTC 构建浏览器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_call.html">WebRTC Call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_gcc.html">WebRTC GCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_dtls.html">WebRTC DTLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC PeerConnection Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#peerconnection-server">PeerConnection Server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main-class">main class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main-flow">main flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#peerconnection-client">PeerConnection Client</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main-class-of-pc-client">main class of pc client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main-flow-of-pc-client">main flow of pc client</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#faq">FAQ</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-s-physicalsocketserver">What’s PhysicalSocketServer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-s-autosocketserverthread">What’s AutoSocketServerThread</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-is-the-difference-between-wwinmain-and-winmain">What is the difference between wWinMain and WinMain?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopus.html">libopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopenh264.html">libopenh264</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC PeerConnection Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/4.code/webrtc_pc_example.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-peerconnection-example">
+<h1>WebRTC PeerConnection Example<a class="headerlink" href="#webrtc-peerconnection-example" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC PeerConnection Example</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
+<li><p><a class="reference internal" href="#peerconnection-server" id="id6">PeerConnection Server</a></p>
+<ul>
+<li><p><a class="reference internal" href="#main-class" id="id7">main class</a></p></li>
+<li><p><a class="reference internal" href="#main-flow" id="id8">main flow</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#peerconnection-client" id="id9">PeerConnection Client</a></p>
+<ul>
+<li><p><a class="reference internal" href="#main-class-of-pc-client" id="id10">main class of pc client</a></p></li>
+<li><p><a class="reference internal" href="#main-flow-of-pc-client" id="id11">main flow of pc client</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#faq" id="id12">FAQ</a></p>
+<ul>
+<li><p><a class="reference internal" href="#what-s-physicalsocketserver" id="id13">What’s PhysicalSocketServer</a></p></li>
+<li><p><a class="reference internal" href="#what-s-autosocketserverthread" id="id14">What’s AutoSocketServerThread</a></p></li>
+<li><p><a class="reference internal" href="#what-is-the-difference-between-wwinmain-and-winmain" id="id15">What is the difference between wWinMain and WinMain?</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id5">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>在 windows 平台上编译 webrtc library 后会生成一些例子程序,其中的例子 peerconnection client and server 用来研究 WebRTC 源码, 是一份绝佳的餐前开味小菜</p>
+<p>测试步骤:</p>
+<ol class="arabic simple">
+<li><p>start peer connection server</p></li>
+<li><p>start peer connection client 1 - Alice</p></li>
+<li><p>start peer connection client 2 - Bob</p></li>
+<li><p>Alice click “connect” to localhost:8888</p></li>
+<li><p>Bob click “connect” to localhost:8888</p></li>
+<li><p>Alice select the peer of Bob, and connect</p></li>
+</ol>
+</section>
+<section id="peerconnection-server">
+<h2><a class="toc-backref" href="#id6">PeerConnection Server</a><a class="headerlink" href="#peerconnection-server" title="Permalink to this headline">¶</a></h2>
+<p>It is a signal server that listen port 8888</p>
+<section id="main-class">
+<h3><a class="toc-backref" href="#id7">main class</a><a class="headerlink" href="#main-class" title="Permalink to this headline">¶</a></h3>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-text">CRCC Cards</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Class</p></th>
+<th class="head"><p>Responsibility</p></th>
+<th class="head"><p>Collaborators</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ListeningSocket</p></td>
+<td><p>The server socket.  Accepts connections and generates DataSocket instances
+for each new connection</p></td>
+<td><p>parent: SocketBase - methods: Create(), Close()</p></td>
+<td><p>methods: Listen(port), Accept()</p></td>
+</tr>
+<tr class="row-odd"><td><p>DataSocket</p></td>
+<td><p>Represents an HTTP server socket what can read/send data</p></td>
+<td><p>parent: SocketBase</p></td>
+<td><p>methods: OnDataAvailable(socket), send(string)</p></td>
+</tr>
+<tr class="row-even"><td><p>ChannelMember</p></td>
+<td><p>Represents a single peer connected to the server</p></td>
+<td><p>DataSocket</p></td>
+<td><p>methods: NotifyOfOtherMember(other), ForwardRequestTopPeer(), QueryResponse</p></td>
+</tr>
+<tr class="row-odd"><td><p>PeerChannel</p></td>
+<td><p>Manages all currently connected peers</p></td>
+<td><p>property: vector&lt;ChannelMember*&gt; Members</p></td>
+<td><p>methods: Lookup(ds), AddMember(ds), isTargetRequest</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="main-flow">
+<h3><a class="toc-backref" href="#id8">main flow</a><a class="headerlink" href="#main-flow" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>listen port 8888</p></li>
+<li><p>Accept new connection as a DataSocket</p></li>
+<li><p>add the DataSocket’s socket handle into a select array</p></li>
+<li><p>select for interesting events: read event to callback DataSocket.OnDataAvailable</p></li>
+<li><p>if it is a new peer, call AddMember</p></li>
+<li><p>if it is a existed peer, lookup and forward message to that peer</p></li>
+</ol>
+</section>
+</section>
+<section id="peerconnection-client">
+<h2><a class="toc-backref" href="#id9">PeerConnection Client</a><a class="headerlink" href="#peerconnection-client" title="Permalink to this headline">¶</a></h2>
+<section id="main-class-of-pc-client">
+<h3><a class="toc-backref" href="#id10">main class of pc client</a><a class="headerlink" href="#main-class-of-pc-client" title="Permalink to this headline">¶</a></h3>
+<table class="colwidths-given docutils align-default" id="id4">
+<caption><span class="caption-text">CRCC Cards</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Class</p></th>
+<th class="head"><p>Responsibility</p></th>
+<th class="head"><p>Collaborators</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MainWnd</p></td>
+<td><p>the main window class of pc Client for UI render and event handler</p></td>
+<td><p>parent: MainWindow, collaborators: VideoRenderer for local/remote stream</p></td>
+<td><p>the Observer is  Conductor</p></td>
+</tr>
+<tr class="row-odd"><td><p>PeerConnectionClient</p></td>
+<td><p>Message handler for signin, signout, hangup and message send/read</p></td>
+<td><p>PeerConnectionClientObserver(OnSignedIn, OnDisconnected)</p></td>
+<td><p>the Observer is  Conductor</p></td>
+</tr>
+<tr class="row-even"><td><p>Conductor</p></td>
+<td><p>create/delete PC, add/remove MediaStreamTracks, SDP negotiation, ICE candidate handle</p></td>
+<td><p>parent:PeerConnectionObserver,webrtc::CreateSessionDescriptionObserver,PeerConnectionClientObserver,MainWndCallback</p></td>
+<td><p>handle message from MainWnd and PeerConnectionClient, and operate the two objects</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>UI</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">UI</span> <span class="p">{</span>
+   <span class="n">CONNECT_TO_SERVER</span><span class="p">,</span>
+   <span class="n">LIST_PEERS</span><span class="p">,</span>
+   <span class="n">STREAMING</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>PeerConnection Client State</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">enum</span> <span class="n">State</span> <span class="p">{</span>
+    <span class="n">NOT_CONNECTED</span><span class="p">,</span>
+    <span class="n">RESOLVING</span><span class="p">,</span>
+    <span class="n">SIGNING_IN</span><span class="p">,</span>
+    <span class="n">CONNECTED</span><span class="p">,</span>
+    <span class="n">SIGNING_OUT_WAITING</span><span class="p">,</span>
+    <span class="n">SIGNING_OUT</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Conductor callbacks</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">enum</span> <span class="n">CallbackID</span> <span class="p">{</span>
+    <span class="n">MEDIA_CHANNELS_INITIALIZED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">PEER_CONNECTION_CLOSED</span><span class="p">,</span>
+    <span class="n">SEND_MESSAGE_TO_PEER</span><span class="p">,</span>
+    <span class="n">NEW_TRACK_ADDED</span><span class="p">,</span>
+    <span class="n">TRACK_REMOVED</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="main-flow-of-pc-client">
+<h3><a class="toc-backref" href="#id11">main flow of pc client</a><a class="headerlink" href="#main-flow-of-pc-client" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>conect the signal server - peerconnection server</p></li>
+<li><p>start to login into the signal server</p></li>
+<li><p>get the peer list and connect to a peer</p></li>
+<li><p>capture media stream track from local camera</p></li>
+<li><p>create offer and do SDP negotiation</p></li>
+<li><p>collect ICE candidate and do connection checking</p></li>
+<li><p>send local media stream via the peer connection</p></li>
+<li><p>got remote media stream and render</p></li>
+</ol>
+</section>
+</section>
+<section id="faq">
+<h2><a class="toc-backref" href="#id12">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<section id="what-s-physicalsocketserver">
+<h3><a class="toc-backref" href="#id13">What’s PhysicalSocketServer</a><a class="headerlink" href="#what-s-physicalsocketserver" title="Permalink to this headline">¶</a></h3>
+<p>PhysicalSocketServer is A socket server that provides the real sockets of the underlying OS.</p>
+<p>It may contains  select(), epoll() or WSAWaitForMultipleEvents loop</p>
+<p>And the SocketServer Provides the ability to wait for activity on a set of sockets.</p>
+<p>The Thread class provides a nice wrapper on a socket server.</p>
+<p>The server is also a socket factory.</p>
+<p>The sockets it creates will be notified of asynchronous I/O from this server’s Wait method.</p>
+</section>
+<section id="what-s-autosocketserverthread">
+<h3><a class="toc-backref" href="#id14">What’s AutoSocketServerThread</a><a class="headerlink" href="#what-s-autosocketserverthread" title="Permalink to this headline">¶</a></h3>
+<p>AutoSocketServerThread automatically installs itself at construction and uninstalls at destruction. If a Thread object is already associated with the current OS thread,
+it is temporarily disassociated and restored by the destructor.</p>
+<p>The rtc::Thread is extended from webrtc::TaskQueueBase</p>
+<p>TaskQueueBase means Asynchronously executes tasks in a way that guarantees
+that they’re executedin FIFO order and that tasks never overlap.</p>
+<p>Tasks may always execute on the same worker thread and they may not.</p>
+<p>To DCHECK that tasks are executing on a known task queue, use IsCurrent().</p>
+</section>
+<section id="what-is-the-difference-between-wwinmain-and-winmain">
+<h3><a class="toc-backref" href="#id15">What is the difference between wWinMain and WinMain?</a><a class="headerlink" href="#what-is-the-difference-between-wwinmain-and-winmain" title="Permalink to this headline">¶</a></h3>
+<p>The only difference between WinMain and wWinMain is the command line string and you should use wWinMain in Unicode applications (and all applications created these days should use Unicode). You can of course manually call GetCommandLineW() in WinMain and parse it yourself if you really want to.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="webrtc_pc_channel.html" class="btn btn-neutral float-left" title="WebRTC PeerConnection Channel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_video_flow.html" class="btn btn-neutral float-right" title="WebRTC Video Flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
