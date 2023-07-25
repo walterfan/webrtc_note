@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'webrtc_tutorial'
-copyright = '2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License'
+copyright = '2021 ~ 2023, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License'
 author = 'Walter Fan'
 
 
