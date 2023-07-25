@@ -31,8 +31,8 @@ WebRTC 学习笔记
    1.basic/index
    2.transport/index
    3.media/index
-   4.practice/index
-   5.code/index
+   4.code/index
+   5.practice/index
    6.tool/index
    7.misc/index
 

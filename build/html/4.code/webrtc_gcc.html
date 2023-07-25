@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC GCC &mdash; webrtc_tutorial 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="WebRTC Congestion Control" href="webrtc_bwe_gcc.html" />
+    <link rel="prev" title="WebRTC Call" href="webrtc_call.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 源码分析</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 源码概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_tools.html">WebRTC 构建工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_browser.html">WebRTC 构建浏览器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_build.html">WebRTC 源码构建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_test.html">WebRTC test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_issues.html">WebRTC issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_demux.html">WebRTC Demux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_thread.html">WebRTC Thread Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_call.html">WebRTC Call</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC GCC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#libwebrtc">构建 libwebrtc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">拥塞控制相关代码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">主要方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#onremotebitratereport">OnRemoteBitrateReport</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ontransportpacketsfeedback">OnTransportPacketsFeedback</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">主要配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">主要流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">带宽探测流程</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#related-classes">Related Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_gcc.html">WebRTC Congestion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_remb.html">WebRTC REMB Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pacer.html">WebRTC Pacer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_dtls.html">WebRTC DTLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sctp.html">WebRTC SCTP library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtp_sender.html">WebRTC RTP Sender</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_packet_buffer.html">WebRTC Packet Buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_rtx_code.html">WebRTC RTX Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_nack_code.html">WebRTC NACK code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="remote_bitrate_estimator.html">Remote Bitrate Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_channel.html">WebRTC PeerConnection Channel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_pc_example.html">WebRTC PeerConnection Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_video_flow.html">WebRTC Video Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_config.html">WebRTC Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="janus_code_1.html">Janus Code analysis 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aiortc.html">Aiortc library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopus.html">libopus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libopenh264.html">libopenh264</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">4. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">5. WebRTC 工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">6. WebRTC 关联技术</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">webrtc_tutorial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC GCC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/4.code/webrtc_gcc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="webrtc-gcc">
+<h1>WebRTC GCC<a class="headerlink" href="#webrtc-gcc" title="Permalink to this headline">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
+<td><p>WebRTC GCC</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Authors</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Status</strong></p></td>
+<td><p>WIP</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Updated</strong></p></td>
+<td><p>2023-07-25</p></td>
+</tr>
+</tbody>
+</table>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id8">Overview</a></p></li>
+<li><p><a class="reference internal" href="#libwebrtc" id="id9">构建 libwebrtc</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id10">拥塞控制相关代码</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id11">主要方法</a></p>
+<ul>
+<li><p><a class="reference internal" href="#onremotebitratereport" id="id12">OnRemoteBitrateReport</a></p></li>
+<li><p><a class="reference internal" href="#ontransportpacketsfeedback" id="id13">OnTransportPacketsFeedback</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id5" id="id14">主要配置</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id15">主要流程</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id16">带宽探测流程</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#related-classes" id="id17">Related Classes</a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2><a class="toc-backref" href="#id8">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="libwebrtc">
+<h2><a class="toc-backref" href="#id9">构建 libwebrtc</a><a class="headerlink" href="#libwebrtc" title="Permalink to this headline">¶</a></h2>
+<p>首先，我们来下载和构建 webrtc library, 你需要一个 VPN 来下载所需的软件和源码</p>
+<ol class="arabic simple">
+<li><p>安装 Chromium 软件库工具.</p></li>
+</ol>
+<p>参见</p>
+<ul class="simple">
+<li><p>WebRTC 开发依赖软件 <a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/development/prerequisite-sw/index.md">webrtc-prerequisite-sw</a></p></li>
+<li><p>安装 WebRTC 开发工具  <a class="reference external" href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">webrtc-depot-tools</a></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>下载 WebRTC 源码</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir webrtc-checkout
+$ cd webrtc-checkout
+$ fetch --nohooks webrtc
+$ gclient sync --force
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>更新源码到你自己的分支</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout main
+$ git pull origin main
+$ gclient sync
+$ git checkout my-branch
+$ git merge main
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>构建</p></li>
+</ol>
+<p>先要安装 ninja 构建工具 <a class="reference external" href="https://ninja-build.org/">ninja-tool</a> 这一构建工具, 通过它来生成构建脚本</p>
+<p>在 Linux 系统上，比较简单的方法是运行 <code class="docutils literal notranslate"><span class="pre">./build/install-build-deps.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd src
+$ python build/util/lastchange.py build/util/LASTCHANGE
+# generate project files using the defaults (Debug build)
+$ gn gen out/Default
+# clean all build artifacts in a directory but leave the current GN configuration untouched
+$ gn clean out/Default
+$ ninja -C out/Default
+</pre></div>
+</div>
+<p>在 windows 系统上，建议安装 visual studio 和 windows 10 SDK</p>
+<p>注意:</p>
+<p>1）一定要在系统设置中选择 Windows SDK , 再选择修改，安装 debugging tool)
+2）为了使用本地安装的 visual studio, 需要先设置一下环境变量 <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">DEPOT_TOOLS_WIN_TOOLCHAIN=0</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gn</span> <span class="n">gen</span> <span class="o">--</span><span class="n">ide</span><span class="o">=</span><span class="n">vs</span> <span class="n">out</span>\<span class="n">Default</span>
+</pre></div>
+</div>
+<p>然后用 visual studio 打开 outDefaultall.sln</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id10">拥塞控制相关代码</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>拥塞控制的相关代码在 webrtc 代码的两个模块中</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator">remote_bitrate_estimator</a> 基于 REMB 的旧版本，基本已经废弃了，其中几个类在新版本中也有使用</p></li>
+<li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller">congestion_controller</a> 基于 Transport Wide CC 的新版本，新旧版本中接收端的估算逻辑移到了发送端，其中的卡尔曼滤波算法也改成了线性回归算法</p></li>
+<li><p>接收端的带宽评估接口是 ReceiveSideCongestionController</p></li>
+</ul>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-cb06cd8ea70d25c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-cb06cd8ea70d25c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<ul>
+<li><p>发送端的拥塞控制的核心类是 GoogCcNetworkController</p>
+<blockquote>
+<div><p>它实现了核心接口 NetworkControllerInterface</p>
+</div></blockquote>
+</li>
+</ul>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-2ebd3d1098f90c3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-2ebd3d1098f90c3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>method</p></th>
+<th class="head"><p>parameter</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>OnNetworkAvailability</p></td>
+<td><p>NetworkAvailability</p></td>
+<td><p>当网络连接有效或无效时</p></td>
+</tr>
+<tr class="row-odd"><td><p>OnNetworkRouteChange</p></td>
+<td><p>NetworkRouteChange</p></td>
+<td><p>当网络地址更改时</p></td>
+</tr>
+<tr class="row-even"><td><p>OnProcessInterval</p></td>
+<td><p>ProcessInterval</p></td>
+<td><p>定时回调，以检查网络</p></td>
+</tr>
+<tr class="row-odd"><td><p>OnRemoteBitrateReport</p></td>
+<td><p>RemoteBitrateReport</p></td>
+<td><p>当收到 REMB RTCP 消息时回调</p></td>
+</tr>
+<tr class="row-even"><td><p>OnRoundTripTimeUpdate</p></td>
+<td><p>RoundTripTimeUpdate</p></td>
+<td><p>当 RTT 更改时回调（可通过 RTCP RR）</p></td>
+</tr>
+<tr class="row-odd"><td><p>OnSentPacket</p></td>
+<td><p>SentPacket</p></td>
+<td><p>当发出一个 RTP 包时</p></td>
+</tr>
+<tr class="row-even"><td><p>OnReceivedPacket</p></td>
+<td><p>ReceivedPacket</p></td>
+<td><p>当收到一个 RTP 包时</p></td>
+</tr>
+<tr class="row-odd"><td><p>OnStreamsConfig</p></td>
+<td><p>StreamsConfig</p></td>
+<td><p>当有媒体流相关的配置更新时</p></td>
+</tr>
+<tr class="row-even"><td><p>OnTargetRateConstraints</p></td>
+<td><p>TargetRateConstraints</p></td>
+<td><p>当目标速率约束更改时</p></td>
+</tr>
+<tr class="row-odd"><td><p>OnTransportLossReport</p></td>
+<td></td>
+<td><p>当收到 TransportLossReport 时</p></td>
+</tr>
+<tr class="row-even"><td><p>OnTransportPacketsFeedback</p></td>
+<td><p>TransportPacketsFeedback</p></td>
+<td><p>当收到 TransportPacketsFeedback 时</p></td>
+</tr>
+<tr class="row-odd"><td><p>OnNetworkStateEstimate</p></td>
+<td><p>NetworkStateEstimate</p></td>
+<td><p>当网络状态估计更新时，还在开发中</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>相关的辅助类有:</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Class</p></th>
+<th class="head"><p>Responsibility</p></th>
+<th class="head"><p>Collaborator</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ProbeController</p></td>
+<td><p>控制探测的启动以估计初始信道容量。 当应用程序调整最大比特率时，也还支持在会话期间进行探测。</p></td>
+<td><p>ProbeClusterConfig， ProbeControllerConfig</p></td>
+<td><p>在初始阶段，及网络带宽有较大变化时都会启动探测</p></td>
+</tr>
+<tr class="row-odd"><td><p>ProbeBitrateEstimator</p></td>
+<td><p>根据 RTCP TWCC feedback计算探测码率，探测包按照cluster进行划分，根据所属的cluster以及发送和接收信息，通过发送和接收的数据大小比判断是否到达链路上限</p></td>
+<td><p>AggregatedCluster, PacketResult</p></td>
+<td><p>探测包传输的大小除以探测时长就是探测的比特率</p></td>
+</tr>
+<tr class="row-even"><td><p>AcknowledgedBitrateEstimator</p></td>
+<td><p>估算当前的吞吐量</p></td>
+<td><p>PacketResult, BitrateEstimator</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>BitrateEstimator</p></td>
+<td><p>使用滑动窗口 + 贝叶斯方法计算当前发送吞吐量</p></td>
+<td><p>AcknowledgedBitrateEstimator</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>DelayBasedBwe</p></td>
+<td><p>基于延迟预估码率</p></td>
+<td><p>InterArrivalDelta, TrendlineEstimator</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>TrendlineEstimator</p></td>
+<td><p>使用线性回归计算当前网络拥堵情况</p></td>
+<td><p>TrendlineEstimatorSettings, BandwidthUsage</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>AimdRateControl</p></td>
+<td><p>通过TrendLine预测出来的网络状态对码率进行 AIMD(加增乘减)方式调整</p></td>
+<td><p>LinkCapacityEstimator</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SendSideBandwidthEstimation</p></td>
+<td><p>基于丢包计算预估码率，结合延迟预估码率，得到最终的目标码率</p></td>
+<td><p>LossBasedBandwidthEstimation/LossBasedBweV2, RttBasedBackoff, LinkCapacityTracker</p></td>
+<td><p>基于丢失的带宽估算, 再加上之前基于延迟的估算综合考虑</p></td>
+</tr>
+<tr class="row-even"><td><p>CongestionWindowPushbackController</p></td>
+<td><p>基于当前的rtt设置一个时间窗口，同时基于当前的码率设置当前时间窗口下的数据量，通过判断当前窗口的使用量，如果使用量过大的时候，降低编码时使用的目标码率，加速窗口消退，减少延迟</p></td>
+<td></td>
+<td><p>主要用于视频编码</p></td>
+</tr>
+<tr class="row-odd"><td><p>AlrDetector</p></td>
+<td><p>应用(码率)受限检测，检测当前的发送码率是否和目标码率由于编码器等原因相差过大受限了，受限情况下会触发带宽预测过程的特殊处理</p></td>
+<td><p>AlrDetectorConfig</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-31af95f0fbb185be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="GCC" src="https://upload-images.jianshu.io/upload_images/1598924-31af95f0fbb185be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+<p>核心的数据结构是</p>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-2c24a2c314300daf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-2c24a2c314300daf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id11">主要方法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<section id="onremotebitratereport">
+<h3><a class="toc-backref" href="#id12">OnRemoteBitrateReport</a><a class="headerlink" href="#onremotebitratereport" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> NetworkControlUpdate GoogCcNetworkController::OnRemoteBitrateReport(
+    RemoteBitrateReport msg) {
+  if (packet_feedback_only_) {
+    RTC_LOG(LS_ERROR) &lt;&lt; &quot;Received REMB for packet feedback only GoogCC&quot;;
+    return NetworkControlUpdate();
+  }
+  bandwidth_estimation_-&gt;UpdateReceiverEstimate(msg.receive_time,
+                                                msg.bandwidth);
+  BWE_TEST_LOGGING_PLOT(1, &quot;REMB_kbps&quot;, msg.receive_time.ms(),
+                        msg.bandwidth.bps() / 1000);
+  return NetworkControlUpdate();
+}
+
+void SendSideBandwidthEstimation::UpdateReceiverEstimate(Timestamp at_time,
+                                                         DataRate bandwidth) {
+  // TODO(srte): Ensure caller passes PlusInfinity, not zero, to represent no
+  // limitation.
+  receiver_limit_ = bandwidth.IsZero() ? DataRate::PlusInfinity() : bandwidth;
+  ApplyTargetLimits(at_time);
+}
+
+void SendSideBandwidthEstimation::ApplyTargetLimits(Timestamp at_time) {
+  UpdateTargetBitrate(current_target_, at_time);
+}
+
+// 这里会限制  new_bitrate 在最大带宽 UpperLimit 和最小带宽 min_bitrate_configured 之间
+void SendSideBandwidthEstimation::UpdateTargetBitrate(DataRate new_bitrate,
+                                                      Timestamp at_time) {
+  new_bitrate = std::min(new_bitrate, GetUpperLimit());
+  if (new_bitrate &lt; min_bitrate_configured_) {
+    MaybeLogLowBitrateWarning(new_bitrate, at_time);
+    new_bitrate = min_bitrate_configured_;
+  }
+  current_target_ = new_bitrate;
+  MaybeLogLossBasedEvent(at_time);
+  link_capacity_.OnRateUpdate(acknowledged_rate_, current_target_, at_time);
+}
+
+// 这里应用了指数平滑移动平均法来应用新的 bitrate, 这个指数 alpha = exp(-delta/tracking_rate)
+void LinkCapacityTracker::OnRateUpdate(absl::optional&lt;DataRate&gt; acknowledged,
+                                       DataRate target,
+                                       Timestamp at_time) {
+  if (!acknowledged)
+    return;
+  DataRate acknowledged_target = std::min(*acknowledged, target);
+  if (acknowledged_target.bps() &gt; capacity_estimate_bps_) {
+    TimeDelta delta = at_time - last_link_capacity_update_;
+    double alpha = delta.IsFinite() ? exp(-(delta / tracking_rate.Get())) : 0;
+    capacity_estimate_bps_ = alpha * capacity_estimate_bps_ +
+                             (1 - alpha) * acknowledged_target.bps&lt;double&gt;();
+  }
+  last_link_capacity_update_ = at_time;
+}
+</pre></div>
+</div>
+</section>
+<section id="ontransportpacketsfeedback">
+<h3><a class="toc-backref" href="#id13">OnTransportPacketsFeedback</a><a class="headerlink" href="#ontransportpacketsfeedback" title="Permalink to this headline">¶</a></h3>
+<p>这个方法用来 处理传输通道的 RTP 包的 TWCC RTCP Feedback, 这个带宽估计的主要流程，另外写篇笔记详细讲讲</p>
+</section>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id14">主要配置</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>对于带宽探测，在 ProbeControllerConfig  类 有如下的配置：</p>
+<p>一开始发送一或二组探测包，大小为 p1 * start_bitrate<em>bps</em> , p2 * start_bitrate<em>bps</em>
+默认为 3 * 300kbps = 900kbps, 6 * 300kpbs = 1.8mbps</p>
+<ul class="simple">
+<li><p>ProbeContollerConfig</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>struct ProbeControllerConfig {
+explicit ProbeControllerConfig(const WebRtcKeyValueConfig* key_value_config);
+ProbeControllerConfig(const ProbeControllerConfig&amp;);
+ProbeControllerConfig&amp; operator=(const ProbeControllerConfig&amp;) = default;
+~ProbeControllerConfig();
+
+// These parameters configure the initial probes. First we send one or two
+// probes of sizes p1 * start_bitrate\ *bps* and p2 * start_bitrate\ *bps*.
+// Then whenever we get a bitrate estimate of at least further_probe_threshold
+// times the size of the last sent probe we&#39;ll send another one of size
+// step_size times the new estimate.
+FieldTrialParameter\ :raw-html-m2r:`&lt;double&gt;` first_exponential_probe_scale;
+FieldTrialOptional\ :raw-html-m2r:`&lt;double&gt;` second_exponential_probe_scale;
+FieldTrialParameter\ :raw-html-m2r:`&lt;double&gt;` further_exponential_probe_scale;
+FieldTrialParameter\ :raw-html-m2r:`&lt;double&gt;` further_probe_threshold;
+
+// Configures how often we send ALR probes and how big they are.
+FieldTrialParameter\ :raw-html-m2r:`&lt;TimeDelta&gt;` alr_probing_interval;
+FieldTrialParameter\ :raw-html-m2r:`&lt;double&gt;` alr_probe_scale;
+
+// Configures the probes emitted by changed to the allocated bitrate.
+FieldTrialOptional\ :raw-html-m2r:`&lt;double&gt;` first_allocation_probe_scale;
+FieldTrialOptional\ :raw-html-m2r:`&lt;double&gt;` second_allocation_probe_scale;
+FieldTrialFlag allocation_allow_further_probing;
+FieldTrialParameter\ :raw-html-m2r:`&lt;DataRate&gt;` allocation_probe_max;
+};
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>PacerConfig 控制 Pacer 发送的速度， 在指定的时间窗口 time_window 内只发送 data_windows 的数据</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">PacerConfig</span> <span class="p">{</span>
+  <span class="n">Timestamp</span> <span class="n">at_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">Pacer</span> <span class="n">should</span> <span class="n">send</span> <span class="n">at</span> <span class="n">most</span> <span class="n">data_window</span> <span class="n">data</span> <span class="n">over</span> <span class="n">time_window</span> <span class="n">duration</span><span class="o">.</span>
+  <span class="n">DataSize</span> <span class="n">data_window</span> <span class="o">=</span> <span class="n">DataSize</span><span class="p">::</span><span class="n">Infinity</span><span class="p">();</span>
+  <span class="n">TimeDelta</span> <span class="n">time_window</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">Pacer</span> <span class="n">should</span> <span class="n">send</span> <span class="n">at</span> <span class="n">least</span> <span class="n">pad_window</span> <span class="n">data</span> <span class="n">over</span> <span class="n">time_window</span> <span class="n">duration</span><span class="o">.</span>
+  <span class="n">DataSize</span> <span class="n">pad_window</span> <span class="o">=</span> <span class="n">DataSize</span><span class="p">::</span><span class="n">Zero</span><span class="p">();</span>
+  <span class="n">DataRate</span> <span class="n">data_rate</span><span class="p">()</span> <span class="n">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_window</span> <span class="o">/</span> <span class="n">time_window</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">DataRate</span> <span class="n">pad_rate</span><span class="p">()</span> <span class="n">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pad_window</span> <span class="o">/</span> <span class="n">time_window</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> //ProbeClusterConfig 控制探测包的个数，目标速率及时长， 一组为一个 cluster, 通过会有两个以上的 cluster
+
+struct ProbeClusterConfig {
+  Timestamp at_time = Timestamp::PlusInfinity();
+  DataRate target_data_rate = DataRate::Zero();
+  TimeDelta target_duration = TimeDelta::Zero();
+  int32_t target_probe_count = 0;
+  int32_t id = 0;
+};
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>TargetTransferRate 目标传输速率， 包括目标速率及稳定的目标速率</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">NetworkEstimate</span> <span class="p">{</span>
+  <span class="n">Timestamp</span> <span class="n">at_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">Deprecated</span><span class="p">,</span> <span class="n">use</span> <span class="n">TargetTransferRate</span><span class="p">::</span><span class="n">target_rate</span> <span class="n">instead</span><span class="o">.</span>
+  <span class="n">DataRate</span> <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">DataRate</span><span class="p">::</span><span class="n">Infinity</span><span class="p">();</span>
+  <span class="n">TimeDelta</span> <span class="n">round_trip_time</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+  <span class="n">TimeDelta</span> <span class="n">bwe_period</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+
+  <span class="nb">float</span> <span class="n">loss_rate_ratio</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">TargetTransferRate</span> <span class="p">{</span>
+  <span class="n">Timestamp</span> <span class="n">at_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">The</span> <span class="n">estimate</span> <span class="n">on</span> <span class="n">which</span> <span class="n">the</span> <span class="n">target</span> <span class="n">rate</span> <span class="ow">is</span> <span class="n">based</span> <span class="n">on</span><span class="o">.</span>
+  <span class="n">NetworkEstimate</span> <span class="n">network_estimate</span><span class="p">;</span>
+  <span class="n">DataRate</span> <span class="n">target_rate</span> <span class="o">=</span> <span class="n">DataRate</span><span class="p">::</span><span class="n">Zero</span><span class="p">();</span>
+  <span class="n">DataRate</span> <span class="n">stable_target_rate</span> <span class="o">=</span> <span class="n">DataRate</span><span class="p">::</span><span class="n">Zero</span><span class="p">();</span>
+  <span class="n">double</span> <span class="n">cwnd_reduce_ratio</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>NetworkControlUpdate 是网络控制器的更新状态，包括几个可选项
+- congestion_window 拥塞窗口
+- pacer_config 发送步进设置
+- probe_cluster_configs 探测群组的设置
+- target_rate 估算出的目标速率，也就是带宽</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// Contains updates of network controller command state. Using optionals to
+// indicate whether a member has been updated. The array of probe clusters
+// should be used to send out probes if not empty.
+struct NetworkControlUpdate {
+  NetworkControlUpdate();
+  NetworkControlUpdate(const NetworkControlUpdate&amp;);
+  ~NetworkControlUpdate();
+  absl::optional\ :raw-html-m2r:`&lt;DataSize&gt;` congestion_window;
+  absl::optional\ :raw-html-m2r:`&lt;PacerConfig&gt;` pacer_config;
+  std::vector\ :raw-html-m2r:`&lt;ProbeClusterConfig&gt;` probe_cluster_configs;
+  absl::optional\ :raw-html-m2r:`&lt;TargetTransferRate&gt;` target_rate;
+};
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id15">主要流程</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id16">带宽探测流程</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>当网络状态发生变化，或者带宽大小发生比较大的变化，都会触发带宽探测, NetworkControlUpdate 的设置反馈到 Pacer 模块, 然后 Pacer 创建探测包, 主要是由 BitrateProber 类来生成 SentPacket 中的 PacedPacketInfo</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">PacedSender</span><span class="p">::</span><span class="n">CreateProbeCluster</span><span class="p">(</span><span class="n">DataRate</span> <span class="n">bitrate</span><span class="p">,</span> <span class="nb">int</span> <span class="n">cluster</span>\ <span class="o">*</span><span class="nb">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">MutexLock</span> <span class="n">lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="o">*</span>\ <span class="p">);</span>
+    <span class="k">return</span> <span class="n">pacing</span>\ <span class="o">*</span><span class="n">controller</span><span class="o">*.</span><span class="n">CreateProbeCluster</span><span class="p">(</span><span class="n">bitrate</span><span class="p">,</span> <span class="n">cluster_id</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">struct</span> <span class="n">PacedPacketInfo</span> <span class="p">{</span>
+  <span class="n">PacedPacketInfo</span><span class="p">();</span>
+  <span class="n">PacedPacketInfo</span><span class="p">(</span><span class="nb">int</span> <span class="n">probe_cluster_id</span><span class="p">,</span>
+                  <span class="nb">int</span> <span class="n">probe_cluster_min_probes</span><span class="p">,</span>
+                  <span class="nb">int</span> <span class="n">probe_cluster_min_bytes</span><span class="p">);</span>
+
+  <span class="nb">bool</span> <span class="n">operator</span><span class="o">==</span><span class="p">(</span><span class="n">const</span> <span class="n">PacedPacketInfo</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="n">const</span><span class="p">;</span>
+
+  <span class="o">//</span> <span class="n">TODO</span><span class="p">(</span><span class="n">srte</span><span class="p">):</span> <span class="n">Move</span> <span class="n">probing</span> <span class="n">info</span> <span class="n">to</span> <span class="n">a</span> <span class="n">separate</span><span class="p">,</span> <span class="n">optional</span> <span class="n">struct</span><span class="o">.</span>
+  <span class="n">static</span> <span class="n">constexpr</span> <span class="nb">int</span> <span class="n">kNotAProbe</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="nb">int</span> <span class="n">send_bitrate_bps</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="nb">int</span> <span class="n">probe_cluster_id</span> <span class="o">=</span> <span class="n">kNotAProbe</span><span class="p">;</span>
+  <span class="nb">int</span> <span class="n">probe_cluster_min_probes</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="nb">int</span> <span class="n">probe_cluster_min_bytes</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="nb">int</span> <span class="n">probe_cluster_bytes_sent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">SentPacket</span> <span class="p">{</span>
+  <span class="n">Timestamp</span> <span class="n">send_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">packet</span> <span class="k">with</span> <span class="n">overhead</span> <span class="n">up</span> <span class="n">to</span> <span class="n">IP</span> <span class="n">layer</span><span class="o">.</span>
+  <span class="n">DataSize</span> <span class="n">size</span> <span class="o">=</span> <span class="n">DataSize</span><span class="p">::</span><span class="n">Zero</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">preceeding</span> <span class="n">packets</span> <span class="n">that</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">part</span> <span class="n">of</span> <span class="n">feedback</span><span class="o">.</span>
+  <span class="n">DataSize</span> <span class="n">prior_unacked_data</span> <span class="o">=</span> <span class="n">DataSize</span><span class="p">::</span><span class="n">Zero</span><span class="p">();</span>
+  <span class="o">//</span> <span class="n">Probe</span> <span class="n">cluster</span> <span class="nb">id</span> <span class="ow">and</span> <span class="n">parameters</span> <span class="n">including</span> <span class="n">bitrate</span><span class="p">,</span> <span class="n">number</span> <span class="n">of</span> <span class="n">packets</span> <span class="ow">and</span>
+  <span class="o">//</span> <span class="n">number</span> <span class="n">of</span> <span class="nb">bytes</span><span class="o">.</span>
+  <span class="n">PacedPacketInfo</span> <span class="n">pacing_info</span><span class="p">;</span>
+  <span class="o">//</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">the</span> <span class="n">packet</span> <span class="ow">is</span> <span class="n">an</span> <span class="n">audio</span> <span class="n">packet</span><span class="p">,</span> <span class="n">false</span> <span class="k">for</span> <span class="n">video</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">RTX</span> <span class="n">etc</span><span class="o">.</span>
+  <span class="nb">bool</span> <span class="n">audio</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+  <span class="o">//</span> <span class="n">Transport</span> <span class="n">independent</span> <span class="n">sequence</span> <span class="n">number</span><span class="p">,</span> <span class="nb">any</span> <span class="n">tracked</span> <span class="n">packet</span> <span class="n">should</span> <span class="n">have</span> <span class="n">a</span>
+  <span class="o">//</span> <span class="n">sequence</span> <span class="n">number</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">unique</span> <span class="n">over</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">call</span> <span class="ow">and</span> <span class="n">increasing</span> <span class="n">by</span> <span class="mi">1</span> <span class="k">for</span>
+  <span class="o">//</span> <span class="n">each</span> <span class="n">packet</span><span class="o">.</span>
+  <span class="n">int64_t</span> <span class="n">sequence_number</span><span class="p">;</span>
+  <span class="o">//</span> <span class="n">Tracked</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">flight</span> <span class="n">when</span> <span class="n">the</span> <span class="n">packet</span> <span class="n">was</span> <span class="n">sent</span><span class="p">,</span> <span class="n">excluding</span> <span class="n">unacked</span> <span class="n">data</span><span class="o">.</span>
+  <span class="n">DataSize</span> <span class="n">data_in_flight</span> <span class="o">=</span> <span class="n">DataSize</span><span class="p">::</span><span class="n">Zero</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="https://upload-images.jianshu.io/upload_images/1598924-8826a38061b1dc20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"><img alt="" src="https://upload-images.jianshu.io/upload_images/1598924-8826a38061b1dc20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" /></a>
+</section>
+</section>
+<section id="related-classes">
+<h2><a class="toc-backref" href="#id17">Related Classes</a><a class="headerlink" href="#related-classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>RtpTransportControllerSend::PostUpdates</p></li>
+<li><p>Call::OnTargetTransferRate</p></li>
+<li><p>BitrateAllocator::AllocateBitrate
+- LowRateAllocation
+- NormalRateAllocation
+- MaxRateAllocation</p></li>
+<li><p>BitrateAllocatorObserver::OnBitrateUpdated</p></li>
+<li><p>VideoSendStreamImpl</p></li>
+<li><p>VideoStreamEncoder</p></li>
+<li><p>VideoBitrateAllocation</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="webrtc_call.html" class="btn btn-neutral float-left" title="WebRTC Call" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="webrtc_bwe_gcc.html" class="btn btn-neutral float-right" title="WebRTC Congestion Control" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
