@@ -8,6 +8,7 @@
    :caption: Contents:
 
    overview
+   faq
    wasm
 
    coturn

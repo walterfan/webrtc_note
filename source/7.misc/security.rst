@@ -23,11 +23,17 @@ Overview
 
 WebRTC security is based on TLS/DTLS and SRTP. The key management is also important.
 
-The user access need
-* Authentication
-* Authorization
-* Audit
+三个基本需求
+* Authentication 用户访问需要认证
+* Authorization 用户访问需要授权
+* Audit 用户的访问应该可被追踪和审查
 
+
+其中前两项也可以归结为 CIA  
+
+1. Confidentiality 机密性：信息需要保密， 访问权限也需要控制
+2. Integrity 完整性：信息需要保持完整，在存储和传输过程不被未授权，未预期或无意地篡改或销毁，或者可以快速检测到被篡改
+3. Availablity 可用性： 信息可被合法用户访问并向其提供所需的功能和特性，例如拒绝服务攻击就是对可用性的破坏
 
 Simple Authentication and Security Layer
 =============================================
