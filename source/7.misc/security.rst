@@ -29,11 +29,32 @@ WebRTC security is based on TLS/DTLS and SRTP. The key management is also import
 * Audit 用户的访问应该可被追踪和审查
 
 
-其中前两项也可以归结为 CIA  
+其中前两项也可以归结为 CIA
 
 1. Confidentiality 机密性：信息需要保密， 访问权限也需要控制
 2. Integrity 完整性：信息需要保持完整，在存储和传输过程不被未授权，未预期或无意地篡改或销毁，或者可以快速检测到被篡改
 3. Availablity 可用性： 信息可被合法用户访问并向其提供所需的功能和特性，例如拒绝服务攻击就是对可用性的破坏
+
+
+信息保障中有一个 PDRR 模型:
+
+1. Protection 保护
+2. Detection 检测
+3. Reaction 响应
+4. Restore 恢复
+
+
+保护的对象有
+1. 保护网络和基础设施： 如主干，有线和无线网络的可用性， 采用 VPN
+2. 保护访问的边界：如登录保护，远程访问控制，多级安全
+3. 保护计算环境：如终端用户环境，系统应用程序
+4. 支撑基础设施：如密钥管理 KMI 和公钥基础设施 PKI, 进行检测与响应
+
+
+安全防护的基本方法：
+1. 检测，分析与评价安全错误与漏洞，采取措施进行修复和风险控制，如打补丁，防病毒，防火墙，入侵检测和应急响应
+2. 将安全保护
+
 
 Simple Authentication and Security Layer
 =============================================
@@ -64,6 +85,7 @@ Kerberos builds on symmetric-key cryptography and requires a trusted third party
 
 Reference
 ==============
+* https://wiki.owasp.org/index.php/Security_by_Design_Principles
 * https://en.wikipedia.org/wiki/Kerberos_(protocol)
 * https://web.mit.edu/kerberos/
 * https://webrtc-security.github.io/
