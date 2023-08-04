@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Video Process &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -105,10 +110,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_video.html">WebRTC 视频</a> &raquo;</li>
-      <li>Video Process</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_video.html">WebRTC 视频</a></li>
+      <li class="breadcrumb-item active">Video Process</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/video_process.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -119,12 +124,8 @@
            <div itemprop="articleBody">
              
   <section id="video-process">
-<h1>Video Process<a class="headerlink" href="#video-process" title="Permalink to this headline">¶</a></h1>
+<h1>Video Process<a class="headerlink" href="#video-process" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>video process</p></td>
@@ -136,11 +137,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id4">概述</a></p></li>
 <li><p><a class="reference internal" href="#example" id="id5">Example</a></p>
@@ -150,9 +151,9 @@
 </li>
 <li><p><a class="reference internal" href="#library" id="id7">Library</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>视频处理首先是图像处理，可以调整亮度，对比度以及饱和度。可以参考 Photoshop 中的众多滤镜，锐化，钝化，
 更高级的是修图及美颜功能，例如美白，去红眼等功能，这也需要参考不同人种的面部及身体特征</p>
 <ul class="simple">
@@ -170,54 +171,54 @@
 </ul>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id5">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <section id="add-a-watermark-to-a-webrtc-video-stream">
-<h3><a class="toc-backref" href="#id6">add a watermark to a WebRTC video stream</a><a class="headerlink" href="#add-a-watermark-to-a-webrtc-video-stream" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">add a watermark to a WebRTC video stream</a><a class="headerlink" href="#add-a-watermark-to-a-webrtc-video-stream" title="Permalink to this heading"></a></h3>
 <p>We can use the Canvas API to overlay an image on top of the video stream.</p>
 <p>例如:</p>
 <p>Get the video element: Use JavaScript to get a reference to the video element in your HTML page.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">video</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;video&#39;</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">video</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;video&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Create a canvas element: Use JavaScript to create a new canvas element and set its size to match the video element.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
-<span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
-<span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">;</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Get the canvas context: Use JavaScript to get a reference to the 2D rendering context of the canvas element.</p></li>
 </ul>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;2d&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Draw the video frame: Use JavaScript to draw the current video frame onto the canvas.</p></li>
 </ul>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Add the watermark: Use JavaScript to draw the watermark image onto the canvas.</p></li>
 </ul>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">watermark</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Image</span><span class="p">();</span>
-<span class="nx">watermark</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;path/to/watermark.png&#39;</span><span class="p">;</span>
-<span class="nx">watermark</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-   <span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">watermark</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">watermark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Image</span><span class="p">();</span>
+<span class="nx">watermark</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;path/to/watermark.png&#39;</span><span class="p">;</span>
+<span class="nx">watermark</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">watermark</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><p>Replace the video element with the canvas element: Use JavaScript to replace the video element with the canvas element.</p></li>
 </ul>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">video</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span> <span class="nx">video</span><span class="p">);</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">video</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span><span class="w"> </span><span class="nx">video</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This code will replace the video element with a canvas element that has the video frame and the watermark image overlaid on top. You can customize the position and opacity of the watermark by adjusting the parameters of the drawImage function.</p>
 </section>
 </section>
 <section id="library">
-<h2><a class="toc-backref" href="#id7">Library</a><a class="headerlink" href="#library" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Library</a><a class="headerlink" href="#library" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>opencv</p></li>
 <li><p>Scikit-video</p></li>

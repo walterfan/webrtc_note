@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 源码构建 &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,9 +116,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
-      <li>WebRTC 源码构建</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
+      <li class="breadcrumb-item active">WebRTC 源码构建</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_build.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -124,12 +129,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc">
-<h1>WebRTC 源码构建<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC 源码构建<a class="headerlink" href="#webrtc" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC Source</p></td>
@@ -141,11 +142,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#source-code" id="id4">Source code</a></p>
@@ -161,9 +162,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="source-code">
-<h2><a class="toc-backref" href="#id4">Source code</a><a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Source code</a><a class="headerlink" href="#source-code" title="Permalink to this heading"></a></h2>
 <p>按照 <a class="reference external" href="https://webrtc.github.io/webrtc-org/native-code/development">https://webrtc.github.io/webrtc-org/native-code/development</a>， 可以在 windows, mac 或 linux 上构建 webrtc library.</p>
 <p>前提是你要能连接上 webrtc 的仓库，有些地方需要翻墙。</p>
 <ol class="arabic">
@@ -175,27 +176,27 @@
 <li><p><a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/development/prerequisite-sw/index.md">WebRTC 开发依赖软件</a></p></li>
 <li><p><a class="reference external" href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">安装 WebRTC 开发工具</a></p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/depot_tools&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://chromium.googlesource.com/chromium/tools/depot_tools.git
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/depot_tools&quot;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p>下载 WebRTC 源码</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir webrtc-checkout
-$ <span class="nb">cd</span> webrtc-checkout
-$ fetch --nohooks webrtc
-$ gclient sync --force
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>webrtc-checkout
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>webrtc-checkout
+$<span class="w"> </span>fetch<span class="w"> </span>--nohooks<span class="w"> </span>webrtc
+$<span class="w"> </span>gclient<span class="w"> </span>sync<span class="w"> </span>--force
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>更新源码到你自己的分支</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git checkout main
-$ git pull origin main
-$ gclient sync
-$ git checkout my-branch
-$ git merge main
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>main
+$<span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+$<span class="w"> </span>gclient<span class="w"> </span>sync
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>my-branch
+$<span class="w"> </span>git<span class="w"> </span>merge<span class="w"> </span>main
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
@@ -203,13 +204,13 @@ $ git merge main
 </ol>
 <p>先要安装 ninja 这一构建工具, 通过它来生成构建脚本</p>
 <p>在 Linux 系统上，比较简单的方法是运行 <cite>./build/install-build-deps.sh</cite></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> src
-$ python build/util/lastchange.py build/util/LASTCHANGE
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>src
+$<span class="w"> </span>python<span class="w"> </span>build/util/lastchange.py<span class="w"> </span>build/util/LASTCHANGE
 <span class="c1"># generate project files using the defaults (Debug build)</span>
-$ gn gen out/Default
+$<span class="w"> </span>gn<span class="w"> </span>gen<span class="w"> </span>out/Default
 <span class="c1"># clean all build artifacts in a directory but leave the current GN configuration untouched</span>
-$ gn clean out/Default
-$ ninja -C out/Default
+$<span class="w"> </span>gn<span class="w"> </span>clean<span class="w"> </span>out/Default
+$<span class="w"> </span>ninja<span class="w"> </span>-C<span class="w"> </span>out/Default
 </pre></div>
 </div>
 <p>在 windows 系统上，建议安装 visual studio 和 windows 10 SDK</p>
@@ -229,7 +230,7 @@ $ ninja -C out/Default
 </div>
 <p>然后用 visual studio 打开 outDefaultall.sln</p>
 <section id="gn">
-<h3><a class="toc-backref" href="#id5">GN 编译选项</a><a class="headerlink" href="#gn" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">GN 编译选项</a><a class="headerlink" href="#gn" title="Permalink to this heading"></a></h3>
 <p>gn 支持的参数很多，例如</p>
 <ul class="simple">
 <li><p>clang_base_path=”/usr”</p></li>
@@ -248,16 +249,16 @@ $ ninja -C out/Default
 </section>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id6">配置文件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">配置文件</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <section id="webrtc-gni">
-<h3><a class="toc-backref" href="#id7">webrtc.gni</a><a class="headerlink" href="#webrtc-gni" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">webrtc.gni</a><a class="headerlink" href="#webrtc-gni" title="Permalink to this heading"></a></h3>
 <p>这个文件由其他  BUILD.gn 所包含，它包括了很多特性开关选项和模板, 例如</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rtc_enable_bwe_test_logging</span> <span class="o">=</span> <span class="n">false</span>
 </pre></div>
 </div>
 </section>
 <section id="build-gn">
-<h3><a class="toc-backref" href="#id8">Build.gn</a><a class="headerlink" href="#build-gn" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Build.gn</a><a class="headerlink" href="#build-gn" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>src/BUILD.gn</p></li>
 </ul>
@@ -293,7 +294,7 @@ $ ninja -C out/Default
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src">Chromium Code Search</a></p></li>
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>

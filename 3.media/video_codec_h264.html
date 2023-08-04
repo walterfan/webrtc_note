@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>H.264 编码 &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -58,9 +63,8 @@
 <li class="toctree-l3"><a class="reference internal" href="yuv.html">YUV 图像格式</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">H.264 编码</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id3">简介</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">概述</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#h-264-avc">H.264/AVC 应用的主要技术</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">术语和缩写</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">术语和缩写</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#h264-encoder">H264 encoder</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#h264-decoder">H264 decoder</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#file-format-for-h-264-video">File Format for H.264 Video</a></li>
@@ -112,10 +116,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_video.html">WebRTC 视频</a> &raquo;</li>
-      <li>H.264 编码</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_video.html">WebRTC 视频</a></li>
+      <li class="breadcrumb-item active">H.264 编码</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/video_codec_h264.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -126,12 +130,8 @@
            <div itemprop="articleBody">
              
   <section id="h-264">
-<h1>H.264 编码<a class="headerlink" href="#h-264" title="Permalink to this headline">¶</a></h1>
+<h1>H.264 编码<a class="headerlink" href="#h-264" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>H.264 Codec</p></td>
@@ -143,66 +143,62 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id3" id="id8">简介</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id9">概述</a></p></li>
-<li><p><a class="reference internal" href="#h-264-avc" id="id10">H.264/AVC 应用的主要技术</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id11">术语和缩写</a></p></li>
-<li><p><a class="reference internal" href="#h264-encoder" id="id12">H264 encoder</a></p></li>
-<li><p><a class="reference internal" href="#h264-decoder" id="id13">H264 decoder</a></p></li>
-<li><p><a class="reference internal" href="#file-format-for-h-264-video" id="id14">File Format for H.264 Video</a></p>
+<li><p><a class="reference internal" href="#id3" id="id7">简介</a></p></li>
+<li><p><a class="reference internal" href="#h-264-avc" id="id8">H.264/AVC 应用的主要技术</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">术语和缩写</a></p></li>
+<li><p><a class="reference internal" href="#h264-encoder" id="id10">H264 encoder</a></p></li>
+<li><p><a class="reference internal" href="#h264-decoder" id="id11">H264 decoder</a></p></li>
+<li><p><a class="reference internal" href="#file-format-for-h-264-video" id="id12">File Format for H.264 Video</a></p>
 <ul>
-<li><p><a class="reference internal" href="#annexb-format" id="id15">annexb format</a></p></li>
-<li><p><a class="reference internal" href="#avcc-format" id="id16">avcc format</a></p></li>
+<li><p><a class="reference internal" href="#annexb-format" id="id13">annexb format</a></p></li>
+<li><p><a class="reference internal" href="#avcc-format" id="id14">avcc format</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#rtp-payload-format-for-h-264-video" id="id17">RTP Payload Format for H.264 Video</a></p>
+<li><p><a class="reference internal" href="#rtp-payload-format-for-h-264-video" id="id15">RTP Payload Format for H.264 Video</a></p>
 <ul>
-<li><p><a class="reference internal" href="#h-264-media-stream" id="id18">H.264 media stream</a></p>
+<li><p><a class="reference internal" href="#h-264-media-stream" id="id16">H.264 media stream</a></p>
 <ul>
-<li><p><a class="reference internal" href="#rtp-header" id="id19">RTP header</a></p></li>
-<li><p><a class="reference internal" href="#rtp-payload" id="id20">RTP payload</a></p></li>
-<li><p><a class="reference internal" href="#nal-unit" id="id21">NAL Unit</a></p>
+<li><p><a class="reference internal" href="#rtp-header" id="id17">RTP header</a></p></li>
+<li><p><a class="reference internal" href="#rtp-payload" id="id18">RTP payload</a></p></li>
+<li><p><a class="reference internal" href="#nal-unit" id="id19">NAL Unit</a></p>
 <ul>
-<li><p><a class="reference internal" href="#nri" id="id22">NRI</a></p></li>
-<li><p><a class="reference internal" href="#nal-unit-type" id="id23">NAL Unit Type</a></p></li>
+<li><p><a class="reference internal" href="#nri" id="id20">NRI</a></p></li>
+<li><p><a class="reference internal" href="#nal-unit-type" id="id21">NAL Unit Type</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id6" id="id24">H.264 打包原则</a></p></li>
-<li><p><a class="reference internal" href="#h-264-sdp" id="id25">H.264 相关的 SDP 属性</a></p>
+<li><p><a class="reference internal" href="#id5" id="id22">H.264 打包原则</a></p></li>
+<li><p><a class="reference internal" href="#h-264-sdp" id="id23">H.264 相关的 SDP 属性</a></p>
 <ul>
-<li><p><a class="reference internal" href="#profile-level-id" id="id26">profile-level-id</a></p></li>
-<li><p><a class="reference internal" href="#packetization-mode" id="id27">packetization-mode</a></p></li>
-<li><p><a class="reference internal" href="#level-asymmetry-allowed" id="id28">level-asymmetry-allowed</a></p></li>
-<li><p><a class="reference internal" href="#max-mbps" id="id29">max-mbps</a></p></li>
-<li><p><a class="reference internal" href="#max-fs" id="id30">max-fs</a></p></li>
-<li><p><a class="reference internal" href="#max-cpb" id="id31">max-cpb</a></p></li>
-<li><p><a class="reference internal" href="#max-dpb" id="id32">max-dpb</a></p></li>
-<li><p><a class="reference internal" href="#max-fps" id="id33">max-fps</a></p></li>
-<li><p><a class="reference internal" href="#max-rcmd-nalu-size" id="id34">max-rcmd-nalu-size</a></p></li>
-<li><p><a class="reference internal" href="#max-smbps" id="id35">max-smbps</a></p></li>
-<li><p><a class="reference internal" href="#max-br" id="id36">max-br</a></p></li>
+<li><p><a class="reference internal" href="#profile-level-id" id="id24">profile-level-id</a></p></li>
+<li><p><a class="reference internal" href="#packetization-mode" id="id25">packetization-mode</a></p></li>
+<li><p><a class="reference internal" href="#level-asymmetry-allowed" id="id26">level-asymmetry-allowed</a></p></li>
+<li><p><a class="reference internal" href="#max-mbps" id="id27">max-mbps</a></p></li>
+<li><p><a class="reference internal" href="#max-fs" id="id28">max-fs</a></p></li>
+<li><p><a class="reference internal" href="#max-cpb" id="id29">max-cpb</a></p></li>
+<li><p><a class="reference internal" href="#max-dpb" id="id30">max-dpb</a></p></li>
+<li><p><a class="reference internal" href="#max-fps" id="id31">max-fps</a></p></li>
+<li><p><a class="reference internal" href="#max-rcmd-nalu-size" id="id32">max-rcmd-nalu-size</a></p></li>
+<li><p><a class="reference internal" href="#max-smbps" id="id33">max-smbps</a></p></li>
+<li><p><a class="reference internal" href="#max-br" id="id34">max-br</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#sdp-example" id="id37">SDP example</a></p></li>
+<li><p><a class="reference internal" href="#sdp-example" id="id35">SDP example</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#rtp-payload-format-for-h-264-reduced-complexity-decoding-operation-rcdo-video" id="id38">RTP Payload Format for H.264 Reduced-Complexity Decoding Operation (RCDO) Video</a></p></li>
-<li><p><a class="reference internal" href="#reference" id="id39">Reference</a></p></li>
+<li><p><a class="reference internal" href="#rtp-payload-format-for-h-264-reduced-complexity-decoding-operation-rcdo-video" id="id36">RTP Payload Format for H.264 Reduced-Complexity Decoding Operation (RCDO) Video</a></p></li>
+<li><p><a class="reference internal" href="#reference" id="id37">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id8">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="id4">
-<h2><a class="toc-backref" href="#id9">概述</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">简介</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>高级视频编码 (AVC), 也称为 H.264 或 MPEG-4 第 10 部分, 高级视频编码 (MPEG-4 AVC), 是一种基于面向块的, 采用运动补偿和整数 DCT 编码的视频压缩标准。</p>
 <p>截止2021 年末, 尽管H.265, AV1 已经冒出头来, H.264 依然是市场上最流行的视频编解码标准, 它成熟可靠, 而且相当灵活, 可适应不同的带宽, 既适用于在线视频服务和视频会议, 也适用于文件存储。</p>
 <p>H.264 定义了 1 ~ 6.2 一系列的 Profile 等级, 每个 Profile 都有不同的分辨率, 码率, 帧率等范围</p>
@@ -224,7 +220,7 @@
 <img alt="../_images/h264-encoder.png" src="../_images/h264-encoder.png" />
 </section>
 <section id="h-264-avc">
-<h2><a class="toc-backref" href="#id10">H.264/AVC 应用的主要技术</a><a class="headerlink" href="#h-264-avc" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">H.264/AVC 应用的主要技术</a><a class="headerlink" href="#h-264-avc" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>分层设计</p></li>
 </ol>
@@ -255,8 +251,8 @@
 <a class="reference external" href="https://www.youtube.com/watch?v=PmoEsPWEdOA&amp;t=265s">https://www.youtube.com/watch?v=PmoEsPWEdOA&amp;t=265s</a></p>
 <p>参见 <a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Video_Coding">https://en.wikipedia.org/wiki/Advanced_Video_Coding</a></p>
 </section>
-<section id="id5">
-<h2><a class="toc-backref" href="#id11">术语和缩写</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<section id="id4">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">术语和缩写</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>DON:        Decoding Order Number</p></li>
 <li><p>DONB:       Decoding Order Number Base</p></li>
@@ -288,12 +284,12 @@
 </ul>
 </section>
 <section id="h264-encoder">
-<h2><a class="toc-backref" href="#id12">H264 encoder</a><a class="headerlink" href="#h264-encoder" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">H264 encoder</a><a class="headerlink" href="#h264-encoder" title="Permalink to this heading"></a></h2>
 <p>H.264 采用混合编码技术, 即把画面间运动预测和画面内空间预测组合, 并对残差进行变换编码</p>
 <img alt="h.264 encoder" src="../_images/H264-encoder.png" />
 </section>
 <section id="h264-decoder">
-<h2><a class="toc-backref" href="#id13">H264 decoder</a><a class="headerlink" href="#h264-decoder" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">H264 decoder</a><a class="headerlink" href="#h264-decoder" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>熵解码</p></li>
 <li><p>残差像素的逆量化和变换</p></li>
@@ -303,16 +299,16 @@
 </ul>
 </section>
 <section id="file-format-for-h-264-video">
-<h2><a class="toc-backref" href="#id14">File Format for H.264 Video</a><a class="headerlink" href="#file-format-for-h-264-video" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">File Format for H.264 Video</a><a class="headerlink" href="#file-format-for-h-264-video" title="Permalink to this heading"></a></h2>
 <section id="annexb-format">
-<h3><a class="toc-backref" href="#id15">annexb format</a><a class="headerlink" href="#annexb-format" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">annexb format</a><a class="headerlink" href="#annexb-format" title="Permalink to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">([</span><span class="n">start</span> <span class="n">code</span><span class="p">]</span> <span class="n">NALU</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span> <span class="p">[</span><span class="n">start</span> <span class="n">code</span><span class="p">]</span> <span class="n">NALU</span><span class="p">)</span> <span class="o">|</span>
 </pre></div>
 </div>
 <p>In annexb, [start code] may be 0x000001 or 0x00000001.</p>
 </section>
 <section id="avcc-format">
-<h3><a class="toc-backref" href="#id16">avcc format</a><a class="headerlink" href="#avcc-format" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">avcc format</a><a class="headerlink" href="#avcc-format" title="Permalink to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">([</span><span class="n">extradata</span><span class="p">])</span> <span class="o">|</span> <span class="p">([</span><span class="n">length</span><span class="p">]</span> <span class="n">NALU</span><span class="p">)</span> <span class="o">|</span> <span class="p">([</span><span class="n">length</span><span class="p">]</span> <span class="n">NALU</span><span class="p">)</span> <span class="o">|</span>
 </pre></div>
 </div>
@@ -321,10 +317,10 @@ the value of [length] depends on the size of following NALU</p>
 </section>
 </section>
 <section id="rtp-payload-format-for-h-264-video">
-<h2><a class="toc-backref" href="#id17">RTP Payload Format for H.264 Video</a><a class="headerlink" href="#rtp-payload-format-for-h-264-video" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">RTP Payload Format for H.264 Video</a><a class="headerlink" href="#rtp-payload-format-for-h-264-video" title="Permalink to this heading"></a></h2>
 <p>参见 <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc6184">RFC6184</a>: RTP Payload Format for H.264 Video</p>
 <section id="h-264-media-stream">
-<h3><a class="toc-backref" href="#id18">H.264 media stream</a><a class="headerlink" href="#h-264-media-stream" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">H.264 media stream</a><a class="headerlink" href="#h-264-media-stream" title="Permalink to this heading"></a></h3>
 <p>H264 over RTP 大体上分为三种:</p>
 <ol class="arabic simple">
 <li><p>Single NAL unit packet 一个包就是一个视频帧, NALU type : 1 ~ 23</p></li>
@@ -355,7 +351,7 @@ the value of [length] depends on the size of following NALU</p>
 </pre></div>
 </div>
 <section id="rtp-header">
-<h4><a class="toc-backref" href="#id19">RTP header</a><a class="headerlink" href="#rtp-header" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id17" role="doc-backlink">RTP header</a><a class="headerlink" href="#rtp-header" title="Permalink to this heading"></a></h4>
 <p>针对 H264视频帧, RTP 头中的某些字段有如下设置</p>
 <ul class="simple">
 <li><p>Marker bit (M): 1 bit</p></li>
@@ -387,7 +383,7 @@ the value of [length] depends on the size of following NALU</p>
 </div>
 </section>
 <section id="rtp-payload">
-<h4><a class="toc-backref" href="#id20">RTP payload</a><a class="headerlink" href="#rtp-payload" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id18" role="doc-backlink">RTP payload</a><a class="headerlink" href="#rtp-payload" title="Permalink to this heading"></a></h4>
 <img alt="../_images/h264-rtp-nal.jpg" src="../_images/h264-rtp-nal.jpg" />
 <ul class="simple">
 <li><p>NAL: Network Abstraction Layer</p></li>
@@ -396,7 +392,7 @@ VCL Layer contains slices, slice transmit by NALU</p></li>
 </ul>
 </section>
 <section id="nal-unit">
-<h4><a class="toc-backref" href="#id21">NAL Unit</a><a class="headerlink" href="#nal-unit" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id19" role="doc-backlink">NAL Unit</a><a class="headerlink" href="#nal-unit" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>Single NALU: 如果一个视频帧包含1个NALU, 可以单独打包成一个 RTP 包, 那么RTP时间戳就对应这个帧的采集时间；</p></li>
 <li><p>FU-A: 如果一个视频帧的 NALU 过大(超过 MTU)需要拆分成多个包, 可以使用 FU-A 方式来拆分并打到不同的 RTP 包里, 那么这几个包的 RTP 时间戳是一样的；</p></li>
@@ -414,7 +410,7 @@ VCL Layer contains slices, slice transmit by NALU</p></li>
 </pre></div>
 </div>
 <section id="nri">
-<h5><a class="toc-backref" href="#id22">NRI</a><a class="headerlink" href="#nri" title="Permalink to this headline">¶</a></h5>
+<h5><a class="toc-backref" href="#id20" role="doc-backlink">NRI</a><a class="headerlink" href="#nri" title="Permalink to this heading"></a></h5>
 <ul class="simple">
 <li><p>00: the content of the NAL unit is not used to reconstruct reference pictures for inter picture prediction</p></li>
 <li><dl class="simple">
@@ -440,12 +436,8 @@ VCL Layer contains slices, slice transmit by NALU</p></li>
 </div>
 </section>
 <section id="nal-unit-type">
-<h5><a class="toc-backref" href="#id23">NAL Unit Type</a><a class="headerlink" href="#nal-unit-type" title="Permalink to this headline">¶</a></h5>
+<h5><a class="toc-backref" href="#id21" role="doc-backlink">NAL Unit Type</a><a class="headerlink" href="#nal-unit-type" title="Permalink to this heading"></a></h5>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 18%" />
-<col style="width: 82%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>NAL Type</p></th>
 <th class="head"><p>Definition</p></th>
@@ -628,8 +620,8 @@ i.e., the last byte of the payload is also the last byte of the fragmented NAL u
 </section>
 </section>
 </section>
-<section id="id6">
-<h3><a class="toc-backref" href="#id24">H.264 打包原则</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<section id="id5">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">H.264 打包原则</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <p>All senders MUST enforce the following packetization rules,
 regardless of the packetization mode in use:</p>
 <dl class="simple">
@@ -666,7 +658,7 @@ buffering capabilities of the receiver.</p>
 </dl>
 </section>
 <section id="h-264-sdp">
-<h3><a class="toc-backref" href="#id25">H.264 相关的 SDP 属性</a><a class="headerlink" href="#h-264-sdp" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">H.264 相关的 SDP 属性</a><a class="headerlink" href="#h-264-sdp" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>max-fs: max frame size 最大帧尺寸,  宏块的个数</p></li>
 </ul>
@@ -681,8 +673,8 @@ equal to the value of MaxFS given in Table A-1 of [1] for the
 highest level.  Senders MAY use this knowledge to send larger
 pictures at a proportionally lower frame rate than is indicated
 in the signaled highest level.</p>
-<table class="colwidths-given docutils align-default" id="id7">
-<caption><span class="caption-text">分辨率对应的 max-fs</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">分辨率对应的 max-fs</span><a class="headerlink" href="#id6" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -828,7 +820,7 @@ mode MUST be an integer in the range of 0 to 2, inclusive.</p>
 </pre></div>
 </div>
 <section id="profile-level-id">
-<h4><a class="toc-backref" href="#id26">profile-level-id</a><a class="headerlink" href="#profile-level-id" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id24" role="doc-backlink">profile-level-id</a><a class="headerlink" href="#profile-level-id" title="Permalink to this heading"></a></h4>
 <p>A base16  (hexadecimal) representation of the following three bytes in the sequence parameter set NAL unit , e.g. profile-level-id=42e01f</p>
 <ol class="arabic simple">
 <li><p>profile_idc: 0x42 = 66 –&gt; Baseline Profile (BP, 66)</p></li>
@@ -837,7 +829,7 @@ mode MUST be an integer in the range of 0 to 2, inclusive.</p>
 </ol>
 </section>
 <section id="packetization-mode">
-<h4><a class="toc-backref" href="#id27">packetization-mode</a><a class="headerlink" href="#packetization-mode" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id25" role="doc-backlink">packetization-mode</a><a class="headerlink" href="#packetization-mode" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>0 = a single NALU packet sent in an RTP packet, no fragments</p></li>
 <li><p>1 = multiple NALUs can be sent in decoding order. Fragments allowed, non-interleaved</p></li>
@@ -846,16 +838,16 @@ mode MUST be an integer in the range of 0 to 2, inclusive.</p>
 <p>The negotiated packetization mode for the call must be symmetrical</p>
 </section>
 <section id="level-asymmetry-allowed">
-<h4><a class="toc-backref" href="#id28">level-asymmetry-allowed</a><a class="headerlink" href="#level-asymmetry-allowed" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id26" role="doc-backlink">level-asymmetry-allowed</a><a class="headerlink" href="#level-asymmetry-allowed" title="Permalink to this heading"></a></h4>
 <p>level-asymmetry-allowed表示是否允许两端编码的Level不一致。注意必须两端的SDP中该值都为1才生效</p>
 </section>
 <section id="max-mbps">
-<h4><a class="toc-backref" href="#id29">max-mbps</a><a class="headerlink" href="#max-mbps" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id27" role="doc-backlink">max-mbps</a><a class="headerlink" href="#max-mbps" title="Permalink to this heading"></a></h4>
 <p>Max Decoding speed = Max Macroblocks/sec = 245000 (Baseline profile level 2.2 value = 20250)
 表示每秒钟能处理的最大宏块数量</p>
 </section>
 <section id="max-fs">
-<h4><a class="toc-backref" href="#id30">max-fs</a><a class="headerlink" href="#max-fs" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id28" role="doc-backlink">max-fs</a><a class="headerlink" href="#max-fs" title="Permalink to this heading"></a></h4>
 <p>max-fs=9000</p>
 <p>Max Frame Size = 9000 Macroblocks (Baseline profile level 2.2 value = 1620)
 接收端能够解码的一帧图像的最大尺寸, 这个尺寸用这帧图像包含的宏块数来量化, 即max-fs的数值。</p>
@@ -865,42 +857,42 @@ mode MUST be an integer in the range of 0 to 2, inclusive.</p>
 </ul>
 </section>
 <section id="max-cpb">
-<h4><a class="toc-backref" href="#id31">max-cpb</a><a class="headerlink" href="#max-cpb" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id29" role="doc-backlink">max-cpb</a><a class="headerlink" href="#max-cpb" title="Permalink to this heading"></a></h4>
 <p>max-cpb=200</p>
 <p>Max Coded Picture Buffer size = 200 kbits (Baseline profile level 2.2 value = 4 kbits)
 The value of max-cpb is an integer indicating the maximum coded picture buffer size in units of 1000 bits for the VCL HRD parameters and in units of 1200 bits for the NAL HRD parameters.
 表示用来存储编码的图像的buffer的最大尺寸</p>
 </section>
 <section id="max-dpb">
-<h4><a class="toc-backref" href="#id32">max-dpb</a><a class="headerlink" href="#max-dpb" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id30" role="doc-backlink">max-dpb</a><a class="headerlink" href="#max-dpb" title="Permalink to this heading"></a></h4>
 <p>decoded picture buffer
 表示用来存储解码后图像的buffer的最大尺寸。</p>
 </section>
 <section id="max-fps">
-<h4><a class="toc-backref" href="#id33">max-fps</a><a class="headerlink" href="#max-fps" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id31" role="doc-backlink">max-fps</a><a class="headerlink" href="#max-fps" title="Permalink to this heading"></a></h4>
 <p>max-fps=6000
 接收端能够处理的最大帧率。如果发送端发送的帧率高于接收端设置的值, 那么接受端会在解码后丢掉多余的帧。
 Max Frames Per Second in 1/100s of a frame/second = 60 fps (Baseline profile level 2.2 value = 30 fps)</p>
 </section>
 <section id="max-rcmd-nalu-size">
-<h4><a class="toc-backref" href="#id34">max-rcmd-nalu-size</a><a class="headerlink" href="#max-rcmd-nalu-size" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id32" role="doc-backlink">max-rcmd-nalu-size</a><a class="headerlink" href="#max-rcmd-nalu-size" title="Permalink to this heading"></a></h4>
 <p>max-rcmd-nalu-size=3456000
 Max NALU packet size (bytes) that the receiver can handle</p>
 </section>
 <section id="max-smbps">
-<h4><a class="toc-backref" href="#id35">max-smbps</a><a class="headerlink" href="#max-smbps" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id33" role="doc-backlink">max-smbps</a><a class="headerlink" href="#max-smbps" title="Permalink to this heading"></a></h4>
 <p>max-smbps=245000
 Max Static Macroblock processing rate – macroblocks/second</p>
 </section>
 <section id="max-br">
-<h4><a class="toc-backref" href="#id36">max-br</a><a class="headerlink" href="#max-br" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id34" role="doc-backlink">max-br</a><a class="headerlink" href="#max-br" title="Permalink to this heading"></a></h4>
 <p>max-br=5000
 Max video bit rate = 5000 kbps, Baseline profile level 2.2 value = 4000 kbps
 max-br表示最大比特率, 对VCL HRD参数是以1000bit为单位, 对NAL HRD参数是以1200bit为单位。例子中max-br=1500, 表示VCL HRD参数的最大比特率是1500 kbits/s, NAL HRD参数的最大比特率是1800 kbits/s。</p>
 </section>
 </section>
 <section id="sdp-example">
-<h3><a class="toc-backref" href="#id37">SDP example</a><a class="headerlink" href="#sdp-example" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">SDP example</a><a class="headerlink" href="#sdp-example" title="Permalink to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Offer</span>
 
 <span class="n">v</span><span class="o">=</span><span class="mi">0</span>
@@ -1232,7 +1224,7 @@ max-br表示最大比特率, 对VCL HRD参数是以1000bit为单位, 对NAL HRD�
 </section>
 </section>
 <section id="rtp-payload-format-for-h-264-reduced-complexity-decoding-operation-rcdo-video">
-<h2><a class="toc-backref" href="#id38">RTP Payload Format for H.264 Reduced-Complexity Decoding Operation (RCDO) Video</a><a class="headerlink" href="#rtp-payload-format-for-h-264-reduced-complexity-decoding-operation-rcdo-video" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id36" role="doc-backlink">RTP Payload Format for H.264 Reduced-Complexity Decoding Operation (RCDO) Video</a><a class="headerlink" href="#rtp-payload-format-for-h-264-reduced-complexity-decoding-operation-rcdo-video" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://tools.ietf.org/html/rfc6185">https://tools.ietf.org/html/rfc6185</a></p>
 <blockquote>
 <div><p>it describes an RTP payload format for the Reduced-
@@ -1243,7 +1235,7 @@ The RCDO RTP payload format is based on the H.264 RTP payload format.</p>
 </div></blockquote>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id39">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Video_Coding">https://en.wikipedia.org/wiki/Advanced_Video_Coding</a></p></li>
 <li><p><a class="reference external" href="https://zhuanlan.zhihu.com/p/31056455">H264 基本原理</a></p></li>

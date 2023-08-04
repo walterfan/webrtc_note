@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jitter Buffer &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,10 +116,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_audio.html">WebRTC 音频</a> &raquo;</li>
-      <li>Jitter Buffer</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_audio.html">WebRTC 音频</a></li>
+      <li class="breadcrumb-item active">Jitter Buffer</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/audio_jitter_buffer.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -125,12 +130,8 @@
            <div itemprop="articleBody">
              
   <section id="jitter-buffer">
-<h1>Jitter Buffer<a class="headerlink" href="#jitter-buffer" title="Permalink to this headline">¶</a></h1>
+<h1>Jitter Buffer<a class="headerlink" href="#jitter-buffer" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 48%" />
-<col style="width: 52%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Opus Codec</p></td>
@@ -142,11 +143,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p>
 <ul>
@@ -172,11 +173,11 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <section id="how-to-implementation-a-jitter-buffer-of-audio">
-<h3><a class="toc-backref" href="#id5">How to implementation a jitter buffer of audio</a><a class="headerlink" href="#how-to-implementation-a-jitter-buffer-of-audio" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">How to implementation a jitter buffer of audio</a><a class="headerlink" href="#how-to-implementation-a-jitter-buffer-of-audio" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Understand the concept of jitter: Jitter refers to the variation in the arrival time of audio packets due to network congestion, packet loss, or other factors. To handle jitter, you need to buffer incoming audio packets and play them out at a steady pace.</p></li>
 <li><p>Design the buffer structure: Decide on the data structure for your buffer, which will store the incoming audio packets. Typically, a circular buffer is used for this purpose. The buffer should be large enough to accommodate variations in packet arrival times.</p></li>
@@ -194,7 +195,7 @@
 </section>
 </section>
 <section id="jitter">
-<h2><a class="toc-backref" href="#id6">Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this heading"></a></h2>
 <p>抖动是由网络路径上的排队、争用和序列化效应引起的数据包传输延迟的变化。</p>
 <p>一般而言，在慢速或严重拥塞的链路上更可能发生更高级别的抖动。</p>
 <p>ITU-T G.114 recommend suggest one-way delay should be kept lower than 150ms for acceptable conversation experience.
@@ -202,7 +203,7 @@ Delay between 150ms to 400ms areacceptable quality but user is aware of audio qu
 Latency bigger than 600ms is unacceptable</p>
 </section>
 <section id="audio-quality">
-<h2><a class="toc-backref" href="#id7">Audio Quality</a><a class="headerlink" href="#audio-quality" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Audio Quality</a><a class="headerlink" href="#audio-quality" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>语音的连续性</p></li>
 </ul>
@@ -215,7 +216,7 @@ For example: mute, repeat last packet</p>
 <p>A one-way latency of up to 200 ms is considered acceptable</p>
 <p>Voice overlap becomes a concern when the one-way latency is more than 200 ms</p>
 <section id="id3">
-<h3><a class="toc-backref" href="#id8">Jitter 分类</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Jitter 分类</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <ol class="lowerroman simple">
 <li><p>Type A – constant jitter. This is a roughly constant level of packet to packet delay variation.</p></li>
 <li><p>Type B – transient jitter. This is characterized by a substantial incremental delay that may be incurred by a single packet.</p></li>
@@ -237,7 +238,7 @@ For example: mute, repeat last packet</p>
 </section>
 </section>
 <section id="jitter-buffer-overview">
-<h2><a class="toc-backref" href="#id9">Jitter buffer Overview</a><a class="headerlink" href="#jitter-buffer-overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Jitter buffer Overview</a><a class="headerlink" href="#jitter-buffer-overview" title="Permalink to this heading"></a></h2>
 <p>The network delivers RTP packets asynchronously, with variable delays.</p>
 <p>To be able to play the audio stream with reasonable quality, the receiving endpoint needs to turn the variable delays into constant delays.</p>
 <p>This can be done by using a jitter buffer.</p>
@@ -252,7 +253,7 @@ For example: mute, repeat last packet</p>
 <li><p>start the playout when the buffer has at least 40ms data (delay = 40ms)</p></li>
 </ul>
 <section id="how-long-jb-is-better">
-<h3><a class="toc-backref" href="#id10">How long JB is better?</a><a class="headerlink" href="#how-long-jb-is-better" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">How long JB is better?</a><a class="headerlink" href="#how-long-jb-is-better" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Latency/delay 设置得比较小，声音虽然及时了，但就有更大几率会出现 packet loss，导致音质不好</p></li>
 <li><p>Latency/delay 设置得比较大，packet loss 机会变小，但过大的延迟会造成对话障碍</p></li>
@@ -263,7 +264,7 @@ For example: mute, repeat last packet</p>
 </section>
 </section>
 <section id="jitter-buffer-purpose">
-<h2><a class="toc-backref" href="#id11">Jitter Buffer Purpose</a><a class="headerlink" href="#jitter-buffer-purpose" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Jitter Buffer Purpose</a><a class="headerlink" href="#jitter-buffer-purpose" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Absorb packet arrival variability to a decoder interface
 Buffers sets of data
@@ -276,9 +277,9 @@ Delays a stream to match the playout of another: lip sync is an example</p></li>
 </ul>
 </section>
 <section id="jitter-buffer-types">
-<h2><a class="toc-backref" href="#id12">Jitter Buffer types</a><a class="headerlink" href="#jitter-buffer-types" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Jitter Buffer types</a><a class="headerlink" href="#jitter-buffer-types" title="Permalink to this heading"></a></h2>
 <section id="fixed-jitter-buffer">
-<h3><a class="toc-backref" href="#id13">Fixed Jitter Buffer</a><a class="headerlink" href="#fixed-jitter-buffer" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Fixed Jitter Buffer</a><a class="headerlink" href="#fixed-jitter-buffer" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Latency is fixed</p></li>
 <li><p>Delta/Jitter statistics is not necessary since it is not referenced</p></li>
@@ -287,7 +288,7 @@ Delays a stream to match the playout of another: lip sync is an example</p></li>
 </ul>
 </section>
 <section id="adaptive-jitter-buffer">
-<h3><a class="toc-backref" href="#id14">Adaptive Jitter Buffer</a><a class="headerlink" href="#adaptive-jitter-buffer" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Adaptive Jitter Buffer</a><a class="headerlink" href="#adaptive-jitter-buffer" title="Permalink to this heading"></a></h3>
 <p>trait：</p>
 <ul class="simple">
 <li><p>Latency is dynamic according to jitter real-time changes</p></li>

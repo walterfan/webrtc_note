@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Elements &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -102,9 +107,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">1. WebRTC 基础</a> &raquo;</li>
-      <li>WebRTC Elements</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">1. WebRTC 基础</a></li>
+      <li class="breadcrumb-item active">WebRTC Elements</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/1.basic/webrtc_elements.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -115,12 +120,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-elements">
-<h1>WebRTC Elements<a class="headerlink" href="#webrtc-elements" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC Elements<a class="headerlink" href="#webrtc-elements" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>HTML5 for WebRTC</p></td>
@@ -132,11 +133,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#audio-element" id="id4">Audio Element</a></p>
 <ul>
@@ -159,31 +160,31 @@
 </li>
 <li><p><a class="reference internal" href="#web-worker" id="id14">Web Worker</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="audio-element">
-<h2><a class="toc-backref" href="#id4">Audio Element</a><a class="headerlink" href="#audio-element" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Audio Element</a><a class="headerlink" href="#audio-element" title="Permalink to this heading"></a></h2>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">audio</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;xxx.mp3&quot;</span> <span class="na">controls</span> <span class="na">autoplay</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">audio</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <section id="audio-api">
-<h3><a class="toc-backref" href="#id5">Audio API</a><a class="headerlink" href="#audio-api" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Audio API</a><a class="headerlink" href="#audio-api" title="Permalink to this heading"></a></h3>
 <p>refer to <a class="reference external" href="audio_api.html">Audio API</a></p>
 </section>
 </section>
 <section id="video-element">
-<h2><a class="toc-backref" href="#id6">Video Element</a><a class="headerlink" href="#video-element" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Video Element</a><a class="headerlink" href="#video-element" title="Permalink to this heading"></a></h2>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">video</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;xxx.mp4&quot;</span> <span class="na">controls</span> <span class="na">autoplay</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;400&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;300&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">video</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <section id="methods">
-<h3><a class="toc-backref" href="#id7">methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">methods</a><a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>play</p></li>
 <li><p>pause</p></li>
 </ul>
 </section>
 <section id="property">
-<h3><a class="toc-backref" href="#id8">property</a><a class="headerlink" href="#property" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">property</a><a class="headerlink" href="#property" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>playbackRate</p></li>
 <li><p>currentTime</p></li>
@@ -192,8 +193,8 @@
 </ul>
 </section>
 <section id="file-format-and-codec">
-<h3><a class="toc-backref" href="#id9">File format and codec</a><a class="headerlink" href="#file-format-and-codec" title="Permalink to this headline">¶</a></h3>
-<table class="colwidths-given docutils align-default">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">File format and codec</a><a class="headerlink" href="#file-format-and-codec" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 10%" />
@@ -243,21 +244,21 @@
 </section>
 </section>
 <section id="canvas">
-<h2><a class="toc-backref" href="#id10">Canvas</a><a class="headerlink" href="#canvas" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Canvas</a><a class="headerlink" href="#canvas" title="Permalink to this heading"></a></h2>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">canvas</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;myCanvas&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;640&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;480&quot;</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">canvas</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <section id="canvas-context">
-<h3><a class="toc-backref" href="#id11">Canvas Context</a><a class="headerlink" href="#canvas-context" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Canvas Context</a><a class="headerlink" href="#canvas-context" title="Permalink to this heading"></a></h3>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
 
-<span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="mf">10</span><span class="p">;</span>
-<span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">&quot;#3366ff&quot;</span><span class="p">;</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">lineWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">strokeStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;#3366ff&quot;</span><span class="p">;</span>
 
-<span class="nx">context</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span> <span class="mf">10</span><span class="p">);</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span>
 <span class="nx">context</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="mf">400</span><span class="p">,</span><span class="mf">10</span><span class="p">);</span>
-<span class="nx">context</span><span class="p">.</span><span class="nx">lineCap</span> <span class="o">=</span> <span class="s2">&quot;butt&quot;</span><span class="p">;</span>
+<span class="nx">context</span><span class="p">.</span><span class="nx">lineCap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;butt&quot;</span><span class="p">;</span>
 <span class="nx">context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -268,29 +269,29 @@
 </ul>
 </section>
 <section id="canvas-data">
-<h3><a class="toc-backref" href="#id12">Canvas data</a><a class="headerlink" href="#canvas-data" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">);</span>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Canvas data</a><a class="headerlink" href="#canvas-data" title="Permalink to this heading"></a></h3>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="canvas-and-image">
-<h3><a class="toc-backref" href="#id13">Canvas and image</a><a class="headerlink" href="#canvas-and-image" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">Image</span><span class="p">();</span>
-<span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">&quot;smile.png&quot;</span><span class="p">;</span>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Canvas and image</a><a class="headerlink" href="#canvas-and-image" title="Permalink to this heading"></a></h3>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">img</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Image</span><span class="p">();</span>
+<span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;smile.png&quot;</span><span class="p">;</span>
 
-<span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="mf">10</span><span class="p">,</span> <span class="mf">10</span><span class="p">,</span> <span class="mf">200</span><span class="p">,</span> <span class="mf">2000</span><span class="p">);</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">font</span> <span class="o">=</span> <span class="s2">&quot;20px Arial&quot;</span><span class="p">;</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">textBaseline</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span><span class="p">;</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">;</span>
-    <span class="nx">context</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">&quot;I&#39;m happy on web&quot;</span><span class="p">);</span>
+<span class="nx">img</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">canvas</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="mf">2000</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">font</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;20px Arial&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">textBaseline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;top&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">fillStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">context</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">&quot;I&#39;m happy on web&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="web-worker">
-<h2><a class="toc-backref" href="#id14">Web Worker</a><a class="headerlink" href="#web-worker" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Web Worker</a><a class="headerlink" href="#web-worker" title="Permalink to this heading"></a></h2>
 <p>Web worker 实现了 Web JS 中的多线程支持</p>
 <ol class="arabic simple">
 <li><p>Dedicated Worker: 只能被首次生成它的脚本使用</p></li>

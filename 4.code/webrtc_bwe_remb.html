@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC REMB Code &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -116,9 +121,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
-      <li>WebRTC REMB Code</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
+      <li class="breadcrumb-item active">WebRTC REMB Code</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_bwe_remb.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -129,12 +134,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-remb-code">
-<h1>WebRTC REMB Code<a class="headerlink" href="#webrtc-remb-code" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC REMB Code<a class="headerlink" href="#webrtc-remb-code" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC REMB</p></td>
@@ -146,11 +147,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
 <li><p><a class="reference internal" href="#controller" id="id6">Controller</a></p>
@@ -171,9 +172,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id5">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>RTP extension: abs_send_time</p></li>
 <li><p>RTCP extension: REMB</p></li>
@@ -182,7 +183,7 @@
 </ul>
 </section>
 <section id="controller">
-<h2><a class="toc-backref" href="#id6">Controller</a><a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Controller</a><a class="headerlink" href="#controller" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>ReceiveSideCongestionController</p></li>
 <li><p>RembThrottler</p></li>
@@ -250,7 +251,7 @@ uint32_t packets_since_absolute_send_time_ RTC_GUARDED_BY(mutex_);
 </pre></div>
 </div>
 <section id="id3">
-<h3><a class="toc-backref" href="#id7">生成和发送 REMB 消息</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">生成和发送 REMB 消息</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <p>根据所接收到的 RTP packet 中的 abs_send_time, 以及所接收到的时间</p>
 <p class="plantuml">
 <img src="../_images/plantuml-fbe29241a522ebc3d4793c2658b48fa5e2581afc.png" alt="MediaChannel-&gt;WebRtcVideoChannel: OnPacketReceived
@@ -262,7 +263,7 @@ ReceiveSideCongestionController-&gt; RemoteBitrateEstimatorAbsSendTime : Incomin
 </p>
 </section>
 <section id="id4">
-<h3><a class="toc-backref" href="#id8">接收和解析 REMB 消息</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">接收和解析 REMB 消息</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <p>这里应用了观察者模式， 当 <cite>rtcp_receiver</cite> 收到了 REMB 或者 TMMBR 消息后，可以通知观察者 <cite>rtcp_bandwidth_observer</cite></p>
 <blockquote class="epigraph">
 <div><p>A receiver, translator, or mixer uses the Temporary Maximum Media Stream Bit Rate Request (TMMBR, “timber”) to request a sender to limit the maximum bit rate for a media stream</p>
@@ -271,19 +272,19 @@ ReceiveSideCongestionController-&gt; RemoteBitrateEstimatorAbsSendTime : Incomin
 <ul class="simple">
 <li><p>rtp_transport_controller_send.cc</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NetworkControllerInterface</span><span class="o">&gt;</span><span class="w"> </span><span class="n">controller_</span><span class="w"></span>
-<span class="w">   </span><span class="n">RTC_GUARDED_BY</span><span class="p">(</span><span class="n">task_queue_</span><span class="p">)</span><span class="w"> </span><span class="n">RTC_PT_GUARDED_BY</span><span class="p">(</span><span class="n">task_queue_</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NetworkControllerInterface</span><span class="o">&gt;</span><span class="w"> </span><span class="n">controller_</span>
+<span class="w">   </span><span class="n">RTC_GUARDED_BY</span><span class="p">(</span><span class="n">task_queue_</span><span class="p">)</span><span class="w"> </span><span class="n">RTC_PT_GUARDED_BY</span><span class="p">(</span><span class="n">task_queue_</span><span class="p">);</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">RtpTransportControllerSend::OnReceivedEstimatedBitrate</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">bitrate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">RemoteBitrateReport</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">msg</span><span class="p">.</span><span class="n">receive_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">Millis</span><span class="p">(</span><span class="n">clock_</span><span class="o">-&gt;</span><span class="n">TimeInMilliseconds</span><span class="p">());</span><span class="w"></span>
-<span class="w">   </span><span class="n">msg</span><span class="p">.</span><span class="n">bandwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">BitsPerSec</span><span class="p">(</span><span class="n">bitrate</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">task_queue_</span><span class="p">.</span><span class="n">RunOrPost</span><span class="p">([</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">RTC_DCHECK_RUN_ON</span><span class="p">(</span><span class="o">&amp;</span><span class="n">task_queue_</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">controller_</span><span class="p">)</span><span class="w"></span>
-<span class="w">         </span><span class="n">PostUpdates</span><span class="p">(</span><span class="n">controller_</span><span class="o">-&gt;</span><span class="n">OnRemoteBitrateReport</span><span class="p">(</span><span class="n">msg</span><span class="p">));</span><span class="w"></span>
-<span class="w">   </span><span class="p">});</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">RtpTransportControllerSend::OnReceivedEstimatedBitrate</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">bitrate</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">RemoteBitrateReport</span><span class="w"> </span><span class="n">msg</span><span class="p">;</span>
+<span class="w">   </span><span class="n">msg</span><span class="p">.</span><span class="n">receive_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">Millis</span><span class="p">(</span><span class="n">clock_</span><span class="o">-&gt;</span><span class="n">TimeInMilliseconds</span><span class="p">());</span>
+<span class="w">   </span><span class="n">msg</span><span class="p">.</span><span class="n">bandwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">BitsPerSec</span><span class="p">(</span><span class="n">bitrate</span><span class="p">);</span>
+<span class="w">   </span><span class="n">task_queue_</span><span class="p">.</span><span class="n">RunOrPost</span><span class="p">([</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">RTC_DCHECK_RUN_ON</span><span class="p">(</span><span class="o">&amp;</span><span class="n">task_queue_</span><span class="p">);</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">controller_</span><span class="p">)</span>
+<span class="w">         </span><span class="n">PostUpdates</span><span class="p">(</span><span class="n">controller_</span><span class="o">-&gt;</span><span class="n">OnRemoteBitrateReport</span><span class="p">(</span><span class="n">msg</span><span class="p">));</span>
+<span class="w">   </span><span class="p">});</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>之后回调到 GoogCcNetworkController 也就 GCC 的核心类</p>
@@ -304,60 +305,60 @@ ReceiveSideCongestionController-&gt; RemoteBitrateEstimatorAbsSendTime : Incomin
 <ul class="simple">
 <li><p>third_party/webrtc/modules/congestion_controller/goog_cc/send_side_bandwidth_estimation.cc</p></li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::UpdateReceiverEstimate</span><span class="p">(</span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                                         </span><span class="n">DataRate</span><span class="w"> </span><span class="n">bandwidth</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::UpdateReceiverEstimate</span><span class="p">(</span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">,</span>
+<span class="w">                                                         </span><span class="n">DataRate</span><span class="w"> </span><span class="n">bandwidth</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">   </span><span class="c1">// TODO(srte): Ensure caller passes PlusInfinity, not zero, to represent no</span>
 <span class="w">   </span><span class="c1">// limitation.</span>
-<span class="w">   </span><span class="n">receiver_limit_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bandwidth</span><span class="p">.</span><span class="n">IsZero</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">bandwidth</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">ApplyTargetLimits</span><span class="p">(</span><span class="n">at_time</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="n">receiver_limit_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bandwidth</span><span class="p">.</span><span class="n">IsZero</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">DataRate</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">()</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">bandwidth</span><span class="p">;</span>
+<span class="w">   </span><span class="n">ApplyTargetLimits</span><span class="p">(</span><span class="n">at_time</span><span class="p">);</span>
+<span class="p">}</span>
 
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::UpdateTargetBitrate</span><span class="p">(</span><span class="n">DataRate</span><span class="w"> </span><span class="n">new_bitrate</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                                      </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">new_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">new_bitrate</span><span class="p">,</span><span class="w"> </span><span class="n">GetUpperLimit</span><span class="p">());</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">new_bitrate</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">min_bitrate_configured_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">MaybeLogLowBitrateWarning</span><span class="p">(</span><span class="n">new_bitrate</span><span class="p">,</span><span class="w"> </span><span class="n">at_time</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="n">new_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min_bitrate_configured_</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="n">current_target_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_bitrate</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">MaybeLogLossBasedEvent</span><span class="p">(</span><span class="n">at_time</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">link_capacity_</span><span class="p">.</span><span class="n">OnRateUpdate</span><span class="p">(</span><span class="n">acknowledged_rate_</span><span class="p">,</span><span class="w"> </span><span class="n">current_target_</span><span class="p">,</span><span class="w"> </span><span class="n">at_time</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::UpdateTargetBitrate</span><span class="p">(</span><span class="n">DataRate</span><span class="w"> </span><span class="n">new_bitrate</span><span class="p">,</span>
+<span class="w">                                                      </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">new_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">new_bitrate</span><span class="p">,</span><span class="w"> </span><span class="n">GetUpperLimit</span><span class="p">());</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">new_bitrate</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">min_bitrate_configured_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">MaybeLogLowBitrateWarning</span><span class="p">(</span><span class="n">new_bitrate</span><span class="p">,</span><span class="w"> </span><span class="n">at_time</span><span class="p">);</span>
+<span class="w">      </span><span class="n">new_bitrate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min_bitrate_configured_</span><span class="p">;</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">   </span><span class="n">current_target_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_bitrate</span><span class="p">;</span>
+<span class="w">   </span><span class="n">MaybeLogLossBasedEvent</span><span class="p">(</span><span class="n">at_time</span><span class="p">);</span>
+<span class="w">   </span><span class="n">link_capacity_</span><span class="p">.</span><span class="n">OnRateUpdate</span><span class="p">(</span><span class="n">acknowledged_rate_</span><span class="p">,</span><span class="w"> </span><span class="n">current_target_</span><span class="p">,</span><span class="w"> </span><span class="n">at_time</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::ApplyTargetLimits</span><span class="p">(</span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">UpdateTargetBitrate</span><span class="p">(</span><span class="n">current_target_</span><span class="p">,</span><span class="w"> </span><span class="n">at_time</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::ApplyTargetLimits</span><span class="p">(</span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">UpdateTargetBitrate</span><span class="p">(</span><span class="n">current_target_</span><span class="p">,</span><span class="w"> </span><span class="n">at_time</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="n">DataRate</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::GetUpperLimit</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">DataRate</span><span class="w"> </span><span class="n">upper_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delay_based_limit_</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">disable_receiver_limit_caps_only_</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="n">upper_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">upper_limit</span><span class="p">,</span><span class="w"> </span><span class="n">receiver_limit_</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">upper_limit</span><span class="p">,</span><span class="w"> </span><span class="n">max_bitrate_configured_</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="n">DataRate</span><span class="w"> </span><span class="nf">SendSideBandwidthEstimation::GetUpperLimit</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">DataRate</span><span class="w"> </span><span class="n">upper_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delay_based_limit_</span><span class="p">;</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">disable_receiver_limit_caps_only_</span><span class="p">)</span>
+<span class="w">      </span><span class="n">upper_limit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">upper_limit</span><span class="p">,</span><span class="w"> </span><span class="n">receiver_limit_</span><span class="p">);</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">upper_limit</span><span class="p">,</span><span class="w"> </span><span class="n">max_bitrate_configured_</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>注：这里的 GetUpperLimit() 中应用了 REMB 设定的最大带宽， 和当前带宽的最大值进行比较，取其较小的值进行速率调整</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">LinkCapacityTracker::OnRateUpdate</span><span class="p">(</span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">acknowledged</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                       </span><span class="n">DataRate</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                       </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">acknowledged</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="n">DataRate</span><span class="w"> </span><span class="n">acknowledged_target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="o">*</span><span class="n">acknowledged</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">acknowledged_target</span><span class="p">.</span><span class="n">bps</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">capacity_estimate_bps_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">TimeDelta</span><span class="w"> </span><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">at_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">last_link_capacity_update_</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="kt">double</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delta</span><span class="p">.</span><span class="n">IsFinite</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">delta</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tracking_rate</span><span class="p">.</span><span class="n">Get</span><span class="p">()))</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">capacity_estimate_bps_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">capacity_estimate_bps_</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
-<span class="w">                              </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">acknowledged_target</span><span class="p">.</span><span class="n">bps</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="n">last_link_capacity_update_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">at_time</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">LinkCapacityTracker::OnRateUpdate</span><span class="p">(</span><span class="n">absl</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">DataRate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">acknowledged</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">DataRate</span><span class="w"> </span><span class="n">target</span><span class="p">,</span>
+<span class="w">                                       </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">at_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">acknowledged</span><span class="p">)</span>
+<span class="w">      </span><span class="k">return</span><span class="p">;</span>
+<span class="w">   </span><span class="n">DataRate</span><span class="w"> </span><span class="n">acknowledged_target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="o">*</span><span class="n">acknowledged</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">);</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">acknowledged_target</span><span class="p">.</span><span class="n">bps</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">capacity_estimate_bps_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">TimeDelta</span><span class="w"> </span><span class="n">delta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">at_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">last_link_capacity_update_</span><span class="p">;</span>
+<span class="w">      </span><span class="kt">double</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">delta</span><span class="p">.</span><span class="n">IsFinite</span><span class="p">()</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">delta</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">tracking_rate</span><span class="p">.</span><span class="n">Get</span><span class="p">()))</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">capacity_estimate_bps_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">capacity_estimate_bps_</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                              </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">acknowledged_target</span><span class="p">.</span><span class="n">bps</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">   </span><span class="n">last_link_capacity_update_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">at_time</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="algorigthm">
-<h2><a class="toc-backref" href="#id9">Algorigthm</a><a class="headerlink" href="#algorigthm" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Algorigthm</a><a class="headerlink" href="#algorigthm" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>pre-filtering 预先过滤</p></li>
 <li><p>arrival-time filter 到达时间过滤器</p></li>
@@ -376,7 +377,7 @@ ReceiveSideCongestionController-&gt; RemoteBitrateEstimatorAbsSendTime : Incomin
 </ol>
 <p>为了计算延迟梯度, 除了接收端要反馈每个媒体包的接受状态, 同时发送端也要记录每个媒体包的发送状态, 记录其发送的时间值。在这个情况下abs-send-time扩展不再需要。</p>
 <section id="key-metrics">
-<h3><a class="toc-backref" href="#id10">Key metrics</a><a class="headerlink" href="#key-metrics" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Key metrics</a><a class="headerlink" href="#key-metrics" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>inter-group delay variaration:</p></li>
 </ul>
@@ -390,42 +391,42 @@ ReceiveSideCongestionController-&gt; RemoteBitrateEstimatorAbsSendTime : Incomin
 </section>
 </section>
 <section id="class-and-snippets">
-<h2><a class="toc-backref" href="#id11">Class and Snippets</a><a class="headerlink" href="#class-and-snippets" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Class and Snippets</a><a class="headerlink" href="#class-and-snippets" title="Permalink to this heading"></a></h2>
 <section id="modules">
-<h3><a class="toc-backref" href="#id12">modules</a><a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">modules</a><a class="headerlink" href="#modules" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/congestion_controller/">congestion_controller</a></p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator">remote_bitrate_estimator</a></p></li>
 </ul>
 </section>
 <section id="classes">
-<h3><a class="toc-backref" href="#id13">classes</a><a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">classes</a><a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>RemoteBitrateEstimatorAbsSendTime</p></li>
 </ul>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Instantiate RBE for Time Offset or Absolute Send Time extensions.</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">ReceiveSideCongestionController::PickEstimator</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">using_absolute_send_time_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">rbe_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">RemoteBitrateEstimatorAbsSendTime</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">remb_throttler_</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                                                  </span><span class="o">&amp;</span><span class="n">clock_</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">rbe_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">RemoteBitrateEstimatorSingleStream</span><span class="o">&gt;</span><span class="p">(</span><span class="w"></span>
-<span class="w">         </span><span class="o">&amp;</span><span class="n">remb_throttler_</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">clock_</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">ReceiveSideCongestionController::PickEstimator</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">using_absolute_send_time_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">rbe_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">RemoteBitrateEstimatorAbsSendTime</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">remb_throttler_</span><span class="p">,</span>
+<span class="w">                                                                  </span><span class="o">&amp;</span><span class="n">clock_</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">rbe_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">RemoteBitrateEstimatorSingleStream</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">         </span><span class="o">&amp;</span><span class="n">remb_throttler_</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">clock_</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">}</span>
 
-<span class="kt">void</span><span class="w"> </span><span class="nf">ReceiveSideCongestionController::OnReceivedPacket</span><span class="p">(</span><span class="w"></span>
-<span class="w">      </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">arrival_time_ms</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">payload_size</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">RTPHeader</span><span class="o">&amp;</span><span class="w"> </span><span class="n">header</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">remote_estimator_proxy_</span><span class="p">.</span><span class="n">IncomingPacket</span><span class="p">(</span><span class="n">arrival_time_ms</span><span class="p">,</span><span class="w"> </span><span class="n">payload_size</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">header</span><span class="p">.</span><span class="n">extension</span><span class="p">.</span><span class="n">hasTransportSequenceNumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">ReceiveSideCongestionController::OnReceivedPacket</span><span class="p">(</span>
+<span class="w">      </span><span class="kt">int64_t</span><span class="w"> </span><span class="n">arrival_time_ms</span><span class="p">,</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">payload_size</span><span class="p">,</span>
+<span class="w">      </span><span class="k">const</span><span class="w"> </span><span class="n">RTPHeader</span><span class="o">&amp;</span><span class="w"> </span><span class="n">header</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">remote_estimator_proxy_</span><span class="p">.</span><span class="n">IncomingPacket</span><span class="p">(</span><span class="n">arrival_time_ms</span><span class="p">,</span><span class="w"> </span><span class="n">payload_size</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">);</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">header</span><span class="p">.</span><span class="n">extension</span><span class="p">.</span><span class="n">hasTransportSequenceNumber</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="c1">// Receive-side BWE.</span>
-<span class="w">      </span><span class="n">MutexLock</span><span class="w"> </span><span class="n">lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex_</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="n">PickEstimatorFromHeader</span><span class="p">(</span><span class="n">header</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="n">rbe_</span><span class="o">-&gt;</span><span class="n">IncomingPacket</span><span class="p">(</span><span class="n">arrival_time_ms</span><span class="p">,</span><span class="w"> </span><span class="n">payload_size</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="n">MutexLock</span><span class="w"> </span><span class="n">lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex_</span><span class="p">);</span>
+<span class="w">      </span><span class="n">PickEstimatorFromHeader</span><span class="p">(</span><span class="n">header</span><span class="p">);</span>
+<span class="w">      </span><span class="n">rbe_</span><span class="o">-&gt;</span><span class="n">IncomingPacket</span><span class="p">(</span><span class="n">arrival_time_ms</span><span class="p">,</span><span class="w"> </span><span class="n">payload_size</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>接收方带宽估算的核心代码参见 <a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/modules/remote_bitrate_estimator/remote_bitrate_estimator_abs_send_time.cc;l=230">remote_bitrate_estimator_abs_send_time.cc</a></p>
