@@ -2,5 +2,7 @@ Markdown==3.3.6
 MarkupSafe==2.0.1
 ujson==1.35
 sphinx-mdinclude
-Sphinx==4.2.0
+Sphinx
+fabric
 sphinxcontrib-plantuml==0.24.1
+sphinx-rtd-theme

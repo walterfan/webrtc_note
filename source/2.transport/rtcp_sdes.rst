@@ -31,7 +31,7 @@ SDES 可用于将附加的非媒体信息附加到 RTP 媒体流，例如电子�
 SDES Header
 -------------------------
 
-SDES 数据包包含常规标头，有效负载类型为 202，项目计数等于数据包中 SSRC/CSRC 块的数量，后跟零个或多个 SSRC/CSRC 块，其中包含有关特定 SSRC 或 CSRC，每个都与 32 位边界对齐。
+SDES 数据包包含常规包头，有效负载类型为 202，项目计数等于数据包中 SSRC/CSRC 块的数量，后跟零个或多个 SSRC/CSRC 块，其中包含有关特定 SSRC 或 CSRC，每个都与 32 位边界对齐。
 
 .. code-block::
 
@@ -58,12 +58,11 @@ SDES 数据包包含常规标头，有效负载类型为 202，项目计数等�
 SDES Items
 -------------------------
 
-The different SDES items are encoded according to a type-length-value scheme. Currently, CNAME, NAME, EMAIL, PHONE, LOC, TOOL, NOTE, and PRIV items are defined in [RFC1889].
+不同的 SDES 项根据类型-长度-值方案进行编码。 目前，CNAME、NAME、EMAIL、PHONE、LOC、TOOL、NOTE 和 PRIV 项在 RFC1889 中有详细定义。
 
-The CNAME item is mandatory in every SDES packet, which in turn is mandatory part of every compound RTCP packet.
+CNAME 项在每个 SDES 数据包中都是必需的，而 SDES 数据包又是每个复合 RTCP 数据包中的必需部分。
 
-Like the SSRC identifier, a CNAME must differ from the CNAMEs of every other session participants. But instead of choosing the CNAME identifier randomly, the CNAME should allow both a person or a program to locate the source by means of the CNAME contents.
-
+与 SSRC 标识符一样，CNAME 必须与其他会话参与者的 CNAME 不同。 但 CNAME 不应随机选择 CNAME 标识符，而应允许个人或程序通过 CNAME 内容来定位其来源。
 
 .. code-block::
 

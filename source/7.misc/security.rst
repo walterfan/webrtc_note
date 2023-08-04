@@ -36,14 +36,6 @@ WebRTC security is based on TLS/DTLS and SRTP. The key management is also import
 3. Availablity 可用性： 信息可被合法用户访问并向其提供所需的功能和特性，例如拒绝服务攻击就是对可用性的破坏
 
 
-信息保障中有一个 PDRR 模型:
-
-1. Protection 保护
-2. Detection 检测
-3. Reaction 响应
-4. Restore 恢复
-
-
 保护的对象有
 1. 保护网络和基础设施： 如主干，有线和无线网络的可用性， 采用 VPN
 2. 保护访问的边界：如登录保护，远程访问控制，多级安全
@@ -65,6 +57,22 @@ Authentication mechanisms can also support proxy authorization, a facility allow
 
 Security Check list
 ===================================
+#. 原则：未雨绸缪，亡羊补牢
+
+#. 分析方法：
+
+   - 要保护的对象
+   - 分析其价值，弱点，威胁
+   - 制定对策
+   - 降低风险
+
+* 安全对策 PDRRP
+
+  - Protect 保护： 层层设防
+  - Detect 检测： 实时，动态
+  - React 反应：迅速，连锁
+  - Restore 恢复： 及时，升级
+  - Punish 处罚：准确，有力，适当
 
 
 

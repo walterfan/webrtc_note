@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Analytics &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -98,9 +103,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">6. WebRTC 工具</a> &raquo;</li>
-      <li>Data Analytics</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">6. WebRTC 工具</a></li>
+      <li class="breadcrumb-item active">Data Analytics</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/6.tool/analytics.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -111,12 +116,8 @@
            <div itemprop="articleBody">
              
   <section id="data-analytics">
-<h1>Data Analytics<a class="headerlink" href="#data-analytics" title="Permalink to this headline">¶</a></h1>
+<h1>Data Analytics<a class="headerlink" href="#data-analytics" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Data Analytics</p></td>
@@ -128,11 +129,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p>
 <ul>
@@ -143,9 +144,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <p>There are two kinds of data for data analytics:</p>
 <ol class="arabic simple">
 <li><p>Log</p></li>
@@ -161,7 +162,7 @@
 <li><p>rich analytics and visualize tool</p></li>
 </ol>
 <section id="elk-k">
-<h3><a class="toc-backref" href="#id4">ELK + K</a><a class="headerlink" href="#elk-k" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">ELK + K</a><a class="headerlink" href="#elk-k" title="Permalink to this heading"></a></h3>
 <p>ElasticSearch + LogStash + Kibana + Kafka</p>
 <p>Data flow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LogStash</span> <span class="o">-&gt;</span> <span class="n">Kafka</span> <span class="o">-&gt;</span> <span class="n">ElasticSearch</span> <span class="o">-&gt;</span> <span class="n">Kibana</span>
@@ -169,19 +170,19 @@
 </div>
 </section>
 <section id="fig-k">
-<h3><a class="toc-backref" href="#id5">FIG + K</a><a class="headerlink" href="#fig-k" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">FIG + K</a><a class="headerlink" href="#fig-k" title="Permalink to this heading"></a></h3>
 <p>Data flow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Filebeat</span> <span class="o">-&gt;</span> <span class="n">Kafka</span> <span class="o">-&gt;</span> <span class="n">InfluxDB</span> <span class="o">-&gt;</span> <span class="n">Grafana</span>
 </pre></div>
 </div>
 </section>
 <section id="pinot">
-<h3><a class="toc-backref" href="#id6">Pinot</a><a class="headerlink" href="#pinot" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Pinot</a><a class="headerlink" href="#pinot" title="Permalink to this heading"></a></h3>
 <p>Pinot is a real-time distributed OLAP datastore, purpose-built to provide ultra low-latency analytics, even at extremely high throughput. It can ingest directly from streaming data sources - such as Apache Kafka and Amazon Kinesis - and make the events available for querying instantly. It can also ingest from batch data sources such as Hadoop HDFS, Amazon S3, Azure ADLS, and Google Cloud Storage.</p>
 <p>At the heart of the system is a columnar store, with several smart indexing and pre-aggregation techniques for low latency. This makes Pinot the most perfect fit for user-facing realtime analytics. At the same time, Pinot is also a great choice for other analytical use-cases, such as internal dashboards, anomaly detection, and ad-hoc data exploration.</p>
 </section>
 <section id="iceberg">
-<h3><a class="toc-backref" href="#id7">Iceberg</a><a class="headerlink" href="#iceberg" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Iceberg</a><a class="headerlink" href="#iceberg" title="Permalink to this heading"></a></h3>
 <p>Iceberg is a high-performance format for huge analytic tables. Iceberg brings the reliability and simplicity of SQL tables to big data, while making it possible for engines like Spark, Trino, Flink, Presto, and Hive to safely work with the same tables, at the same time.</p>
 </section>
 </section>

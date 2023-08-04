@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>video adaptation &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -104,10 +109,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_video.html">WebRTC 视频</a> &raquo;</li>
-      <li>video adaptation</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_video.html">WebRTC 视频</a></li>
+      <li class="breadcrumb-item active">video adaptation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/video_adaptation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -118,12 +123,8 @@
            <div itemprop="articleBody">
              
   <section id="video-adaptation">
-<h1>video adaptation<a class="headerlink" href="#video-adaptation" title="Permalink to this headline">¶</a></h1>
+<h1>video adaptation<a class="headerlink" href="#video-adaptation" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Video Adaptation</p></td>
@@ -135,11 +136,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id5">概述</a></p>
 <ul>
@@ -155,9 +156,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id11">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>video 的编码或传输质量会受到网络带宽和设备能力的影响。</p>
 <p>网络质量不佳，带宽受限，如果还要发送高质量的视频会很困难，因为质量越高，码率越大，所以我们需要降低传送的码率。
 如果用户可以接受低质量的视频，那么这时候可以降低分辨率。如果用户不接受低质量视频，那么就需要忍受延迟，降低帧率或者有些丢帧。</p>
@@ -195,31 +196,31 @@
 </pre></div>
 </div>
 <section id="device-adaptation">
-<h3><a class="toc-backref" href="#id6">Device adaptation</a><a class="headerlink" href="#device-adaptation" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Device adaptation</a><a class="headerlink" href="#device-adaptation" title="Permalink to this heading"></a></h3>
 <p>设备的计算和存储资源对于视频的编解码, 捕获和渲染是有很大影响的. 如果设备性能太差, 则不适合进行高分辨率和高帧率的视频编解码.</p>
 <p>在 webrtc library 中的 video 模块中有一个子模块 adaption, 它主要有如下的类来适应设备和网络状态</p>
 <section id="encodeusageresource">
-<h4><a class="toc-backref" href="#id7">EncodeUsageResource</a><a class="headerlink" href="#encodeusageresource" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id7" role="doc-backlink">EncodeUsageResource</a><a class="headerlink" href="#encodeusageresource" title="Permalink to this heading"></a></h4>
 <p>Handles interaction with the OveruseDetector.</p>
 </section>
 <section id="qualityscaler">
-<h4><a class="toc-backref" href="#id8">QualityScaler</a><a class="headerlink" href="#qualityscaler" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id8" role="doc-backlink">QualityScaler</a><a class="headerlink" href="#qualityscaler" title="Permalink to this heading"></a></h4>
 <p>QualityScaler runs asynchronously and monitors QP values of encoded frames.
 It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to signal an overuse or underuse of QP
 (which indicate a desire to scale the video stream down or up).</p>
 </section>
 <section id="qualityscalerqpusagehandlerinterface">
-<h4><a class="toc-backref" href="#id9">QualityScalerQpUsageHandlerInterface</a><a class="headerlink" href="#qualityscalerqpusagehandlerinterface" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id9" role="doc-backlink">QualityScalerQpUsageHandlerInterface</a><a class="headerlink" href="#qualityscalerqpusagehandlerinterface" title="Permalink to this heading"></a></h4>
 <p>Reacts to QP being too high or too low.</p>
 <p>For best quality, when QP is high it is desired to decrease the resolution or frame rate of the stream and when QP is low it is desired to increase the resolution or frame rate of the stream.</p>
 <p>Whether to reconfigure the stream is ultimately up to the handler, which is able to respond asynchronously.</p>
 </section>
 </section>
 <section id="network-adaptation">
-<h3><a class="toc-backref" href="#id10">Network adaptation</a><a class="headerlink" href="#network-adaptation" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Network adaptation</a><a class="headerlink" href="#network-adaptation" title="Permalink to this heading"></a></h3>
 <p>WebRTC 有一个网络拥塞和带宽估计的模块, 当检测到网络带宽有变化的(over-use, under-use), 就可以来调整视频的分辨率或帧率</p>
-<table class="colwidths-given docutils align-default" id="id4">
-<caption><span class="caption-text">分辨率对应的大约带宽</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">分辨率对应的大约带宽</span><a class="headerlink" href="#id4" title="Permalink to this table"></a></caption>
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
@@ -265,7 +266,7 @@ It holds a reference to a QualityScalerQpUsageHandlerInterface implementation to
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id11">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://xie.infoq.cn/article/50b7931b8a023f8ca7f25d4e9">Webrtc video framerate/resolution 自适应</a></p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h">overuse_frame_detector</a></p></li>

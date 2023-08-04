@@ -52,7 +52,7 @@ These messages are classified into three categories as follows:
 PT 荷载类型有如下分类
 
 .. code-block::
-    
+
             Name   | Value | Brief Description
          ----------+-------+------------------------------------
             RTPFB  |  205  | Transport layer FB message

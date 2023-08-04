@@ -18,19 +18,48 @@ Video Lip Sync
 .. contents::
    :local:
 
-概述
-==================
-来自同一个终端用户的音频和视频, 在编码发送的 RTP 包中有一个 timestamp, 这个时间戳表示媒体流的捕捉时间。
-同时, 作为发送者也会发送 RTCP Sender Report, 包含发送的 RTP timestamp 和 NTP timestamp 的映射
+
 
 问题的原因
 ===================
-两个问题：
+这个问题的原因主要在于音频的采集， 编码，传输， 解码， 播放与视频的采集，编码，传输，解码以及渲染一般是分开进行的，因为音频和视频采集自不同的设备，即它们的来源不同，在网络上传输也会有延迟，也由不同的设备进行播放，这样如果在接收方不采取措施进行时间同步，就会极有可能看到口型和听到的声音对不上的情况。
 
+由此派生出 ３ 个小问题：
+
+1. 如何将来自同一个人或设备的多路 audio 及 video stream关联起来?
+2. 如何将 RTP 中的时间戳 timestamp 映射到发送方的音视频采集时间
+3. 如何调整音频或者视频帧的播放时间，让它们怎么之间相对同步？
+
+
+
+解决方案
+========================
 1. 如何关联来自同一个人或设备的多路 audio 及 video stream?
 
 对于多媒体会话，每种类型的媒体（例如音频或视频）会在单独的 RTP 会话中发送，
 接收方通过 CNAME 项关联要同步的RTP流, 而这个 CNAME 包含在发送方所发送的 RTCP SDES 中
+
+
+SDES 数据包包含常规包头，有效负载类型为 202，项目计数等于数据包中 SSRC/CSRC 块的数量，后跟零个或多个 SSRC/CSRC 块，其中包含有关特定 SSRC 或 CSRC，每个都与 32 位边界对齐。
+
+.. code-block::
+
+    0               1               2               3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |V=2|P|    SC   |  PT=SDES=202  |            length L           |
+    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+    |                          SSRC/CSRC_1                          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           SDES items                          |
+    |                              ...                              |
+    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+    |                          SSRC/CSRC_2                          |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                           SDES items                          |
+    |                              ...                              |
+    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 
 
 2. 如何将 RTP 中的时间戳 timestamp 与 wall clock 挂钟时间映射
@@ -150,9 +179,9 @@ ITU 给出的阈值:
 1.  使用 Video RTCP SR 中的 RTP/NTP 时间戳对建立的映射，将视频 RTP 时间戳 RTPv 映射到发送方 NTP 时域。
 
 2. 根据该 NTP 时间戳，使用 Audio RTCP SR 中的 RTP/NTP 时间戳对建立的映射，计算来自发送方的相应音频 RTP 时间戳。
-   此时，视频RTP时间戳被映射到音频RTP 时间基准。
+   此时，视频RTP时间戳被映射到音频RTP 包的相同时间基准。
 
-3. 根据该音频 RTP 时间戳，使用 Krl 偏移计算音频设备时基中的相应时间戳。 结果是音频设备时基 ATB 中的时间戳。
+3. 根据该音频 RTP 时间戳，使用卡尔曼滤波的方法计算音频设备时基中的相应时间戳。 结果是音频设备时基 ATB 中的时间戳。
 
 4. 根据 ATB，使用偏移量 AtoV 计算视频设备时基 VTB 中的相应时间戳。
 
@@ -167,6 +196,40 @@ ITU 给出的阈值:
 
 
 .. image:: ../_static/lip-sync.jpeg
+
+
+
+.. code-block::
+
+if (diff_ms > 0) {
+      // The minimum video delay is longer than the current audio delay.
+      // We need to decrease extra video delay, or add extra audio delay.
+      if (video_delay_.extra_ms > base_target_delay_ms_) {
+            // We have extra delay added to ViE. Reduce this delay before adding
+            // extra delay to VoE.
+            video_delay_.extra_ms -= diff_ms;
+            audio_delay_.extra_ms = base_target_delay_ms_;
+      } else {  // video_delay_.extra_ms > 0
+            // We have no extra video delay to remove, increase the audio delay.
+            audio_delay_.extra_ms += diff_ms;
+            video_delay_.extra_ms = base_target_delay_ms_;
+      }
+      } else {  // if (diff_ms > 0)
+      // The video delay is lower than the current audio delay.
+      // We need to decrease extra audio delay, or add extra video delay.
+      if (audio_delay_.extra_ms > base_target_delay_ms_) {
+            // We have extra delay in VoiceEngine.
+            // Start with decreasing the voice delay.
+            // Note: diff_ms is negative; add the negative difference.
+            audio_delay_.extra_ms += diff_ms;
+            video_delay_.extra_ms = base_target_delay_ms_;
+      } else {  // audio_delay_.extra_ms > base_target_delay_ms_
+            // We have no extra delay in VoiceEngine, increase the video delay.
+            // Note: diff_ms is negative; subtract the negative difference.
+            video_delay_.extra_ms -= diff_ms;  // X - (-Y) = X + Y.
+            audio_delay_.extra_ms = base_target_delay_ms_;
+      }
+}
 
 
 相关代码

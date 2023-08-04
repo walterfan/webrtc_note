@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>coturn &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -48,15 +53,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../4.code/index.html">4. WebRTC 源码分析</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">5. WebRTC 实践</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 应用实践要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wasm.html">WebAssembly</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">coturn</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apprtc.html">AppRTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aiortc.html">aiortc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="recordrtc.html">Record RTC Tool</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sfu.html">SFU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="owt.html">Open WebRTC Toolkit Media Server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="janus.html">Janus Gateway</a></li>
 <li class="toctree-l2"><a class="reference internal" href="janus_plugins.html">Janus Plugins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="janus_modules.html">Janus Modules</a></li>
@@ -85,9 +92,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">5. WebRTC 实践</a> &raquo;</li>
-      <li>coturn</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">5. WebRTC 实践</a></li>
+      <li class="breadcrumb-item active">coturn</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/5.practice/coturn.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -98,12 +105,8 @@
            <div itemprop="articleBody">
              
   <section id="coturn">
-<h1>coturn<a class="headerlink" href="#coturn" title="Permalink to this headline">¶</a></h1>
+<h1>coturn<a class="headerlink" href="#coturn" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 71%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>coturn</p></td>
@@ -115,17 +118,68 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id3">Installation</a></p></li>
 </ul>
+</nav>
+<section id="installation">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>参考 <a class="reference external" href="https://github.com/coturn/coturn/blob/master/INSTALL">https://github.com/coturn/coturn/blob/master/INSTALL</a></p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">git</span><span class="w"> </span><span class="n">clone</span><span class="w"> </span><span class="n">https</span><span class="o">:</span><span class="c1">//github.com/coturn/coturn.git</span>
+<span class="n">cd</span><span class="w"> </span><span class="n">coturn</span>
+</pre></div>
 </div>
-<section id="overview">
-<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>编辑 install_deps.sh</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>openssl-devel
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>sqlite
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>sqlite-devel
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>libevent
+yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w">  </span>libevent-devel
+<span class="c1">#yum install postgresql-devel</span>
+<span class="c1">#yum install postgresql-server</span>
+<span class="c1">#yum install mysql-devel</span>
+<span class="c1">#yum install mysql-server</span>
+<span class="c1">#yum install hiredis</span>
+<span class="c1">#yum install hiredis-devel</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>安装依赖</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source install_deps.sh
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>配置</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./configure
+install is /bin/install
+pkill is /bin/pkill
+sqlite3 is /bin/sqlite3
+Use TMP dir /var/tmp
+….
+install -d sqlite
+rm -rf sqlite/turndb
+sqlite3 sqlite/turndb &lt; turndb/schema.sql
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>安装</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make install
+install -d /usr/local
+install -d /usr/local/bin
+</pre></div>
+</div>
 </section>
 </section>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voice Activity Detector &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,10 +116,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_audio.html">WebRTC 音频</a> &raquo;</li>
-      <li>Voice Activity Detector</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_audio.html">WebRTC 音频</a></li>
+      <li class="breadcrumb-item active">Voice Activity Detector</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/audio_vad.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -125,12 +130,8 @@
            <div itemprop="articleBody">
              
   <section id="voice-activity-detector">
-<h1>Voice Activity Detector<a class="headerlink" href="#voice-activity-detector" title="Permalink to this headline">¶</a></h1>
+<h1>Voice Activity Detector<a class="headerlink" href="#voice-activity-detector" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Voice Activity Detector</p></td>
@@ -142,11 +143,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#vad-in-codec" id="id4">VAD in codec</a></p></li>
@@ -159,9 +160,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <p>Voice activity detection (VAD), also known as speech activity detection or speech detection, is the detection of the presence or absence of human speech, used in speech processing.</p>
 <p>The main uses of VAD are in speech coding and speech recognition. It can facilitate speech processing, and can also be used to deactivate some processes during non-speech section of an audio session: it can avoid unnecessary coding/transmission of silence packets in Voice over Internet Protocol (VoIP) applications, saving on computation and on network bandwidth.</p>
 <p>VAD is an important enabling technology for a variety of speech-based applications.</p>
@@ -169,7 +170,7 @@
 <p>Some VAD algorithms also provide further analysis, for example whether the speech is voiced, unvoiced or sustained. Voice activity detection is usually independent of language.</p>
 </section>
 <section id="vad-in-codec">
-<h2><a class="toc-backref" href="#id4">VAD in codec</a><a class="headerlink" href="#vad-in-codec" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">VAD in codec</a><a class="headerlink" href="#vad-in-codec" title="Permalink to this heading"></a></h2>
 <p>VAD in Opus determines whether a frame is sent out as empty (DTX) or not.</p>
 <p>If speech is classified as silence (false negative), the frame will be empty and speech will be lost
 False negative rate(FNR) needs to be as close to zero as possible when DTX is enabled
@@ -177,7 +178,7 @@ the different VAD in opus codec under different complexity, VAD ON will tigger D
 <p>the RNN-VAD is used when complexity setting &gt;=7(float),which means when complexity &lt;7,we use traditional VAD.</p>
 </section>
 <section id="cng">
-<h2><a class="toc-backref" href="#id5">CNG</a><a class="headerlink" href="#cng" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">CNG</a><a class="headerlink" href="#cng" title="Permalink to this heading"></a></h2>
 <p>There is a Real-time Transport Protocol (RTP) Payload for Comfort Noise (CN).
 (refer to RFC 3389 )</p>
 <p>The payload format provides a minimum interoperability specification for communication of comfort noise parameters.  The comfort noise analysis and synthesis as well as the Voice Activity Detection (VAD) and DT</p>
@@ -187,7 +188,7 @@ the different VAD in opus codec under different complexity, VAD ON will tigger D
 <p>For example, in the case of μ-law-based coding, the maximum sine wave signal power without distortion is 3.17 dBm with amplitude ±8159. Square wave power is 3 dB more than sine wave power. The maximum possible power of signal from a square wave with an amplitude of ±8159 is 0 dBov as reference, which corresponds to a 6.17-dBm power level in the μ-law system. Hence, 0 dBov = 6.17 dBm is used in μ-law system. Sine and square wave power levels and signal amplitudes are shown in Fig. 4.1(c). Representation relative to the overload point of a system is particularly useful for digital implementations, because one does not need to know the relative calibration of the analog circuitry.</p>
 </section>
 <section id="vad-definition">
-<h2><a class="toc-backref" href="#id6">VAD definition</a><a class="headerlink" href="#vad-definition" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">VAD definition</a><a class="headerlink" href="#vad-definition" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>SILK VAD(SNR based)</p></li>
 </ul>
@@ -200,7 +201,7 @@ Multiplying this smoothed inverse energy with the subband energy gives the SNR.<
 <p>Opus VAD uses recursive neural network based on GRU units to perform both speech/music and speech/silence classification:</p>
 </section>
 <section id="algorithm">
-<h2><a class="toc-backref" href="#id7">Algorithm</a><a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Algorithm</a><a class="headerlink" href="#algorithm" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>There may first be a noise reduction stage, e.g. via spectral subtraction.</p></li>
 <li><p>Then some features or quantities are calculated from a section of the input signal.</p></li>
@@ -210,12 +211,12 @@ Multiplying this smoothed inverse energy with the subband energy gives the SNR.<
 <p>A representative set of recently published VAD methods formulates the decision rule on a frame by frame basis using instantaneous measures of the divergence distance between speech and noise.[citation needed] The different measures which are used in VAD methods include spectral slope, correlation coefficients, log likelihood ratio, cepstral, weighted cepstral, and modified distance measures.[citation needed]</p>
 <p>Independently from the choice of VAD algorithm, a compromise must be made between having voice detected as noise, or noise detected as voice (between false positive and false negative). A VAD operating in a mobile phone must be able to detect speech in the presence of a range of very diverse types of acoustic background noise. In these difficult detection conditions it is often preferable that a VAD should fail-safe, indicating speech detected when the decision is in doubt, to lower the chance of losing speech segments. The biggest difficulty in the detection of speech in this environment is the very low signal-to-noise ratios (SNRs) that are encountered. It may be impossible to distinguish between speech and noise using simple level detection techniques when parts of the speech utterance are buried below the noise.</p>
 <section id="gmm-vad">
-<h3><a class="toc-backref" href="#id8">GMM VAD</a><a class="headerlink" href="#gmm-vad" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">GMM VAD</a><a class="headerlink" href="#gmm-vad" title="Permalink to this heading"></a></h3>
 <p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/common_audio/vad/vad_gmm.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/common_audio/vad/vad_gmm.h</a></p>
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Voice_activity_detection">https://en.wikipedia.org/wiki/Voice_activity_detection</a></p></li>
 <li><p><a class="reference external" href="https://github.com:wiseman/py-webrtcvad.gits">https://github.com:wiseman/py-webrtcvad.gits</a></p></li>

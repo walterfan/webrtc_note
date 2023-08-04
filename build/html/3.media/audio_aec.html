@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acoustic Echo Canceller &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -109,10 +114,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_audio.html">WebRTC 音频</a> &raquo;</li>
-      <li>Acoustic Echo Canceller</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_audio.html">WebRTC 音频</a></li>
+      <li class="breadcrumb-item active">Acoustic Echo Canceller</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/audio_aec.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -123,12 +128,8 @@
            <div itemprop="articleBody">
              
   <section id="acoustic-echo-canceller">
-<h1>Acoustic Echo Canceller<a class="headerlink" href="#acoustic-echo-canceller" title="Permalink to this headline">¶</a></h1>
+<h1>Acoustic Echo Canceller<a class="headerlink" href="#acoustic-echo-canceller" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Acoustic Echo Canceller</p></td>
@@ -140,11 +141,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id9">概述</a></p>
 <ul>
@@ -176,30 +177,30 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id25">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id9">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 <p>回声抵消 (AEC) 指的是在二线传输的两个方向上同时间、同频谱地占用线路, 在线路上两个方向传输的信号完全混在一起, 本端发信号的回声即成为本端收信号的干扰信号, 利用自适应滤波器可抵消回声以达到较好的接收信号质量. 也就是消除回声.</p>
 <p>回声消除的原理就是利用接收到的音频与本地采集的音频做对比, 添加反相的人造回声, 将远端的声音消除.</p>
 <p>WebRTC library 提供了 Echo Cancellation 的功能</p>
 <section id="mediatracksettings-echocancellation">
-<h3><a class="toc-backref" href="#id10">MediaTrackSettings.echoCancellation</a><a class="headerlink" href="#mediatracksettings-echocancellation" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">MediaTrackSettings.echoCancellation</a><a class="headerlink" href="#mediatracksettings-echocancellation" title="Permalink to this heading"></a></h3>
 <p>The MediaTrackSettings dictionary’s echoCancellation property is a Boolean value whose value indicates whether or not echo cancellation is enabled on an audio track.</p>
 </section>
 <section id="id4">
-<h3><a class="toc-backref" href="#id11">何为回声？</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">何为回声？</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <p>In audio signal processing and acoustics, an echo is a reflection of sound that arrives at the listener with a delay after the direct sound. The delay is directly proportional to the distance of the reflecting surface from the source and the listener. Typical examples are the echo produced by the bottom of a well, by a building, or by the walls of an enclosed room and an empty room. A true echo is a single reflection of the sound source.[citation needed]</p>
 </section>
 <section id="id5">
-<h3><a class="toc-backref" href="#id12">回声产生的原因</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">回声产生的原因</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
 <p>从通讯回音产生的原因看, 可以分为声学回音 (Acoustic Echo) 和线路回音 (Line Echo) , 相应的回声消除技术就叫声学回声消除 (Acoustic Echo Cancelation, AEC) 和线路回声消除 (Line Echo Canceltion, LEC) .</p>
 <p>一方面, IP电话系统与PSTN互联时, 涉及到混合线圈的2/4线转换电路, 因而会产生线路回声 (Line Echo) . 另一方面, IP电话的语音数据在传输过程中还存在“声学回声(Acoustic Echo) ”.</p>
 <section id="id6">
-<h4><a class="toc-backref" href="#id13">线路回声</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">线路回声</a><a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
 <p>线路回声通常产生于有线通话中, 为了降低电话中心局与电话用户之间电话线的价格, 用户间线的连接采用两线制；而电话中心局之间连接采用四线制 (上面两条线路用于发送给用户端信号, 下面两条线路用于接收用户端信号) . 问题就出来了, 造成电路回声的根本原因是转换混合器的二线-四线阻抗不能完全匹配 (使用的不同型号的电线或者负载线圈没有被使用的原因) , 导致混合器 接收线路 上的语音信号流失到了 发送线路 , 产生了回声信号, 使得另一端的用户在接收信号的同时听到了自己的声音</p>
 </section>
 <section id="id7">
-<h4><a class="toc-backref" href="#id14">声学回声</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">声学回声</a><a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
 <p>声学回声是指扬声器播放出来的声音被麦克风拾取后发回远端, 使远端谈话者能听到自己的声音.</p>
 <p>声学回声又分为直接回声和间接回声.</p>
 <ul class="simple">
@@ -212,7 +213,7 @@
 </section>
 </section>
 <section id="id8">
-<h3><a class="toc-backref" href="#id15">回声消除的方法</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">回声消除的方法</a><a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
 <p>回声消除是非常复杂的技术, 但我们可以简单的描述两种处理方法：</p>
 <ol class="arabic simple">
 <li><p>回声路径消除</p></li>
@@ -238,50 +239,50 @@
 </section>
 </section>
 <section id="glossary">
-<h2><a class="toc-backref" href="#id16">Glossary</a><a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Glossary</a><a class="headerlink" href="#glossary" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>near end 近端</p></li>
 <li><p>far end 远端</p></li>
 </ul>
 </section>
 <section id="methods">
-<h2><a class="toc-backref" href="#id17">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">Methods</a><a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <section id="aecm">
-<h3><a class="toc-backref" href="#id18">AECM</a><a class="headerlink" href="#aecm" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">AECM</a><a class="headerlink" href="#aecm" title="Permalink to this heading"></a></h3>
 <section id="input-processing">
-<h4><a class="toc-backref" href="#id19">Input processing</a><a class="headerlink" href="#input-processing" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id19" role="doc-backlink">Input processing</a><a class="headerlink" href="#input-processing" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>Hanning window</p></li>
 <li><p>FFT</p></li>
 </ul>
 </section>
 <section id="echo-delay-estimation">
-<h4><a class="toc-backref" href="#id20">Echo Delay Estimation</a><a class="headerlink" href="#echo-delay-estimation" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id20" role="doc-backlink">Echo Delay Estimation</a><a class="headerlink" href="#echo-delay-estimation" title="Permalink to this heading"></a></h4>
 <ul class="simple">
 <li><p>VAD</p></li>
 <li><p>Align Far Near End</p></li>
 </ul>
 </section>
 <section id="adaptive-filter">
-<h4><a class="toc-backref" href="#id21">Adaptive Filter</a><a class="headerlink" href="#adaptive-filter" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21" role="doc-backlink">Adaptive Filter</a><a class="headerlink" href="#adaptive-filter" title="Permalink to this heading"></a></h4>
 <p>NLMS - Normalized Least-Mean-Squares</p>
 </section>
 <section id="non-linear-processing">
-<h4><a class="toc-backref" href="#id22">Non-linear processing</a><a class="headerlink" href="#non-linear-processing" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id22" role="doc-backlink">Non-linear processing</a><a class="headerlink" href="#non-linear-processing" title="Permalink to this heading"></a></h4>
 <p>Winner Filter</p>
 </section>
 <section id="comfort-noise">
-<h4><a class="toc-backref" href="#id23">Comfort Noise</a><a class="headerlink" href="#comfort-noise" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id23" role="doc-backlink">Comfort Noise</a><a class="headerlink" href="#comfort-noise" title="Permalink to this heading"></a></h4>
 <p>CNG generate</p>
 </section>
 <section id="output-result">
-<h4><a class="toc-backref" href="#id24">Output result</a><a class="headerlink" href="#output-result" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id24" role="doc-backlink">Output result</a><a class="headerlink" href="#output-result" title="Permalink to this heading"></a></h4>
 <p>IFFT</p>
 </section>
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id25">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 

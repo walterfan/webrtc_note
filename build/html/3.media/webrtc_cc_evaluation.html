@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Congeston Control Evaluation &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,10 +13,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -136,11 +141,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_qos.html">WebRTC QoS</a> &raquo;</li>
-          <li><a href="webrtc_cc.html">WebRTC 拥塞控制</a> &raquo;</li>
-      <li>Congeston Control Evaluation</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_qos.html">WebRTC QoS</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_cc.html">WebRTC 拥塞控制</a></li>
+      <li class="breadcrumb-item active">Congeston Control Evaluation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/webrtc_cc_evaluation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -151,12 +156,8 @@
            <div itemprop="articleBody">
              
   <section id="congeston-control-evaluation">
-<h1>Congeston Control Evaluation<a class="headerlink" href="#congeston-control-evaluation" title="Permalink to this headline">¶</a></h1>
+<h1>Congeston Control Evaluation<a class="headerlink" href="#congeston-control-evaluation" title="Permalink to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 71%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Congeston Control Evaluation</p></td>
@@ -171,11 +172,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-03</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id5">概述</a></p></li>
 <li><p><a class="reference internal" href="#evaluating-congestion-control-for-interactive-real-time-media" id="id6">Evaluating Congestion Control for Interactive Real-Time Media</a></p>
@@ -204,14 +205,14 @@
 </li>
 <li><p><a class="reference internal" href="#evaluation-by-ns-3" id="id21">Evaluation by ns-3</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
 </section>
 <section id="evaluating-congestion-control-for-interactive-real-time-media">
-<h2><a class="toc-backref" href="#id6">Evaluating Congestion Control for Interactive Real-Time Media</a><a class="headerlink" href="#evaluating-congestion-control-for-interactive-real-time-media" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Evaluating Congestion Control for Interactive Real-Time Media</a><a class="headerlink" href="#evaluating-congestion-control-for-interactive-real-time-media" title="Permalink to this heading"></a></h2>
 <section id="id4">
-<h3><a class="toc-backref" href="#id7">度量</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">度量</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
 <p>从数据包日志中可以计算出下列度量指标</p>
 <ol class="arabic simple">
 <li><p>Sending rate, receiver rate, goodput (measured at 200ms intervals) 发送速率，接收速率，和实际吞吐量（以 200ms 间隔来度量）</p></li>
@@ -263,9 +264,9 @@ intervals.  Additionally, from the logs, it is possible to plot the
 histogram or cumulative distribution function (CDF) of packet delay.</p>
 </section>
 <section id="list-of-network-parameters">
-<h3><a class="toc-backref" href="#id8">List of Network Parameters</a><a class="headerlink" href="#list-of-network-parameters" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">List of Network Parameters</a><a class="headerlink" href="#list-of-network-parameters" title="Permalink to this heading"></a></h3>
 <section id="one-way-propagation-delay">
-<h4><a class="toc-backref" href="#id9">One-Way Propagation Delay</a><a class="headerlink" href="#one-way-propagation-delay" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id9" role="doc-backlink">One-Way Propagation Delay</a><a class="headerlink" href="#one-way-propagation-delay" title="Permalink to this heading"></a></h4>
 <ol class="arabic simple">
 <li><p>Very low latency: 0-1 ms</p></li>
 <li><p>Low latency: 50 ms</p></li>
@@ -274,7 +275,7 @@ histogram or cumulative distribution function (CDF) of packet delay.</p>
 </ol>
 </section>
 <section id="end-to-end-loss">
-<h4><a class="toc-backref" href="#id10">End-to-End Loss</a><a class="headerlink" href="#end-to-end-loss" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id10" role="doc-backlink">End-to-End Loss</a><a class="headerlink" href="#end-to-end-loss" title="Permalink to this heading"></a></h4>
 <ol class="arabic simple">
 <li><p>no loss: 0%</p></li>
 <li><p>1%</p></li>
@@ -284,39 +285,39 @@ histogram or cumulative distribution function (CDF) of packet delay.</p>
 </ol>
 </section>
 <section id="drop-tail-router-queue-length">
-<h4><a class="toc-backref" href="#id11">Drop-Tail Router Queue Length</a><a class="headerlink" href="#drop-tail-router-queue-length" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id11" role="doc-backlink">Drop-Tail Router Queue Length</a><a class="headerlink" href="#drop-tail-router-queue-length" title="Permalink to this heading"></a></h4>
 </section>
 <section id="loss-generation-model">
-<h4><a class="toc-backref" href="#id12">Loss Generation Model</a><a class="headerlink" href="#loss-generation-model" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id12" role="doc-backlink">Loss Generation Model</a><a class="headerlink" href="#loss-generation-model" title="Permalink to this heading"></a></h4>
 </section>
 <section id="jitter-models">
-<h4><a class="toc-backref" href="#id13">Jitter Models</a><a class="headerlink" href="#jitter-models" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">Jitter Models</a><a class="headerlink" href="#jitter-models" title="Permalink to this heading"></a></h4>
 </section>
 <section id="random-bounded-pdv-rbpdv">
-<h4><a class="toc-backref" href="#id14">Random Bounded PDV (RBPDV)</a><a class="headerlink" href="#random-bounded-pdv-rbpdv" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">Random Bounded PDV (RBPDV)</a><a class="headerlink" href="#random-bounded-pdv-rbpdv" title="Permalink to this heading"></a></h4>
 </section>
 <section id="approximately-random-subject-to-no-reordering-bounded-pdv-nr-bpdv">
-<h4><a class="toc-backref" href="#id15">Approximately Random Subject to No-Reordering Bounded PDV (NR-BPDV)</a><a class="headerlink" href="#approximately-random-subject-to-no-reordering-bounded-pdv-nr-bpdv" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id15" role="doc-backlink">Approximately Random Subject to No-Reordering Bounded PDV (NR-BPDV)</a><a class="headerlink" href="#approximately-random-subject-to-no-reordering-bounded-pdv-nr-bpdv" title="Permalink to this heading"></a></h4>
 </section>
 <section id="recommended-distribution">
-<h4><a class="toc-backref" href="#id16">Recommended Distribution</a><a class="headerlink" href="#recommended-distribution" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id16" role="doc-backlink">Recommended Distribution</a><a class="headerlink" href="#recommended-distribution" title="Permalink to this heading"></a></h4>
 </section>
 </section>
 <section id="traffic-models">
-<h3><a class="toc-backref" href="#id17">Traffic Models</a><a class="headerlink" href="#traffic-models" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Traffic Models</a><a class="headerlink" href="#traffic-models" title="Permalink to this heading"></a></h3>
 <section id="tcp-traffic-model">
-<h4><a class="toc-backref" href="#id18">TCP Traffic Model</a><a class="headerlink" href="#tcp-traffic-model" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id18" role="doc-backlink">TCP Traffic Model</a><a class="headerlink" href="#tcp-traffic-model" title="Permalink to this heading"></a></h4>
 </section>
 <section id="rtp-video-model">
-<h4><a class="toc-backref" href="#id19">RTP Video Model</a><a class="headerlink" href="#rtp-video-model" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id19" role="doc-backlink">RTP Video Model</a><a class="headerlink" href="#rtp-video-model" title="Permalink to this heading"></a></h4>
 </section>
 <section id="background-udp">
-<h4><a class="toc-backref" href="#id20">Background UDP</a><a class="headerlink" href="#background-udp" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id20" role="doc-backlink">Background UDP</a><a class="headerlink" href="#background-udp" title="Permalink to this heading"></a></h4>
 </section>
 </section>
 </section>
 <section id="evaluation-by-ns-3">
-<h2><a class="toc-backref" href="#id21">Evaluation by ns-3</a><a class="headerlink" href="#evaluation-by-ns-3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">Evaluation by ns-3</a><a class="headerlink" href="#evaluation-by-ns-3" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>edit /etc/profile</p></li>
 </ul>
