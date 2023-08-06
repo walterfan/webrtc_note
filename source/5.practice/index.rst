@@ -23,7 +23,7 @@
    janus_modules
    mediasoup
    pion
-
+   srs
    video_quality
    audio_quality
    remote_sharing
