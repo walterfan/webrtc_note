@@ -49,13 +49,47 @@ video streaming 协议回顾
 
 
 HLS
---------------------------------------
-HTTP Live Streaming (also known as HLS) is an HTTP-based adaptive bitrate streaming communications protocol developed by Apple Inc. and released in 2009. Support for the protocol is widespread in media players, web browsers, mobile devices, and streaming media servers. As of 2019, an annual video industry survey has consistently found it to be the most popular streaming format.[2]
+====================================================
+HTTP Live Streaming（也称为HLS）是由Apple Inc.开发并于2009年发布的基于HTTP的自适应比特率流通信协议。对协议的支持在媒体播放器、Web 浏览器、移动设备和流媒体服务器中广泛存在。截至 2019 年，一项年度视频行业调查一直发现它是最受欢迎的流媒体格式。
 
-HLS resembles MPEG-DASH in that it works by breaking the overall stream into a sequence of small HTTP-based file downloads, each downloading one short chunk of an overall potentially unbounded transport stream. A list of available streams, encoded at different bit rates, is sent to the client using an extended M3U playlist.
+HLS类似于MPEG-DASH，因为它通过将整个流分解为一系列基于HTTP的小型文件下载来工作，每个下载一个整体潜在无限传输流的一小块。以不同比特率编码的可用流列表使用扩展的 M3U 播放列表发送到客户端。
 
-Based on standard HTTP transactions, HTTP Live Streaming can traverse any firewall or proxy server that lets through standard HTTP traffic, unlike UDP-based protocols such as RTP. This also allows content to be offered from conventional HTTP servers and delivered over widely available HTTP-based content delivery networks. The standard also includes a standard encryption mechanism[5] and secure-key distribution using HTTPS, which together provide a simple DRM system. Later versions of the protocol also provide for trick-mode fast-forward and rewind and for integration of subtitle
+基于标准 HTTP 事务，HTTP 实时流可以遍历任何允许通过标准 HTTP 流量的防火墙或代理服务器，这与基于 UDP 的协议（如 RTP）不同。这也允许从传统的HTTP服务器提供内容，并通过广泛可用的基于HTTP的内容交付网络交付内容。该标准还包括一个标准的加密机制和使用HTTPS的安全密钥分发，它们共同提供了一个简单的DRM系统。该协议的更高版本还提供技巧模式快进和快退以及字幕的集成
 
+
+HLS 是新一代流媒体传输协议，其基本实现原理为将一个大的媒体文件进行分片，将该分片文件资源路径记录于 m3u8 文件（即 playlist）内，其中附带一些额外描述（比如该资源的多带宽信息···）用于提供给客户端。客户端依据该 m3u8 文件即可获取对应的媒体资源，进行播放。
+
+
+metadata file
+----------------------------
+* m3u8
+
+.. code-block::
+
+  #EXTM3U
+  #EXT-X-TARGETDURATION:10
+
+  #EXTINF:9.009,
+  http://media.example.com/first.ts
+  #EXTINF:9.009,
+  http://media.example.com/second.ts
+  #EXTINF:3.003,
+  http://media.example.com/third.ts
+
+media file
+----------------------------
+* mpeg2-ts
+* fMP4
+
+
+ts文件为传输流文件，视频编码主要格式h264/mpeg4，音频为acc/MP3。
+
+ts文件分为三层：
+1) ts层Transport Stream、
+2) pes层 Packet Elemental Stream、
+3) es层 Elementary Stream. 
+
+es层就是音视频数据，pes层是在音视频数据上加了时间戳等对数据帧的说明信息，ts层就是在pes层加入数据流的识别和传输必须的信息
 
 Protocols Enhancement
 ==========================

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC RTP RTCP module &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -121,9 +116,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
-      <li class="breadcrumb-item active">WebRTC RTP RTCP module</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC RTP RTCP module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_rtp_rtcp_module.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -134,8 +129,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-rtp-rtcp-module">
-<h1>WebRTC RTP RTCP module<a class="headerlink" href="#webrtc-rtp-rtcp-module" title="Permalink to this heading"></a></h1>
+<h1>WebRTC RTP RTCP module<a class="headerlink" href="#webrtc-rtp-rtcp-module" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC RTP RTCP module</p></td>
@@ -147,11 +146,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p>
 <ul>
@@ -172,16 +171,16 @@
 </ul>
 </li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>rtp_rtcp 是 libwebrtc 的一个核心模块</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">constexpr</span> <span class="n">TimeDelta</span> <span class="n">RTCP_SEND_BEFORE_KEY_FRAME</span> <span class="o">=</span> <span class="n">TimeDelta</span><span class="p">::</span><span class="n">Millis</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
 <span class="n">constexpr</span> <span class="nb">int</span> <span class="n">RTCP_MAX_REPORT_BLOCKS</span> <span class="o">=</span> <span class="mi">31</span><span class="p">;</span>  <span class="o">//</span> <span class="n">RFC</span> <span class="mi">3550</span> <span class="n">page</span> <span class="mi">37</span>
 </pre></div>
 </div>
 <section id="rtcp-mode">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">RTCP Mode</a><a class="headerlink" href="#rtcp-mode" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">RTCP Mode</a><a class="headerlink" href="#rtcp-mode" title="Permalink to this headline">¶</a></h3>
 <p>RtcpMode 有三种:</p>
 <ul class="simple">
 <li><p>kOff</p></li>
@@ -205,7 +204,7 @@
 </section>
 </section>
 <section id="webrtc">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">WebRTC 中计算的汇报间隔</a><a class="headerlink" href="#webrtc" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6">WebRTC 中计算的汇报间隔</a><a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h2>
 <p>默认汇报间隔是
 * 视频会话: 1s
 * 音频会话: 5s</p>
@@ -268,7 +267,7 @@
 </div>
 </section>
 <section id="webrtc-rtp">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">WebRTC中支持的 RTP 扩展头</a><a class="headerlink" href="#webrtc-rtp" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">WebRTC中支持的 RTP 扩展头</a><a class="headerlink" href="#webrtc-rtp" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">This</span> <span class="n">enum</span> <span class="n">must</span> <span class="ow">not</span> <span class="n">have</span> <span class="nb">any</span> <span class="n">gaps</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="nb">all</span> <span class="n">integers</span> <span class="n">between</span>
 <span class="o">//</span> <span class="n">kRtpExtensionNone</span> <span class="ow">and</span> <span class="n">kRtpExtensionNumberOfExtensions</span> <span class="n">must</span> <span class="n">be</span> <span class="n">valid</span> <span class="n">enum</span>
 <span class="o">//</span> <span class="n">entries</span><span class="o">.</span>
@@ -300,7 +299,7 @@
 </pre></div>
 </div>
 <section id="rtp">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">RTP 包中的媒体内容类型</a><a class="headerlink" href="#rtp" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8">RTP 包中的媒体内容类型</a><a class="headerlink" href="#rtp" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// NOTE! `kNumMediaTypes` must be kept in sync with RtpPacketMediaType!
 static constexpr size_t kNumMediaTypes = 5;
 enum class RtpPacketMediaType : size_t {
@@ -316,9 +315,9 @@ enum class RtpPacketMediaType : size_t {
 </section>
 </section>
 <section id="rtcp">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">RTCP 包</a><a class="headerlink" href="#rtcp" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">RTCP 包</a><a class="headerlink" href="#rtcp" title="Permalink to this headline">¶</a></h2>
 <section id="id3">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">RTCP 包类型</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10">RTCP 包类型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">RTCPPacketType</span> <span class="p">:</span> <span class="n">uint32_t</span> <span class="p">{</span>
     <span class="n">kRtcpReport</span> <span class="o">=</span> <span class="mh">0x0001</span><span class="p">,</span>
     <span class="n">kRtcpSr</span> <span class="o">=</span> <span class="mh">0x0002</span><span class="p">,</span>
@@ -343,7 +342,7 @@ enum class RtpPacketMediaType : size_t {
 </div>
 </section>
 <section id="senderreportstats">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">SenderReportStats</a><a class="headerlink" href="#senderreportstats" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11">SenderReportStats</a><a class="headerlink" href="#senderreportstats" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Stats</span> <span class="k">for</span> <span class="n">RTCP</span> <span class="n">sender</span> <span class="n">reports</span> <span class="p">(</span><span class="n">SR</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="n">specific</span> <span class="n">SSRC</span><span class="o">.</span>
 <span class="o">//</span> <span class="n">Refer</span> <span class="n">to</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">tools</span><span class="o">.</span><span class="n">ietf</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">rfc3550</span><span class="c1">#section-6.4.1.</span>
 <span class="n">struct</span> <span class="n">SenderReportStats</span> <span class="p">{</span>
@@ -368,7 +367,7 @@ enum class RtpPacketMediaType : size_t {
 </div>
 </section>
 <section id="rtcp-sender">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">RTCP sender</a><a class="headerlink" href="#rtcp-sender" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12">RTCP sender</a><a class="headerlink" href="#rtcp-sender" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>configuration</p></li>
 </ul>

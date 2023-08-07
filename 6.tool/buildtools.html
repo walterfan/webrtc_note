@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Build Tools &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -105,9 +100,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">6. WebRTC 工具</a></li>
-      <li class="breadcrumb-item active">Build Tools</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">6. WebRTC 工具</a> &raquo;</li>
+      <li>Build Tools</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/6.tool/buildtools.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -118,8 +113,12 @@
            <div itemprop="articleBody">
              
   <section id="build-tools">
-<h1>Build Tools<a class="headerlink" href="#build-tools" title="Permalink to this heading"></a></h1>
+<h1>Build Tools<a class="headerlink" href="#build-tools" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Build Tools</p></td>
@@ -131,11 +130,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#gn" id="id4">gn</a></p>
@@ -148,9 +147,9 @@
 <li><p><a class="reference internal" href="#clang" id="id8">clang</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>WebRTC 没有使用传统的 make 和 autotools, 原因是其性能不够, 写起来也比较麻烦。 它主要用到了以下三种主要的构建工具,</p>
 <ul class="simple">
 <li><p>Ninja: Ninja 原意是忍者的意思, 它是一个专注于速度的小型构建工具, 它是一个构建系统。 它将文件的相互依赖关系（通常是源代码和输出可执行文件）作为输入, 并快速编排构建它们。</p></li>
@@ -164,9 +163,9 @@
 <p>参见 <a class="reference external" href="cmake_quick_guide.html">Cmake quick guide</a></p>
 </section>
 <section id="gn">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">gn</a><a class="headerlink" href="#gn" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">gn</a><a class="headerlink" href="#gn" title="Permalink to this headline">¶</a></h2>
 <section id="quick-start">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">quick start</a><a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">quick start</a><a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gn</span><span class="o">.</span><span class="n">googlesource</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gn</span>
 <span class="n">cd</span> <span class="n">gn</span>
 <span class="n">python</span> <span class="n">build</span><span class="o">/</span><span class="n">gen</span><span class="o">.</span><span class="n">py</span>
@@ -177,7 +176,7 @@
 </div>
 </section>
 <section id="setting-up-a-build">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Setting up a build</a><a class="headerlink" href="#setting-up-a-build" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">Setting up a build</a><a class="headerlink" href="#setting-up-a-build" title="Permalink to this headline">¶</a></h3>
 <p>Unlike some other build systems, with GN you set up your own build directories with the settings you want. This lets you maintain as many different builds in parallel as you need.</p>
 <p>Once you set up a build directory, the Ninja files will be automatically regenerated if they’re out of date when you build in that directory so you should not have to re-run GN.</p>
 <p>To make a build directory:</p>
@@ -186,7 +185,7 @@
 </div>
 </section>
 <section id="passing-build-arguments">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Passing build arguments</a><a class="headerlink" href="#passing-build-arguments" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7">Passing build arguments</a><a class="headerlink" href="#passing-build-arguments" title="Permalink to this headline">¶</a></h3>
 <p>Set build arguments on your build directory by running:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gn</span> <span class="n">args</span> <span class="n">out</span><span class="o">/</span><span class="n">my_build</span>
 </pre></div>
@@ -194,7 +193,7 @@
 </section>
 </section>
 <section id="clang">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">clang</a><a class="headerlink" href="#clang" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">clang</a><a class="headerlink" href="#clang" title="Permalink to this headline">¶</a></h2>
 <p><cite>docker pull bowery/clang</cite></p>
 <p>Dockerfile example (<a class="reference external" href="https://github.com/rsmmr/install-clang.git">https://github.com/rsmmr/install-clang.git</a>)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
@@ -216,7 +215,7 @@ ADD . /opt/install-clang</p>
 RUN /opt/install-clang/install-clang -j 4 -C /opt/llvm</p>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://gn.googlesource.com/gn/+/main/docs/quick_start.md">https://gn.googlesource.com/gn/+/main/docs/quick_start.md</a></p></li>
 </ul>

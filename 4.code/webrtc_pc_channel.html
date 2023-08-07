@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC PeerConnection Channel &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -113,9 +108,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
-      <li class="breadcrumb-item active">WebRTC PeerConnection Channel</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC PeerConnection Channel</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_pc_channel.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -126,8 +121,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-peerconnection-channel">
-<h1>WebRTC PeerConnection Channel<a class="headerlink" href="#webrtc-peerconnection-channel" title="Permalink to this heading"></a></h1>
+<h1>WebRTC PeerConnection Channel<a class="headerlink" href="#webrtc-peerconnection-channel" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC PeerConnection Example</p></td>
@@ -139,11 +138,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p>
 <ul>
@@ -154,11 +153,11 @@
 </ul>
 </li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <section id="basechannel">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">BaseChannel</a><a class="headerlink" href="#basechannel" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4">BaseChannel</a><a class="headerlink" href="#basechannel" title="Permalink to this headline">¶</a></h3>
 <p>BaseChannel contains logic common to voice and video, including enable,marshaling calls to a worker and network threads, and connection and media
 monitors.</p>
 <p>BaseChannel assumes signaling and other threads are allowed to make synchronous calls to the worker thread, the worker thread makes synchronous
@@ -171,13 +170,13 @@ calls only to the network thread, and the network thread can’t be blocked by o
 <p>Network and worker threads may be the same thread.</p>
 </section>
 <section id="videochannel">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">VideoChannel</a><a class="headerlink" href="#videochannel" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">VideoChannel</a><a class="headerlink" href="#videochannel" title="Permalink to this headline">¶</a></h3>
 </section>
 <section id="voicechannel">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">VoiceChannel</a><a class="headerlink" href="#voicechannel" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">VoiceChannel</a><a class="headerlink" href="#voicechannel" title="Permalink to this headline">¶</a></h3>
 </section>
 <section id="ssrc-generator">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">SSRC generator</a><a class="headerlink" href="#ssrc-generator" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7">SSRC generator</a><a class="headerlink" href="#ssrc-generator" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>ssrc 是 UniqueRandomIdGenerator随机生成的 32 位数，WebRTC library 的 ssrc generator 用的方法应该是不会产生 0 作为 ssrc 的</p></li>
 </ul>

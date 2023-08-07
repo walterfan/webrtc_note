@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Bundle &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
@@ -102,9 +98,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
-      <li class="breadcrumb-item active">WebRTC Bundle</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
+      <li>WebRTC Bundle</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/webrtc_bundle.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -115,8 +111,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-bundle">
-<h1>WebRTC Bundle<a class="headerlink" href="#webrtc-bundle" title="Permalink to this heading"></a></h1>
+<h1>WebRTC Bundle<a class="headerlink" href="#webrtc-bundle" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC Bundle</p></td>
@@ -128,11 +128,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#what" id="id6">What</a></p></li>
 <li><p><a class="reference internal" href="#how" id="id7">How</a></p></li>
@@ -144,9 +144,9 @@
 <li><p><a class="reference internal" href="#rtcp-rtp-media-session-m-line" id="id13">4. 关联 RTCP 与 RTP 数据包到相应的 media session(m-line)</a></p></li>
 <li><p><a class="reference internal" href="#id5" id="id14">参考资料</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="what">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">What</a><a class="headerlink" href="#what" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6">What</a><a class="headerlink" href="#what" title="Permalink to this headline">¶</a></h2>
 <p>RFC8843 defines a new Session Description Protocol (SDP) Grouping Framework extension called ‘BUNDLE’.
 The extension can be used with the SDP offer/answer mechanism to negotiate the usage of a  single transport (5-tuple) for sending and receiving media described by multiple SDP media descriptions (“m=” sections).</p>
 <p>Such transport is referred to as a BUNDLE transport, and the media is referred to as  bundled media.
@@ -154,7 +154,7 @@ The “m=” sections that use the BUNDLE transport form a BUNDLE group.</p>
 <p>It sends all media flows (those m= lines in the SDP) using the same “5 tuple”, meaning from the same IP and port, to the same IP and port, and over the same transport protocol.</p>
 </section>
 <section id="how">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">How</a><a class="headerlink" href="#how" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">How</a><a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
 <p>In the JavaScript APIs for WebRTC, there is a configuration parameter called RTCConfiguration that is passed into the constructor when a new Peer Connection is created.</p>
 <p>This object has properties for setting the STUN and TURN servers (iceServers), for indicating which paths to use for transport (iceTransportPolicy), for setting the peer identity policy (peerIdentity), and for controlling how BUNDLE is to be used (bundlePolicy).  Here is an example use of bundlePolicy:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>myConfig = {bundlePolicy: “max-bundle”};
@@ -176,13 +176,13 @@ pc = new RTCPeerConnection(myConfig);
 <p>Note that max-compat is the most likely to be backwards compatible with non-BUNDLE-aware legacy devices.</p>
 </section>
 <section id="why">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Why</a><a class="headerlink" href="#why" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">Why</a><a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
 <p>One obvious benefit of doing this is reducing the ICE negotiation time as the number of ICE candidates is reduced.</p>
 <p>While there are clear benefits to using one single BUNDLE for all media flows when possible, there are sometimes requirements to separate media flows.</p>
 <p>For example: to separate audio from video and bundle each media type. In this example this would result in 2 SDP BUNDLEs.</p>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">简介</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>回顾一下这张经典的图</p>
 <img alt="https://upload-images.jianshu.io/upload_images/1598924-a0b7b8dd85776b92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-a0b7b8dd85776b92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
 <p>我改了一下 audio 和 video 的 codec, 现在 Opus 和 H.264 用的比较多 Web
@@ -205,7 +205,7 @@ API 中最主要的就是 MediaStream, RTCPeerConnection 和 DataChannel.</p>
 </div>
 </section>
 <section id="stun-dtls-rtp">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">1. 区分 STUN, DTLS 和 RTP 包</a><a class="headerlink" href="#stun-dtls-rtp" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10">1. 区分 STUN, DTLS 和 RTP 包</a><a class="headerlink" href="#stun-dtls-rtp" title="Permalink to this headline">¶</a></h2>
 <p>注: 这里提到的 RTP 包括 RTP, RTCP, SRTP, SRTCP</p>
 <p>在 UDP 传输通道上会跑 STUN, DTLS 和 RTP(SRTP)
 的数据，我们首先要区分这几种数据</p>
@@ -305,7 +305,7 @@ API 中最主要的就是 MediaStream, RTCPeerConnection 和 DataChannel.</p>
 </div>
 </section>
 <section id="rtp-rtcp">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">2. 区分 RTP 和 RTCP</a><a class="headerlink" href="#rtp-rtcp" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11">2. 区分 RTP 和 RTCP</a><a class="headerlink" href="#rtp-rtcp" title="Permalink to this headline">¶</a></h2>
 <p>在一个端口上传输 RTP 和 RTCP 包会面临 payload 冲突的问题。RTCP
 头的第二个字节是 payload type, RTP 头的第二个字节的低 7 位是 payload
 type, RFC 5761 总结了一下，有如下冲突</p>
@@ -326,7 +326,7 @@ RTP/AVP profile 的规定，RFC 5761 建议 RTP payload 64 ~ 95 不要再使用�
 RTP 的动态 payload type 的选择最好在 96 ~ 127 之间</p>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">3. 区分不同的媒体流</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12">3. 区分不同的媒体流</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>传统上，一个传输通道只传输一路媒体流，其 RTP 包 的 SSRC
 也用来标识这路媒体流。 RTCP 会使用一个单独的传输 媒体协商的 SDP 中的一个
 m-line 也只包含一路或者一对(包括重传 RTX 的媒体流 )媒体流。</p>
@@ -444,7 +444,7 @@ MediaStream, 通过 rid 来标识媒体流中不同的 MediaStreamTrack,
 </div>
 </section>
 <section id="rtcp-rtp-media-session-m-line">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">4. 关联 RTCP 与 RTP 数据包到相应的 media session(m-line)</a><a class="headerlink" href="#rtcp-rtp-media-session-m-line" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13">4. 关联 RTCP 与 RTP 数据包到相应的 media session(m-line)</a><a class="headerlink" href="#rtcp-rtp-media-session-m-line" title="Permalink to this headline">¶</a></h2>
 <p>RTCP 消息一般是用来控制或反馈相应媒体会话(media session )的 RTP 流的,
 如何将 RTCP 与相应的 RTP 流关联起来呢，尤其在多路复用的场景中。RTP
 包头里有 SSRC, RTCP 包里也有 SSRC,
@@ -479,7 +479,7 @@ extension.</p></li>
 <img alt="https://upload-images.jianshu.io/upload_images/1598924-48580b2c2b25de20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="https://upload-images.jianshu.io/upload_images/1598924-48580b2c2b25de20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" />
 </section>
 <section id="id5">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id14">参考资料</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://tools.ietf.org/html/rfc3550">RFC3550</a>: RTP 核心协议</p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc3711">RFC3711</a>: SRTP 安全的 RTP</p></li>

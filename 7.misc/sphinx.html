@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sphinx &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,15 +28,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -91,9 +86,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">7. WebRTC 关联技术</a></li>
-      <li class="breadcrumb-item active">Sphinx</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">7. WebRTC 关联技术</a> &raquo;</li>
+      <li>Sphinx</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/7.misc/sphinx.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,8 +99,12 @@
            <div itemprop="articleBody">
              
   <section id="sphinx">
-<h1>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this heading"></a></h1>
+<h1>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Sphinx and restructuredText</p></td>
@@ -117,11 +116,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#example" id="id4">Example</a></p>
@@ -133,26 +132,27 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id8">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Sphinx 是我用过的最强大的文本构建系统, 众多的开源项目用它来编写用户文档, 帮助手册, 它不但支持 restructuredText 和 Markdown
 还有众多强大的插件可供使用.</p>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <section id="flow-chart">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Flow chart</a><a class="headerlink" href="#flow-chart" title="Permalink to this heading"></a></h3>
-digraph {
+<h3><a class="toc-backref" href="#id5">Flow chart</a><a class="headerlink" href="#flow-chart" title="Permalink to this headline">¶</a></h3>
+<div class="graphviz"><img src="../_images/graphviz-c70f332a2d61523b37a07a2bb3c31f552da4e5c1.png" alt="digraph {
     start -&gt; a;
     a -&gt; b[label=&quot;yes&quot;];
     a -&gt; c[label=&quot;no&quot;];
     b -&gt; end;
     c -&gt; end;
-}<ul class="simple">
+}" class="graphviz" /></div>
+<ul class="simple">
 <li><p>mindmap</p></li>
 </ul>
-graph {
+<div class="graphviz"><img src="../_images/graphviz-2740394ac2c52f2ccd11f97607bb40c764a92fea.png" alt="graph {
 
     cql[label=&quot;CQL&quot;];
     trait[label=&quot;Trait: No Joins, No referential integrity, denormalization&quot;];
@@ -164,9 +164,10 @@ graph {
     cas -- mod;
     cas -- arch;
     mod -- trait;
-}</section>
+}" class="graphviz" /></div>
+</section>
 <section id="class-diagram">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Class diagram</a><a class="headerlink" href="#class-diagram" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">Class diagram</a><a class="headerlink" href="#class-diagram" title="Permalink to this headline">¶</a></h3>
 <p class="plantuml">
 <img src="../_images/plantuml-82a7dab42cf55965b46ddc3eaf1e941043890629.png" alt="class task {
     worker_id text,
@@ -184,7 +185,7 @@ class task_time_slot {
 </p>
 </section>
 <section id="state-diagram">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">State diagram</a><a class="headerlink" href="#state-diagram" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7">State diagram</a><a class="headerlink" href="#state-diagram" title="Permalink to this headline">¶</a></h3>
 <p class="plantuml">
 <img src="../_images/plantuml-a06495aef82e8cce5cdd53b0df08492dcc12d3e6.png" alt="[*] --&gt; IDLE
 IDLE -&gt; COMPLETE
@@ -241,7 +242,7 @@ ThirdActor ----&gt; (LowerCase)
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/DOT_(graph_description_language">https://en.wikipedia.org/wiki/DOT_(graph_description_language</a>)</p></li>
 <li><p><a class="reference external" href="http://www.graphviz.org/pdf/dotguide.pdf">http://www.graphviz.org/pdf/dotguide.pdf</a></p></li>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OpenSSL &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -107,9 +102,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">6. WebRTC 工具</a></li>
-      <li class="breadcrumb-item active">OpenSSL</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">6. WebRTC 工具</a> &raquo;</li>
+      <li>OpenSSL</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/6.tool/openssl.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -120,8 +115,12 @@
            <div itemprop="articleBody">
              
   <section id="openssl">
-<h1>OpenSSL<a class="headerlink" href="#openssl" title="Permalink to this heading"></a></h1>
+<h1>OpenSSL<a class="headerlink" href="#openssl" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>OpenSSL</p></td>
@@ -136,11 +135,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#snippets" id="id4">Snippets</a></p></li>
@@ -155,12 +154,12 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id11">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="snippets">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>ssl3.h</p></li>
 </ul>
@@ -266,9 +265,9 @@
 </div>
 </section>
 <section id="bio">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">BIO</a><a class="headerlink" href="#bio" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">BIO</a><a class="headerlink" href="#bio" title="Permalink to this headline">¶</a></h2>
 <section id="what-is-openssl-bio">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">What is OpenSSL BIO?</a><a class="headerlink" href="#what-is-openssl-bio" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">What is OpenSSL BIO?</a><a class="headerlink" href="#what-is-openssl-bio" title="Permalink to this headline">¶</a></h3>
 <p>BIO 也就是  Basic Input Output 的缩写, 是 openssl 所封装的 API, 提供基本的输入输出功能.</p>
 <p>A BIO is an I/O abstraction, it hides many of the underlying I/O details from an application.
 If an application uses a BIO for its I/O it can transparently handle SSL connections, unencrypted network connections and file I/O.</p>
@@ -292,7 +291,7 @@ It should be given a unique integer type and a string that represents its name.
 Use BIO_get_new_index() to get the value for type.</p>
 </section>
 <section id="what-is-a-filter-bio-source-bio-and-sink-bio">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">What is a filter BIO, source BIO and sink BIO?</a><a class="headerlink" href="#what-is-a-filter-bio-source-bio-and-sink-bio" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7">What is a filter BIO, source BIO and sink BIO?</a><a class="headerlink" href="#what-is-a-filter-bio-source-bio-and-sink-bio" title="Permalink to this headline">¶</a></h3>
 <p>An OpenSSL filter BIO is a BIO that takes data, processes it and passes it to another BIO.</p>
 <p>An OpenSSL source BIO is a BIO that doesn’t take data from another BIO but takes it from somewhere else
 (from a file, network, etc.).</p>
@@ -327,7 +326,7 @@ This allows to make a such chain: your code &lt;-&gt; cipher BIO &lt;-&gt; socke
 </div>
 </section>
 <section id="bio-usage-in-openssl">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">BIO usage in openssl</a><a class="headerlink" href="#bio-usage-in-openssl" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8">BIO usage in openssl</a><a class="headerlink" href="#bio-usage-in-openssl" title="Permalink to this headline">¶</a></h3>
 <p>OpenSSL uses BIOs for communicating with the remote side when operating SSL/TLS protocol.</p>
 <p>The SSL_set_bio function is used to set up BIOs for communicating in a concrete instance of an SSL/TLS link. You can use socket BIO, for example, to run SSL/TLS protocol via network connection.</p>
 <p>But you may also develop your own BIO (yes, it is possible) or use memory BIO to run SSL/TLS protocol via your own type of link.</p>
@@ -353,7 +352,7 @@ This allows to make a such chain: your code &lt;-&gt; cipher BIO &lt;-&gt; socke
 </ul>
 </section>
 <section id="bio-methods">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">BIO methods</a><a class="headerlink" href="#bio-methods" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9">BIO methods</a><a class="headerlink" href="#bio-methods" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;openssl/bio.h&gt;</span>
 
 <span class="c1">//All other functions return either the amount of data successfully read or written</span>
@@ -380,7 +379,7 @@ This allows to make a such chain: your code &lt;-&gt; cipher BIO &lt;-&gt; socke
 </div>
 </section>
 <section id="example">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">SSL_CTX</span><span class="o">*</span> <span class="n">mContext</span><span class="p">;</span>
     <span class="n">SSL</span> <span class="o">*</span><span class="n">mSsl</span><span class="p">;</span>
     <span class="n">BIO</span> <span class="o">*</span><span class="n">mInBio</span><span class="p">;</span>
@@ -395,7 +394,7 @@ This allows to make a such chain: your code &lt;-&gt; cipher BIO &lt;-&gt; socke
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://stackoverflow.com/questions/51672133/what-are-openssl-bios-how-do-they-work-how-are-bios-used-in-openssl">https://stackoverflow.com/questions/51672133/what-are-openssl-bios-how-do-they-work-how-are-bios-used-in-openssl</a></p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/rfc9147/">https://datatracker.ietf.org/doc/rfc9147/</a></p></li>

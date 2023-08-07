@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>wireshark &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -112,9 +107,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">6. WebRTC 工具</a></li>
-      <li class="breadcrumb-item active">wireshark</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">6. WebRTC 工具</a> &raquo;</li>
+      <li>wireshark</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/6.tool/wireshark.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -125,8 +120,12 @@
            <div itemprop="articleBody">
              
   <section id="wireshark">
-<h1>wireshark<a class="headerlink" href="#wireshark" title="Permalink to this heading"></a></h1>
+<h1>wireshark<a class="headerlink" href="#wireshark" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>wireshark</p></td>
@@ -138,11 +137,11 @@
 <td><p>v1</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#installation" id="id3">Installation</a></p></li>
 <li><p><a class="reference internal" href="#tools" id="id4">Tools</a></p>
@@ -167,9 +166,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id15">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="installation">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Linux $PkgManager install wireshark   2.6.8 and below</p></li>
 <li><p>Macos brew install –cask wireshark   3.0.2</p></li>
@@ -177,7 +176,7 @@
 </ul>
 </section>
 <section id="tools">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Tools</a><a class="headerlink" href="#tools" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>capinfos</p></li>
 <li><p>captype</p></li>
@@ -196,13 +195,13 @@
 <li><p>tshark</p></li>
 </ul>
 <section id="tshark">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">tshark</a><a class="headerlink" href="#tshark" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">tshark</a><a class="headerlink" href="#tshark" title="Permalink to this headline">¶</a></h3>
 <p>tshark is a command line tool of wireshark , we can create a symbol link like below on MacOS</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Wireshark</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">tshark</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tshark</span>
 </pre></div>
 </div>
 <section id="basic-usage">
-<h4><a class="toc-backref" href="#id6" role="doc-backlink">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id6">Basic Usage</a><a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h4>
 <p>具体用法参见 <cite>tshark –help</cite> 或者 <a class="reference external" href="https://www.wireshark.org/docs/man-pages/tshark.html">https://www.wireshark.org/docs/man-pages/tshark.html</a></p>
 <p>例如将 pcapng 文件中的前 100 包按以下条件过滤出来，并导出为 json 文件</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tshark</span> <span class="o">-</span><span class="n">r</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">pcapng</span> <span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="n">Y</span> <span class="s2">&quot;ip.addr == 10.140.202.120 and rtp.p_type == 123&quot;</span> <span class="o">-</span><span class="n">V</span> <span class="o">-</span><span class="n">c</span> <span class="mi">100</span> <span class="o">-</span><span class="n">T</span> <span class="n">json</span> <span class="o">&gt;</span>
@@ -248,7 +247,7 @@
 </section>
 </section>
 <section id="capinfos">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">capinfos</a><a class="headerlink" href="#capinfos" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7">capinfos</a><a class="headerlink" href="#capinfos" title="Permalink to this headline">¶</a></h3>
 <p>capinfos 2022-03-30-cc.pcapng</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="n">name</span><span class="p">:</span>           <span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="n">cc</span><span class="o">.</span><span class="n">pcapng</span>
 <span class="n">File</span> <span class="nb">type</span><span class="p">:</span>           <span class="n">Wireshark</span><span class="o">/...</span> <span class="o">-</span> <span class="n">pcapng</span>
@@ -279,7 +278,7 @@
 </section>
 </section>
 <section id="capturing-rtp-streams">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Capturing RTP streams</a><a class="headerlink" href="#capturing-rtp-streams" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">Capturing RTP streams</a><a class="headerlink" href="#capturing-rtp-streams" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Select the network interface currently used for RTP traffic and start a capture.</p></li>
 <li><p>Right click on any package in the capture view and select Decode as.</p></li>
@@ -302,7 +301,7 @@
 </ol>
 </section>
 <section id="capturing-turn-rtp-streams">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Capturing TURN RTP streams</a><a class="headerlink" href="#capturing-turn-rtp-streams" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">Capturing TURN RTP streams</a><a class="headerlink" href="#capturing-turn-rtp-streams" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>First we need to enable the Try to decode RTP outside of conversations option.</p></li>
 </ol>
@@ -320,7 +319,7 @@
 </ol>
 </section>
 <section id="text2cap">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">text2cap</a><a class="headerlink" href="#text2cap" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id10">text2cap</a><a class="headerlink" href="#text2cap" title="Permalink to this headline">¶</a></h2>
 <p>Text2pcap understands a hexdump of the form generated by od -Ax -tx1 -v. In other words, each byte is individually displayed, with spaces separating the bytes from each other. Each line begins with an offset describing the position in the packet, each new packet starts with an offset of 0 and there is a space separating the offset from the following bytes. The offset is a hex number (can also be octal or decimal - see -o), of more than two hex digits.</p>
 <p>Here is a sample dump that text2pcap can recognize:</p>
 <p>000000 00 0e b6 00 00 02 00 0e b6 00 00 01 08 00 45 00
@@ -330,9 +329,9 @@
 000036</p>
 </section>
 <section id="faq">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11">FAQ</a><a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
 <section id="how-to-convert-pcap-to-text">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">how to convert pcap to text</a><a class="headerlink" href="#how-to-convert-pcap-to-text" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12">how to convert pcap to text</a><a class="headerlink" href="#how-to-convert-pcap-to-text" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tcpdump</span> <span class="o">-</span><span class="n">r</span> <span class="nb">input</span><span class="o">.</span><span class="n">pcap</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
 <span class="c1"># it works for text2pcap of wireshare</span>
 <span class="n">tshark</span> <span class="o">-</span><span class="n">V</span> <span class="o">-</span><span class="n">r</span> <span class="nb">input</span><span class="o">.</span><span class="n">pcap</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
@@ -340,20 +339,20 @@
 </div>
 </section>
 <section id="how-to-convert-text-to-pcap">
-<h3><a class="toc-backref" href="#id13" role="doc-backlink">how to convert text to pcap</a><a class="headerlink" href="#how-to-convert-text-to-pcap" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id13">how to convert text to pcap</a><a class="headerlink" href="#how-to-convert-text-to-pcap" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tshark</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span> <span class="o">&lt;</span> <span class="s2">&quot;c:</span><span class="se">\f</span><span class="s2">ilename.cap&quot;</span> <span class="o">&gt;</span> <span class="s2">&quot;c:\output.txt</span>
 </pre></div>
 </div>
 </section>
 <section id="how-to-list-interfaces">
-<h3><a class="toc-backref" href="#id14" role="doc-backlink">How to list interfaces</a><a class="headerlink" href="#how-to-list-interfaces" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id14">How to list interfaces</a><a class="headerlink" href="#how-to-list-interfaces" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tshark</span> <span class="o">-</span><span class="n">D</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id15" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id15">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://webrtc.github.io/webrtc-org/testing/wireshark/">https://webrtc.github.io/webrtc-org/testing/wireshark/</a></p></li>
 <li><p><a class="reference external" href="https://www.wireshark.org/docs/man-pages/text2pcap.html">https://www.wireshark.org/docs/man-pages/text2pcap.html</a></p></li>

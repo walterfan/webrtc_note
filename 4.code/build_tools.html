@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 构建工具 &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -112,9 +107,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
-      <li class="breadcrumb-item active">WebRTC 构建工具</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC 构建工具</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/build_tools.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -125,8 +120,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc">
-<h1>WebRTC 构建工具<a class="headerlink" href="#webrtc" title="Permalink to this heading"></a></h1>
+<h1>WebRTC 构建工具<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC Build Tools</p></td>
@@ -138,11 +137,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id5">构建工具</a></p>
@@ -159,30 +158,30 @@
 </ul>
 </li>
 </ul>
-</nav>
+</div>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">构建工具</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">构建工具</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <section id="ninja">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">Ninja</a><a class="headerlink" href="#ninja" title="Permalink to this headline">¶</a></h3>
 <p>Ninja is yet another build system. It takes as input the interdependencies of files (typically source code and output executables) and orchestrates building them, quickly.</p>
 <p>Run ninja. By default, it looks for a file named build.ninja in the current directory and builds all out-of-date targets. You can specify which targets (files) to build as command line arguments.</p>
 <p>There is also a special syntax target^ for specifying a target as the first output of some rule containing the source you put in the command line, if one exists. For example, if you specify target as foo.c^ then foo.o will get built (assuming you have those targets in your build files).</p>
 </section>
 <section id="gn">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">gn</a><a class="headerlink" href="#gn" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7">gn</a><a class="headerlink" href="#gn" title="Permalink to this headline">¶</a></h3>
 <p>The meta-build system used to generate build files for Google Chrome and related projects (v8, node.js), as well as Google Fuchsia. gn can generate Ninja files for all platforms supported by Chrome.</p>
 <p>refer to
 * <a class="reference external" href="https://gn.googlesource.com/gn/+/HEAD/docs/quick_start.md">https://gn.googlesource.com/gn/+/HEAD/docs/quick_start.md</a>
 * <a class="reference external" href="https://www.chromium.org/developers/gn-build-configuration/">https://www.chromium.org/developers/gn-build-configuration/</a></p>
 <section id="passing-build-arguments">
-<h4><a class="toc-backref" href="#id8" role="doc-backlink">Passing build arguments</a><a class="headerlink" href="#passing-build-arguments" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id8">Passing build arguments</a><a class="headerlink" href="#passing-build-arguments" title="Permalink to this headline">¶</a></h4>
 <p>Set build arguments on your build directory by running:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gn</span> <span class="n">args</span> <span class="n">out</span><span class="o">/</span><span class="n">my_build</span>
 </pre></div>
 </div>
 </section>
 <section id="cross-compiling-to-a-target-os-or-architecture">
-<h4><a class="toc-backref" href="#id9" role="doc-backlink">Cross-compiling to a target OS or architecture</a><a class="headerlink" href="#cross-compiling-to-a-target-os-or-architecture" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id9">Cross-compiling to a target OS or architecture</a><a class="headerlink" href="#cross-compiling-to-a-target-os-or-architecture" title="Permalink to this headline">¶</a></h4>
 <p>Run gn args out/Default (substituting your build directory as needed) and add one or more of the following lines for common cross-compiling options.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target_os</span> <span class="o">=</span> <span class="s2">&quot;chromeos&quot;</span>
 <span class="n">target_os</span> <span class="o">=</span> <span class="s2">&quot;android&quot;</span>
@@ -194,14 +193,14 @@
 </div>
 </section>
 <section id="id4">
-<h4><a class="toc-backref" href="#id10" role="doc-backlink">.gn</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id10">.gn</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>.gn 文件是 GN build 的 “源文件”，在这里可以做各种条件判断和配置，gn 会根据这些配置生成特定的 ninja 文件。</p>
 <p>.gn 文件中可以使用预定义的参数，比如 is_debug ， target_os ， rtc_use_h264 等。</p>
 <p>.gn 中可以 import .gni 文件。</p>
 </section>
 </section>
 <section id="cmake">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11">CMake</a><a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
 <p>A widely used meta-build system that can generate Ninja files on Linux as of CMake version 2.8.8. Newer versions of CMake support generating Ninja files on Windows and Mac OS X too.</p>
 </section>
 </section>

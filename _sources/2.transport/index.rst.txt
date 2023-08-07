@@ -16,6 +16,7 @@
 
    quic
    hls
+   rtmp
 
    tls
    dtls

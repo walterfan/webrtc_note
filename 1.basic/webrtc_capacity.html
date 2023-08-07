@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 客户端能力 &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -96,9 +91,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">1. WebRTC 基础</a></li>
-      <li class="breadcrumb-item active">WebRTC 客户端能力</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">1. WebRTC 基础</a> &raquo;</li>
+      <li>WebRTC 客户端能力</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/1.basic/webrtc_capacity.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -109,8 +104,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc">
-<h1>WebRTC 客户端能力<a class="headerlink" href="#webrtc" title="Permalink to this heading"></a></h1>
+<h1>WebRTC 客户端能力<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC 客户端能力</p></td>
@@ -125,11 +124,11 @@
 <td><p>LearningNote</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id4">概论</a></p>
 <ul>
@@ -139,9 +138,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id7">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="id3">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">概论</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">概论</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>在客户端, CPU, GPU, 内存及显示器可能千差万别, 对于一些低端设备, 在视频编解码及渲染会有一些限制.
 浏览器提供了一些基本的 API</p>
 <p>例如:</p>
@@ -155,17 +154,17 @@ This value is an approximation given by rounding to the nearest power of 2 and d
 </ul>
 <p>Returns the number of logical processor cores available.</p>
 <section id="performance-api">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Performance API</a><a class="headerlink" href="#performance-api" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">Performance API</a><a class="headerlink" href="#performance-api" title="Permalink to this headline">¶</a></h3>
 <p>The Performance API offers built-in metrics which are specialized subclasses of PerformanceEntry.
 This includes entries for resource loading, event timing, first input delay (FID), and more.</p>
 </section>
 <section id="overuseframedetector">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">OveruseFrameDetector</a><a class="headerlink" href="#overuseframedetector" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">OveruseFrameDetector</a><a class="headerlink" href="#overuseframedetector" title="Permalink to this headline">¶</a></h3>
 <p>参见 WebRTC OveruseFrameDetector</p>
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.chrome.com/en/docs/web-platform/webgpu/">https://developer.chrome.com/en/docs/web-platform/webgpu/</a></p></li>
 </ul>

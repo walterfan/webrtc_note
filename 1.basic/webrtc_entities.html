@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Entities &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -101,9 +96,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">1. WebRTC 基础</a></li>
-      <li class="breadcrumb-item active">WebRTC Entities</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">1. WebRTC 基础</a> &raquo;</li>
+      <li>WebRTC Entities</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/1.basic/webrtc_entities.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -114,8 +109,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-entities">
-<h1>WebRTC Entities<a class="headerlink" href="#webrtc-entities" title="Permalink to this heading"></a></h1>
+<h1>WebRTC Entities<a class="headerlink" href="#webrtc-entities" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC 实体</p></td>
@@ -130,11 +129,11 @@
 <td><p>LearningNote</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id4" id="id6">概论</a></p>
 <ul>
@@ -157,8 +156,8 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id16">Reference</a></p></li>
 </ul>
-</nav>
-<nav class="contents local" id="id3">
+</div>
+<div class="contents local topic" id="id3">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id4" id="id17">概论</a></p>
 <ul>
@@ -181,9 +180,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id27">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="id4">
-<h2><a class="toc-backref" href="#id17" role="doc-backlink">概论</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id17">概论</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Media Device</p></li>
 <li><p>RTP Peer Connection</p></li>
@@ -195,21 +194,21 @@
 <li><p>Media Stream Track</p></li>
 </ol>
 <section id="rtcpeerconnection">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">RTCPeerConnection</a><a class="headerlink" href="#rtcpeerconnection" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18">RTCPeerConnection</a><a class="headerlink" href="#rtcpeerconnection" title="Permalink to this headline">¶</a></h3>
 <p>The RTCPeerConnection interface represents a WebRTC connection between the local computer and a remote peer. It provides methods to connect to a remote peer, maintain and monitor the connection, and close the connection once it’s no longer needed.</p>
 </section>
 <section id="rtcdatachannel">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">RTCDataChannel</a><a class="headerlink" href="#rtcdatachannel" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19">RTCDataChannel</a><a class="headerlink" href="#rtcdatachannel" title="Permalink to this headline">¶</a></h3>
 <p>The RTCDataChannel interface represents a network channel which can be used for bidirectional peer-to-peer transfers of arbitrary data. Every data channel is associated with an RTCPeerConnection, and each peer connection can have up to a theoretical maximum of 65,534 data channels (the actual limit may vary from browser to browser).</p>
 <p>To create a data channel and ask a remote peer to join you, call the RTCPeerConnection’s createDataChannel() method. The peer being invited to exchange data receives a datachannel event (which has type RTCDataChannelEvent) to let it know the data channel has been added to the connection.</p>
 </section>
 <section id="rtcrtptransceiver">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">RTCRtpTransceiver</a><a class="headerlink" href="#rtcrtptransceiver" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20">RTCRtpTransceiver</a><a class="headerlink" href="#rtcrtptransceiver" title="Permalink to this headline">¶</a></h3>
 <p>The WebRTC interface RTCRtpTransceiver describes a permanent pairing of an RTCRtpSender and an RTCRtpReceiver, along with some shared state.</p>
 <p>Each SDP media section describes one bidirectional SRTP (“Secure Real Time Protocol”) stream (excepting the media section for RTCDataChannel, if present). This pairing of send and receive SRTP streams is significant for some applications, so RTCRtpTransceiver is used to represent this pairing, along with other important state from the media section. Each non-disabled SRTP media section is always represented by exactly one transceiver.</p>
 <p>A transceiver is uniquely identified using its mid property, which is the same as the media ID (mid) of its corresponding m-line. An RTCRtpTransceiver is associated with an m-line if its mid is non-null; otherwise it’s considered disassociated.</p>
 <section id="properties">
-<h4><a class="toc-backref" href="#id21" role="doc-backlink">Properties</a><a class="headerlink" href="#properties" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id21">Properties</a><a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>currentDirection Read only</p></li>
 </ul>
@@ -237,12 +236,12 @@
 </section>
 </section>
 <section id="rtcrtpsender">
-<h3><a class="toc-backref" href="#id22" role="doc-backlink">RTCRtpSender</a><a class="headerlink" href="#rtcrtpsender" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id22">RTCRtpSender</a><a class="headerlink" href="#rtcrtpsender" title="Permalink to this headline">¶</a></h3>
 </section>
 <section id="rtcrtpencodingparameters">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">RTCRtpEncodingParameters</a><a class="headerlink" href="#rtcrtpencodingparameters" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id23">RTCRtpEncodingParameters</a><a class="headerlink" href="#rtcrtpencodingparameters" title="Permalink to this headline">¶</a></h3>
 <section id="id5">
-<h4><a class="toc-backref" href="#id24" role="doc-backlink">Properties</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id24">Properties</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>active</p></li>
 </ul>
@@ -278,11 +277,11 @@
 </section>
 </section>
 <section id="rtcrtpreceiver">
-<h3><a class="toc-backref" href="#id25" role="doc-backlink">RTCRtpReceiver</a><a class="headerlink" href="#rtcrtpreceiver" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id25">RTCRtpReceiver</a><a class="headerlink" href="#rtcrtpreceiver" title="Permalink to this headline">¶</a></h3>
 <p>The RTCRtpReceiver interface of the WebRTC API manages the reception and decoding of data for a MediaStreamTrack on an RTCPeerConnection.</p>
 </section>
 <section id="rtcrtpcontributingsource">
-<h3><a class="toc-backref" href="#id26" role="doc-backlink">RTCRtpContributingSource</a><a class="headerlink" href="#rtcrtpcontributingsource" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id26">RTCRtpContributingSource</a><a class="headerlink" href="#rtcrtpcontributingsource" title="Permalink to this headline">¶</a></h3>
 <p>The RTCRtpContributingSource dictionary of the WebRTC API is used by getContributingSources() to provide information about a given contributing source (CSRC), including the most recent time a packet that the source contributed was played out.</p>
 <p>The information provided is based on the last ten seconds of media received.</p>
 <ul class="simple">
@@ -304,7 +303,7 @@
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id27" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id27">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/ondevicechange">https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/ondevicechange</a></p></li>
 </ul>
