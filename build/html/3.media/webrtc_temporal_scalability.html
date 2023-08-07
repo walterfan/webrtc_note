@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Temporal scalability &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -93,9 +88,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
-      <li class="breadcrumb-item active">Temporal scalability</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
+      <li>Temporal scalability</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/webrtc_temporal_scalability.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -106,8 +101,12 @@
            <div itemprop="articleBody">
              
   <section id="temporal-scalability">
-<h1>Temporal scalability<a class="headerlink" href="#temporal-scalability" title="Permalink to this heading"></a></h1>
+<h1>Temporal scalability<a class="headerlink" href="#temporal-scalability" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Temporal scalability</p></td>
@@ -122,18 +121,18 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id5">概述</a></p></li>
 <li><p><a class="reference internal" href="#id4" id="id6">参考</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>在时间可伸缩性(temporal scalability)的情况下，帧序列(the sequence of frames)以某种方式编码，
 以便可以在服务器中丢弃一些帧，并且仍然可以在接收器端解码得到的帧序列。</p>
 <p>In video coding, temporal scalability is the option to decode only some of the frames in a video stream instead of the whole stream. This enables an SFU for example to reduce the bitrate sent towards viewers who doesn’t have enough bitrate or CPU to handle the whole stream. It also assists devices that miss a packet to continue decoding the stream partially until an intra-frame is received.</p>
@@ -147,7 +146,7 @@
 * layer t0: cannot discardable ~ 70%</p>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">参考</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6">参考</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>[1] “Advanced Video Coding for Generic Audiovisual Services,” ITU-T, Tech. Rep. Recommendation H.264 &amp; ISO/IEC 14496-10 AVC, v3,2005.</p></li>
 <li><p>[2] J. Ostermann, J .Bormans, P. List, D. Marpe, N. Narroschke, F. Pereira,T. Stockhammer, and T. Wedi, “Video Coding with H.264/AVC: Tools, Performance and Complexity,” IEEE Circuits and Systems Magazine,vol.4, no.1,pp. 7-28, April 2004.</p></li>

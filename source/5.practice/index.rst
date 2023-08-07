@@ -28,3 +28,5 @@
    audio_quality
    remote_sharing
    remote_control
+
+   webrtc_security

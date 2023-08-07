@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC 常用工具 &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -108,9 +103,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">6. WebRTC 工具</a></li>
-      <li class="breadcrumb-item active">WebRTC 常用工具</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">6. WebRTC 工具</a> &raquo;</li>
+      <li>WebRTC 常用工具</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/6.tool/overview.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -121,8 +116,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc">
-<h1>WebRTC 常用工具<a class="headerlink" href="#webrtc" title="Permalink to this heading"></a></h1>
+<h1>WebRTC 常用工具<a class="headerlink" href="#webrtc" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC 常用工具</p></td>
@@ -134,11 +133,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#binutils" id="id3">binutils</a></p>
 <ul>
@@ -156,9 +155,9 @@
 </ul>
 </li>
 </ul>
-</nav>
+</div>
 <section id="binutils">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">binutils</a><a class="headerlink" href="#binutils" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">binutils</a><a class="headerlink" href="#binutils" title="Permalink to this headline">¶</a></h2>
 <p>The GNU Binutils are a collection of binary tools. The main ones are:</p>
 <ul class="simple">
 <li><p>ld - the GNU linker.</p></li>
@@ -185,11 +184,11 @@
 <li><p>windres - A compiler for Windows resource files.</p></li>
 </ul>
 <section id="example">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4">example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 </section>
 </section>
 <section id="linux-tools">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Linux Tools</a><a class="headerlink" href="#linux-tools" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">Linux Tools</a><a class="headerlink" href="#linux-tools" title="Permalink to this headline">¶</a></h2>
 <p>seq 生成数字序列
 wc -l 计算行数
 sed
@@ -211,16 +210,16 @@ uniq
 </pre></div>
 </div>
 <section id="gprof">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">gprof</a><a class="headerlink" href="#gprof" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">gprof</a><a class="headerlink" href="#gprof" title="Permalink to this headline">¶</a></h3>
 <p>cc -g -c myprog.c utils.c -pg
 cc -o myprog myprog.o utils.o -pg</p>
 <p>refer to <a class="reference external" href="https://sourceware.org/binutils/docs/gprof/index.html">https://sourceware.org/binutils/docs/gprof/index.html</a></p>
 </section>
 </section>
 <section id="python-tools">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Python Tools</a><a class="headerlink" href="#python-tools" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">Python Tools</a><a class="headerlink" href="#python-tools" title="Permalink to this headline">¶</a></h2>
 <section id="psutil">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">psutil</a><a class="headerlink" href="#psutil" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8">psutil</a><a class="headerlink" href="#psutil" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psutil</span>
 
 <span class="c1">#refer to https://psutil.readthedocs.io/en/latest/#processes</span>

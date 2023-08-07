@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC RTP Header extension &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
@@ -105,9 +101,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
-      <li class="breadcrumb-item active">WebRTC RTP Header extension</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
+      <li>WebRTC RTP Header extension</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/rtp_header_extension.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -118,8 +114,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-rtp-header-extension">
-<h1>WebRTC RTP Header extension<a class="headerlink" href="#webrtc-rtp-header-extension" title="Permalink to this heading"></a></h1>
+<h1>WebRTC RTP Header extension<a class="headerlink" href="#webrtc-rtp-header-extension" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC RTP</p></td>
@@ -131,11 +131,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p>
 <ul>
@@ -156,16 +156,16 @@
 </ul>
 </li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>在 <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5285">RFC5285</a> 中定义了 RTP 头的扩展方法
 WebRTC 默认使用 One Byte 扩展。</p>
 <p>0xBEDE (the first version of this specification was written on the feast day of the Venerable Bede)
 Therefore, the  value zero in this field indicates that one byte of data follows,
 and a value of 15 (the maximum) indicates element data of 16 bytes</p>
 <section id="one-byte-header-profile">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">One-byte header profile</a><a class="headerlink" href="#one-byte-header-profile" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id4">One-byte header profile</a><a class="headerlink" href="#one-byte-header-profile" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
 <span class="o">|</span> <span class="mh">0xBE</span>         <span class="o">|</span><span class="mh">0xDE</span>            <span class="o">|</span>          <span class="n">length</span>               <span class="o">|</span>
@@ -194,7 +194,7 @@ and a value of 15 (the maximum) indicates element data of 16 bytes</p>
 最后一个header extension：L=3，表示data长度为4字节。</p>
 </section>
 <section id="two-bytes-header-profile">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Two-bytes header profile</a><a class="headerlink" href="#two-bytes-header-profile" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5">Two-bytes header profile</a><a class="headerlink" href="#two-bytes-header-profile" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
 <span class="o">|</span> <span class="mh">0x100</span>                 <span class="o">|</span><span class="n">appbits</span><span class="o">|</span> <span class="o">|</span>       <span class="n">length</span>                <span class="o">|</span>
@@ -226,7 +226,7 @@ and a value of 15 (the maximum) indicates element data of 16 bytes</p>
 </section>
 </section>
 <section id="absolute-send-time">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Absolute Send Time</a><a class="headerlink" href="#absolute-send-time" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id6">Absolute Send Time</a><a class="headerlink" href="#absolute-send-time" title="Permalink to this headline">¶</a></h2>
 <p>refer to <a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/rtp-hdrext/abs-send-time/README.md">https://webrtc.googlesource.com/src/+/main/docs/native-code/rtp-hdrext/abs-send-time/README.md</a></p>
 <p>The Absolute Send Time extension is used to stamp RTP packets with a timestamp showing the departure time from the system that put this packet on the wire (or as close to this as we can manage). Contact <a class="reference external" href="mailto:solenberg&#37;&#52;&#48;google&#46;com">solenberg<span>&#64;</span>google<span>&#46;</span>com</a> for more info.</p>
 <ul class="simple">
@@ -243,7 +243,7 @@ and a value of 15 (the maximum) indicates element data of 16 bytes</p>
 <p>Notes: Packets are time stamped when going out, preferably close to metal. Intermediate RTP relays (entities possibly altering the stream) should remove the extension or set its own timestamp.</p>
 </section>
 <section id="absolute-capture-time">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Absolute Capture Time</a><a class="headerlink" href="#absolute-capture-time" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">Absolute Capture Time</a><a class="headerlink" href="#absolute-capture-time" title="Permalink to this headline">¶</a></h2>
 <p>refer to <a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/rtp-hdrext/abs-capture-time/README.md">https://webrtc.googlesource.com/src/+/main/docs/native-code/rtp-hdrext/abs-capture-time/README.md</a></p>
 <p>The Absolute Capture Time extension is used to stamp RTP packets with a NTP timestamp showing when the first audio or video frame in a packet was originally captured. The intent of this extension is to provide a way to accomplish audio-to-video synchronization when RTCP-terminating intermediate systems (e.g. mixers) are involved.</p>
 <p>Name: “Absolute Capture Time”; “RTP Header Extension for Absolute Capture Time”</p>
@@ -285,7 +285,7 @@ and a value of 15 (the maximum) indicates element data of 16 bytes</p>
 </div>
 </section>
 <section id="transport-wide-congestion-control">
-<h2><a class="toc-backref" href="#id8" role="doc-backlink">Transport-Wide Congestion Control</a><a class="headerlink" href="#transport-wide-congestion-control" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8">Transport-Wide Congestion Control</a><a class="headerlink" href="#transport-wide-congestion-control" title="Permalink to this headline">¶</a></h2>
 <p>refer to <a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/rtp-hdrext/transport-wide-cc-02/README.md">https://webrtc.googlesource.com/src/+/main/docs/native-code/rtp-hdrext/transport-wide-cc-02/README.md</a></p>
 <p>This RTP header extension is an extended version of the extension defined in <a class="reference external" href="https://tools.ietf.org/html/draft-holmer-rmcat-transport-wide-cc-extensions-01">https://tools.ietf.org/html/draft-holmer-rmcat-transport-wide-cc-extensions-01</a></p>
 <ul class="simple">
@@ -297,9 +297,9 @@ and a value of 15 (the maximum) indicates element data of 16 bytes</p>
 <p>Feedback is sent only on request by the sender, therefore, the extension has two optional bytes that signals that a feedback packet is requested.
 The sender determines if timing information should be included or not in the feedback packet. The original version always include timing information.</p>
 <section id="rtp-header-extension-format">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">RTP header extension format</a><a class="headerlink" href="#rtp-header-extension-format" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9">RTP header extension format</a><a class="headerlink" href="#rtp-header-extension-format" title="Permalink to this headline">¶</a></h3>
 <section id="data-layout-overview">
-<h4><a class="toc-backref" href="#id10" role="doc-backlink">Data layout overview</a><a class="headerlink" href="#data-layout-overview" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id10">Data layout overview</a><a class="headerlink" href="#data-layout-overview" title="Permalink to this headline">¶</a></h4>
 <p>Data layout of transport-wide sequence number 1-byte header + 2 bytes of data:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>
 <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
@@ -321,7 +321,7 @@ The sender determines if timing information should be included or not in the fee
 </section>
 </section>
 <section id="data-layout-details">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Data layout details</a><a class="headerlink" href="#data-layout-details" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11">Data layout details</a><a class="headerlink" href="#data-layout-details" title="Permalink to this headline">¶</a></h3>
 <p>The data is written in the following order,</p>
 <ul>
 <li><p>transport-wide sequence number (16-bit unsigned integer)</p></li>

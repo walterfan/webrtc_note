@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC E2E Delay &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -124,10 +119,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
-          <li class="breadcrumb-item"><a href="webrtc_qos.html">WebRTC QoS</a></li>
-      <li class="breadcrumb-item active">WebRTC E2E Delay</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
+          <li><a href="webrtc_qos.html">WebRTC QoS</a> &raquo;</li>
+      <li>WebRTC E2E Delay</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/webrtc_e2e_delay.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -138,8 +133,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-e2e-delay">
-<h1>WebRTC E2E Delay<a class="headerlink" href="#webrtc-e2e-delay" title="Permalink to this heading"></a></h1>
+<h1>WebRTC E2E Delay<a class="headerlink" href="#webrtc-e2e-delay" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC E2E Delay</p></td>
@@ -154,11 +153,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id4">概述</a></p></li>
 <li><p><a class="reference internal" href="#media-stats" id="id5">Media Stats</a></p>
@@ -179,9 +178,9 @@
 <li><p><a class="reference internal" href="#examples" id="id11">Examples</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id12">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="id3">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>在网上会议中，张三和李四在会议中进行视频聊天。 张三的声音从麦克风中传入，视频从摄像头中传入，李四要过一段时间才能听到声音，看到图像，这个时间差是视频会议中的关键指标。我们称为端到端延迟。</p>
 <p>端到端延迟 = 接收端的播放时间 - 发送端的捕获时间</p>
 <p>麻烦的事情在于, 时间在发送端和接收端的时间基准是不一致的, 这就要参考 RTCP SR 中给出了发送端的 NTP 时间, 通过这个时间， 将接收端的 NTP 时间基准转换为发送端的</p>
@@ -194,9 +193,9 @@
 </div>
 </section>
 <section id="media-stats">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Media Stats</a><a class="headerlink" href="#media-stats" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">Media Stats</a><a class="headerlink" href="#media-stats" title="Permalink to this headline">¶</a></h2>
 <section id="estimatedplayouttimestamp">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">estimatedPlayoutTimestamp</a><a class="headerlink" href="#estimatedplayouttimestamp" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">estimatedPlayoutTimestamp</a><a class="headerlink" href="#estimatedplayouttimestamp" title="Permalink to this headline">¶</a></h3>
 <p>type: DOMHighResTimeStamp</p>
 <p>This is the estimated playout time of this receiver’s track.</p>
 <p>The playout time is the NTP timestamp of the last playable audio sample or video frame that has a known timestamp
@@ -207,11 +206,11 @@
 </section>
 </section>
 <section id="absolute-capture-time">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Absolute Capture Time</a><a class="headerlink" href="#absolute-capture-time" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">Absolute Capture Time</a><a class="headerlink" href="#absolute-capture-time" title="Permalink to this headline">¶</a></h2>
 <p>The Absolute Capture Time extension is used to stamp RTP packets with a NTP timestamp showing when the first audio or video frame in a packet was originally captured. The intent of this extension is to provide a way to accomplish audio-to-video synchronization when RTCP-terminating intermediate systems (e.g. mixers) are involved.</p>
 <p>Name: “Absolute Capture Time”; “RTP Header Extension for Absolute Capture Time”</p>
 <section id="data-layout-overview">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Data layout overview</a><a class="headerlink" href="#data-layout-overview" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8">Data layout overview</a><a class="headerlink" href="#data-layout-overview" title="Permalink to this headline">¶</a></h3>
 <p>Data layout of the shortened version of abs-capture-time with a 1-byte header + 8 bytes of data:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
 <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
@@ -241,13 +240,13 @@
 </pre></div>
 </div>
 <section id="absolute-capture-timestamp">
-<h4><a class="toc-backref" href="#id9" role="doc-backlink">Absolute capture timestamp</a><a class="headerlink" href="#absolute-capture-timestamp" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id9">Absolute capture timestamp</a><a class="headerlink" href="#absolute-capture-timestamp" title="Permalink to this headline">¶</a></h4>
 <p>Absolute capture timestamp is the NTP timestamp of when the first frame in a packet was originally captured. This timestamp MUST be based on the same clock as the clock used to generate NTP timestamps for RTCP sender reports on the capture system.</p>
 <p>It’s not always possible to do an NTP clock readout at the exact moment of when a media frame is captured. A capture system MAY postpone the readout until a more convenient time. A capture system SHOULD have known delays (e.g. from hardware buffers) subtracted from the readout to make the final timestamp as close to the actual capture time as possible.</p>
 <p>This field is encoded as a 64-bit unsigned fixed-point number with the high 32 bits for the timestamp in seconds and low 32 bits for the fractional part. This is also known as the UQ32.32 format and is what the RTP specification defines as the canonical format to represent NTP timestamps.</p>
 </section>
 <section id="estimated-capture-clock-offset">
-<h4><a class="toc-backref" href="#id10" role="doc-backlink">Estimated capture clock offset</a><a class="headerlink" href="#estimated-capture-clock-offset" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id10">Estimated capture clock offset</a><a class="headerlink" href="#estimated-capture-clock-offset" title="Permalink to this headline">¶</a></h4>
 <p>Estimated capture clock offset is the sender’s estimate of the offset between its own NTP clock and the capture system’s NTP clock. The sender is here defined as the system that owns the NTP clock used to generate the NTP timestamps for the RTCP sender reports on this stream. The sender system is typically either the capture system or a mixer.</p>
 <p>This field is encoded as a 64-bit two’s complement signed fixed-point number with the high 32 bits for the seconds and low 32 bits for the fractional part. It’s intended to make it easy for a receiver, that knows how to estimate the sender system’s NTP clock, to also estimate the capture system’s NTP clock:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Capture</span> <span class="n">NTP</span> <span class="n">Clock</span> <span class="o">=</span> <span class="n">Sender</span> <span class="n">NTP</span> <span class="n">Clock</span> <span class="o">+</span> <span class="n">Capture</span> <span class="n">Clock</span> <span class="n">Offset</span>
@@ -257,10 +256,10 @@
 </section>
 </section>
 <section id="examples">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">Examples</a><a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id11">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id12">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/w3ctag/design-reviews/issues/493">https://github.com/w3ctag/design-reviews/issues/493</a></p></li>
 <li><p><a class="reference external" href="https://github.com/w3c/webrtc-extensions/blob/main/explainer.md">https://github.com/w3c/webrtc-extensions/blob/main/explainer.md</a></p></li>

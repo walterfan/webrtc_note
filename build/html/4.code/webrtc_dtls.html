@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC DTLS &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -116,9 +111,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
-      <li class="breadcrumb-item active">WebRTC DTLS</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
+      <li>WebRTC DTLS</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_dtls.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -129,8 +124,12 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-dtls">
-<h1>WebRTC DTLS<a class="headerlink" href="#webrtc-dtls" title="Permalink to this heading"></a></h1>
+<h1>WebRTC DTLS<a class="headerlink" href="#webrtc-dtls" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC Pacer</p></td>
@@ -142,11 +141,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#api-of-openssl-boringssl" id="id4">API of openssl/boringssl</a></p></li>
@@ -161,12 +160,12 @@
 </ul>
 </li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="api-of-openssl-boringssl">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">API of openssl/boringssl</a><a class="headerlink" href="#api-of-openssl-boringssl" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">API of openssl/boringssl</a><a class="headerlink" href="#api-of-openssl-boringssl" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>SSL_do_handshake</p></li>
 <li><p>DTLSv1_handle_timeout</p></li>
@@ -257,7 +256,7 @@
 </div>
 </section>
 <section id="classes">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">classes</a><a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">classes</a><a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <ul>
 <li><p>OpenSSLAdapter</p>
 <p>rtc_base/openssl_adapter.cc</p>
@@ -270,7 +269,7 @@
 </li>
 </ul>
 <section id="sslstreamadapter">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">SSLStreamAdapter</a><a class="headerlink" href="#sslstreamadapter" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6">SSLStreamAdapter</a><a class="headerlink" href="#sslstreamadapter" title="Permalink to this headline">¶</a></h3>
 <p>SSLStreamAdapter : A StreamInterfaceAdapter that does SSL/TLS.</p>
 <p>After SSL has been started, the stream will only open on successful SSL verification of certificates,
 and the communication is encrypted of course.</p>
@@ -282,7 +281,7 @@ They should possibly be moved out to a neutral class.</p>
 </section>
 </section>
 <section id="snippets">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">SSLRole</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SSL_CLIENT</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_SERVER</span><span class="w"> </span><span class="p">};</span>
 <span class="k">enum</span><span class="w"> </span><span class="nc">SSLMode</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SSL_MODE_TLS</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_MODE_DTLS</span><span class="w"> </span><span class="p">};</span>
 
@@ -464,7 +463,7 @@ They should possibly be moved out to a neutral class.</p>
 </pre></div>
 </div>
 <section id="logs">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">logs</a><a class="headerlink" href="#logs" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8">logs</a><a class="headerlink" href="#logs" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">38367</span><span class="p">:</span><span class="mi">49923</span><span class="p">:</span><span class="mi">0619</span><span class="o">/</span><span class="mf">142328.887408</span><span class="p">:</span><span class="n">INFO</span><span class="p">:</span><span class="n">openssl_stream_adapter</span><span class="o">.</span><span class="n">cc</span><span class="p">(</span><span class="mi">828</span><span class="p">)]</span> <span class="n">DTLS</span> <span class="n">retransmission</span>
 <span class="p">[</span><span class="mi">38367</span><span class="p">:</span><span class="mi">49923</span><span class="p">:</span><span class="mi">0619</span><span class="o">/</span><span class="mf">142328.887456</span><span class="p">:</span><span class="n">INFO</span><span class="p">:</span><span class="n">openssl_adapter</span><span class="o">.</span><span class="n">cc</span><span class="p">(</span><span class="mi">833</span><span class="p">)]</span> <span class="n">connect_exit</span> <span class="n">TLS</span> <span class="n">client</span> <span class="n">read_session_ticket</span>
 

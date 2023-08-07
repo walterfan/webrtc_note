@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>视频编码 &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -112,10 +107,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
-          <li class="breadcrumb-item"><a href="webrtc_video.html">WebRTC 视频</a></li>
-      <li class="breadcrumb-item active">视频编码</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
+          <li><a href="webrtc_video.html">WebRTC 视频</a> &raquo;</li>
+      <li>视频编码</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/video_codec.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -126,8 +121,12 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1>视频编码<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<h1>视频编码<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Video Codec</p></td>
@@ -139,11 +138,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id4" id="id7">概述</a></p>
 <ul>
@@ -178,11 +177,11 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id23">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="id4">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">概述</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id7">概述</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <section id="id5">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">视频压缩</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8">视频压缩</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>RGB24 -&gt; YUV420</p>
 <ul class="simple">
 <li><p>帧内压缩</p></li>
@@ -191,7 +190,7 @@
 </section>
 </section>
 <section id="video-frame">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">视频帧 Video Frame</a><a class="headerlink" href="#video-frame" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9">视频帧 Video Frame</a><a class="headerlink" href="#video-frame" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">A video is an action sequence formed by a series of images, and each image in the series succeeds the previous one in the timeline of the action sequence to displayed . These still images are called video frames.</div>
 </div>
@@ -205,20 +204,20 @@
 </div>
 <p>这是因为每秒有更多的视频帧要显示为动作序列的一部分，因此帧之间图像的变化较小，并且运动看起来更平滑。</p>
 <section id="i-frame">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">I-frame 信息帧</a><a class="headerlink" href="#i-frame" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id10">I-frame 信息帧</a><a class="headerlink" href="#i-frame" title="Permalink to this headline">¶</a></h3>
 <p>信息帧用帧内压缩，用作关键帧</p>
 </section>
 <section id="p-frame">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">P-frame</a><a class="headerlink" href="#p-frame" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11">P-frame</a><a class="headerlink" href="#p-frame" title="Permalink to this headline">¶</a></h3>
 <p>预测帧 Predictive Frame 用帧间压缩，反映之前的 I-frame 的变化</p>
 </section>
 <section id="b-frame">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">B-frame</a><a class="headerlink" href="#b-frame" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12">B-frame</a><a class="headerlink" href="#b-frame" title="Permalink to this headline">¶</a></h3>
 <p>双向预测帧 Bidirectional Predictive Frames 使得总体压缩更高， 它参考了之前的 I-frame 和之后的 P-frame</p>
 </section>
 </section>
 <section id="video-compress">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">视频压缩 Video compress</a><a class="headerlink" href="#video-compress" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id13">视频压缩 Video compress</a><a class="headerlink" href="#video-compress" title="Permalink to this headline">¶</a></h2>
 <p>由于视频是由图像的时间序列组成，视频压缩可以看作具有时间分量的图像压缩。</p>
 <p>大多数视频压缩方案都利用了时间相关性来消除冗余。</p>
 <p>预测帧与当前帧之间的差异称为预测误差或残差</p>
@@ -226,7 +225,7 @@
 <p>Inter-Frame 帧间压缩</p>
 </section>
 <section id="h-264">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">H.264</a><a class="headerlink" href="#h-264" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id14">H.264</a><a class="headerlink" href="#h-264" title="Permalink to this headline">¶</a></h2>
 <p>Compression and media resilliency feature</p>
 <ul class="simple">
 <li><p>Error feedback mechanism</p></li>
@@ -248,7 +247,7 @@
 </ul>
 <p>在对视频进行编码时，大多数编解码器将帧 (frame) 划分为宏块 (macroblocks) – 离散且大部分独立的处理单元。 然后，编解码器可以进一步细分这些宏块以执行特定的变换或预测.</p>
 <section id="id6">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">宏块和分辨率</a><a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id15">宏块和分辨率</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>在 H.264 中，宏块是 16x16 正方形中 256 个像素的块（尽管它们可以更小或针对某些内部操作进行细分）。 因此，H.264 编码视频的宽度和高度（以像素为单位）必须是 16 的倍数，因为帧边界必须以宏块结束。</p>
 <p>宏块对于 H.264 来说非常重要，因此在协商支持的分辨率时，最大帧大小 max-fs 以总宏块而不是像素来表示。 与 H.263 等早期编解码器不同，在 H.264 中，接收器不需要也没有能力表达它们支持的分辨率或宽高比。 H.264 接收器简单地表示每帧的最大宏块数，然后应该能够解码和渲染包含那么多或更少宏块的任何有效分辨率。</p>
 <p>问题在于，根据规范，发送者以不寻常的宽高比发送视频是合法的，甚至可能是极其不寻常的宽高比，例如 5x1。 在实践中，大多数解码器分配一个表面来解码具有最大高度和宽度的视频，并且极端分辨率将不适合该表面并且将不可解码。 关心互操作性的实现者应该警惕发送非标准分辨率，除非有其他机制来表示支持它们，但也应该设法使他们的解码器相对稳健，以接收他们可能收到的合理范围的分辨率。</p>
@@ -257,19 +256,19 @@
 <p>支持 1080p 的实现应该宣传最高支持 1920x1088，并且应该能够处理接收 1920x1072 或 1920x1088。 发送时，实现必须确保它们不超过远端公布的最大值（这可能意味着发送 1920x1072 而不是 1920x1088，如果这是他们公布的支持的最大值），但建议对可操作性感兴趣的实现者选择公布支持 支持 1080p 时至少为 1920x1088。</p>
 </section>
 <section id="framerate">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">帧率 framerate</a><a class="headerlink" href="#framerate" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id16">帧率 framerate</a><a class="headerlink" href="#framerate" title="Permalink to this headline">¶</a></h3>
 <p>以类似的方式，H.264 协商不涉及最大帧速率的协商，而是涉及每秒最大宏块数 max-mbps。 与 max-fs 的宽高比问题一样，这确实具有发送器在规范内以较高帧速率发送较低分辨率的属性。 例如，720p 对应于 (1280*720)/(16*16)=3600 个宏块，在 30fps 下，其 mbps 为 108000。但是，此最大 mbps 也允许在超过 60fps 时实现 720x576，或者在甚至更低的分辨率下更高的帧率。</p>
 <p>与宽高比问题一样，实现实际上很少支持接收任意高的帧速率； 关心互操作性的实现者应该避免发送高于 30fps 的帧速率，除非有其他机制来表示支持它们。</p>
 </section>
 <section id="quantization-parameter">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">量化参数 Quantization Parameter</a><a class="headerlink" href="#quantization-parameter" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id17">量化参数 Quantization Parameter</a><a class="headerlink" href="#quantization-parameter" title="Permalink to this headline">¶</a></h3>
 <p>分辨率和帧速率并不是影响发送 H.264 流所需比特率的唯一变量，编解码器还可以通过量化参数 QP 改变压缩帧本身的保真度或质量。</p>
 <p>QP是用于导出缩放矩阵的索引； QP 值越小，编码器采取的步数越多，因此可以保留原始帧的更多细节，但需要的比特率也越高。 较高的 QP 使用较大的步长并导致保真度损失较大，但可以使用较少的位数对相同分辨率的帧进行编码。 因此，QP 可以被认为是控制编码质量——低 QP 意味着更高的质量，高 QP 意味着更低的质量。</p>
 <p>因此，当编码器以给定的最大比特率为目标时，实现必须在帧速率、分辨率和质量之间取得折衷。 大多数实现都会选择根据目标比特率设置帧速率和分辨率，从而允许编码器选择最佳 QP 来达到目标质量。</p>
 <p>然而，在需要大量关键帧的情况下（可能是由于丢包导致远端频繁发送关键帧请求），编码器可能被迫使用足够高的 QP 来维持视频会降低的分辨率和帧率 能见度; 这可能会导致“脉冲”质量，因为编码器只能生成低质量的 I 帧，然后能够降低后续增量帧的 QP，然后被迫再次提高下一个关键帧的 QP。 实现可能希望设置 QP 上限来避免这种影响，通过丢帧（从而降低有效帧速率）来避免这种情况过于明显。</p>
 </section>
 <section id="profiles">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">配置 Profiles</a><a class="headerlink" href="#profiles" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18">配置 Profiles</a><a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h3>
 <p>H.264 标准中有许多可用的工具选项。 其中一些选项允许为某些参数分配额外的位以实现更高的清晰度，但这些很少用于实时媒体编码。更相关的是在给定比特率下允许更高清晰度的选项集，但 CPU 成本明显会更高。</p>
 <p>虽然这些选项在视频流被编码一次然后由多个接收者（例如流媒体或磁盘上的媒体）解码的用例中具有很大的价值，但在视频会议的情况下有所不同， 其中编码必须实时地完成，并且编码由少数接收者进行解码。 在这些情况下，实际应用中许多的实现选择不支持这些高级工具选项。</p>
 <p>H.264 不是单独协商所有这些工具，而是将它们捆绑到配置文件 (Profiles) 中，其中每个预定义的配置文件 (Profiles)意味着支持许多此类扩展。 视频会议中的 H.264 主要涉及三个配置文件：</p>
@@ -281,11 +280,11 @@
 <p>还有一个通常在信令协商时用到的一个独立的 Baseline Profile，它实际上等同于  Constrained Baseline Profile (CBP)。 它主要是出于历史原因而用到的； 直到 H.264 Baseline Profile在信令协商中得到很好的建立和应用之后，CBP 才被定义。</p>
 </section>
 <section id="scalable-video-coding-svc">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">可扩展视频编码 Scalable Video Coding (SVC)</a><a class="headerlink" href="#scalable-video-coding-svc" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19">可扩展视频编码 Scalable Video Coding (SVC)</a><a class="headerlink" href="#scalable-video-coding-svc" title="Permalink to this headline">¶</a></h3>
 <p>H.264 的另一个扩展是Scalable Video Coding (SVC)。 当使用此扩展时，编码器会创建一个视频流，其中还包含一个或多个子流，这些子流可以通过从流中丢弃某些数据包来导出。</p>
 <p>这在将编码流发送到多个接收者（其中一些接收者可能具有不同的接收能力）的用例中非常有价值——然后 SFU 交换服务器可以将所有数据包转发到能力更强的接收者，同时丢弃一层或多层 SVC 流 以较低的比特率将子流之一转发到其他能力较弱的接收者。</p>
 <section id="svc-layer-substream">
-<h4><a class="toc-backref" href="#id20" role="doc-backlink">SVC 编码允许三种类型的层次(layer)或称子流(substream)</a><a class="headerlink" href="#svc-layer-substream" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id20">SVC 编码允许三种类型的层次(layer)或称子流(substream)</a><a class="headerlink" href="#svc-layer-substream" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>Temporal Layer 时间层：每个子层代表流的不同帧速率。 例如，30fps 流可能包含 15fps 子层，方法是每隔一个帧进行预测，而不是根据前一帧，而是根据前一帧。 因此，服务器可以丢弃 50% 没有预测到任何内容的帧，并具有兼容的 15fps 流发送到接收器子集。 这是迄今为止实现起来最简单的 SVC 模式，因此在视频会议中得到了最好的支持。</p></li>
 <li><p>Spatial Layer 空间层：每个子层代表流的不同分辨率。 这比时间可伸缩性要复杂得多，并且在视频会议中很少受支持。</p></li>
@@ -298,10 +297,10 @@
 </section>
 </section>
 <section id="packetization-mode">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">Packetization mode 打包模式</a><a class="headerlink" href="#packetization-mode" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21">Packetization mode 打包模式</a><a class="headerlink" href="#packetization-mode" title="Permalink to this headline">¶</a></h3>
 <p>当 H.264 在 RTP 中发送时，需要将给定帧拆分为多个数据包，因为与音频不同，考虑到 MTU 限制，视频帧很少适合单个 RTP 数据包。 H.264支持多种打包模式。 这些必须配置为编码的一部分，因为不同的打包模式要求以特定方式对帧进行编码。</p>
 <section id="h-264-3">
-<h4><a class="toc-backref" href="#id22" role="doc-backlink">H.264 有 3 种不同的打包模式</a><a class="headerlink" href="#h-264-3" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id22">H.264 有 3 种不同的打包模式</a><a class="headerlink" href="#h-264-3" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><p>0：最简单的模式，RTP数据包只能包含单个NAL单元（NALU），这是H.264内部的结构。 最简单的实现，涉及互操作性的实现通常应该提供对分组模式 0 的支持。</p></li>
 <li><p>1：该模式允许NALU跨越多个数据包。 这是视频会议中使用最广泛的分组模式，建议实现确保它们支持和协商分组模式 1。</p></li>
@@ -311,7 +310,7 @@
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id23" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id23">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Video_codec">Web video codec guide</a></p></li>
 </ul>

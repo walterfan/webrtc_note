@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opus Codec &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -123,10 +118,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
-          <li class="breadcrumb-item"><a href="webrtc_audio.html">WebRTC 音频</a></li>
-      <li class="breadcrumb-item active">Opus Codec</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
+          <li><a href="webrtc_audio.html">WebRTC 音频</a> &raquo;</li>
+      <li>Opus Codec</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/audio_opus.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -137,8 +132,12 @@
            <div itemprop="articleBody">
              
   <section id="opus-codec">
-<h1>Opus Codec<a class="headerlink" href="#opus-codec" title="Permalink to this heading"></a></h1>
+<h1>Opus Codec<a class="headerlink" href="#opus-codec" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Opus Codec</p></td>
@@ -150,11 +149,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id16">概述</a></p></li>
 <li><p><a class="reference internal" href="#id4" id="id17">互联网音频编码需求</a></p>
@@ -204,9 +203,9 @@
 </li>
 <li><p><a class="reference internal" href="#id13" id="id41">参考资料</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="id3">
-<h2><a class="toc-backref" href="#id16" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id16">概述</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>Opus 是一种实时交互音频编码， 设计用来满足在 <a class="reference external" href="https://tools.ietf.org/html/rfc6366">RFC6366</a>  中所提出的对互联网音频编码的需求.
 不稳定的网络环境下的高质量语音通信.</p>
 <p>Opus 由基于线性预测 (LP)的层和基于修正离散余弦变换 (MDCT)的层组成。</p>
@@ -230,10 +229,10 @@
 </ul>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id17" role="doc-backlink">互联网音频编码需求</a><a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id17">互联网音频编码需求</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://tools.ietf.org/html/rfc6366">Requirements for an Internet Audio Codec</a></p>
 <section id="id5">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">定义</a><a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18">定义</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>窄带音频 Narrowband: 8 kilohertz (kHz)</p></li>
 <li><p>宽带音频 Wideband: 16 kHz</p></li>
@@ -242,7 +241,7 @@
 </ul>
 </section>
 <section id="id6">
-<h3><a class="toc-backref" href="#id19" role="doc-backlink">应用场景</a><a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19">应用场景</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Point-to-point calls</p></li>
 <li><p>Conferencing</p></li>
@@ -255,7 +254,7 @@
 </ul>
 </section>
 <section id="id7">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">详细的基本需求</a><a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id20">详细的基本需求</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>操作空间</p></li>
 <li><p>质量和比特率</p></li>
@@ -264,7 +263,7 @@
 </ul>
 </section>
 <section id="id8">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">其他的考虑</a><a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id21">其他的考虑</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>混音的低复杂性</p></li>
 <li><p>编码的潜在改进</p></li>
@@ -280,7 +279,7 @@
 </section>
 </section>
 <section id="id9">
-<h2><a class="toc-backref" href="#id22" role="doc-backlink">术语</a><a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id22">术语</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>bitrate 比特每秒</p></li>
 <li><p>complexity 复杂度从1到10，复杂度最高为10</p></li>
@@ -297,7 +296,7 @@
 <p>不要使用 max_packet 来控制目标可变比特率，用 OPUS_SET_BITRATE 来代替</p>
 </section>
 <section id="opus-architecture">
-<h2><a class="toc-backref" href="#id23" role="doc-backlink">Opus Architecture</a><a class="headerlink" href="#opus-architecture" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id23">Opus Architecture</a><a class="headerlink" href="#opus-architecture" title="Permalink to this headline">¶</a></h2>
 <p>Opus 的整体架构</p>
 <ul class="simple">
 <li><p>Opus Encoder</p></li>
@@ -308,10 +307,15 @@
 <li><p>Opus Custom</p></li>
 </ul>
 <section id="opus-codec-bandwidth">
-<h3><a class="toc-backref" href="#id24" role="doc-backlink">Opus Codec bandwidth</a><a class="headerlink" href="#opus-codec-bandwidth" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id24">Opus Codec bandwidth</a><a class="headerlink" href="#opus-codec-bandwidth" title="Permalink to this headline">¶</a></h3>
 <p>Opus 编码可从 6 kbit/s 窄带单声道语音扩展到 510 kbit/s 全带立体声音乐， 其算法延迟范围从5 ms 到 65.2 ms。在给定的时间，或者 LP 层，或者 MDCT 层，或者两者都有应用。它可无缝地在它的各种操作模式之间切换，这给它很大的灵活性来适应各种内容和网络条件，而无需重新协商当前的会话。</p>
 <p>此编码允许输入和输出多种不同的音频带宽，定义如下：</p>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 27%" />
+<col style="width: 39%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Abbreviation</p></th>
 <th class="head"><p>Audio Bandwidth</p></th>
@@ -344,8 +348,18 @@
 </section>
 </section>
 <section id="opus-frame-size-and-timestamp-increments">
-<h2><a class="toc-backref" href="#id25" role="doc-backlink">Opus frame size and timestamp increments</a><a class="headerlink" href="#opus-frame-size-and-timestamp-increments" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id25">Opus frame size and timestamp increments</a><a class="headerlink" href="#opus-frame-size-and-timestamp-increments" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 29%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Mode</p></th>
 <th class="head"><p>fs</p></th>
@@ -389,7 +403,7 @@
 </table>
 </section>
 <section id="control-parameters">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">Control Parameters</a><a class="headerlink" href="#control-parameters" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id26">Control Parameters</a><a class="headerlink" href="#control-parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>bitrate</p></li>
 <li><p>channels</p></li>
@@ -402,7 +416,7 @@
 <li><p>DTX</p></li>
 </ul>
 <section id="fec">
-<h3><a class="toc-backref" href="#id27" role="doc-backlink">FEC</a><a class="headerlink" href="#fec" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id27">FEC</a><a class="headerlink" href="#fec" title="Permalink to this headline">¶</a></h3>
 <p>In-band Forward Error Correction (FEC)</p>
 <p>Opus 编码自身支持的是带内前向纠错 In-band FEC</p>
 <p>Packets that are determined to contain perceptually important speech information, such as onsets or transients,
@@ -418,14 +432,14 @@ The encoder needs higher bitrate to have a room for LBRR packets containing FEC.
 <li><p>The encoder must be told to expect packet loss via OPUS_SET_PACKET_LOSS_PERC.</p></li>
 </ul>
 <section id="encoder-change">
-<h4><a class="toc-backref" href="#id28" role="doc-backlink">Encoder change</a><a class="headerlink" href="#encoder-change" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id28">Encoder change</a><a class="headerlink" href="#encoder-change" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">opus_encoder_ctl</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span><span class="w"> </span><span class="n">OPUS_SET_INBAND_FEC</span><span class="p">(</span><span class="n">TRUE</span><span class="p">));</span>
 <span class="n">opus_encoder_ctl</span><span class="p">(</span><span class="n">encoder</span><span class="p">,</span><span class="n">OPUS_SET_PACKET_LOSS_PERC</span><span class="p">(</span><span class="n">opus_packet_loss</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
 <section id="decoder-change">
-<h4><a class="toc-backref" href="#id29" role="doc-backlink">Decoder change</a><a class="headerlink" href="#decoder-change" title="Permalink to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id29">Decoder change</a><a class="headerlink" href="#decoder-change" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Decode the lost packet */</span>
 <span class="n">opus_decoder_ctl</span><span class="p">(</span><span class="n">decoder</span><span class="p">,</span><span class="w"> </span><span class="n">OPUS_GET_LAST_PACKET_DURATION</span><span class="p">(</span><span class="n">frame_size</span><span class="p">));</span>
 <span class="n">opus_decode</span><span class="p">(</span><span class="w">        </span><span class="n">decoder</span><span class="p">,</span>
@@ -448,13 +462,13 @@ The encoder needs higher bitrate to have a room for LBRR packets containing FEC.
 </section>
 </section>
 <section id="discontinuous-transmission-dtx">
-<h3><a class="toc-backref" href="#id30" role="doc-backlink">Discontinuous Transmission (DTX)</a><a class="headerlink" href="#discontinuous-transmission-dtx" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id30">Discontinuous Transmission (DTX)</a><a class="headerlink" href="#discontinuous-transmission-dtx" title="Permalink to this headline">¶</a></h3>
 <p>Discontinuous Transmission (DTX) reduces the bitrate during silence or background noise.
 When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </section>
 </section>
 <section id="id10">
-<h2><a class="toc-backref" href="#id31" role="doc-backlink">内部分帧</a><a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id31">内部分帧</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>Opus 编码打包到 RTP payload中，可以包含一个或几个帧 frame, 需要关注几个问题</p>
 <ul class="simple">
 <li><p>operation mode</p></li>
@@ -463,7 +477,7 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 <li><p>channel count</p></li>
 </ul>
 <section id="toc">
-<h3><a class="toc-backref" href="#id32" role="doc-backlink">TOC</a><a class="headerlink" href="#toc" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id32">TOC</a><a class="headerlink" href="#toc" title="Permalink to this headline">¶</a></h3>
 <p>Opus 包必需包含最少一个字节，这个字节称为 TOC(Table Of Contents) 内容表，用来指示这个包所采用的模式和配置</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>
 <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span>
@@ -524,12 +538,12 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </ul>
 </section>
 <section id="id11">
-<h3><a class="toc-backref" href="#id33" role="doc-backlink">帧打包</a><a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id33">帧打包</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>对于上述不同的配置 “config” , 有不同的打包方式</p>
 </section>
 </section>
 <section id="opus-decoder">
-<h2><a class="toc-backref" href="#id34" role="doc-backlink">Opus Decoder 解码</a><a class="headerlink" href="#opus-decoder" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id34">Opus Decoder 解码</a><a class="headerlink" href="#opus-decoder" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Range Decoder</p></li>
 <li><p>SILK Decoder</p></li>
@@ -538,7 +552,7 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </ul>
 </section>
 <section id="opus-encoder">
-<h2><a class="toc-backref" href="#id35" role="doc-backlink">Opus Encoder 编码</a><a class="headerlink" href="#opus-encoder" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id35">Opus Encoder 编码</a><a class="headerlink" href="#opus-encoder" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Range Encoder</p></li>
 <li><p>SILK Encoder</p></li>
@@ -546,7 +560,7 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </ul>
 </section>
 <section id="id12">
-<h2><a class="toc-backref" href="#id36" role="doc-backlink">SDP</a><a class="headerlink" href="#id12" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id36">SDP</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>maxaveragebitrate</p></li>
 <li><p>maxplaybackrate</p></li>
@@ -559,7 +573,7 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 <li><p>sprop-stereo</p></li>
 </ul>
 <section id="example">
-<h3><a class="toc-backref" href="#id37" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id37">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">audio</span> <span class="mi">9000</span> <span class="n">RTP</span><span class="o">/</span><span class="n">SAVPF</span> <span class="mi">111</span>
 <span class="n">a</span><span class="o">=</span><span class="n">rtpmap</span><span class="p">:</span><span class="mi">111</span> <span class="n">opus</span><span class="o">/</span><span class="mi">48000</span><span class="o">/</span><span class="mi">2</span>
 <span class="n">a</span><span class="o">=</span><span class="n">ptime</span><span class="p">:</span><span class="mi">20</span>
@@ -571,7 +585,7 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </section>
 </section>
 <section id="api">
-<h2><a class="toc-backref" href="#id38" role="doc-backlink">API</a><a class="headerlink" href="#api" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id38">API</a><a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Encodes an Opus frame.</p></li>
 </ul>
@@ -618,9 +632,9 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </div>
 </section>
 <section id="tools">
-<h2><a class="toc-backref" href="#id39" role="doc-backlink">Tools</a><a class="headerlink" href="#tools" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id39">Tools</a><a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
 <section id="opus-tools">
-<h3><a class="toc-backref" href="#id40" role="doc-backlink">Opus-tools</a><a class="headerlink" href="#opus-tools" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id40">Opus-tools</a><a class="headerlink" href="#opus-tools" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Encode:</p></li>
 </ul>
@@ -636,7 +650,7 @@ When DTX is enabled, only one frame is encoded every 400 milliseconds.</p>
 </section>
 </section>
 <section id="id13">
-<h2><a class="toc-backref" href="#id41" role="doc-backlink">参考资料</a><a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id41">参考资料</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://tools.ietf.org/html/rfc6716">RFC6716 Definition of the Opus Audio Codec</a></p></li>
 <li><p><a class="reference external" href="https://tools.ietf.org/html/rfc7587">Official Opus RTP specification - RFC 7587</a></p></li>

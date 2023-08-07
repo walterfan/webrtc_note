@@ -201,35 +201,35 @@ ITU 给出的阈值:
 
 .. code-block::
 
-if (diff_ms > 0) {
-      // The minimum video delay is longer than the current audio delay.
-      // We need to decrease extra video delay, or add extra audio delay.
-      if (video_delay_.extra_ms > base_target_delay_ms_) {
-            // We have extra delay added to ViE. Reduce this delay before adding
-            // extra delay to VoE.
-            video_delay_.extra_ms -= diff_ms;
-            audio_delay_.extra_ms = base_target_delay_ms_;
-      } else {  // video_delay_.extra_ms > 0
-            // We have no extra video delay to remove, increase the audio delay.
-            audio_delay_.extra_ms += diff_ms;
-            video_delay_.extra_ms = base_target_delay_ms_;
+      if (diff_ms > 0) {
+            // The minimum video delay is longer than the current audio delay.
+            // We need to decrease extra video delay, or add extra audio delay.
+            if (video_delay_.extra_ms > base_target_delay_ms_) {
+                  // We have extra delay added to ViE. Reduce this delay before adding
+                  // extra delay to VoE.
+                  video_delay_.extra_ms -= diff_ms;
+                  audio_delay_.extra_ms = base_target_delay_ms_;
+            } else {  // video_delay_.extra_ms > 0
+                  // We have no extra video delay to remove, increase the audio delay.
+                  audio_delay_.extra_ms += diff_ms;
+                  video_delay_.extra_ms = base_target_delay_ms_;
+            }
+            } else {  // if (diff_ms > 0)
+            // The video delay is lower than the current audio delay.
+            // We need to decrease extra audio delay, or add extra video delay.
+            if (audio_delay_.extra_ms > base_target_delay_ms_) {
+                  // We have extra delay in VoiceEngine.
+                  // Start with decreasing the voice delay.
+                  // Note: diff_ms is negative; add the negative difference.
+                  audio_delay_.extra_ms += diff_ms;
+                  video_delay_.extra_ms = base_target_delay_ms_;
+            } else {  // audio_delay_.extra_ms > base_target_delay_ms_
+                  // We have no extra delay in VoiceEngine, increase the video delay.
+                  // Note: diff_ms is negative; subtract the negative difference.
+                  video_delay_.extra_ms -= diff_ms;  // X - (-Y) = X + Y.
+                  audio_delay_.extra_ms = base_target_delay_ms_;
+            }
       }
-      } else {  // if (diff_ms > 0)
-      // The video delay is lower than the current audio delay.
-      // We need to decrease extra audio delay, or add extra video delay.
-      if (audio_delay_.extra_ms > base_target_delay_ms_) {
-            // We have extra delay in VoiceEngine.
-            // Start with decreasing the voice delay.
-            // Note: diff_ms is negative; add the negative difference.
-            audio_delay_.extra_ms += diff_ms;
-            video_delay_.extra_ms = base_target_delay_ms_;
-      } else {  // audio_delay_.extra_ms > base_target_delay_ms_
-            // We have no extra delay in VoiceEngine, increase the video delay.
-            // Note: diff_ms is negative; subtract the negative difference.
-            video_delay_.extra_ms -= diff_ms;  // X - (-Y) = X + Y.
-            audio_delay_.extra_ms = base_target_delay_ms_;
-      }
-}
 
 
 相关代码

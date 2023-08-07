@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MediaSoup &mdash; webrtc_tutorial 1 documentation</title>
@@ -13,11 +13,10 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -30,15 +29,11 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -71,10 +66,12 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pion.html">Pion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="srs.html">SRS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="video_quality.html">Video Quality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="audio_quality.html">Audio Quality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_sharing.html">Remote Sharing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="remote_control.html">Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webrtc_security.html">WebRTC Security</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../6.tool/index.html">6. WebRTC 工具</a></li>
@@ -94,9 +91,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">5. WebRTC 实践</a></li>
-      <li class="breadcrumb-item active">MediaSoup</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">5. WebRTC 实践</a> &raquo;</li>
+      <li>MediaSoup</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/5.practice/mediasoup.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -107,8 +104,12 @@
            <div itemprop="articleBody">
              
   <section id="mediasoup">
-<h1>MediaSoup<a class="headerlink" href="#mediasoup" title="Permalink to this heading"></a></h1>
+<h1>MediaSoup<a class="headerlink" href="#mediasoup" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>MediaSoup</p></td>
@@ -120,19 +121,19 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-03</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#example" id="id4">Example</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id5">Reference</a></p></li>
 </ul>
-</nav>
+</div>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Mediasoup is a opensource project, its server and client side libraries are designed to accomplish with the following goals:</p>
 <ul class="simple">
 <li><p>Be a SFU (Selective Forwarding Unit).</p></li>
@@ -147,7 +148,7 @@
 </ul>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/versatica/mediasoup-demo">https://github.com/versatica/mediasoup-demo</a></p></li>
 </ul>
@@ -158,7 +159,7 @@ $<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </s
 </div>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id5">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://mediasoup.org/">MediaSoup offical site</a></p></li>
 </ul>
