@@ -51,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">DTLS 协议</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
@@ -133,7 +134,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -401,16 +402,16 @@
 <ul class="simple">
 <li><p>openssl example</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>// Generate a certificate
-openssl ecparam -out key.pem -name prime256v1 -genkey
-openssl req -new -sha256 -key key.pem -out server.csr
-openssl x509 -req -sha256 -days <span class="m">365</span> -in server.csr -signkey key.pem -out cert.pem
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>//<span class="w"> </span>Generate<span class="w"> </span>a<span class="w"> </span>certificate
+openssl<span class="w"> </span>ecparam<span class="w"> </span>-out<span class="w"> </span>key.pem<span class="w"> </span>-name<span class="w"> </span>prime256v1<span class="w"> </span>-genkey
+openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-sha256<span class="w"> </span>-key<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>server.csr
+openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-sha256<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-in<span class="w"> </span>server.csr<span class="w"> </span>-signkey<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>cert.pem
 
-// Use with examples/dial/selfsign/main.go
-openssl s_server -dtls1_2 -cert cert.pem -key key.pem -accept <span class="m">4444</span>
+//<span class="w"> </span>Use<span class="w"> </span>with<span class="w"> </span>examples/dial/selfsign/main.go
+openssl<span class="w"> </span>s_server<span class="w"> </span>-dtls1_2<span class="w"> </span>-cert<span class="w"> </span>cert.pem<span class="w"> </span>-key<span class="w"> </span>key.pem<span class="w"> </span>-accept<span class="w"> </span><span class="m">4444</span>
 
-// Use with examples/listen/selfsign/main.go
-openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug -cert cert.pem -key key.pem
+//<span class="w"> </span>Use<span class="w"> </span>with<span class="w"> </span>examples/listen/selfsign/main.go
+openssl<span class="w"> </span>s_client<span class="w"> </span>-dtls1_2<span class="w"> </span>-connect<span class="w"> </span><span class="m">127</span>.0.0.1:4444<span class="w"> </span>-debug<span class="w"> </span>-cert<span class="w"> </span>cert.pem<span class="w"> </span>-key<span class="w"> </span>key.pem
 </pre></div>
 </div>
 <ul class="simple">
@@ -445,24 +446,24 @@ openssl s_client -dtls1_2 -connect <span class="m">127</span>.0.0.1:4444 -debug 
 <li><p>DTLS Record</p></li>
 </ul>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//DTLS record raw data structure</span>
-<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">DtlsHandshakeRawData</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">DtlsHandshakeRawData</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="n">u8</span><span class="w">  </span><span class="n">handshakeType</span><span class="p">;</span><span class="w"> </span><span class="c1">// ssl3_mt_*</span>
-<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u16</span><span class="w"> </span><span class="n">msgSeq</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">fragOffset</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">fragLen</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u8</span><span class="w">  </span><span class="n">fragBuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">stDtlsHandshakeRawData</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u16</span><span class="w"> </span><span class="n">msgSeq</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">fragOffset</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u24</span><span class="w"> </span><span class="n">fragLen</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u8</span><span class="w">  </span><span class="n">fragBuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span><span class="w"> </span><span class="n">stDtlsHandshakeRawData</span><span class="p">;</span>
 
-<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span> <span class="nc">DtlsRecordLayerRawData</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">DtlsRecordLayerRawData</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="n">u8</span><span class="w">   </span><span class="n">contentType</span><span class="p">;</span><span class="w"> </span><span class="c1">// ssl3_rt_*</span>
-<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">dtlsVer</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">epoch</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">seqNoH</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u32</span><span class="w">  </span><span class="n">seqNoL</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">len</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="n">stDtlsHandshakeRawData</span><span class="w"> </span><span class="n">fragData</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">stDtlsRecordLayerRawData</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">dtlsVer</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">epoch</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">seqNoH</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u32</span><span class="w">  </span><span class="n">seqNoL</span><span class="p">;</span>
+<span class="w">      </span><span class="n">u16</span><span class="w">  </span><span class="n">len</span><span class="p">;</span>
+<span class="w">      </span><span class="n">stDtlsHandshakeRawData</span><span class="w"> </span><span class="n">fragData</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">stDtlsRecordLayerRawData</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>

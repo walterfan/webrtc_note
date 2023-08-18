@@ -51,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
@@ -65,6 +66,9 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="rtcp_rr.html">RTCP Receiver Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_sdes.html">RTCP SDES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_bye.html">RTCP Bye</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_app.html">RTCP App</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rtcp_xr.html">RTCP XR</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rtcp.html#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rtcp.html#reference">Reference</a></li>
@@ -129,7 +133,7 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -149,7 +153,7 @@
 <li><p><a class="reference internal" href="#sender-report-rtcp-packets-sr" id="id12">Sender Report RTCP Packets (SR)</a></p>
 <ul>
 <li><p><a class="reference internal" href="#the-header" id="id13">The header</a></p></li>
-<li><p><a class="reference internal" href="#the-sender-information-block" id="id14">The sender information block</a></p></li>
+<li><p><a class="reference internal" href="#the-sender-information-block" id="id14">The sender information block 发送者信息块</a></p></li>
 <li><p><a class="reference internal" href="#the-receiver-report-blocks" id="id15">The receiver report blocks</a></p></li>
 <li><p><a class="reference internal" href="#the-extensions" id="id16">The extensions</a></p></li>
 </ul>
@@ -215,7 +219,7 @@
 </ul>
 </section>
 <section id="the-sender-information-block">
-<h3><a class="toc-backref" href="#id14">The sender information block</a><a class="headerlink" href="#the-sender-information-block" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">The sender information block 发送者信息块</a><a class="headerlink" href="#the-sender-information-block" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
 <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -233,10 +237,20 @@
 </div>
 <ul class="simple">
 <li><p>NTS: 64 bits, The NTP timestampgif indicates the point of time measured in wall clock time when this report was sent. In combination with timestamps returned in reception reports from the respective receivers, it can be used to estimate the round-trip propagation time to and from the receivers.</p></li>
+</ul>
+<p>NTP 时间戳是一个 64 位字段，包含以网络时间协议 (NTP) 格式发送报告的时间，即 1970 年 1 月 1 日 00:00 UTC 等秒数，可通过许多标准库获得。 这通常称为挂钟时间。 前 32 位表示秒数，而第二个 32 位表示秒的小数部分。 RTCP 没有定义小数部分所需的精度，但它应该精确到至少毫秒，以便用于计算往返时间等目的。 请注意，虽然它使用 NTP 格式，但信息不必来自 NTP； 由于该值主要用于相对计算，因此只要实现对所有流上的发送方报告使用公共系统时钟，绝对精度并不是特别重要。</p>
+<ul class="simple">
 <li><p>RTS: 32 bits, The RTP timestamp resembles the same time as the NTP timestamp (above), but is measured in the same units and with the same random offset as the RTP timestamps in data packets. This correspondence may be used for intra- and inter-media synchronisation for sources whose NTP timestamps are synchronised, and may be used by media-independent receivers to estimate the nominal RTP clock frequency.</p></li>
+</ul>
+<p>RTP 时间戳是一个 32 位字段，包含发送报告的时间，但采用 RTP 媒体流的单位/偏移量。 这允许在 RTP 数据包和挂钟时间之间建立关联。 实现时应该为发送者报告计算此值，而不是仅使用最近的 RTP 数据包时间戳，因为 RTCP 数据包和 RTP 数据包不会同时发送。</p>
+<ul class="simple">
 <li><p>SPC: 32 bits, The sender’s packet count totals up the number of RTP data packets transmitted by the sender since joining the RTP session. This field can be used to estimate the average data packet rate.</p></li>
+</ul>
+<p>Sender’s packet count 发送者的数据包计数是一个 32 位字段，包含自传输开始以来使用当前 SSRC 发送的 RTP 媒体数据包的总数。 因此，如果 SSRC 更改，计数应重置为 0。注意这是总计数，而不是自上一个 SR 以来的计数。</p>
+<ul class="simple">
 <li><p>SOC: 32 bits, The total number of payload octets (i.e., not including the header or any padding) transmitted in RTP data packets by the sender since starting up transmission. This field can be used to estimate the average payload data rate.</p></li>
 </ul>
+<p>Sender’s octet count 发送方的八位字节计数是一个 32 位字段，包含自传输开始以来与当前 SSRC 一起发送的 RTP 有效负载数据（不包括标头、填充等）的总字节数。 如果 SSRC 更改，计数应重置为 0。再次注意这是总的计数，而不是自上一个 SR 以来的计数。</p>
 </section>
 <section id="the-receiver-report-blocks">
 <h3><a class="toc-backref" href="#id15">The receiver report blocks</a><a class="headerlink" href="#the-receiver-report-blocks" title="Permalink to this headline">¶</a></h3>

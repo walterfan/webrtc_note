@@ -155,3 +155,23 @@ Multiple Control Unit 多点控制单元相比 SFU, 它有着对于媒体流的 
 
 
 .. _RTP Toplogies: https://www.rfc-editor.org/rfc/rfc5117.html
+
+
+WebRTC 的开源实现
+=================================
+* janus
+* Pion: Pure Go implementation of the WebRTC API.
+* aiortc: WebRTC and ORTC implementation for Python using asyncio.
+* kurento
+* webrtc-rs: A pure Rust implementation of WebRTC stack. Rewrite Pion WebRTC stack in Rust.
+* SIPSorcery: A WebRTC, SIP and VoIP library for C# and .NET. Designed for real-time communications apps.
+* werift-webrtc: WebRTC Implementation for TypeScript (Node.js)
+
+
+
+Libraries
+--------------------------------------------
+* libwebrtc 
+* libdatachannel
+
+.. _webrtc-echoes: https://github.com/sipsorcery/webrtc-echoes

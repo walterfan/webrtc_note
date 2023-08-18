@@ -141,7 +141,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -175,27 +175,27 @@
 <li><p><a class="reference external" href="https://webrtc.googlesource.com/src/+/main/docs/native-code/development/prerequisite-sw/index.md">WebRTC 开发依赖软件</a></p></li>
 <li><p><a class="reference external" href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up">安装 WebRTC 开发工具</a></p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/depot_tools&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://chromium.googlesource.com/chromium/tools/depot_tools.git
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/depot_tools&quot;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p>下载 WebRTC 源码</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir webrtc-checkout
-$ <span class="nb">cd</span> webrtc-checkout
-$ fetch --nohooks webrtc
-$ gclient sync --force
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>webrtc-checkout
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>webrtc-checkout
+$<span class="w"> </span>fetch<span class="w"> </span>--nohooks<span class="w"> </span>webrtc
+$<span class="w"> </span>gclient<span class="w"> </span>sync<span class="w"> </span>--force
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>更新源码到你自己的分支</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git checkout main
-$ git pull origin main
-$ gclient sync
-$ git checkout my-branch
-$ git merge main
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>main
+$<span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+$<span class="w"> </span>gclient<span class="w"> </span>sync
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>my-branch
+$<span class="w"> </span>git<span class="w"> </span>merge<span class="w"> </span>main
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
@@ -203,13 +203,13 @@ $ git merge main
 </ol>
 <p>先要安装 ninja 这一构建工具, 通过它来生成构建脚本</p>
 <p>在 Linux 系统上，比较简单的方法是运行 <cite>./build/install-build-deps.sh</cite></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> src
-$ python build/util/lastchange.py build/util/LASTCHANGE
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>src
+$<span class="w"> </span>python<span class="w"> </span>build/util/lastchange.py<span class="w"> </span>build/util/LASTCHANGE
 <span class="c1"># generate project files using the defaults (Debug build)</span>
-$ gn gen out/Default
+$<span class="w"> </span>gn<span class="w"> </span>gen<span class="w"> </span>out/Default
 <span class="c1"># clean all build artifacts in a directory but leave the current GN configuration untouched</span>
-$ gn clean out/Default
-$ ninja -C out/Default
+$<span class="w"> </span>gn<span class="w"> </span>clean<span class="w"> </span>out/Default
+$<span class="w"> </span>ninja<span class="w"> </span>-C<span class="w"> </span>out/Default
 </pre></div>
 </div>
 <p>在 windows 系统上，建议安装 visual studio 和 windows 10 SDK</p>

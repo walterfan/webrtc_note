@@ -133,7 +133,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -148,76 +148,76 @@
 </section>
 <section id="snippets">
 <h2><a class="toc-backref" href="#id4">snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">NackRequester::OnReceivedPacket</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">seq_num</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_keyframe</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_recovered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">RTC_DCHECK_RUN_ON</span><span class="p">(</span><span class="n">worker_thread_</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">NackRequester::OnReceivedPacket</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">seq_num</span><span class="p">,</span>
+<span class="w">                                </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_keyframe</span><span class="p">,</span>
+<span class="w">                                </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_recovered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">RTC_DCHECK_RUN_ON</span><span class="p">(</span><span class="n">worker_thread_</span><span class="p">);</span>
 <span class="w">    </span><span class="c1">// TODO(philipel): When the packet includes information whether it is</span>
 <span class="w">    </span><span class="c1">//                 retransmitted or not, use that value instead. For</span>
 <span class="w">    </span><span class="c1">//                 now set it to true, which will cause the reordering</span>
 <span class="w">    </span><span class="c1">//                 statistics to never be updated.</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_retransmitted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">is_retransmitted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">initialized_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">newest_seq_num_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq_num</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_keyframe</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">initialized_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">initialized_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">newest_seq_num_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq_num</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_keyframe</span><span class="p">)</span>
+<span class="w">        </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span>
+<span class="w">        </span><span class="n">initialized_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="c1">// Since the `newest_seq_num_` is a packet we have actually received we know</span>
 <span class="w">    </span><span class="c1">// that packet has never been Nacked.</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seq_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">newest_seq_num_</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seq_num</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">newest_seq_num_</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">AheadOf</span><span class="p">(</span><span class="n">newest_seq_num_</span><span class="p">,</span><span class="w"> </span><span class="n">seq_num</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">AheadOf</span><span class="p">(</span><span class="n">newest_seq_num_</span><span class="p">,</span><span class="w"> </span><span class="n">seq_num</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// An out of order packet has been received.</span>
-<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">nack_list_it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nack_list_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nacks_sent_for_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nack_list_it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">nack_list_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">nacks_sent_for_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nack_list_it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">retries</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">nack_list_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">nack_list_it</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">is_retransmitted</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">UpdateReorderingStatistics</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">nacks_sent_for_packet</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">nack_list_it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nack_list_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nacks_sent_for_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nack_list_it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">nack_list_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">nacks_sent_for_packet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nack_list_it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">retries</span><span class="p">;</span>
+<span class="w">        </span><span class="n">nack_list_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">nack_list_it</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">is_retransmitted</span><span class="p">)</span>
+<span class="w">        </span><span class="n">UpdateReorderingStatistics</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">nacks_sent_for_packet</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="c1">// Keep track of new keyframes.</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_keyframe</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_keyframe</span><span class="p">)</span>
+<span class="w">        </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// And remove old ones so we don&#39;t accumulate keyframes.</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">seq_num</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kMaxPacketAge</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span><span class="w"></span>
-<span class="w">        </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">it</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">seq_num</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kMaxPacketAge</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span>
+<span class="w">        </span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">keyframe_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">it</span><span class="p">);</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_recovered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_recovered</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">seq_num</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Remove old ones so we don&#39;t accumulate recovered packets.</span>
-<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">seq_num</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kMaxPacketAge</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span><span class="w"></span>
-<span class="w">        </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">it</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">seq_num</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">kMaxPacketAge</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span>
+<span class="w">        </span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">recovered_list_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">it</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Do not send nack for packets recovered by FEC or RTX.</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="n">AddPacketsToNack</span><span class="p">(</span><span class="n">newest_seq_num_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">seq_num</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">newest_seq_num_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq_num</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">AddPacketsToNack</span><span class="p">(</span><span class="n">newest_seq_num_</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">seq_num</span><span class="p">);</span>
+<span class="w">    </span><span class="n">newest_seq_num_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq_num</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// Are there any nacks that are waiting for this seq_num.</span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nack_batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetNackBatch</span><span class="p">(</span><span class="n">kSeqNumOnly</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">nack_batch</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nack_batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetNackBatch</span><span class="p">(</span><span class="n">kSeqNumOnly</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">nack_batch</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// This batch of NACKs is triggered externally; the initiator can</span>
 <span class="w">        </span><span class="c1">// batch them with other feedback messages.</span>
-<span class="w">        </span><span class="n">nack_sender_</span><span class="o">-&gt;</span><span class="n">SendNack</span><span class="p">(</span><span class="n">nack_batch</span><span class="p">,</span><span class="w"> </span><span class="cm">/*buffering_allowed=*/</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">nack_sender_</span><span class="o">-&gt;</span><span class="n">SendNack</span><span class="p">(</span><span class="n">nack_batch</span><span class="p">,</span><span class="w"> </span><span class="cm">/*buffering_allowed=*/</span><span class="nb">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>

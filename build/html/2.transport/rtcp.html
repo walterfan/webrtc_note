@@ -51,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
@@ -60,6 +61,9 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC RTCP Usage</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="rtcp_sr.html">RTCP Sender Report</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rtcp_rr.html">RTCP Receiver Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_sdes.html">RTCP SDES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_bye.html">RTCP Bye</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rtcp_app.html">RTCP App</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rtcp_xr.html">RTCP XR</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#rtcp-compound-packet">RTCP compound packet</a></li>
@@ -68,6 +72,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#receiver-report">201 Receiver Report</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#source-description-rtcp-packets-sdes">202 Source Description RTCP Packets (SDES)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#goodbye-rtcp-packets-bye">203 Goodbye RTCP Packets (BYE)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">204 Goodbye RTCP Packets (BYE)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#reference">Reference</a></li>
@@ -120,6 +125,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rtcp_sr.html">RTCP Sender Report</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rtcp_rr.html">RTCP Receiver Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rtcp_sdes.html">RTCP SDES</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rtcp_bye.html">RTCP Bye</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rtcp_app.html">RTCP App</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rtcp_xr.html">RTCP XR</a></li>
 </ul>
 </div>
@@ -139,14 +147,16 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>RTCP 即 RTP Control Protocol , 也就是是 RTP 控制协议，在会话中给所有与会者定期传送控制数据包，其分发的机制和媒体数据包一致，传统上与 RTP 包通过不同的端口传输，
-在 WebRTC 中的通常做法是 RTP 与 RTCP 复用相同的端口。</p>
+<p>RTCP 即 RTP Control Protocol , 也就是是 RTP 控制协议，在会话中给所有与会者定期传送控制数据包，其分发的机制和媒体数据包一致，传统上与 RTP 包通过不同的端口传输，</p>
+<p>RTCP 消息通常使用与其附带的 RTP 消息相同的传输方式发送，按照惯例，RTP 在偶数端口上接收，RTCP 在奇数端口上接收。</p>
+<p>RFC3605 中定义的“a=rtcp”属性允许接收方通告在与 RTP 不同的 IP 和/或端口上接收 RTCP，但是不是所有设备对此都支持。</p>
+<p>RFC5761 定义了通过“a=rtcp-mux”属性将 RTP 和 RTCP 复用到同一端口，这也是在 WebRTC 中的通常做法。</p>
 <p>RTCP 主要实现四大功能</p>
 <ol class="arabic simple">
 <li><p>提供数据传输质量的反馈</p></li>
@@ -164,8 +174,8 @@
 </ul>
 </dd>
 </dl>
-<table class="colwidths-given docutils align-default" id="id3">
-<caption><span class="caption-text">RTCP Packet</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<table class="colwidths-given docutils align-default" id="id5">
+<caption><span class="caption-text">RTCP Packet</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -249,6 +259,11 @@
            <span class="n">Figure</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Example</span> <span class="n">of</span> <span class="n">an</span> <span class="n">RTCP</span> <span class="n">compound</span> <span class="n">packet</span>
 </pre></div>
 </div>
+<p>由于每个 RTCP 数据包头都包含长度参数，因此单个 RTCP 数据包可以包含多个 RTCP 消息，这称为复合 RTCP 数据包。 每个消息都可以单独处理，并且数据包内消息的顺序没有意义。 如果需要，给定类型的消息可以出现多次。</p>
+<p>RFC3550要求所有 RTCP 消息都作为两个或多个消息的复合数据包发送，第一个消息始终是 SR 或 RR 消息，第二个消息始终是包含 CNAME 的 SDES 消息。 即使发送 RTCP 数据包的设备尚未接收或发送任何媒体，情况也是如此，在这种情况下，初始消息必须是具有零 Recevier block 的 RR。</p>
+<p>为了发送 BYE 或 PLI 反馈消息，RTCP 发送方必须构建包含 SR 或 RR 消息、SDES 消息、然后是 BYE 或 PLI 消息的 RTCP 数据包。</p>
+<p>RFC4585 建议使用最小复合 RTCP 数据包，该数据包不包含额外的 RR，并将 SDES 消息限制为仅 CNAME，但实际上大多数实现不需要额外的 RR 或使用 CNAME 之外的 SDES 项目，所以这种优化实际意义不大。</p>
+<p>对于正常的 RTCP 传输来说，这一要求并不太繁重，即使在使用反馈消息时，这种情况通常也相对不频繁。 然而，如果实现选择使用具有更高传输速率的专有 RTCP 消息传递，compound 要求所施加的额外带宽可能会造成严重后果。 在这种情况下，实现可能会选择发送不符合 RFC3550 compound 要求的 RTCP 数据包，但在这样做时应注意解复用，并且只有在使用这些特定于应用程序的消息时才应这样做； 应按照 compound 要求发送标准消息。</p>
 </section>
 <section id="rtcp-transmission-interval">
 <h3>RTCP Transmission Interval<a class="headerlink" href="#rtcp-transmission-interval" title="Permalink to this headline">¶</a></h3>
@@ -266,23 +281,31 @@ A receiver report is approximately 28 bytes</p>
 <p>If the participant has not yet sent an RTCP packet (the variable initial is true),
 the constant Tmin is set to half of the configured interval.</p>
 <p>The interval between RTCP packets is varied randomly over the range [0.5,1.5] times the calculated interval to avoid unintended synchronization of all participants</p>
-<p>if we send</p>
+<section id="if-we-send">
+<h4>if we send<a class="headerlink" href="#if-we-send" title="Permalink to this headline">¶</a></h4>
 <p>If the participant is a sender (we_sent true), the constant C is set to the average RTCP packet size (avg_rtcp_size) divided by 25% of the RTCP bandwidth (rtcp_bw), and the constant n is set to the number of senders.</p>
-<p>if we receive only</p>
+</section>
+<section id="if-we-receive-only">
+<h4>if we receive only<a class="headerlink" href="#if-we-receive-only" title="Permalink to this headline">¶</a></h4>
 <p>If we_sent is not true, the constant C is set to the average RTCP packet size divided by 75% of the RTCP bandwidth.
 The constant n is set to the number of receivers (members - senders).  If the number of senders is greater than 25%, senders and receivers are treated together.</p>
 <p>reconsideration NOT required for peer-to-peer “timer reconsideration” is employed.</p>
 <p>This algorithm implements a simple back-off mechanism which causes users to hold back RTCP packet transmission if the group sizes are increasing.</p>
-<p>n = number of members
-C = avg_size/(rtcpBW/4)</p>
-<ol class="arabic simple" start="3">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="n">number</span> <span class="n">of</span> <span class="n">members</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">avg_size</span><span class="o">/</span><span class="p">(</span><span class="n">rtcpBW</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
 <li><p>The deterministic calculated interval Td is set to max(Tmin, n*C).</p></li>
 </ol>
-<p>4. The calculated interval T is set to a number uniformly distributed
+<p>2. The calculated interval T is set to a number uniformly distributed
 between 0.5 and 1.5 times the deterministic calculated interval.</p>
-<p>5. The resulting value of T is divided by e-3/2=1.21828 to compensate
+<p>3. The resulting value of T is divided by e-3/2=1.21828 to compensate
 for the fact that the timer reconsideration algorithm converges to
 a value of the RTCP bandwidth below the intended average</p>
+<p>上述规则有点复杂， 其目的是为了应对分布式会议，其中服务器在所有参与者之间传播 RTCP，需要防止 RTCP 的带宽占用在具有大量参与者的会议中过高。</p>
+<p>其实在现代的在线会议中，媒体服务器通常不会以这种方式转发所有 RTCP，并且参与者信息一般通过信令层进行共享。 所有很多系统并没有实现 RFC3550 中定义的上述规则。 相反，它们使用一个相对静态的传输间隔（通常为 1 ~ 5 秒），发送 SR/RR 和 SDES，然后根据需要发送反馈消息和 BYE。</p>
+</section>
 </section>
 <section id="sender-report">
 <h3>200 Sender Report<a class="headerlink" href="#sender-report" title="Permalink to this headline">¶</a></h3>
@@ -294,60 +317,15 @@ a value of the RTCP bandwidth below the intended average</p>
 </section>
 <section id="source-description-rtcp-packets-sdes">
 <h3>202 Source Description RTCP Packets (SDES)<a class="headerlink" href="#source-description-rtcp-packets-sdes" title="Permalink to this headline">¶</a></h3>
-<p>A SDES packet consists of a SDES header and a variable number of chunks for the described sources. Each chunk in turn consists of a SSRC/CSRC identifier and a collection of SDES items. SDES items themselves consists of a SDES item type code (8 bits), a length field (8 bits) and as much text octets as the length field indicates.</p>
-<p>SDES Header</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
-<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span><span class="n">V</span><span class="o">=</span><span class="mi">2</span><span class="o">|</span><span class="n">P</span><span class="o">|</span>    <span class="n">SC</span>   <span class="o">|</span>  <span class="n">PT</span><span class="o">=</span><span class="n">SDES</span><span class="o">=</span><span class="mi">202</span>  <span class="o">|</span>            <span class="n">length</span> <span class="n">L</span>           <span class="o">|</span>
-<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
-<span class="o">|</span>                          <span class="n">SSRC</span><span class="o">/</span><span class="n">CSRC_1</span>                          <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                           <span class="n">SDES</span> <span class="n">items</span>                          <span class="o">|</span>
-<span class="o">|</span>                              <span class="o">...</span>                              <span class="o">|</span>
-<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
-<span class="o">|</span>                          <span class="n">SSRC</span><span class="o">/</span><span class="n">CSRC_2</span>                          <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                           <span class="n">SDES</span> <span class="n">items</span>                          <span class="o">|</span>
-<span class="o">|</span>                              <span class="o">...</span>                              <span class="o">|</span>
-<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>V, P, PT, L: As described for SR packets, with the packet type code set to 202.</p></li>
-<li><p>SC: 5 bits, The number of SSRC/CSRC chunks contained in this SDES packet.</p></li>
-</ul>
-<p>The different SDES items are encoded according to a type-length-value scheme. Currently, CNAME, NAME, EMAIL, PHONE, LOC, TOOL, NOTE, and PRIV items are defined in [RFC1889].
-The CNAME item is mandatory in every SDES packet, which in turn is mandatory part of every compound RTCP packet.
-Like the SSRC identifier, a CNAME must differ from the CNAMEs of every other session participants. But instead of choosing the CNAME identifier randomly, the CNAME should allow both a person or a program to locate the source by means of the CNAME contents.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
-<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>    <span class="n">CNAME</span><span class="o">=</span><span class="mi">1</span>    <span class="o">|</span>     <span class="n">length</span>    <span class="o">|</span> <span class="n">user</span> <span class="ow">and</span> <span class="n">domain</span> <span class="n">name</span>         <span class="o">...</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-</pre></div>
-</div>
+<p><a class="reference external" href="rtcp_sdes.html">RTCP SDES</a></p>
 </section>
 <section id="goodbye-rtcp-packets-bye">
 <h3>203 Goodbye RTCP Packets (BYE)<a class="headerlink" href="#goodbye-rtcp-packets-bye" title="Permalink to this headline">¶</a></h3>
-<p>A participant sends a BYE packet to indicate that one or more sources are no longer active, optionally giving a reason for leaving.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>               <span class="mi">1</span>               <span class="mi">2</span>               <span class="mi">3</span>
-<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span><span class="n">V</span><span class="o">=</span><span class="mi">2</span><span class="o">|</span><span class="n">P</span><span class="o">|</span>    <span class="n">SC</span>   <span class="o">|</span>   <span class="n">PT</span><span class="o">=</span><span class="n">BYE</span><span class="o">=</span><span class="mi">203</span>  <span class="o">|</span>            <span class="n">length</span> <span class="n">L</span>           <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="o">|</span>                           <span class="n">SSRC</span><span class="o">/</span><span class="n">CSRC</span>                           <span class="o">|</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-<span class="p">:</span>                              <span class="o">...</span>                              <span class="p">:</span>
-<span class="o">+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+</span>
-<span class="o">|</span>     <span class="n">length</span>    <span class="o">|</span>               <span class="n">reason</span> <span class="k">for</span> <span class="n">leaving</span> <span class="p">(</span><span class="n">opt</span><span class="p">)</span>       <span class="o">...</span>
-<span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>V, P, PT, L, SSRC/CSRC: As described for SR packets, with the packet type code 202 set.</p></li>
-<li><p>SC:5 bits, The number of SSRC/CSRC identifiers contained in this BYE packet.</p></li>
-</ul>
+<p><a class="reference external" href="rtcp_bye.html">RTCP Bye</a></p>
+</section>
+<section id="id3">
+<h3>204 Goodbye RTCP Packets (BYE)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="rtcp_bye.html">RTCP Bye</a></p>
 </section>
 </section>
 <section id="reference">

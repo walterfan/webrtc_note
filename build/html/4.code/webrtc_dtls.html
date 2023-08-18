@@ -141,7 +141,7 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -182,10 +182,10 @@
 <span class="c1">// configuration may not be used.</span>
 
 <span class="c1">// TLS_method is the |SSL_METHOD| used for TLS connections.</span>
-<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">SSL_METHOD</span><span class="w"> </span><span class="o">*</span><span class="n">TLS_method</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">SSL_METHOD</span><span class="w"> </span><span class="o">*</span><span class="n">TLS_method</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 
 <span class="c1">// DTLS_method is the |SSL_METHOD| used for DTLS connections.</span>
-<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">SSL_METHOD</span><span class="w"> </span><span class="o">*</span><span class="n">DTLS_method</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="w"></span>
+<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">SSL_METHOD</span><span class="w"> </span><span class="o">*</span><span class="n">DTLS_method</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -204,7 +204,7 @@
 <span class="c1">//</span>
 <span class="c1">// TODO(davidben): Ensure 0 is only returned on transport EOF.</span>
 <span class="c1">// https://crbug.com/466303.</span>
-<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">SSL_do_handshake</span><span class="p">(</span><span class="n">SSL</span><span class="w"> </span><span class="o">*</span><span class="n">ssl</span><span class="p">);</span><span class="w"></span>
+<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">SSL_do_handshake</span><span class="p">(</span><span class="n">SSL</span><span class="w"> </span><span class="o">*</span><span class="n">ssl</span><span class="p">);</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -227,7 +227,7 @@
 <span class="c1">// primarily used for uncommon protocols where the underlying transport is</span>
 <span class="c1">// reused after TLS completes. Additionally, DTLS uses an unordered transport</span>
 <span class="c1">// and is unordered, so the second stage is a no-op in DTLS.</span>
-<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">SSL_shutdown</span><span class="p">(</span><span class="n">SSL</span><span class="w"> </span><span class="o">*</span><span class="n">ssl</span><span class="p">);</span><span class="w"></span>
+<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">SSL_shutdown</span><span class="p">(</span><span class="n">SSL</span><span class="w"> </span><span class="o">*</span><span class="n">ssl</span><span class="p">);</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -251,7 +251,7 @@
 <span class="c1">// Due to the very complex historical behavior of this function, calling this</span>
 <span class="c1">// function if |ssl| already has |BIO|s configured is deprecated. Prefer</span>
 <span class="c1">// |SSL_set0_rbio| and |SSL_set0_wbio| instead.</span>
-<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">SSL_set_bio</span><span class="p">(</span><span class="n">SSL</span><span class="w"> </span><span class="o">*</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">rbio</span><span class="p">,</span><span class="w"> </span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">wbio</span><span class="p">);</span><span class="w"></span>
+<span class="n">OPENSSL_EXPORT</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">SSL_set_bio</span><span class="p">(</span><span class="n">SSL</span><span class="w"> </span><span class="o">*</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">rbio</span><span class="p">,</span><span class="w"> </span><span class="n">BIO</span><span class="w"> </span><span class="o">*</span><span class="n">wbio</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -282,87 +282,87 @@ They should possibly be moved out to a neutral class.</p>
 </section>
 <section id="snippets">
 <h2><a class="toc-backref" href="#id7">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="nc">SSLRole</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SSL_CLIENT</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_SERVER</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="k">enum</span> <span class="nc">SSLMode</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SSL_MODE_TLS</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_MODE_DTLS</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">SSLRole</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SSL_CLIENT</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_SERVER</span><span class="w"> </span><span class="p">};</span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">SSLMode</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">SSL_MODE_TLS</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_MODE_DTLS</span><span class="w"> </span><span class="p">};</span>
 
 
-<span class="k">enum</span> <span class="nc">SSLProtocolVersion</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_PROTOCOL_NOT_GIVEN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_PROTOCOL_TLS_10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_PROTOCOL_TLS_11</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_PROTOCOL_TLS_12</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_PROTOCOL_DTLS_10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_PROTOCOL_TLS_11</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_PROTOCOL_DTLS_12</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_PROTOCOL_TLS_12</span><span class="p">,</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">SSLProtocolVersion</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">SSL_PROTOCOL_NOT_GIVEN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_PROTOCOL_TLS_10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_PROTOCOL_TLS_11</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_PROTOCOL_TLS_12</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_PROTOCOL_DTLS_10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_PROTOCOL_TLS_11</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_PROTOCOL_DTLS_12</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SSL_PROTOCOL_TLS_12</span><span class="p">,</span>
+<span class="p">};</span>
 
-<span class="k">enum</span> <span class="k">class</span><span class="w"> </span><span class="nc">SSLPeerCertificateDigestError</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">NONE</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">UNKNOWN_ALGORITHM</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">INVALID_LENGTH</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">VERIFICATION_FAILED</span><span class="p">,</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SSLPeerCertificateDigestError</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">NONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">UNKNOWN_ALGORITHM</span><span class="p">,</span>
+<span class="w">    </span><span class="n">INVALID_LENGTH</span><span class="p">,</span>
+<span class="w">    </span><span class="n">VERIFICATION_FAILED</span><span class="p">,</span>
+<span class="p">};</span>
 
-<span class="k">enum</span> <span class="nc">SSLState</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_NONE</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_WAIT</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_CONNECTING</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_CONNECTED</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">SSL_ERROR</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">SSLState</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">SSL_NONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_WAIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_CONNECTING</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_CONNECTED</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SSL_ERROR</span>
+<span class="p">};</span>
 
 <span class="c1">// client handshake state</span>
-<span class="k">enum</span> <span class="nc">ssl_client_hs_state_t</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_start_connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_enter_early_data</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_early_reverify_server_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_hello_verify_request</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_server_hello</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_tls13</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_server_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_certificate_status</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_verify_server_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_reverify_server_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_server_key_exchange</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_certificate_request</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_server_hello_done</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_send_client_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_send_client_key_exchange</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_send_client_certificate_verify</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_send_client_finished</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_finish_flight</span><span class="p">,</span><span class="w"></span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">ssl_client_hs_state_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">state_start_connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_enter_early_data</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_early_reverify_server_certificate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_hello_verify_request</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_server_hello</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_tls13</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_server_certificate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_certificate_status</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_verify_server_certificate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_reverify_server_certificate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_server_key_exchange</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_certificate_request</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_server_hello_done</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_send_client_certificate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_send_client_key_exchange</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_send_client_certificate_verify</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_send_client_finished</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_finish_flight</span><span class="p">,</span>
 <span class="w">    </span><span class="n">state_read_session_ticket</span><span class="p">,</span><span class="w"> </span><span class="c1">// read session ticket</span>
-<span class="w">    </span><span class="n">state_process_change_cipher_spec</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_read_server_finished</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_finish_client_handshake</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">state_done</span><span class="p">,</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="n">state_process_change_cipher_spec</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_read_server_finished</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_finish_client_handshake</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_done</span><span class="p">,</span>
+<span class="p">};</span>
 
 <span class="c1">// server handshake state</span>
 <span class="c1">//refer to https://source.chromium.org/chromium/chromium/src/+/main:third_party/boringssl/src/ssl/handshake_client.cc;l=1720?q=handshake_client.cc</span>
-<span class="k">enum</span> <span class="nc">tls12_server_hs_state_t</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_start_accept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_client_hello</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_client_hello_after_ech</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_select_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_tls13</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_select_parameters</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_send_server_hello</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_send_server_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_send_server_key_exchange</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_send_server_hello_done</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_client_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_verify_client_certificate</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_client_key_exchange</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_client_certificate_verify</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_change_cipher_spec</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_process_change_cipher_spec</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_next_proto</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_channel_id</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_read_client_finished</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_send_server_finished</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_finish_server_handshake</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">state12_done</span><span class="p">,</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="k">enum</span><span class="w"> </span><span class="nc">tls12_server_hs_state_t</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">state12_start_accept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_client_hello</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_client_hello_after_ech</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_select_certificate</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_tls13</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_select_parameters</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_send_server_hello</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_send_server_certificate</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_send_server_key_exchange</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_send_server_hello_done</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_client_certificate</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_verify_client_certificate</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_client_key_exchange</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_client_certificate_verify</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_change_cipher_spec</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_process_change_cipher_spec</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_next_proto</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_channel_id</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_read_client_finished</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_send_server_finished</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_finish_server_handshake</span><span class="p">,</span>
+<span class="w">  </span><span class="n">state12_done</span><span class="p">,</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 <ul>
@@ -371,95 +371,95 @@ They should possibly be moved out to a neutral class.</p>
 <p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/boringssl/src/ssl/handshake_client.cc;l=1720?q=do_read_session_ticket&amp;sq=&amp;ss=chromium">https://source.chromium.org/chromium/chromium/src/+/main:third_party/boringssl/src/ssl/handshake_client.cc;l=1720?q=do_read_session_ticket&amp;sq=&amp;ss=chromium</a></p>
 </li>
 </ul>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="nc">ssl_hs_wait_t</span><span class="w"> </span><span class="n">ssl_client_handshake</span><span class="p">(</span><span class="n">SSL_HANDSHAKE</span><span class="w"> </span><span class="o">*</span><span class="n">hs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">state_done</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">enum</span> <span class="nc">ssl_hs_wait_t</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ssl_hs_error</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">enum</span> <span class="nc">ssl_client_hs_state_t</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="k">enum</span> <span class="nc">ssl_client_hs_state_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_start_connect</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_start_connect</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_enter_early_data</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_enter_early_data</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_early_reverify_server_certificate</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_early_reverify_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_hello_verify_request</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_hello_verify_request</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_server_hello</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_hello</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_tls13</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_tls13</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_server_certificate</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_certificate_status</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_certificate_status</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_verify_server_certificate</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_verify_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_reverify_server_certificate</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_reverify_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_server_key_exchange</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_key_exchange</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_certificate_request</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_certificate_request</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_server_hello_done</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_hello_done</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_send_client_certificate</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_send_client_key_exchange</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_key_exchange</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_send_client_certificate_verify</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_certificate_verify</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_send_client_finished</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_finished</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_finish_flight</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_finish_flight</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_session_ticket</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_session_ticket</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_process_change_cipher_spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_process_change_cipher_spec</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_read_server_finished</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_finished</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_finish_client_handshake</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_finish_client_handshake</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="nl">state_done</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ssl_hs_ok</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="nc">ssl_hs_wait_t</span><span class="w"> </span><span class="n">ssl_client_handshake</span><span class="p">(</span><span class="n">SSL_HANDSHAKE</span><span class="w"> </span><span class="o">*</span><span class="n">hs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">state_done</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">ssl_hs_wait_t</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ssl_hs_error</span><span class="p">;</span>
+<span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">ssl_client_hs_state_t</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="k">enum</span><span class="w"> </span><span class="nc">ssl_client_hs_state_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">state</span><span class="p">);</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_start_connect</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_start_connect</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_enter_early_data</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_enter_early_data</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_early_reverify_server_certificate</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_early_reverify_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_hello_verify_request</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_hello_verify_request</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_server_hello</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_hello</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_tls13</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_tls13</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_server_certificate</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_certificate_status</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_certificate_status</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_verify_server_certificate</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_verify_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_reverify_server_certificate</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_reverify_server_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_server_key_exchange</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_key_exchange</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_certificate_request</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_certificate_request</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_server_hello_done</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_hello_done</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_send_client_certificate</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_certificate</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_send_client_key_exchange</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_key_exchange</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_send_client_certificate_verify</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_certificate_verify</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_send_client_finished</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_send_client_finished</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_finish_flight</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_finish_flight</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_session_ticket</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_session_ticket</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_process_change_cipher_spec</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_process_change_cipher_spec</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_read_server_finished</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_read_server_finished</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_finish_client_handshake</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">do_finish_client_handshake</span><span class="p">(</span><span class="n">hs</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">state_done</span><span class="p">:</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ssl_hs_ok</span><span class="p">;</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">ssl_do_info_callback</span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_CB_CONNECT_LOOP</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">ssl_do_info_callback</span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_CB_CONNECT_LOOP</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ssl_hs_ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ssl_hs_ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="n">ssl_do_info_callback</span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_CB_HANDSHAKE_DONE</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">ssl_hs_ok</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">ssl_do_info_callback</span><span class="p">(</span><span class="n">hs</span><span class="o">-&gt;</span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">SSL_CB_HANDSHAKE_DONE</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">ssl_hs_ok</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <section id="logs">

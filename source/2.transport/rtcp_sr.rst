@@ -90,8 +90,8 @@ The header
 * SSRC: 32 bits, The synchronisation source identifier for the sender of this SR packet.
 
 
-The sender information block
--------------------------------------------
+The sender information block 发送者信息块
+------------------------------------------------------
 .. code-block::
 
     0               1               2               3
@@ -109,9 +109,21 @@ The sender information block
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 * NTS: 64 bits, The NTP timestampgif indicates the point of time measured in wall clock time when this report was sent. In combination with timestamps returned in reception reports from the respective receivers, it can be used to estimate the round-trip propagation time to and from the receivers.
+
+NTP 时间戳是一个 64 位字段，包含以网络时间协议 (NTP) 格式发送报告的时间，即 1970 年 1 月 1 日 00:00 UTC 等秒数，可通过许多标准库获得。 这通常称为挂钟时间。 前 32 位表示秒数，而第二个 32 位表示秒的小数部分。 RTCP 没有定义小数部分所需的精度，但它应该精确到至少毫秒，以便用于计算往返时间等目的。 请注意，虽然它使用 NTP 格式，但信息不必来自 NTP； 由于该值主要用于相对计算，因此只要实现对所有流上的发送方报告使用公共系统时钟，绝对精度并不是特别重要。
+
 * RTS: 32 bits, The RTP timestamp resembles the same time as the NTP timestamp (above), but is measured in the same units and with the same random offset as the RTP timestamps in data packets. This correspondence may be used for intra- and inter-media synchronisation for sources whose NTP timestamps are synchronised, and may be used by media-independent receivers to estimate the nominal RTP clock frequency.
+
+RTP 时间戳是一个 32 位字段，包含发送报告的时间，但采用 RTP 媒体流的单位/偏移量。 这允许在 RTP 数据包和挂钟时间之间建立关联。 实现时应该为发送者报告计算此值，而不是仅使用最近的 RTP 数据包时间戳，因为 RTCP 数据包和 RTP 数据包不会同时发送。
+
 * SPC: 32 bits, The sender's packet count totals up the number of RTP data packets transmitted by the sender since joining the RTP session. This field can be used to estimate the average data packet rate.
+
+Sender’s packet count 发送者的数据包计数是一个 32 位字段，包含自传输开始以来使用当前 SSRC 发送的 RTP 媒体数据包的总数。 因此，如果 SSRC 更改，计数应重置为 0。注意这是总计数，而不是自上一个 SR 以来的计数。
+
 * SOC: 32 bits, The total number of payload octets (i.e., not including the header or any padding) transmitted in RTP data packets by the sender since starting up transmission. This field can be used to estimate the average payload data rate.
+
+Sender’s octet count 发送方的八位字节计数是一个 32 位字段，包含自传输开始以来与当前 SSRC 一起发送的 RTP 有效负载数据（不包括标头、填充等）的总字节数。 如果 SSRC 更改，计数应重置为 0。再次注意这是总的计数，而不是自上一个 SR 以来的计数。
+
 
 The receiver report blocks
 -------------------------------------------

@@ -147,7 +147,7 @@
 <td><p>v1</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-07-25</p></td>
+<td><p>2023-08-07</p></td>
 </tr>
 </tbody>
 </table>
@@ -709,13 +709,13 @@ where  OBJECT := { qdisc | class | filter }
 <li><p>删除网卡上面的相关配置:    <code class="code docutils literal notranslate"><span class="pre">tc</span> <span class="pre">qdisc</span> <span class="pre">del</span> <span class="pre">dev</span> <span class="pre">enp0s3</span> <span class="pre">root</span></code></p></li>
 <li><p>对指定 ip 做限制:</p></li>
 </ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc qdisc del dev enp0s3 root
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc<span class="w"> </span>qdisc<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span>enp0s3<span class="w"> </span>root
 
-tc qdisc add dev enp0s3  root handle <span class="m">1</span>: prio
+tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>enp0s3<span class="w">  </span>root<span class="w"> </span>handle<span class="w"> </span><span class="m">1</span>:<span class="w"> </span>prio
 
-tc filter add dev enp0s3 parent <span class="m">1</span>:0 protocol ip prio <span class="m">1</span> u32 match ip dst <span class="m">172</span>.27.25.3 flowid <span class="m">2</span>:1
+tc<span class="w"> </span>filter<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>enp0s3<span class="w"> </span>parent<span class="w"> </span><span class="m">1</span>:0<span class="w"> </span>protocol<span class="w"> </span>ip<span class="w"> </span>prio<span class="w"> </span><span class="m">1</span><span class="w"> </span>u32<span class="w"> </span>match<span class="w"> </span>ip<span class="w"> </span>dst<span class="w"> </span><span class="m">172</span>.27.25.3<span class="w"> </span>flowid<span class="w"> </span><span class="m">2</span>:1
 
-tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m">2</span>: netem delay 1500ms  loss <span class="m">1</span>%
+tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>enp0s3<span class="w">  </span>parent<span class="w"> </span><span class="m">1</span>:1<span class="w"> </span>handle<span class="w"> </span><span class="m">2</span>:<span class="w"> </span>netem<span class="w"> </span>delay<span class="w"> </span>1500ms<span class="w">  </span>loss<span class="w"> </span><span class="m">1</span>%
 </pre></div>
 </div>
 </section>
@@ -809,13 +809,13 @@ tc qdisc add dev enp0s3  parent <span class="m">1</span>:1 handle <span class="m
 <section id="id9">
 <h3><a class="toc-backref" href="#id76">实例</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>附加一个持续最大速率为 0.5 mbit/s, 峰值速率为 1.0 mbit/s, 5 KB 缓冲区的 TBF, 计算了预存储桶队列大小限制, 因此 TBF 导致最多 70 毫秒的延迟，具有完美的峰值速率行为， 命令如下：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc qdisc add dev eth0 handle <span class="m">10</span>: root tbf rate <span class="m">0</span>.5mbit <span class="se">\</span>
-burst 5kb latency 70ms peakrate 1mbit       <span class="se">\</span>
-minburst <span class="m">1540</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>handle<span class="w"> </span><span class="m">10</span>:<span class="w"> </span>root<span class="w"> </span>tbf<span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.5mbit<span class="w"> </span><span class="se">\</span>
+burst<span class="w"> </span>5kb<span class="w"> </span>latency<span class="w"> </span>70ms<span class="w"> </span>peakrate<span class="w"> </span>1mbit<span class="w">       </span><span class="se">\</span>
+minburst<span class="w"> </span><span class="m">1540</span>
 </pre></div>
 </div>
 <p>要附加一个内部 qdisc，例如 sfq，命令如下：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc qdisc add dev eth0 parent <span class="m">10</span>:1 handle <span class="m">100</span>: sfq
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>parent<span class="w"> </span><span class="m">10</span>:1<span class="w"> </span>handle<span class="w"> </span><span class="m">100</span>:<span class="w"> </span>sfq
 </pre></div>
 </div>
 <p>没有内部 qdisc TBF 队列充当 bfifo。 如果更改了内部 qdisc，则限制/延迟不再有效。</p>
@@ -857,7 +857,7 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 </pre></div>
 </div>
 <p>例如,以 5kbit 的速率延迟设备 eth0 上的所有传出数据包，每个数据包开销为 20 字节，单元大小为 100 字节，每个单元开销为 5 字节：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc qdisc add dev eth0 root netem rate 5kbit <span class="m">20</span> <span class="m">100</span> <span class="m">5</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span>rate<span class="w"> </span>5kbit<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="m">5</span>
 </pre></div>
 </div>
 </section>
@@ -878,28 +878,28 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 <section id="jitter">
 <h4><a class="toc-backref" href="#id80">Jitter</a><a class="headerlink" href="#jitter" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 200ms jitter</span>
-sudo ./netimpair.py -n eth0 netem --jitter <span class="m">200</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>netem<span class="w"> </span>--jitter<span class="w"> </span><span class="m">200</span>
 </pre></div>
 </div>
 </section>
 <section id="delay">
 <h4><a class="toc-backref" href="#id81">Delay</a><a class="headerlink" href="#delay" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 200ms delay</span>
-sudo ./netimpair.py -n eth0 netem --delay <span class="m">200</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>netem<span class="w"> </span>--delay<span class="w"> </span><span class="m">200</span>
 </pre></div>
 </div>
 </section>
 <section id="loss">
 <h4><a class="toc-backref" href="#id82">Loss</a><a class="headerlink" href="#loss" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 5% loss</span>
-sudo ./netimpair.py -n eth0 netem --loss_ratio <span class="m">5</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 </pre></div>
 </div>
 </section>
 <section id="rate-control">
 <h4><a class="toc-backref" href="#id83">Rate Control</a><a class="headerlink" href="#rate-control" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Limit rate to 1mbit</span>
-sudo ./netimpair.py -n eth0 rate --limit <span class="m">1000</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>rate<span class="w"> </span>--limit<span class="w"> </span><span class="m">1000</span>
 </pre></div>
 </div>
 </section>
@@ -907,7 +907,7 @@ sudo ./netimpair.py -n eth0 rate --limit <span class="m">1000</span>
 <h4><a class="toc-backref" href="#id84">Impair inbound traffic</a><a class="headerlink" href="#impair-inbound-traffic" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Append --inbound flag before the impairment keyword to apply inbound impairment</span>
 <span class="c1"># For example, this applies 5% loss on inbound eth0</span>
-sudo ./netimpair.py -n eth0 --inbound netem --loss_ratio <span class="m">5</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--inbound<span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 </pre></div>
 </div>
 </section>
@@ -915,24 +915,24 @@ sudo ./netimpair.py -n eth0 --inbound netem --loss_ratio <span class="m">5</span
 <h4><a class="toc-backref" href="#id85">Selectively impair certain traffic</a><a class="headerlink" href="#selectively-impair-certain-traffic" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 5% loss on packets with source IP of 10.194.247.50 and destination port 9001</span>
 <span class="c1"># NOTE: Specifying include flag overrides the default include, which impairs everything</span>
-sudo ./netimpair.py -n eth0 --include <span class="nv">src</span><span class="o">=</span><span class="m">10</span>.194.247.50,dport<span class="o">=</span><span class="m">9001</span> netem --loss_ratio <span class="m">5</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--include<span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">10</span>.194.247.50,dport<span class="o">=</span><span class="m">9001</span><span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 <span class="c1"># Exclude packets with destination IP 10.194.247.50 and source port 10000</span>
-sudo ./netimpair.py -n eth0 --exclude <span class="nv">dst</span><span class="o">=</span><span class="m">10</span>.194.247.50,sport<span class="o">=</span><span class="m">10000</span> netem --loss_ratio <span class="m">5</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--exclude<span class="w"> </span><span class="nv">dst</span><span class="o">=</span><span class="m">10</span>.194.247.50,sport<span class="o">=</span><span class="m">10000</span><span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 <span class="c1"># Exclude SSH</span>
-sudo ./netimpair.py -n eth0 --exclude <span class="nv">dport</span><span class="o">=</span><span class="m">22</span> netem --loss_ratio <span class="m">5</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--exclude<span class="w"> </span><span class="nv">dport</span><span class="o">=</span><span class="m">22</span><span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 <span class="c1"># Exclude a certain source IP on all ports</span>
-sudo ./netimpair.py -n eth0 --exclude <span class="nv">src</span><span class="o">=</span><span class="m">10</span>.194.247.50 netem --loss_ratio <span class="m">5</span>
+sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--exclude<span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">10</span>.194.247.50<span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 </pre></div>
 </div>
 </section>
 <section id="additional-parameters-can-be-found-with-the-help-option">
 <h4><a class="toc-backref" href="#id86">Additional parameters can be found with the help option</a><a class="headerlink" href="#additional-parameters-can-be-found-with-the-help-option" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic help</span>
-./netimpair.py -h
+./netimpair.py<span class="w"> </span>-h
 <span class="c1"># Help for the netem subcommand</span>
-./netimpair.py netem -h
+./netimpair.py<span class="w"> </span>netem<span class="w"> </span>-h
 <span class="c1"># Help for the rate subcommand</span>
-./netimpair.py rate -h
+./netimpair.py<span class="w"> </span>rate<span class="w"> </span>-h
 </pre></div>
 </div>
 </section>
