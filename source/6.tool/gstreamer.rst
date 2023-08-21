@@ -12,6 +12,7 @@ GStreamer
    :caption: Sections
 
    gstreamer_dev
+   gstreamer_webrtc
 
 ============ ==========================
 **Abstract** GStreamer
