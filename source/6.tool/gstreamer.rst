@@ -91,6 +91,12 @@ GStreamers 功能可以通过新插件进行扩展。 下面列出的功能只�
 
 Installation
 ===============
+Linux
+---------------
+
+.. code-block::
+
+
 
 MacOS
 ---------------
