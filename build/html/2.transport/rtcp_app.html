@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RTCP App &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,13 +57,13 @@
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bfcp.html">BFCP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rtcp_sr.html">RTCP Sender Report</a></li>
@@ -101,10 +108,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
-          <li><a href="rtcp.html">WebRTC RTCP Usage</a> &raquo;</li>
-      <li>RTCP App</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
+          <li class="breadcrumb-item"><a href="rtcp.html">WebRTC RTCP Usage</a></li>
+      <li class="breadcrumb-item active">RTCP App</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/rtcp_app.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -115,12 +122,8 @@
            <div itemprop="articleBody">
              
   <section id="rtcp-app">
-<h1>RTCP App<a class="headerlink" href="#rtcp-app" title="Permalink to this headline">¶</a></h1>
+<h1>RTCP App<a class="headerlink" href="#rtcp-app" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>RTCP Application</p></td>
@@ -132,11 +135,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#feedback" id="id4">Feedback</a></p>
@@ -147,9 +150,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>APP 数据包旨在用于开发新应用程序和新功能时的实验用途，无需注册数据包类型值。 具有无法识别名称的 APP 数据包应该被忽略。</p>
 <p>经过测试并且如果证明更广泛的使用是合理的，建议重新定义每个 APP 数据包，而不使用子类型和名称字段，并使用 RTCP 数据包类型向 IANA 注册。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
@@ -189,7 +192,7 @@ data.</p>
 <p>然后，RTCP 数据包的其余部分的格式由相关扩展定义，如名称所标识，这也定义了项目计数和 SSRC/CSRC 的用途。</p>
 </section>
 <section id="feedback">
-<h2><a class="toc-backref" href="#id4">Feedback</a><a class="headerlink" href="#feedback" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Feedback</a><a class="headerlink" href="#feedback" title="Link to this heading"></a></h2>
 <p>RFC4585 中定义了 RTCP 反馈消息，它添加了协商和发送可用于响应媒体问题的 RTCP 反馈的机制。 这些反馈消息由RTP媒体流的接收者发送。 特别是用于请求新视频关键帧的两条消息(PLI/FIR)在使用视频时极其重要。</p>
 <p>RTCP Feedback 大体可以分为以下三类：</p>
 <ul class="simple">
@@ -225,17 +228,17 @@ data.</p>
 <p>最后是反馈控制信息（FCI）部分，其内容和长度取决于反馈消息的类型。</p>
 <p>RFC4585 和 RFC5104 定义了许多反馈消息的类型。</p>
 <section id="pli-fir">
-<h3><a class="toc-backref" href="#id5">PLI/FIR</a><a class="headerlink" href="#pli-fir" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">PLI/FIR</a><a class="headerlink" href="#pli-fir" title="Link to this heading"></a></h3>
 <p>PLI 和 FIR 消息具有不同的语义含义。 PLI(Picture Loss Indication )图片丢失指示反馈消息表示解码视频帧所需的一个或多个数据包已丢失，而 FIR(Full Intra Request)完整帧内请求反馈消息明确请求关键帧。</p>
 <p>然而，由于几乎所有接收方对 PLI 的响应都是发送关键帧，因此许多实现可互换地使用这两种消息类型。 从技术上讲，PLI 意味着在由于丢失而需要关键帧时发送，而 FIR 则在由于未收到关键帧而需要关键帧时发送（例如，在关键帧丢失的流开始时），但许多实现都对待它们 可以互换，并且确实具有相同的代码来处理接收任一消息。</p>
 <p>实现请求关键帧的方法是通过可丢失的传输通道（例如基于 UDP 的 RTP）发送视频的基本要求，而 PLI/FIR 是该领域最常用的方法。 一般在媒体协商时会都支持这两种反馈消息， PLI 更为常用。</p>
 </section>
 <section id="nack">
-<h3><a class="toc-backref" href="#id6">NACK</a><a class="headerlink" href="#nack" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">NACK</a><a class="headerlink" href="#nack" title="Link to this heading"></a></h3>
 <p>处理数据包丢失的另一种机制是通用 NACK 消息，它与 PLI 类似，但允许发送方准确指定哪些 RTP 数据包未成功接收。 在最简单的情况下，这可以作为提示关键帧的另一种机制，但更复杂的媒体发送方可以选择重新传输丢失的数据包。 NACK 最常用于WebRTC 设备，而PLI/FIR 往往用于SIP 设备。</p>
 </section>
 <section id="tmmbr-tmmbn">
-<h3><a class="toc-backref" href="#id7">TMMBR/TMMBN</a><a class="headerlink" href="#tmmbr-tmmbn" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">TMMBR/TMMBN</a><a class="headerlink" href="#tmmbr-tmmbn" title="Link to this heading"></a></h3>
 <p>TMMBR 和 TMMBN 是与比特率控制相关的反馈消息，在媒体弹性章节中详细讨论。 注意TMMBN 消息的不寻常之处在于，虽然大多数反馈消息是由 RTP 媒体流的接收方发送的，但 TMMBN 消息是作为响应于接收 TMMBR 消息的反馈而发送的，因此是由媒体发送方发送的。</p>
 <p>TMMBR 和 TMMBN 消息最常见于 SIP 设备中。 WebRTC 设备倾向于使用名为“接收器估计最大比特率”(REMB) 的应用程序级消息， 近年来逐步转向 Transport Wide Congestion Control Feedback</p>
 </section>

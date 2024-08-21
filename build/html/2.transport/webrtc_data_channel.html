@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Data Channel &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,13 +57,13 @@
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bfcp.html">BFCP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">WebRTC Data Channel</a><ul>
@@ -103,9 +110,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
-      <li>WebRTC Data Channel</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
+      <li class="breadcrumb-item active">WebRTC Data Channel</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/webrtc_data_channel.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -116,12 +123,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-data-channel">
-<h1>WebRTC Data Channel<a class="headerlink" href="#webrtc-data-channel" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC Data Channel<a class="headerlink" href="#webrtc-data-channel" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>SCTP protocol</p></td>
@@ -133,11 +136,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id7">简介</a></p></li>
 <li><p><a class="reference internal" href="#sctp" id="id8">SCTP</a></p></li>
@@ -161,9 +164,9 @@
 </li>
 <li><p><a class="reference internal" href="#id6" id="id18">参考资料</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id7">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">简介</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>WebRTC 的 Data Channel 被设计用来在两个端点之间传输非音视频之类的媒体流外的数据，例如文本数据，控制命令。
 这样无需经过由服务器的信令通道中转，效率较高。当然，通过服务器中转也没问题。</p>
 <p>RTCDataChannel 接口表示一个网络通道，可用于任意数据的双向对等传输。 每个数据通道都与一个 RTCPeerConnection 相关联，每个对等连接理论上最多可以有 65,534 个数据通道（实际限制可能因浏览器而异）。</p>
@@ -215,7 +218,7 @@
 </div>
 </section>
 <section id="sctp">
-<h2><a class="toc-backref" href="#id8">SCTP</a><a class="headerlink" href="#sctp" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">SCTP</a><a class="headerlink" href="#sctp" title="Link to this heading"></a></h2>
 <p>WebRTC 采用 SCTP 作为数据通道，在于它拥有这些重要的特性</p>
 <ul class="simple">
 <li><p>Usage of TCP-friendly congestion control.</p></li>
@@ -248,7 +251,7 @@
 </div>
 </section>
 <section id="data-channel-establishment-protocol-dcep">
-<h2><a class="toc-backref" href="#id9">Data Channel Establishment Protocol (DCEP)</a><a class="headerlink" href="#data-channel-establishment-protocol-dcep" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Data Channel Establishment Protocol (DCEP)</a><a class="headerlink" href="#data-channel-establishment-protocol-dcep" title="Link to this heading"></a></h2>
 <p>The Data Channel Establishment Protocol is a simple, low-overhead way to establish bidirectional data channels over an SCTP association with a consistent set of properties.</p>
 <p>The set of consistent properties includes:</p>
 <ul>
@@ -270,7 +273,7 @@
 </pre></div>
 </div>
 <section id="new-message-type-registry">
-<h3><a class="toc-backref" href="#id10">New Message Type Registry</a><a class="headerlink" href="#new-message-type-registry" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">New Message Type Registry</a><a class="headerlink" href="#new-message-type-registry" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+===================+===========+===========+</span>
 <span class="o">|</span> <span class="n">Name</span>              <span class="o">|</span> <span class="n">Type</span>      <span class="o">|</span> <span class="n">Reference</span> <span class="o">|</span>
 <span class="o">+===================+===========+===========+</span>
@@ -290,7 +293,7 @@
 </div>
 </section>
 <section id="new-channel-type-registry">
-<h3><a class="toc-backref" href="#id11">New Channel Type Registry</a><a class="headerlink" href="#new-channel-type-registry" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">New Channel Type Registry</a><a class="headerlink" href="#new-channel-type-registry" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+================================================+======+===========+</span>
 <span class="o">|</span> <span class="n">Name</span>                                           <span class="o">|</span> <span class="n">Type</span> <span class="o">|</span> <span class="n">Reference</span> <span class="o">|</span>
 <span class="o">+================================================+======+===========+</span>
@@ -316,9 +319,9 @@
 </div>
 </section>
 <section id="message-formats">
-<h3><a class="toc-backref" href="#id12">Message Formats</a><a class="headerlink" href="#message-formats" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Message Formats</a><a class="headerlink" href="#message-formats" title="Link to this heading"></a></h3>
 <section id="data-channel-open-message">
-<h4><a class="toc-backref" href="#id13">DATA_CHANNEL_OPEN Message</a><a class="headerlink" href="#data-channel-open-message" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">DATA_CHANNEL_OPEN Message</a><a class="headerlink" href="#data-channel-open-message" title="Link to this heading"></a></h4>
 <blockquote>
 <div><p>This message is initially sent using the data channel on the stream used for user messages.</p>
 </div></blockquote>
@@ -368,7 +371,7 @@
 </div>
 </section>
 <section id="data-channel-ack-message">
-<h4><a class="toc-backref" href="#id14">DATA_CHANNEL_ACK Message</a><a class="headerlink" href="#data-channel-ack-message" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">DATA_CHANNEL_ACK Message</a><a class="headerlink" href="#data-channel-ack-message" title="Link to this heading"></a></h4>
 <blockquote>
 <div><p>This message is sent in response to a DATA_CHANNEL_OPEN_RESPONSE
 message.  It is sent on the stream used for user messages using the
@@ -391,7 +394,7 @@ data channel setup handshake is complete.</p>
 </section>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id15">SDP</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">SDP</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>it is a sdp example that use sctp over dtls</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">application</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">DTLS</span><span class="o">/</span><span class="n">SCTP</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">datachannel</span>
 <span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
@@ -408,7 +411,7 @@ data channel setup handshake is complete.</p>
 <p>Multiple SCTP associations MAY be multiplexed over a single DTLS connection.
 The SCTP port numbers are used for multiplexing and demultiplexing the SCTP associations carried over a single DTLS connection.</p>
 <section id="id5">
-<h3><a class="toc-backref" href="#id16">示例</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">示例</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Offerer side</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">RTCPeerConnection</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">pc</span><span class="p">.</span><span class="nx">createDataChannel</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">);</span>
@@ -448,7 +451,7 @@ The SCTP port numbers are used for multiplexing and demultiplexing the SCTP asso
 </div>
 </section>
 <section id="dtls-encapsulation-of-sctp-packets">
-<h3><a class="toc-backref" href="#id17">DTLS Encapsulation of SCTP Packets</a><a class="headerlink" href="#dtls-encapsulation-of-sctp-packets" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">DTLS Encapsulation of SCTP Packets</a><a class="headerlink" href="#dtls-encapsulation-of-sctp-packets" title="Link to this heading"></a></h3>
 <p>详细描述参见 <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8261">RFC8261</a> , 要点如下:</p>
 <p>WebRTC 使用  SCTP [RFC4960] <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc8261">RFC8261</a> with the following restrictions,which are required to reflect that the lower layer is DTLS instead of
 IPv4 and IPv6 and that SCTP does not deal with the IP addresses or the transport protocol used below DTLS:</p>
@@ -472,7 +475,7 @@ The window-based congestion control method specified in [RFC4960] resets the con
 </section>
 </section>
 <section id="id6">
-<h2><a class="toc-backref" href="#id18">参考资料</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">参考资料</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Data channel tutorial: <a class="reference external" href="https://www.html5rocks.com/en/tutorials/webrtc/datachannels/">https://www.html5rocks.com/en/tutorials/webrtc/datachannels/</a></p></li>
 <li><p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4960">RFC4960</a> : Stream Control Transmission Protocol</p></li>

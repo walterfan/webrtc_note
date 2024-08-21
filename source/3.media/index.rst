@@ -9,6 +9,7 @@
 
    overview
    streaming
+   hls
 
    webrtc_audio
    webrtc_video

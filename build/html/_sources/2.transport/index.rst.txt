@@ -15,7 +15,6 @@
    ice
 
    quic
-   hls
    rtmp
 
    tls
@@ -24,6 +23,7 @@
    srtp
    whip
 
+   bfcp
    rtp
    rtcp
    webrtc_data_channel

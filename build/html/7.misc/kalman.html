@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>卡尔曼滤波笔记 &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -30,11 +33,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -72,6 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="scientific_calculation.html">科学计算</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jenkins.html">Jenkins</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sphinx.html">Sphinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linux.html">linux environment</a></li>
 </ul>
 </li>
 </ul>
@@ -89,9 +97,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">7. WebRTC 关联技术</a> &raquo;</li>
-      <li>卡尔曼滤波笔记</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">7. WebRTC 关联技术</a></li>
+      <li class="breadcrumb-item active">卡尔曼滤波笔记</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/7.misc/kalman.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -102,12 +110,8 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1>卡尔曼滤波笔记<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>卡尔曼滤波笔记<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>卡尔曼滤波笔记</p></td>
@@ -119,11 +123,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id4" id="id11">简介</a></p></li>
 <li><p><a class="reference internal" href="#id5" id="id12">预备知识</a></p>
@@ -136,9 +140,9 @@
 <li><p><a class="reference internal" href="#id9" id="id16">术语</a></p></li>
 <li><p><a class="reference internal" href="#id10" id="id17">离散卡尔曼滤波</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id4">
-<h2><a class="toc-backref" href="#id11">简介</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">简介</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>卡尔曼滤波（Kalman filtering）是一种算法，用于在不确定的观测数据中估算出最优结果的算法。它利用线性系统状态方程，通过系统输入输出观测数据，对系统状态进行最优估计。由于观测数据中包括系统中的噪声和干扰的影响，所以最优估计也可看作是滤波过程。</p>
 <p>数据滤波是去除噪声还原真实数据的一种数据处理技术，Kalman滤波在测量方差已知的情况下能够从一系列存在测量噪声的数据中，估计动态系统的状态。由于它便于计算机编程实现，并能够对现场采集的数据进行实时的更新和处理，Kalman滤波是目前应用最为广泛的滤波方法，在通信，导航，制导与控制等多领域得到了较好的应用。</p>
 <div class="math notranslate nohighlight">
@@ -203,7 +207,7 @@
 </div>
 </section>
 <section id="id5">
-<h2><a class="toc-backref" href="#id12">预备知识</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">预备知识</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>微积分</p></li>
 <li><p>线性代数
@@ -228,7 +232,7 @@ v 表示测量噪声</p>
 <li><p>能控性和能观性</p></li>
 </ul>
 <section id="id6">
-<h3><a class="toc-backref" href="#id13">概率论</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">概率论</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>概率
 - 贝叶斯公式
@@ -244,14 +248,14 @@ v 表示测量噪声</p>
 </ul>
 </section>
 <section id="id7">
-<h3><a class="toc-backref" href="#id14">最小二乘估计</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">最小二乘估计</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>常量估计</p></li>
 <li><p>加权及递推最小二乘估计</p></li>
 </ul>
 </section>
 <section id="id8">
-<h3><a class="toc-backref" href="#id15">状态和协方差</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">状态和协方差</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>离散时间系统</p></li>
 <li><p>抽样数据系统</p></li>
@@ -260,7 +264,7 @@ v 表示测量噪声</p>
 </section>
 </section>
 <section id="id9">
-<h2><a class="toc-backref" href="#id16">术语</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">术语</a><a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>随机变量是一个定义在样本空间上的实值函数，把样本点映射成一个实数。每个样本点都有不同的概率出现，意味着随机变量的取值也是随机的，并且服从某个分布(distribution)。</p></li>
 <li><p>一个随机变量 [公式] 的distribution是由 累积分布函数(cumulative distribution function,CDF)，或者简称distribution function来刻画的，是以一个实数为自变量的函数</p></li>
@@ -280,7 +284,7 @@ v 表示测量噪声</p>
 </div>
 </section>
 <section id="id10">
-<h2><a class="toc-backref" href="#id17">离散卡尔曼滤波</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">离散卡尔曼滤波</a><a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>状态方程</p></li>
 </ul>

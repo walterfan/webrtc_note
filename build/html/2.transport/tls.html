@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TLS 协议 &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,7 +57,6 @@
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">TLS 协议</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
@@ -68,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bfcp.html">BFCP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
@@ -98,9 +105,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
-      <li>TLS 协议</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
+      <li class="breadcrumb-item active">TLS 协议</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/tls.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -111,12 +118,8 @@
            <div itemprop="articleBody">
              
   <section id="tls">
-<h1>TLS 协议<a class="headerlink" href="#tls" title="Permalink to this headline">¶</a></h1>
+<h1>TLS 协议<a class="headerlink" href="#tls" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>TLS protocol</p></td>
@@ -128,11 +131,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#protocol" id="id4">Protocol</a></p>
@@ -145,9 +148,9 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id9">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>协议细节参见</p>
 <ul class="simple">
 <li><p>TLS v1.2 <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5246">https://datatracker.ietf.org/doc/html/rfc5246</a></p></li>
@@ -155,9 +158,9 @@
 </ul>
 </section>
 <section id="protocol">
-<h2><a class="toc-backref" href="#id4">Protocol</a><a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Protocol</a><a class="headerlink" href="#protocol" title="Link to this heading"></a></h2>
 <section id="handshake-protocol">
-<h3><a class="toc-backref" href="#id5">handshake protocol</a><a class="headerlink" href="#handshake-protocol" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">handshake protocol</a><a class="headerlink" href="#handshake-protocol" title="Link to this heading"></a></h3>
 <p>SSL Handshake Steps</p>
 <ol class="arabic simple">
 <li><p>The client says hello. This “client hello” message lists cryptographic information, including the SSL version to use to communicate with each other. It also lists which encryption algorithms it supports, which are known as Cipher Suites.</p></li>
@@ -169,7 +172,7 @@
 </ol>
 </section>
 <section id="tls-session-resumption-without-server-side-state">
-<h3><a class="toc-backref" href="#id6">TLS Session Resumption without Server-Side State</a><a class="headerlink" href="#tls-session-resumption-without-server-side-state" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">TLS Session Resumption without Server-Side State</a><a class="headerlink" href="#tls-session-resumption-without-server-side-state" title="Link to this heading"></a></h3>
 <p>refer to <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc5077">https://datatracker.ietf.org/doc/html/rfc5077</a></p>
 <ul class="simple">
 <li><p>Figure 1: Message Flow for Full Handshake Issuing New Session Ticket</p></li>
@@ -197,7 +200,7 @@
 </div>
 </section>
 <section id="what-is-ssl-handshake-failed">
-<h3><a class="toc-backref" href="#id7">What is SSL Handshake Failed?</a><a class="headerlink" href="#what-is-ssl-handshake-failed" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">What is SSL Handshake Failed?</a><a class="headerlink" href="#what-is-ssl-handshake-failed" title="Link to this heading"></a></h3>
 <p>possible reason:</p>
 <ul class="simple">
 <li><p>The client is using the wrong date or time.</p></li>
@@ -209,7 +212,7 @@
 </ul>
 </section>
 <section id="alert-protocol">
-<h3><a class="toc-backref" href="#id8">Alert Protocol</a><a class="headerlink" href="#alert-protocol" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Alert Protocol</a><a class="headerlink" href="#alert-protocol" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="p">{</span> <span class="n">warning</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">fatal</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="p">}</span> <span class="n">AlertLevel</span><span class="p">;</span>
 
   <span class="n">enum</span> <span class="p">{</span>
@@ -250,7 +253,7 @@
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id9">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <ul>
 <li><p>High Performance Browser Networking</p>
 <p><a class="reference external" href="https://www.oreilly.com/library/view/high-performance-browser/9781449344757/ch04.html">https://www.oreilly.com/library/view/high-performance-browser/9781449344757/ch04.html</a></p>

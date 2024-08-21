@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Web Codecs &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +53,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html">Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sharing.html">WebRTC Sharing</a></li>
@@ -100,9 +109,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-      <li>Web Codecs</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+      <li class="breadcrumb-item active">Web Codecs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/web_codec.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -113,12 +122,8 @@
            <div itemprop="articleBody">
              
   <section id="web-codecs">
-<h1>Web Codecs<a class="headerlink" href="#web-codecs" title="Permalink to this headline">¶</a></h1>
+<h1>Web Codecs<a class="headerlink" href="#web-codecs" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>Web Codecs</p></td>
@@ -130,11 +135,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p></li>
 <li><p><a class="reference internal" href="#interface" id="id5">Interface</a></p>
@@ -152,9 +157,9 @@
 <li><p><a class="reference internal" href="#example" id="id14">Example</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id15">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>在WebRTC中，音频使用 opus codec 来做音频的编解码，视频使用 vp8 或 h.264 等库来做视频的编解码。</p>
 <p>以下两篇规范对于 WebRTC 所需要的 codec 有详细要求</p>
 <p><a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc7874">RFC7874</a> “WebRTC Audio Codec and Processing Requirements”
@@ -166,7 +171,7 @@
 <p>It is useful for web applications that require full control over the way media is processed. For example, video or audio editors, and video conferencing.</p>
 </section>
 <section id="interface">
-<h2><a class="toc-backref" href="#id5">Interface</a><a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Interface</a><a class="headerlink" href="#interface" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>AudioDecoder</p></li>
 </ul>
@@ -216,7 +221,7 @@
 </ul>
 <p>Represents an individual image track.</p>
 <section id="audiodecoder-interface">
-<h3><a class="toc-backref" href="#id6">AudioDecoder Interface</a><a class="headerlink" href="#audiodecoder-interface" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">AudioDecoder Interface</a><a class="headerlink" href="#audiodecoder-interface" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span>
 <span class="kr">interface</span><span class="w"> </span><span class="nx">AudioDecoder</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">AudioDecoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span>
@@ -243,7 +248,7 @@
 </div>
 </section>
 <section id="videodecoder-interface">
-<h3><a class="toc-backref" href="#id7">VideoDecoder Interface</a><a class="headerlink" href="#videodecoder-interface" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">VideoDecoder Interface</a><a class="headerlink" href="#videodecoder-interface" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span>
 <span class="kr">interface</span><span class="w"> </span><span class="nx">VideoDecoder</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">VideoDecoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span>
@@ -270,7 +275,7 @@
 </div>
 </section>
 <section id="audioencoder-interface">
-<h3><a class="toc-backref" href="#id8">AudioEncoder Interface</a><a class="headerlink" href="#audioencoder-interface" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">AudioEncoder Interface</a><a class="headerlink" href="#audioencoder-interface" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span>
 <span class="kr">interface</span><span class="w"> </span><span class="nx">AudioEncoder</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">AudioEncoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span>
@@ -299,7 +304,7 @@
 </div>
 </section>
 <section id="videoencoder-interface">
-<h3><a class="toc-backref" href="#id9">VideoEncoder Interface</a><a class="headerlink" href="#videoencoder-interface" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">VideoEncoder Interface</a><a class="headerlink" href="#videoencoder-interface" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">Exposed</span><span class="o">=</span><span class="p">(</span><span class="nx">Window</span><span class="p">,</span><span class="nx">DedicatedWorker</span><span class="p">),</span><span class="w"> </span><span class="nx">SecureContext</span><span class="p">]</span>
 <span class="kr">interface</span><span class="w"> </span><span class="nx">VideoEncoder</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">VideoEncoderInit</span><span class="w"> </span><span class="nx">init</span><span class="p">);</span>
@@ -328,7 +333,7 @@
 </div>
 </section>
 <section id="audiodecoderconfig">
-<h3><a class="toc-backref" href="#id10">AudioDecoderConfig</a><a class="headerlink" href="#audiodecoderconfig" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">AudioDecoderConfig</a><a class="headerlink" href="#audiodecoderconfig" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">AudioDecoderConfig</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span>
 <span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">required</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">sampleRate</span><span class="p">;</span>
@@ -339,7 +344,7 @@
 </div>
 </section>
 <section id="videodecoderconfig">
-<h3><a class="toc-backref" href="#id11">VideoDecoderConfig</a><a class="headerlink" href="#videodecoderconfig" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">VideoDecoderConfig</a><a class="headerlink" href="#videodecoderconfig" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">VideoDecoderConfig</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span>
 <span class="w">    </span><span class="nx">BufferSource</span><span class="w"> </span><span class="nx">description</span><span class="p">;</span>
@@ -355,7 +360,7 @@
 </div>
 </section>
 <section id="audioencoderconfig">
-<h3><a class="toc-backref" href="#id12">AudioEncoderConfig</a><a class="headerlink" href="#audioencoderconfig" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">AudioEncoderConfig</a><a class="headerlink" href="#audioencoderconfig" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">AudioEncoderConfig</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span>
 <span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">sampleRate</span><span class="p">;</span>
@@ -366,7 +371,7 @@
 </div>
 </section>
 <section id="videoencoderconfig">
-<h3><a class="toc-backref" href="#id13">VideoEncoderConfig</a><a class="headerlink" href="#videoencoderconfig" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">VideoEncoderConfig</a><a class="headerlink" href="#videoencoderconfig" title="Link to this heading"></a></h3>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="nx">dictionary</span><span class="w"> </span><span class="nx">VideoEncoderConfig</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">required</span><span class="w"> </span><span class="nx">DOMString</span><span class="w"> </span><span class="nx">codec</span><span class="p">;</span>
 <span class="w">    </span><span class="p">[</span><span class="nx">EnforceRange</span><span class="p">]</span><span class="w"> </span><span class="nx">required</span><span class="w"> </span><span class="nx">unsigned</span><span class="w"> </span><span class="kr">long</span><span class="w"> </span><span class="nx">width</span><span class="p">;</span>
@@ -386,11 +391,11 @@
 </section>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id14">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://w3c.github.io/webcodecs/samples/">https://w3c.github.io/webcodecs/samples/</a></p>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id15">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://web.dev/webcodecs/">https://web.dev/webcodecs/</a></p>
 </section>
 </section>

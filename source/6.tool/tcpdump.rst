@@ -42,7 +42,7 @@ This dumps everything from eth0 into a file with details useful with wireshark.
 
     tcpdump -i ens192 -Xvnp -s0 -w /tmp/tcpdump1116.pcap
 
-                     
+
 
 To capture 10 instances of a particular mini-carousel:
 

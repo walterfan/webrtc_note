@@ -75,3 +75,39 @@ Installation
    $ make install
    install -d /usr/local
    install -d /usr/local/bin
+
+
+配置
+----------------------
+
+* 设置帐号和域名
+
+.. code-block:: bash
+
+   $ turnadmin -a -u walter -p pass1234 -r fanyamin.com
+
+
+* 也可以通过配置文件进行配置
+
+
+.. code-block:: bash
+
+   $ cp /usr/local/etc/turnserver.conf.default /usr/local/etc/turnserver.conf
+   $ vi /usr/local/etc/turnserver.conf
+   listening-port=3478 #监听端口
+   listening-device=eth0 #监听的网卡
+
+   external-ip=121.4.184.225 #公网ip
+   user=walter:pass1234 #用户名:密码
+   realm=fanyamin.com #一般与turnadmin创建用户时指定的realm一致
+
+
+Refer to https://www.cnblogs.com/yjmyzz/p/how-to-install-coturn-on-ubuntu.html
+
+
+运行
+---------------------
+
+.. code-block:: bash
+
+   # turnserver -o -a -f -v -r fanyamin.com

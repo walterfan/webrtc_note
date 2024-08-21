@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Video Lip Sync &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +53,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html">Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="video_basic.html">Video Basic</a></li>
@@ -107,10 +116,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_video.html">WebRTC 视频</a> &raquo;</li>
-      <li>Video Lip Sync</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_video.html">WebRTC 视频</a></li>
+      <li class="breadcrumb-item active">Video Lip Sync</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/video_lip_sync.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -121,12 +130,8 @@
            <div itemprop="articleBody">
              
   <section id="video-lip-sync">
-<h1>Video Lip Sync<a class="headerlink" href="#video-lip-sync" title="Permalink to this headline">¶</a></h1>
+<h1>Video Lip Sync<a class="headerlink" href="#video-lip-sync" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>video lip sync</p></td>
@@ -138,11 +143,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id7">问题的原因</a></p></li>
 <li><p><a class="reference internal" href="#id4" id="id8">解决方案</a></p></li>
@@ -150,9 +155,9 @@
 <li><p><a class="reference internal" href="#id6" id="id10">相关代码</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id11">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id7">问题的原因</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">问题的原因</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>这个问题的原因主要在于音频的采集， 编码，传输， 解码， 播放与视频的采集，编码，传输，解码以及渲染一般是分开进行的，因为音频和视频采集自不同的设备，即它们的来源不同，在网络上传输也会有延迟，也由不同的设备进行播放，这样如果在接收方不采取措施进行时间同步，就会极有可能看到口型和听到的声音对不上的情况。</p>
 <p>由此派生出 ３ 个小问题：</p>
 <ol class="arabic simple">
@@ -162,7 +167,7 @@
 </ol>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id8">解决方案</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">解决方案</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>如何关联来自同一个人或设备的多路 audio 及 video stream?</p></li>
 </ol>
@@ -270,7 +275,7 @@
 如果这个 sync_diff 小于 -185ms, 也就是视频包到得过早，就会有音视频不同步的问题 - 嘴巴在动，声音没跟上</p>
 </section>
 <section id="id5">
-<h2><a class="toc-backref" href="#id9">解决的方法</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">解决的方法</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
 <p>一般我们会以 audio 为主,  video 向 audio 靠拢, 两者时间一致也就会达到 lip sync 音视频同步</p>
 <ol class="arabic simple">
 <li><p>audio 包先来, video 包后来: audio 包放在 jitter buffer 时等一会儿, 但是这个时间是有限的, 音频的流畅是首先要保证的, 视频跟不上可能降低视频的码率</p></li>
@@ -327,7 +332,7 @@
 </div>
 </section>
 <section id="id6">
-<h2><a class="toc-backref" href="#id10">相关代码</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">相关代码</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>RtpToNtpEstimator, 它将收到的若干 SR 中的 NTP time 和 RTP timestamp 保存下来，
 应用最小二乘法来估算后续 RTP timestamp 所对应的 NTP timestamp</p></li>
@@ -436,7 +441,7 @@
 </div>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id11">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.ciscopress.com/articles/article.asp?p=705533&amp;seqNum=6">https://www.ciscopress.com/articles/article.asp?p=705533&amp;seqNum=6</a></p></li>
 <li><p><a class="reference external" href="https://www.ccexpert.us/video-conferencing/using-rtcp-for-media-synchronization.html">https://www.ccexpert.us/video-conferencing/using-rtcp-for-media-synchronization.html</a></p></li>

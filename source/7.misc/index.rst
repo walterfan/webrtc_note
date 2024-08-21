@@ -18,3 +18,4 @@
    scientific_calculation
    jenkins
    sphinx
+   linux

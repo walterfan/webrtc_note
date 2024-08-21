@@ -149,6 +149,12 @@ SDP
 隐私考虑
 ---------------------------
 
+
+术语
+==========================
+* fingerprints
+  fingerprints are secure, one-way hashes of the DER (distinguished encoding rules) form of the certificate and are widely supported in libraries such as OpenSSL
+
 参考资料
 ==========================
 * `Webrtc security <https://telecom.altanai.com/2015/04/24/webrtc-security/>`_
