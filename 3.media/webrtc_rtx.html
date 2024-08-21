@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC RTX &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,6 +53,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">3. WebRTC 媒体</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 媒体概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html">Streaming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_audio.html">WebRTC 音频</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_video.html">WebRTC 视频</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_sharing.html">WebRTC Sharing</a></li>
@@ -123,10 +132,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">3. WebRTC 媒体</a> &raquo;</li>
-          <li><a href="webrtc_qos.html">WebRTC QoS</a> &raquo;</li>
-      <li>WebRTC RTX</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">3. WebRTC 媒体</a></li>
+          <li class="breadcrumb-item"><a href="webrtc_qos.html">WebRTC QoS</a></li>
+      <li class="breadcrumb-item active">WebRTC RTX</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/3.media/webrtc_rtx.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -137,12 +146,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-rtx">
-<h1>WebRTC RTX<a class="headerlink" href="#webrtc-rtx" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC RTX<a class="headerlink" href="#webrtc-rtx" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC RTX</p></td>
@@ -154,11 +159,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#id3" id="id9">简介</a></p></li>
 <li><p><a class="reference internal" href="#id4" id="id10">术语</a></p></li>
@@ -177,9 +182,9 @@
 </li>
 <li><p><a class="reference internal" href="#id8" id="id18">参考资料</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="id3">
-<h2><a class="toc-backref" href="#id9">简介</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">简介</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>在 WebRTC 中常用的 QoS 策略有</p>
 <ol class="arabic simple">
 <li><p>反馈：例如 PLI , NACK</p></li>
@@ -198,7 +203,7 @@
 <p>Webrtc 默认是开启 RTX (重传)，它一般采用不同的 SSRC 进行传输, RTX 包的 Payload 在  RFC4588 中有详细描述，一般 NACK 和 Bandwidth Probe 也可能走 RTX 通道。</p>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id10">术语</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">术语</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <ul>
 <li><p>Original packet: 源包</p>
 <p>an RTP packet that carries user data sent for the first time by an RTP sender.</p>
@@ -228,7 +233,7 @@ for lost packets.</p>
 </ul>
 </section>
 <section id="requirements-and-design-rationale-for-a-retransmission-scheme">
-<h2><a class="toc-backref" href="#id11">Requirements and Design Rationale for a Retransmission Scheme</a><a class="headerlink" href="#requirements-and-design-rationale-for-a-retransmission-scheme" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Requirements and Design Rationale for a Retransmission Scheme</a><a class="headerlink" href="#requirements-and-design-rationale-for-a-retransmission-scheme" title="Link to this heading"></a></h2>
 <p>The use of retransmissions in RTP as a repair method for streaming media is appropriate in those scenarios with relaxed delay bounds and where full reliability is not a requirement.</p>
 <dl>
 <dt>The RTP retransmission scheme defined in this document is designed to</dt><dd><p>fulfill the following set of requirements:</p>
@@ -253,7 +258,7 @@ sequence number to detect lost packets.</p>
 </dl>
 </section>
 <section id="retransmission-payload-format">
-<h2><a class="toc-backref" href="#id12">Retransmission Payload Format</a><a class="headerlink" href="#retransmission-payload-format" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Retransmission Payload Format</a><a class="headerlink" href="#retransmission-payload-format" title="Link to this heading"></a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -267,13 +272,13 @@ sequence number to detect lost packets.</p>
 </pre></div>
 </div>
 <section id="id5">
-<h3><a class="toc-backref" href="#id13">重传请求</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">重传请求</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>NACK 可用来请求发送方重传</p></li>
 </ul>
 </section>
 <section id="id6">
-<h3><a class="toc-backref" href="#id14">拥塞控制</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">拥塞控制</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <p>拥塞导致丢包，丢包会重传，重传导致拥塞更严重，这样会生成恶性循环，所以需要考虑一个可接受的发送速率。</p>
 <p>对于原始数据流和重传数据流的 packet rate 及 bitrate</p>
 <ul class="simple">
@@ -283,7 +288,7 @@ sequence number to detect lost packets.</p>
 </ul>
 </section>
 <section id="rtx-payload-format-mime-type">
-<h3><a class="toc-backref" href="#id15">RTX Payload format MIME Type</a><a class="headerlink" href="#rtx-payload-format-mime-type" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">RTX Payload format MIME Type</a><a class="headerlink" href="#rtx-payload-format-mime-type" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>rtx: Retransmission</p></li>
 <li><p>rtx-time</p></li>
@@ -292,7 +297,7 @@ sequence number to detect lost packets.</p>
 </section>
 </section>
 <section id="id7">
-<h2><a class="toc-backref" href="#id16">相关代码</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">相关代码</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>RtpConfig -&gt; UlpfecConfig</p></li>
 </ul>
@@ -403,7 +408,7 @@ sequence number to detect lost packets.</p>
 </pre></div>
 </div>
 <section id="build-rtx-packet">
-<h3><a class="toc-backref" href="#id17">Build RTX packet</a><a class="headerlink" href="#build-rtx-packet" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Build RTX packet</a><a class="headerlink" href="#build-rtx-packet" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>std::unique_ptr&lt;RtpPacketToSend&gt; RTPSender::BuildRtxPacket(
     const RtpPacketToSend&amp; packet) {
   std::unique_ptr&lt;RtpPacketToSend&gt; rtx_packet;
@@ -476,7 +481,7 @@ sequence number to detect lost packets.</p>
 </section>
 </section>
 <section id="id8">
-<h2><a class="toc-backref" href="#id18">参考资料</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">参考资料</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>RFC4588: <a class="reference external" href="https://tools.ietf.org/html/rfc4588">RTP Retransmission Payload Format</a></p></li>
 <li><p>RFC4585: <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc4585">Extended RTP Profile for RTCP-Based Feedback</a></p></li>

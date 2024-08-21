@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RTMP 协议 &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="TLS 协议" href="tls.html" />
-    <link rel="prev" title="HTTP Live Streaming" href="hls.html" /> 
+    <link rel="prev" title="QUIC 协议" href="quic.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,7 +57,6 @@
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">RTMP 协议</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#rtmp-overview">RTMP Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">RTMP 连接三部走</a><ul>
@@ -68,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="sctp.html">SCTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bfcp.html">BFCP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
@@ -98,9 +105,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
-      <li>RTMP 协议</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
+      <li class="breadcrumb-item active">RTMP 协议</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/rtmp.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -111,12 +118,8 @@
            <div itemprop="articleBody">
              
   <section id="rtmp">
-<h1>RTMP 协议<a class="headerlink" href="#rtmp" title="Permalink to this headline">¶</a></h1>
+<h1>RTMP 协议<a class="headerlink" href="#rtmp" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>RTMP protocol</p></td>
@@ -128,11 +131,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#rtmp-overview" id="id5">RTMP Overview</a></p></li>
 <li><p><a class="reference internal" href="#id3" id="id6">RTMP 连接三部走</a></p>
@@ -145,9 +148,9 @@
 <li><p><a class="reference internal" href="#id4" id="id10">RTMP 包结构</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id11">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="rtmp-overview">
-<h2><a class="toc-backref" href="#id5">RTMP Overview</a><a class="headerlink" href="#rtmp-overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">RTMP Overview</a><a class="headerlink" href="#rtmp-overview" title="Link to this heading"></a></h2>
 <p>RTMP (Real Time Messaging Protocol) 实时消息传输协议，是 Adobe 公司的专有协议，用于 Flash 的媒体传输。
 它并非是一个单独的协议，而是一组协议簇</p>
 <ul class="simple">
@@ -159,9 +162,9 @@
 </ul>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id6">RTMP 连接三部走</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">RTMP 连接三部走</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <section id="handshake">
-<h3><a class="toc-backref" href="#id7">1. 握手 Handshake:</a><a class="headerlink" href="#handshake" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">1. 握手 Handshake:</a><a class="headerlink" href="#handshake" title="Link to this heading"></a></h3>
 <p>客户端通常采用编码软件或硬件的形式，通过交换三个数据包来启动与它希望流式传输到的服务器的连接。</p>
 <ul class="simple">
 <li><ol class="arabic simple">
@@ -187,22 +190,22 @@
 <p>参见 <a class="reference external" href="https://ossrs.io/lts/en-us/docs/v5/doc/rtmp-handshake">https://ossrs.io/lts/en-us/docs/v5/doc/rtmp-handshake</a></p>
 </section>
 <section id="connection">
-<h3><a class="toc-backref" href="#id8">2. 连接 Connection:</a><a class="headerlink" href="#connection" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">2. 连接 Connection:</a><a class="headerlink" href="#connection" title="Link to this heading"></a></h3>
 <p>然后，客户端和服务器使用操作消息格式 （AMF） 编码的消息协商连接。RTMP 编码器使用 AMF 将连接请求发送到服务器，并指示连接 URL、音频编解码器和视频编解码器等详细信息。一旦服务器响应批准，流就可以开始了。</p>
 </section>
 <section id="stream">
-<h3><a class="toc-backref" href="#id9">3. 流淌 Stream:</a><a class="headerlink" href="#stream" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">3. 流淌 Stream:</a><a class="headerlink" href="#stream" title="Link to this heading"></a></h3>
 <p>完成握手和连接步骤后，现在可以传送流数据。用户命令（如创建流、播放、搜索和暂停）允许数据传输按指示进行</p>
 </section>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id10">RTMP 包结构</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">RTMP 包结构</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>RTMP 消息由 Chunk 组成， 每个 Chunk 可以携带一个 Message, 多数情况下 RTMP message 由多个 Chunk 承载</p>
 <p>RTMP Chunk 由包头 header 和 payload 组成。 对于连接和控制命令，采用 AMF 格式编码(AMF0 或 AMF3, 一般用 AMF0).
 包头包括 Basic Header 和 Chunk Header, 其中 Basic Header 可被扩展为一到两个字节， Chunk Header 则含有如 Message 长度等信息</p>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id11">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.wowza.com/blog/rtmp-streaming-real-time-messaging-protocol">https://www.wowza.com/blog/rtmp-streaming-real-time-messaging-protocol</a></p></li>
 <li><p><a class="reference external" href="https://cloud.tencent.com/developer/inventory/1220">https://cloud.tencent.com/developer/inventory/1220</a></p></li>
@@ -216,7 +219,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="hls.html" class="btn btn-neutral float-left" title="HTTP Live Streaming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quic.html" class="btn btn-neutral float-left" title="QUIC 协议" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="tls.html" class="btn btn-neutral float-right" title="TLS 协议" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

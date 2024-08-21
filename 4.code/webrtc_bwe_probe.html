@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Bandwidth Probe &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -113,9 +120,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
-      <li>WebRTC Bandwidth Probe</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
+      <li class="breadcrumb-item active">WebRTC Bandwidth Probe</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_bwe_probe.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -126,12 +133,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-bandwidth-probe">
-<h1>WebRTC Bandwidth Probe<a class="headerlink" href="#webrtc-bandwidth-probe" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC Bandwidth Probe<a class="headerlink" href="#webrtc-bandwidth-probe" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC Bandwidth Probe</p></td>
@@ -146,11 +149,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p>
 <ul>
@@ -168,9 +171,9 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>在会话刚建立时需要确定远端的一个初始带宽，congestion_controller 通过</p>
 <ul class="simple">
 <li><p>ProbeController 控制何时进行启动探测</p></li>
@@ -184,7 +187,7 @@
 <p>会话刚建立时会探测两次，以及编码器配置改变时会探测两次，一个cluster为一次探测，</p>
 <p>会话刚建立时进行两次探测的bps分别为900000、1800000，一般连续的两次探测，第二次的bps为第一次的两倍。</p>
 <section id="id3">
-<h3><a class="toc-backref" href="#id5">触发探测的条件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">触发探测的条件</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <p>1）network available at startup
 2）enable periodic alr probing
 3）large drop in estimated bandwidth
@@ -192,16 +195,16 @@
 </section>
 </section>
 <section id="flow">
-<h2><a class="toc-backref" href="#id6">Flow</a><a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Flow</a><a class="headerlink" href="#flow" title="Link to this heading"></a></h2>
 <section id="handle-transportpacketsfeedback">
-<h3><a class="toc-backref" href="#id7">handle TransportPacketsFeedback</a><a class="headerlink" href="#handle-transportpacketsfeedback" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">handle TransportPacketsFeedback</a><a class="headerlink" href="#handle-transportpacketsfeedback" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>GoogCcNetworkController::OnTransportPacketsFeedback</p></li>
 </ul>
 </section>
 </section>
 <section id="structures">
-<h2><a class="toc-backref" href="#id8">structures</a><a class="headerlink" href="#structures" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">structures</a><a class="headerlink" href="#structures" title="Link to this heading"></a></h2>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">SentPacket</span><span class="w"> </span><span class="p">{</span>
 <span class="w">     </span><span class="n">Timestamp</span><span class="w"> </span><span class="n">send_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Timestamp</span><span class="o">::</span><span class="n">PlusInfinity</span><span class="p">();</span>
 <span class="w">     </span><span class="c1">// Size of packet with overhead up to IP layer.</span>
@@ -268,7 +271,7 @@
 </pre></div>
 </div>
 <section id="handleprobeandestimatebitrate">
-<h3><a class="toc-backref" href="#id9">HandleProbeAndEstimateBitrate</a><a class="headerlink" href="#handleprobeandestimatebitrate" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">HandleProbeAndEstimateBitrate</a><a class="headerlink" href="#handleprobeandestimatebitrate" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>HandleProbeAndEstimateBitrate</p></li>
 </ul>

@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC OveruseFrameDetector &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -108,9 +115,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
-      <li>WebRTC OveruseFrameDetector</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
+      <li class="breadcrumb-item active">WebRTC OveruseFrameDetector</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/overuse_frame_decoder.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -121,12 +128,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-overuseframedetector">
-<h1>WebRTC OveruseFrameDetector<a class="headerlink" href="#webrtc-overuseframedetector" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC OveruseFrameDetector<a class="headerlink" href="#webrtc-overuseframedetector" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 31%" />
-<col style="width: 69%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC OveruseFrameDetector</p></td>
@@ -138,11 +141,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id4">Overview</a></p></li>
 <li><p><a class="reference internal" href="#id3" id="id5">关键指标</a></p>
@@ -153,26 +156,26 @@
 </li>
 <li><p><a class="reference internal" href="#reference" id="id8">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>用户使用的设备千差万别,</p>
 <p>视频的分辨率, 帧率过高可能会耗费大量的 CPU 资源, 如果用户的设备性能不高, 可能会造成应用程序</p>
 <p>过载检测器, 分别对 cpu, qp, 分辨率进行状态检测, 通过与设定阈值比较, 高于就认为过载, 低于就认为欠载。</p>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id5">关键指标</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">关键指标</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <p>CPU usage (CPU使用率) 是指编码耗时/采集耗时的比率.</p>
 <p>当该比值越大时，表示编码跟不上采集，达到了编码器的性能瓶颈，需要对编码进行降级；
 反之，比值越小，表示编码能力有富余，还可以进行编码升级，提供更好的视频质量。换句话说，就是一个生产者与消费者的关系。</p>
 <section id="overuse-frame-detector">
-<h3><a class="toc-backref" href="#id6">overuse frame detector</a><a class="headerlink" href="#overuse-frame-detector" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">overuse frame detector</a><a class="headerlink" href="#overuse-frame-detector" title="Link to this heading"></a></h3>
 <p>cpu 检测器”, 通过编码器占用率与设定的阀值进行比较, 编码器占用率计算公式：</p>
 <p>编码器占用率 = 编码时长/采集间隔, 具体的实现在 SendProcessingUsage1 类中, 编码时长与采集间隔</p>
 <p>都用了指数加权移动平均法 (EWMA).</p>
 </section>
 <section id="overuse-policy">
-<h3><a class="toc-backref" href="#id7">overuse policy</a><a class="headerlink" href="#overuse-policy" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">overuse policy</a><a class="headerlink" href="#overuse-policy" title="Link to this heading"></a></h3>
 <p>当发生过载时, WebRTC 提供了三种策略：</p>
 <ul class="simple">
 <li><p>MAINTAIN_FRAMERATE: 优先保帧率, 降低分辨率, 该模式的使用场景为视频模式。</p></li>
@@ -182,7 +185,7 @@
 </section>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id8">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/encode_usage_resource.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/encode_usage_resource.h</a></p></li>
 <li><p><a class="reference external" href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h">https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/video/adaptation/overuse_frame_detector.h</a></p></li>

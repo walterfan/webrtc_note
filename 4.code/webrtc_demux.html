@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WebRTC Demux &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -107,9 +114,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">4. WebRTC 源码分析</a> &raquo;</li>
-      <li>WebRTC Demux</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">4. WebRTC 源码分析</a></li>
+      <li class="breadcrumb-item active">WebRTC Demux</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/4.code/webrtc_demux.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -120,12 +127,8 @@
            <div itemprop="articleBody">
              
   <section id="webrtc-demux">
-<h1>WebRTC Demux<a class="headerlink" href="#webrtc-demux" title="Permalink to this headline">¶</a></h1>
+<h1>WebRTC Demux<a class="headerlink" href="#webrtc-demux" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>WebRTC Demux</p></td>
@@ -137,11 +140,11 @@
 <td><p>WIP</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
 <li><p><a class="reference internal" href="#rtpdemuxer" id="id4">RtpDemuxer</a></p>
@@ -151,9 +154,9 @@
 </li>
 <li><p><a class="reference internal" href="#snippets" id="id6">Snippets</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>RFC 8843 - Negotiating Media Multiplexing Using the Session Description Protocol(SDP) 中说明了如何通过 SDP 来协商媒体流的多路复用与分解</p>
 <p>WebRTC 为多路分解一个 Transport 中的多路流，需要下面这些标识进行分解, 分解的详细规则稍后详述</p>
 <ul class="simple">
@@ -177,7 +180,7 @@
 </div>
 </section>
 <section id="rtpdemuxer">
-<h2><a class="toc-backref" href="#id4">RtpDemuxer</a><a class="headerlink" href="#rtpdemuxer" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">RtpDemuxer</a><a class="headerlink" href="#rtpdemuxer" title="Link to this heading"></a></h2>
 <p>当一个 RTP 收到时，RtpDemuxer 会依照如下原则进行处理</p>
 <ol class="arabic simple">
 <li><dl class="simple">
@@ -213,7 +216,7 @@ through an earlier call to AddSink, then forward the packet to that sink.</p></l
 (including through SSRC binding), match SSRC directly as needed, and use
 payload types only if all else fails.</p>
 <section id="main-methods">
-<h3><a class="toc-backref" href="#id5">main methods</a><a class="headerlink" href="#main-methods" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">main methods</a><a class="headerlink" href="#main-methods" title="Link to this heading"></a></h3>
 <p>根据 RtpDemuxerCriteria, SSRC 或者 rsid 来添加 RTP 包对应的回调 RtpPacketSinkInterface</p>
 <p>分解到的 sink 在下面的这些 map 中之一</p>
 <p>Map each sink by its component attributes to facilitate quick lookups.</p>
@@ -274,7 +277,7 @@ or RSID to SSRC bindings discovered when demuxing packets).</p>
 </section>
 </section>
 <section id="snippets">
-<h2><a class="toc-backref" href="#id6">Snippets</a><a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Snippets</a><a class="headerlink" href="#snippets" title="Link to this heading"></a></h2>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// In summary, the routing algorithm will always try to first match MID and RSID</span>
 <span class="c1">// (including through SSRC binding), match SSRC directly as needed, and use</span>
 <span class="c1">// payload types only if all else fails.</span>

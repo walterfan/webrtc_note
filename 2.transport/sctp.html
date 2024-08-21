@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SCTP 协议 &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> webrtc_tutorial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            webrtc_tutorial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,7 +57,6 @@
 <li class="toctree-l2"><a class="reference internal" href="turn.html">TURN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ice.html">Interactive Connectivity Establishment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quic.html">QUIC 协议</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hls.html">HTTP Live Streaming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtmp.html">RTMP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tls.html">TLS 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtls.html">DTLS 协议</a></li>
@@ -89,6 +95,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="srtp.html">SRTP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="whip.html">WHIP 协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bfcp.html">BFCP 协议</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtp.html">WebRTC RTP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rtcp.html">WebRTC RTCP Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webrtc_data_channel.html">WebRTC Data Channel</a></li>
@@ -119,9 +126,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">2. WebRTC 传输</a> &raquo;</li>
-      <li>SCTP 协议</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">2. WebRTC 传输</a></li>
+      <li class="breadcrumb-item active">SCTP 协议</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/2.transport/sctp.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -132,12 +139,8 @@
            <div itemprop="articleBody">
              
   <section id="sctp">
-<h1>SCTP 协议<a class="headerlink" href="#sctp" title="Permalink to this headline">¶</a></h1>
+<h1>SCTP 协议<a class="headerlink" href="#sctp" title="Link to this heading"></a></h1>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 32%" />
-<col style="width: 68%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Abstract</strong></p></td>
 <td><p>SCTP protocol</p></td>
@@ -149,11 +152,11 @@
 <td><p>WIP as draft</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2023-08-07</p></td>
+<td><p>2024-08-21</p></td>
 </tr>
 </tbody>
 </table>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#sctp-overview" id="id7">SCTP Overview</a></p></li>
 <li><p><a class="reference internal" href="#id3" id="id8">术语</a></p>
@@ -206,9 +209,9 @@
 <li><p><a class="reference internal" href="#example" id="id40">Example</a></p></li>
 <li><p><a class="reference internal" href="#reference" id="id41">Reference</a></p></li>
 </ul>
-</div>
+</nav>
 <section id="sctp-overview">
-<h2><a class="toc-backref" href="#id7">SCTP Overview</a><a class="headerlink" href="#sctp-overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">SCTP Overview</a><a class="headerlink" href="#sctp-overview" title="Link to this heading"></a></h2>
 <p>Data Channel 背后使用的协议是 SCTP</p>
 <p>数据通信通过 TCP/TLS 就足够了， 为什么还要 SCTP, 可能是因为 TCP 是面向流的，始终有序和可靠的传输，而我们还想要一种面向消息的，并且可以控制优先级和可靠性的连接， 乱序或者有点丢失也能接受。</p>
 <p>SCTP 是基于 DTLS 之上的， 面向消息的， 支持多流，优先级及可靠性可控的连接协议。</p>
@@ -240,7 +243,7 @@
 </ol>
 </section>
 <section id="id3">
-<h2><a class="toc-backref" href="#id8">术语</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">术语</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>Active destination transport address: A transport address on a peer endpoint that a transmitting endpoint considers available for receiving user messages</p></li>
 <li><p>Bundling: An optional multiplexing operation, whereby more than one user message may be carried in the same SCTP packet. Each user message occupies its own DATA chunk.</p></li>
@@ -269,41 +272,41 @@
 <li><p>Verification Tag: A 32-bit unsigned integer that is randomly generated. The Verification Tag provides a key that allows a receiver to verify that the SCTP packet belongs to the current association</p></li>
 </ul>
 <section id="sctp-association">
-<h3><a class="toc-backref" href="#id9">SCTP Association</a><a class="headerlink" href="#sctp-association" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">SCTP Association</a><a class="headerlink" href="#sctp-association" title="Link to this heading"></a></h3>
 <p>SCTP 关联是指 SCTP 端点之间的连接</p>
 <p>An SCTP association is uniquely identified by the transport addresses used by the endpoints in the association.</p>
 <p>An SCTP association can be represented as a pair of SCTP endpoints, for example, assoc = { [IPv4Addr : PORT1], [IPv4Addr1, IPv4Addr2: PORT2]}.</p>
 <p>Only one association can be established between any two SCTP endpoints.</p>
 </section>
 <section id="sctp-endpoint">
-<h3><a class="toc-backref" href="#id10">SCTP Endpoint</a><a class="headerlink" href="#sctp-endpoint" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">SCTP Endpoint</a><a class="headerlink" href="#sctp-endpoint" title="Link to this heading"></a></h3>
 <p>is a sender or receiver of SCTP packets. An SCTP endpoint may have one or more IP address but it always has one and only one SCTP port number. An SCTP endpoint can be represented as a list of SCTP transport addresses with the same port, for example, endpoint = [IPv6Addr, IPv6Addr: PORT].</p>
 <p>An SCTP endpoint may have multiple associations.</p>
 </section>
 <section id="sctp-path">
-<h3><a class="toc-backref" href="#id11">SCTP Path</a><a class="headerlink" href="#sctp-path" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">SCTP Path</a><a class="headerlink" href="#sctp-path" title="Link to this heading"></a></h3>
 <p>is the route taken by the SCTP packets sent by one SCTP endpoint to a specific destination transport address or its peer SCTP endpoint. Sending to different destination transport addresses does not necessarily guarantee separate routes.</p>
 </section>
 <section id="sctp-primary-path">
-<h3><a class="toc-backref" href="#id12">SCTP Primary Path</a><a class="headerlink" href="#sctp-primary-path" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">SCTP Primary Path</a><a class="headerlink" href="#sctp-primary-path" title="Link to this heading"></a></h3>
 <p>is the default destination source address, the IPv4 or IPv6 address of the association initiator. For retransmissions however, another active path may be selected, if one is available.</p>
 </section>
 <section id="sctp-stream">
-<h3><a class="toc-backref" href="#id13">SCTP Stream</a><a class="headerlink" href="#sctp-stream" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">SCTP Stream</a><a class="headerlink" href="#sctp-stream" title="Link to this heading"></a></h3>
 <p>is a unidirectional logical channel established between two associated SCTP endpoints. SCTP distinguishes different streams of messages within one SCTP association. SCTP makes no correlation between an inbound and outbound stream.</p>
 </section>
 <section id="sctp-transport-address">
-<h3><a class="toc-backref" href="#id14">SCTP Transport Address</a><a class="headerlink" href="#sctp-transport-address" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">SCTP Transport Address</a><a class="headerlink" href="#sctp-transport-address" title="Link to this heading"></a></h3>
 <p>is the combination of an SCTP port and an IP address. For the current release, the IP address portion of an SCTP Transport Address must be a routable, unicast IPv4 or IPv6 address.</p>
 <p>An SCTP transport address binds to a single SCTP endpoint.</p>
 </section>
 </section>
 <section id="id4">
-<h2><a class="toc-backref" href="#id15">基于消息的多流协议</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">基于消息的多流协议</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>SCTP applications submit data for transmission in messages (groups of bytes) to the SCTP transport layer. SCTP places messages and control information into separate chunks (data chunks and control chunks), each identified by a chunk header.</p>
 <p>The protocol can fragment a message into multiple data chunks, but each data chunk contains data from only one user message. SCTP bundles the chunks into SCTP packets. The SCTP packet, which is submitted to the Internet Protocol, consists of a packet header, SCTP control chunks (when necessary), followed by SCTP data chunks (when available).</p>
 <section id="sctp-flow">
-<h3><a class="toc-backref" href="#id16">SCTP Flow</a><a class="headerlink" href="#sctp-flow" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">SCTP Flow</a><a class="headerlink" href="#sctp-flow" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">participant</span> <span class="n">Client</span> <span class="k">as</span> <span class="n">c</span>
 <span class="n">participant</span> <span class="n">Server</span> <span class="k">as</span> <span class="n">s</span>
 
@@ -317,7 +320,7 @@
 </div>
 </section>
 <section id="sctp-packet-format">
-<h3><a class="toc-backref" href="#id17">SCTP packet format</a><a class="headerlink" href="#sctp-packet-format" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">SCTP packet format</a><a class="headerlink" href="#sctp-packet-format" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -333,7 +336,7 @@
 </div>
 </section>
 <section id="sctp-common-header-format">
-<h3><a class="toc-backref" href="#id18">SCTP Common Header Format</a><a class="headerlink" href="#sctp-common-header-format" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">SCTP Common Header Format</a><a class="headerlink" href="#sctp-common-header-format" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -347,7 +350,7 @@
 </div>
 </section>
 <section id="sctp-chunk-fields">
-<h3><a class="toc-backref" href="#id19">SCTP Chunk fields</a><a class="headerlink" href="#sctp-chunk-fields" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">SCTP Chunk fields</a><a class="headerlink" href="#sctp-chunk-fields" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -422,9 +425,9 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="sctp-chunk-data-definition">
-<h3><a class="toc-backref" href="#id20">SCTP Chunk data definition</a><a class="headerlink" href="#sctp-chunk-data-definition" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">SCTP Chunk data definition</a><a class="headerlink" href="#sctp-chunk-data-definition" title="Link to this heading"></a></h3>
 <section id="payload-data-data-0">
-<h4><a class="toc-backref" href="#id21">1. Payload Data (DATA) (0)</a><a class="headerlink" href="#payload-data-data-0" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21" role="doc-backlink">1. Payload Data (DATA) (0)</a><a class="headerlink" href="#payload-data-data-0" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -444,7 +447,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="initiation-init-1">
-<h4><a class="toc-backref" href="#id22">2.  Initiation (INIT) (1)</a><a class="headerlink" href="#initiation-init-1" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id22" role="doc-backlink">2.  Initiation (INIT) (1)</a><a class="headerlink" href="#initiation-init-1" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -466,7 +469,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="initiation-acknowledgement-init-ack-2">
-<h4><a class="toc-backref" href="#id23">3.  Initiation Acknowledgement (INIT ACK) (2)</a><a class="headerlink" href="#initiation-acknowledgement-init-ack-2" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id23" role="doc-backlink">3.  Initiation Acknowledgement (INIT ACK) (2)</a><a class="headerlink" href="#initiation-acknowledgement-init-ack-2" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -488,7 +491,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="selective-acknowledgement-sack-3">
-<h4><a class="toc-backref" href="#id24">4.  Selective Acknowledgement (SACK) (3)</a><a class="headerlink" href="#selective-acknowledgement-sack-3" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id24" role="doc-backlink">4.  Selective Acknowledgement (SACK) (3)</a><a class="headerlink" href="#selective-acknowledgement-sack-3" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -520,7 +523,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="heartbeat-request-heartbeat-4">
-<h4><a class="toc-backref" href="#id25">5.  Heartbeat Request (HEARTBEAT) (4)</a><a class="headerlink" href="#heartbeat-request-heartbeat-4" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id25" role="doc-backlink">5.  Heartbeat Request (HEARTBEAT) (4)</a><a class="headerlink" href="#heartbeat-request-heartbeat-4" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -534,7 +537,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="heartbeat-acknowledgement-heartbeat-ack-5">
-<h4><a class="toc-backref" href="#id26">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a><a class="headerlink" href="#heartbeat-acknowledgement-heartbeat-ack-5" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id26" role="doc-backlink">6.  Heartbeat Acknowledgement (HEARTBEAT ACK) (5)</a><a class="headerlink" href="#heartbeat-acknowledgement-heartbeat-ack-5" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -548,7 +551,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="abort-association-abort-6">
-<h4><a class="toc-backref" href="#id27">7.  Abort Association (ABORT) (6)</a><a class="headerlink" href="#abort-association-abort-6" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id27" role="doc-backlink">7.  Abort Association (ABORT) (6)</a><a class="headerlink" href="#abort-association-abort-6" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -562,7 +565,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="shutdown-association-shutdown-7">
-<h4><a class="toc-backref" href="#id28">8.  Shutdown Association (SHUTDOWN) (7)</a><a class="headerlink" href="#shutdown-association-shutdown-7" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id28" role="doc-backlink">8.  Shutdown Association (SHUTDOWN) (7)</a><a class="headerlink" href="#shutdown-association-shutdown-7" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -574,7 +577,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="shutdown-acknowledgement-shutdown-ack-8">
-<h4><a class="toc-backref" href="#id29">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a><a class="headerlink" href="#shutdown-acknowledgement-shutdown-ack-8" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id29" role="doc-backlink">9.  Shutdown Acknowledgement (SHUTDOWN ACK) (8)</a><a class="headerlink" href="#shutdown-acknowledgement-shutdown-ack-8" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -584,7 +587,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="operation-error-error-9">
-<h4><a class="toc-backref" href="#id30">10.  Operation Error (ERROR) (9)</a><a class="headerlink" href="#operation-error-error-9" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id30" role="doc-backlink">10.  Operation Error (ERROR) (9)</a><a class="headerlink" href="#operation-error-error-9" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -647,7 +650,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="cookie-echo-cookie-echo-10">
-<h4><a class="toc-backref" href="#id31">11.   Cookie Echo (COOKIE ECHO) (10)</a><a class="headerlink" href="#cookie-echo-cookie-echo-10" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id31" role="doc-backlink">11.   Cookie Echo (COOKIE ECHO) (10)</a><a class="headerlink" href="#cookie-echo-cookie-echo-10" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -660,7 +663,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="cookie-acknowledgement-cookie-ack-11">
-<h4><a class="toc-backref" href="#id32">12.   Cookie Acknowledgement (COOKIE ACK) (11)</a><a class="headerlink" href="#cookie-acknowledgement-cookie-ack-11" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id32" role="doc-backlink">12.   Cookie Acknowledgement (COOKIE ACK) (11)</a><a class="headerlink" href="#cookie-acknowledgement-cookie-ack-11" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -670,7 +673,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="shutdown-complete-shutdown-complete-14">
-<h4><a class="toc-backref" href="#id33">13.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a><a class="headerlink" href="#shutdown-complete-shutdown-complete-14" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id33" role="doc-backlink">13.   Shutdown Complete (SHUTDOWN COMPLETE) (14)</a><a class="headerlink" href="#shutdown-complete-shutdown-complete-14" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="mi">0</span>                   <span class="mi">1</span>                   <span class="mi">2</span>                   <span class="mi">3</span>
  <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span>
 <span class="o">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span>
@@ -681,7 +684,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </section>
 </section>
 <section id="sctp-association-state-diagram">
-<h3><a class="toc-backref" href="#id34">SCTP Association State Diagram</a><a class="headerlink" href="#sctp-association-state-diagram" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34" role="doc-backlink">SCTP Association State Diagram</a><a class="headerlink" href="#sctp-association-state-diagram" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                   <span class="o">-----</span>          <span class="o">--------</span> <span class="p">(</span><span class="kn">from</span> <span class="nn">any</span> <span class="n">state</span><span class="p">)</span>
                  <span class="o">/</span>       \      <span class="o">/</span>  <span class="n">rcv</span> <span class="n">ABORT</span>      <span class="p">[</span><span class="n">ABORT</span><span class="p">]</span>
 <span class="n">rcv</span> <span class="n">INIT</span>        <span class="o">|</span>         <span class="o">|</span>    <span class="o">|</span>   <span class="o">----------</span>  <span class="ow">or</span> <span class="o">----------</span>
@@ -777,7 +780,7 @@ if the processing endpoint does not recognize the Chunk Type.</p>
 </div>
 </section>
 <section id="sctp-over-dtls">
-<h3><a class="toc-backref" href="#id35">SCTP over DTLS</a><a class="headerlink" href="#sctp-over-dtls" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">SCTP over DTLS</a><a class="headerlink" href="#sctp-over-dtls" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>         <span class="o">+----------+</span>
          <span class="o">|</span>   <span class="n">SCTP</span>   <span class="o">|</span>
          <span class="o">+----------+</span>
@@ -819,9 +822,9 @@ slow-start threshold to their initial values.</p>
 </section>
 </section>
 <section id="why">
-<h2><a class="toc-backref" href="#id36">Why</a><a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id36" role="doc-backlink">Why</a><a class="headerlink" href="#why" title="Link to this heading"></a></h2>
 <section id="id5">
-<h3><a class="toc-backref" href="#id37">SCTP over DTLS</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37" role="doc-backlink">SCTP over DTLS</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <p>DTLS/SCTP supports:</p>
 <ul class="simple">
 <li><p>preservation of message boundaries.</p></li>
@@ -838,9 +841,9 @@ slow-start threshold to their initial values.</p>
 </section>
 </section>
 <section id="how">
-<h2><a class="toc-backref" href="#id38">How</a><a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id38" role="doc-backlink">How</a><a class="headerlink" href="#how" title="Link to this heading"></a></h2>
 <section id="id6">
-<h3><a class="toc-backref" href="#id39">SDP</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id39" role="doc-backlink">SDP</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">=</span><span class="n">application</span> <span class="mi">9</span> <span class="n">UDP</span><span class="o">/</span><span class="n">DTLS</span><span class="o">/</span><span class="n">SCTP</span> <span class="n">webrtc</span><span class="o">-</span><span class="n">datachannel</span>
 <span class="n">c</span><span class="o">=</span><span class="n">IN</span> <span class="n">IP4</span> <span class="mf">0.0.0.0</span>
 <span class="n">a</span><span class="o">=</span><span class="n">ice</span><span class="o">-</span><span class="n">ufrag</span><span class="p">:</span><span class="n">u8aT</span>
@@ -856,7 +859,7 @@ slow-start threshold to their initial values.</p>
 </section>
 </section>
 <section id="example">
-<h2><a class="toc-backref" href="#id40">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Link to this heading"></a></h2>
 <p>A simple example based on <a class="reference external" href="https://github.com/P1sec/pysctp">https://github.com/P1sec/pysctp</a></p>
 <ul class="simple">
 <li><p>server</p></li>
@@ -914,7 +917,7 @@ slow-start threshold to their initial values.</p>
 </div>
 </section>
 <section id="reference">
-<h2><a class="toc-backref" href="#id41">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id41" role="doc-backlink">Reference</a><a class="headerlink" href="#reference" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>RFC4960: Stream Control Transmission Protocol</p></li>
 <li><p>RFC6083: Datagram Transport Layer Security (DTLS) for Stream Control Transmission Protocol (SCTP)</p></li>
