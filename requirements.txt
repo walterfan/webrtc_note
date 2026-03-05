@@ -1,8 +1,7 @@
-Markdown==3.3.6
-MarkupSafe==2.0.1
-ujson==1.35
-sphinx-mdinclude
-Sphinx
-fabric
-sphinxcontrib-plantuml==0.24.1
-sphinx-rtd-theme
+Sphinx>=7.0
+sphinx-rtd-theme>=2.0
+sphinxcontrib-plantuml>=0.30
+sphinxcontrib-mermaid>=1.0
+sphinx-copybutton>=0.5
+fabric>=3.0
+markdown

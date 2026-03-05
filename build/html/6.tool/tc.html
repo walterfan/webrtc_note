@@ -1,28 +1,30 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Linux Traffic Control &mdash; webrtc_tutorial 1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e536ea0c" />
+  <title>Linux Traffic Control &mdash; WebRTC 学习笔记</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=a8ba8fac" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=29a6c3e3"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8ba3eb92"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=cb5fb026"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
     <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="iPerf" href="iperf.html" />
     <link rel="prev" title="VNC vs. RDP" href="vnc.html" /> 
 </head>
@@ -36,101 +38,1156 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            webrtc_tutorial
+            WebRTC 学习笔记
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../4.code/index.html">4. WebRTC 源码分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">5. WebRTC 实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0.tutorial/index.html">0. WebRTC 简明教程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/overview.html">WebRTC Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/overview.html#target-readers">Target readers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/overview.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/overview.html#problems-to-be-solved">Problems to be solved</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/overview.html#highlight">Highlight</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/learning_path.html">WebRTC Learning Path</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/learning_path.html#learn-webrtc-in-one-month">Learn WebRTC in one month</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/learning_path.html#week-1">Week 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/learning_path.html#week-2">Week 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/learning_path.html#week-3">Week 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/learning_path.html#week-4">Week 4</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/week1.html">WebRTC 简明教程第一周</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week1.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week1.html#content">Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/week2.html">WebRTC 简明教程第二周</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week2.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week2.html#content">Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/week3.html">WebRTC 简明教程第三周</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week3.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week3.html#content">Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/week4.html">WebRTC 简明教程第四周</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week4.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/week4.html#content">Content</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../0.tutorial/appendix.html">WebRTC 简明教程附录</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/appendix.html#id4">WebRTC 开源项目</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/appendix.html#id5">WebRTC 常用工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../0.tutorial/appendix.html#id6">WebRTC 相关技术</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../1.basic/index.html">1. WebRTC 基础</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/overview.html">WebRTC 概论</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/overview.html#id4">WebRTC 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/overview.html#id8">WebRTC 应用模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/overview.html#id9">WebRTC 应用的核心功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/overview.html#id10">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/web_browser.html">Web Browser for RTC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/web_browser.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/web_browser.html#web-browser-rtc-functionality">Web browser RTC functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/web_browser.html#id5">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_spec.html">WebRTC 标准，协议和规范</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_spec.html#id4">相关的标准和协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_spec.html#id5">相关的扩展协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_spec.html#id6">新标准和规范</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_api.html">WebRTC API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_api.html#id4">概论</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_api.html#id5">典型流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_api.html#id6">示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_api.html#id7">代码中的主要流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_api.html#id8">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_elements.html">WebRTC Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_elements.html#audio-element">Audio Element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_elements.html#video-element">Video Element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_elements.html#canvas">Canvas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_elements.html#web-worker">Web Worker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_entities.html">WebRTC Entities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_entities.html#id5">概论</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_entities.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_flow.html">WebRTC 呼叫流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id4">概论</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id5">WebRTC 的信令，媒体以及数据通道</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id6">会话创建过程(JSEP) 与两个最重要的状态机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id7">1. 我们要写一个上面提到的信令服务器, 同时也作为一个网页服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id8">2. 写一个支持视频和文本聊天的网页</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#peerconnection-sdp-ice">3. 编写视频聊天的客户端代码，主要就是创建 PeerConnection, 交换 SDP, 通过ICE检查连通性后进行通信</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id9">4. 启动并运行视频聊天程序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_flow.html#id10">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/media_capture.html">WebRTC API 之 Media Capture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_capture.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_capture.html#enumeratedevices">enumerateDevices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_capture.html#gum-getusermedia">GUM-getUserMedia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_capture.html#faq">FAQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_capture.html#id6">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/screen_capture.html">WebRTC API 之 Screen Capture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/screen_capture.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/screen_capture.html#id5">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/screen_capture.html#id6">接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/screen_capture.html#getdisplaymedia">getDisplayMedia 实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/screen_capture.html#id7">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/media_record.html">WebRTC API 之 Media Record</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_record.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_record.html#html">第一步：创建一个供演示的 HTML  文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_record.html#click">第二步：处理这四个按键的的 click 事件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/media_record.html#id4">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_extension.html">WebRTC extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_extension.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_extension.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_capacity.html">WebRTC 客户端能力</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_capacity.html#id4">概论</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_capacity.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_signal.html">WebRTC 的信令</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#id4">信令协议的传输和格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#id5">WebIDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#id6">SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#id7">SDP 扩展</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#signal-server">Signal Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_signal.html#id10">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_sdp.html">WebRTC SDP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#overview">overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#an-offer-answer-model-with-the-sdp">An Offer/Answer Model with the SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#rtp-profile-for-audio-and-video-conferences-with-minimal-control">RTP Profile for Audio and Video Conferences with Minimal Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#sdp-for-ice-and-dtls">SDP for ICE and DTLS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#sdp-extension">SDP extension</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#sdp-plan">SDP 的两个 Plan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#negotiating-media-multiplexing-using-sdp">Negotiating Media Multiplexing Using SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#sdp-grouping-framework">SDP Grouping Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#source-specific-media-attributes-in-sdp">Source-Specific Media Attributes in SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#sdp-examples">SDP examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_sdp.html#id6">参见资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/webrtc_stats.html">WebRTC stats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#transport-layer">传输层 transport layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#payload-layer">荷载层 payload layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#id4">重要的是搞清楚状况</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#webrtc-statistics-api">WebRTC statistics API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#id5">全部的度量指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#id6">度量驱动改进</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/webrtc_stats.html#id7">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/video_chat.html">视频聊天实例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/video_chat.html#id5">总体设计</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/video_chat.html#id6">快速实现</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../1.basic/white_board.html">White board by WebRTC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/white_board.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/white_board.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../1.basic/white_board.html#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../2.transport/index.html">2. WebRTC 传输</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/overview.html">WebRTC 传输概论</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/overview.html#id4">概论</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/overview.html#id5">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/overview.html#id6">传输控制</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/websocket.html">WebSocket</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/websocket.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/websocket.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/stun.html">STUN</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/stun.html#ovewview">Ovewview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/stun.html#stun-specs">STUN specs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/stun.html#stun-message-structure">STUN Message structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/turn.html">TURN</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#terminology">Terminology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#basic-flow">Basic flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#allocation">Allocation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#send-mechanism">Send Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#channel">Channel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#id4">TURN specs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#stun-specs">STUN specs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#supported-ice-and-related-specs">Supported ICE and related specs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#client-to-turn-server-protocols">client-to-TURN-server protocols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/turn.html#supported-relay-protocols">Supported relay protocols</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/ice.html">Interactive Connectivity Establishment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#ovewview">Ovewview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#nat">NAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#ice-procedure">ICE procedure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#ice-candidae">ICE candidae</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#tcp-candidates-with-interactive-connectivity-establishment-ice">TCP Candidates with Interactive Connectivity Establishment (ICE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#framing-rtp-and-rtcp-packets-over-tcp">Framing RTP and RTCP Packets over TCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/ice.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/quic.html">QUIC 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/quic.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/quic.html#id5">协议文档结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/quic.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/rtmp.html">RTMP 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtmp.html#rtmp-overview">RTMP Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtmp.html#id4">RTMP 连接三部走</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtmp.html#id5">RTMP 包结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtmp.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/tls.html">TLS 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/tls.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/tls.html#protocol">Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/tls.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/dtls.html">DTLS 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#id4">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#packet-structure">Packet structure 包结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#id5">基本流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/dtls.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/sctp.html">SCTP 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#sctp-overview">SCTP Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#id4">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#id5">基于消息的多流协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#why">Why</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#how">How</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/sctp.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/srtp.html">SRTP 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/srtp.html#id4">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/srtp.html#why">Why</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/srtp.html#how">How</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/srtp.html#id7">SRTP 的信令协商</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/srtp.html#libsrtp">libsrtp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/srtp.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/whip.html">WHIP 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/whip.html#what">What</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/whip.html#how">How</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/whip.html#why">Why</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/whip.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/bfcp.html">BFCP 协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/bfcp.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/bfcp.html#packet-format">Packet Format</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/rtp.html">WebRTC RTP Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp.html#rtp">RTP 解决的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp.html#id4">RTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp.html#rtcp">RTCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp.html#id8">1. RTP 协议的度量要点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp.html#id9">4. 实例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/rtcp.html">WebRTC RTCP Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp_sr.html">RTCP Sender Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp_rr.html">RTCP Receiver Report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp_sdes.html">RTCP SDES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp_bye.html">RTCP Bye</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp_app.html">RTCP App</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp_xr.html">RTCP XR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtcp.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/webrtc_data_channel.html">WebRTC Data Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_data_channel.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_data_channel.html#sctp">SCTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_data_channel.html#data-channel-establishment-protocol-dcep">Data Channel Establishment Protocol (DCEP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_data_channel.html#id5">SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_data_channel.html#id7">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/rtp_header_extension.html">WebRTC RTP Header extension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp_header_extension.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp_header_extension.html#absolute-send-time">Absolute Send Time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp_header_extension.html#absolute-capture-time">Absolute Capture Time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp_header_extension.html#transport-wide-congestion-control">Transport-Wide Congestion Control</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/rtp_keepalive.html">RTP Keepalive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/rtp_keepalive.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/webrtc_multiplex.html">WebRTC 传输的多路复用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_multiplex.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_multiplex.html#stun-dtls-rtp">1. 区分 STUN, DTLS 和 RTP 包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_multiplex.html#rtp-rtcp">2. 区分 RTP 和 RTCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_multiplex.html#id5">3. 区分不同的媒体流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_multiplex.html#id6">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/webrtc_ndi.html">Network Device Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_ndi.html#what">What</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_ndi.html#how">How</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_ndi.html#why">Why</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_ndi.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../2.transport/webrtc_bundle.html">WebRTC Bundle</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#what">What</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#how">How</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#why">Why</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#stun-dtls-rtp">1. 区分 STUN, DTLS 和 RTP 包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#rtp-rtcp">2. 区分 RTP 和 RTCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#id5">3. 区分不同的媒体流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#rtcp-rtp-media-session-m-line">4. 关联 RTCP 与 RTP 数据包到相应的 media session(m-line)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2.transport/webrtc_bundle.html#id6">参考资料</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../3.media/index.html">3. WebRTC 媒体</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/overview.html">WebRTC 媒体概论</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/overview.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/overview.html#protocols">Protocols</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/streaming.html">Streaming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/streaming.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/hls.html">HTTP Live Streaming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#hls">HLS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#mpeg-ts">mpeg-ts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#protocols-enhancement">Protocols Enhancement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#implementation">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#performance">Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#mp4">mp4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/hls.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_audio.html">WebRTC 音频</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_basic.html">Audio Basic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_process.html">Audio Process pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_level.html">Audio Level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_api.html">Web Audio API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_qos.html">Audio QoS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_aec.html">Acoustic Echo Canceller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_vad.html">Voice Activity Detector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_agc.html">Automatic Gain Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_ans.html">Automatic Noise Suppression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_jitter_buffer.html">Jitter Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_worklet.html">Audio worklet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_quality.html">Audio Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_analysis.html">Audio Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/audio_opus.html">Opus Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_audio.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_audio.html#plc">PLC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_audio.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_video.html">WebRTC 视频</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_basic.html">Video Basic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_codec.html">视频编码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_adaptation.html">video adaptation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_quality.html">video quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_pipeline.html">Video Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_process.html">Video Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_lip_sync.html">Video Lip Sync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/yuv.html">YUV 图像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_codec_h264.html">H.264 编码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/video_codec_av1.html">视频编码 AV1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_video.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_video.html#terms">Terms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_video.html#video-file-format">Video File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_video.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_sharing.html">WebRTC Sharing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_sharing.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_sharing.html#id5">示例1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_sharing.html#id7">示例2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_sharing.html#wireshark">Wireshark 抓包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_qos.html">WebRTC QoS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_cc.html">WebRTC 拥塞控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_fec.html">WebRTC FEC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_rtx.html">WebRTC RTX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_metrics.html">WebRTC Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_e2e_delay.html">WebRTC E2E Delay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#id4">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#id5">流畅与清晰的平衡</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#glossary">Glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#id9">测试工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#id10">实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#faq">FAQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_qos.html#id15">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_red.html">WebRTC RED</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_red.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_red.html#id5">SDP 扩展</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_red.html#packet">Packet 数据包格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_red.html#redundant-distance">Redundant distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_red.html#metrics">Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_red.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_temporal_scalability.html">Temporal scalability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_temporal_scalability.html#id4">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_temporal_scalability.html#id5">参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_feedback.html">WebRTC Feedback</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_feedback.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_feedback.html#id5">参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/insertable_stream.html">Insertable Stream</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/insertable_stream.html#id4">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/insertable_stream.html#stream-api">Stream API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/insertable_stream.html#insertable-streams-api">可插入流 Insertable Streams API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/insertable_stream.html#id8">案例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/insertable_stream.html#id9">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/web_codec.html">Web Codecs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_codec.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_codec.html#interface">Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_codec.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_codec.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/web_transport.html">Web Transport</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_transport.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_transport.html#id4">核心特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_transport.html#websocket">与 WebSocket 对比</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_transport.html#webrtc">在 WebRTC 中的应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_transport.html#id7">服务端实现</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/web_transport.html#id8">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_svc.html">WebRTC SVC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_svc.html#id4">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_svc.html#terminology">Terminology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_svc.html#id5">示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_svc.html#id6">参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../3.media/webrtc_simulcast.html">WebRTC Simulcast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#id4">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#simulcast">什么叫 Simulcast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#sdp-grouping-framework">SDP grouping Framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#source-specific-media-attributes-in-sdp">Source-Specific Media Attributes in SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#negotiating-media-multiplexing-using-sdp">Negotiating Media Multiplexing Using SDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#using-simulcast-in-sdp-and-rtp-sessions">Using Simulcast in SDP and RTP Sessions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#using-ssrc-with-webrtc-simulcast">Using SSRC with WebRTC Simulcast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#webrtc-library-simulcast">WebRTC library 中对 simulcast 的描述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3.media/webrtc_simulcast.html#id6">参考资料</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../4.code/index.html">4. WebRTC 源码分析</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/overview.html">WebRTC 源码概览</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#domain-object">Domain object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#modules">Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#import-interfaces">Import Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#treasure-in-code">Treasure in code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#contribution">Contribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overview.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/build_tools.html">WebRTC 构建工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/build_tools.html#id3">构建工具</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/build_browser.html">WebRTC 构建浏览器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/build_browser.html#id3">构建工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/build_browser.html#chrome">构建 Chrome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/build_browser.html#build-chrome-on-mac">Build Chrome on mac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/build_browser.html#firefox">构建 Firefox</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_build.html">WebRTC 源码构建</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_build.html#source-code">Source code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_build.html#id3">配置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_build.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_test.html">WebRTC test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#chrome-tools">chrome tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#chrome-testing">Chrome testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#firefox-testing">Firefox testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#unit-testing">Unit testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#test-scenarios">Test scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_test.html#id4">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_issues.html">WebRTC issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_issues.html#faq">FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_demux.html">WebRTC Demux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_demux.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_demux.html#rtpdemuxer">RtpDemuxer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_demux.html#snippets">Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_thread.html">WebRTC Thread Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_thread.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_thread.html#id4">线程模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_thread.html#main-classes">main classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_thread.html#faq">FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_call.html">WebRTC Call</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#call">Call 类的职责</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#peerconnection">与 PeerConnection 的关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#audiosendstream">AudioSendStream 管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#videosendstream">VideoSendStream 管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#id4">带宽估计与比特率分配</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_call.html#id5">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_gcc.html">WebRTC GCC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#libwebrtc">构建 libwebrtc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#id4">拥塞控制相关代码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#id5">主要方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#id6">主要配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#id7">主要流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_gcc.html#related-classes">Related Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html">WebRTC Congestion Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#id4">核心接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#config-classes">config classes 配置类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#controller-classes">Controller classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#estimator-classes">Estimator classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#unit-tests">unit tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_gcc.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_bwe_probe.html">WebRTC Bandwidth Probe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_probe.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_probe.html#flow">Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_probe.html#structures">structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_bwe_remb.html">WebRTC REMB Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_remb.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_remb.html#controller">Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_remb.html#algorigthm">Algorigthm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_remb.html#class-and-snippets">Class and Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_bwe_loss.html">WebRTC Loss based Bandwidth Estimation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_loss.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_bwe_loss.html#classes">classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_pacer.html">WebRTC Pacer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pacer.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pacer.html#types">Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_dtls.html">WebRTC DTLS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_dtls.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_dtls.html#api-of-openssl-boringssl">API of openssl/boringssl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_dtls.html#classes">classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_dtls.html#snippets">Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_sctp.html">WebRTC SCTP library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sctp.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sctp.html#id4">相关代码</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_rtp_rtcp_module.html">WebRTC RTP RTCP module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtp_rtcp_module.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtp_rtcp_module.html#webrtc">WebRTC 中计算的汇报间隔</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtp_rtcp_module.html#webrtc-rtp">WebRTC中支持的 RTP 扩展头</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtp_rtcp_module.html#rtcp">RTCP 包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_rtp_sender.html">WebRTC RTP Sender</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtp_sender.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtp_sender.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html">WebRTC SDP Offer Answer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#sdpofferanswerhandler">SdpOfferAnswerHandler 类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#createoffer">CreateOffer 流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#createanswer">CreateAnswer 流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#transceiver">Transceiver 管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#setlocaldescription-setremotedescription">SetLocalDescription / SetRemoteDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_sdp_offer_answer.html#id4">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_packet_buffer.html">WebRTC Packet Buffer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_packet_buffer.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_packet_buffer.html#video-jitter-buffer">Video jitter buffer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_rtx_code.html">WebRTC RTX Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtx_code.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtx_code.html#rtx-config">RTX Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtx_code.html#rtx">RTX 包的接收与处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtx_code.html#relative-classes">Relative Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_rtx_code.html#relative-log">Relative log</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_nack_code.html">WebRTC NACK code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_nack_code.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_nack_code.html#snippets">snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/overuse_frame_decoder.html">WebRTC OveruseFrameDetector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overuse_frame_decoder.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overuse_frame_decoder.html#id4">关键指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/overuse_frame_decoder.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/remote_bitrate_estimator.html">Remote Bitrate Estimator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/remote_bitrate_estimator.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/remote_bitrate_estimator.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/remote_bitrate_estimator.html#code">Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/remote_bitrate_estimator.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_pc_channel.html">WebRTC PeerConnection Channel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pc_channel.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_pc_example.html">WebRTC PeerConnection Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pc_example.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pc_example.html#peerconnection-server">PeerConnection Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pc_example.html#peerconnection-client">PeerConnection Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_pc_example.html#faq">FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_video_flow.html">WebRTC Video Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_video_flow.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_video_flow.html#videosendstream">VideoSendStream 发送流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_video_flow.html#videoreceivestream">VideoReceiveStream 接收流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_video_flow.html#id6">码率自适应</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_video_flow.html#simulcast-svc">Simulcast 与 SVC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_video_flow.html#id7">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/webrtc_config.html">WebRTC Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/webrtc_config.html#rtp-config">RTP Config</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/janus_code_1.html">Janus Code analysis 1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/janus_code_1.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/janus_code_1.html#id4">架构概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/janus_code_1.html#janus-c">核心模块 (janus.c)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/janus_code_1.html#id6">插件系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/janus_code_1.html#id7">ICE 处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/janus_code_1.html#id8">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/aiortc.html">Aiortc library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/aiortc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/aiortc.html#signal">Signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/aiortc.html#datachannel">datachannel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/aiortc.html#rtp-packet">RTP packet 处理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/libopus.html">libopus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopus.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopus.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopus.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../4.code/libopenh264.html">libopenh264</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopenh264.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopenh264.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopenh264.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../4.code/libopenh264.html#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../5.practice/index.html">5. WebRTC 实践</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/overview.html">WebRTC 应用实践要点</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/overview.html#id2">WebRTC 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/overview.html#id3">服务器的主要功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/overview.html#id4">服务器中需要维护领域对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/overview.html#id5">WebRTC 的开源实现</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/faq.html">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/faq.html#how-to-disable-srtp">How to disable SRTP?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/wasm.html">WebAssembly</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/wasm.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/wasm.html#id4">核心原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/wasm.html#id5">工具链</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/wasm.html#rd-party-open-source-components">3rd party /open source components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/wasm.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/coturn.html">coturn</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/coturn.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/apprtc.html">AppRTC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/apprtc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/apprtc.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/aiortc.html">aiortc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/aiortc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/aiortc.html#quick-start">Quick start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/aiortc.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/recordrtc.html">Record RTC Tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/recordrtc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/recordrtc.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/sfu.html">SFU</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/sfu.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/sfu.html#id3">SFU 所需要的相关库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/sfu.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/sfu.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/sfu.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/owt.html">Open WebRTC Toolkit Media Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/owt.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/owt.html#id4">架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/owt.html#mcu-sfu">MCU 与 SFU 模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/owt.html#intel">Intel 硬件加速</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/owt.html#id5">安装部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/owt.html#id6">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/janus.html">Janus Gateway</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus.html#installation-and-startup">Installation and startup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus.html#configuration">configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus.html#usage-and-testing">usage and testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus.html#code-structure">code structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus.html#dependencies">dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/janus_plugins.html">Janus Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus_plugins.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus_plugins.html#echo-test">Echo test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus_plugins.html#video-room">Video Room</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus_plugins.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/janus_modules.html">Janus Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus_modules.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/janus_modules.html#id4">入口函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/mediasoup.html">MediaSoup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/mediasoup.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/mediasoup.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/mediasoup.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/pion.html">Pion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/pion.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/pion.html#build">Build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/pion.html#interceptor">Interceptor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/srs.html">SRS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/srs.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/srs.html#quick-start">Quick Start</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/video_quality.html">Video Quality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/video_quality.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/video_quality.html#tools">Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/audio_quality.html">Audio Quality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/audio_quality.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/remote_sharing.html">Remote Sharing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/remote_sharing.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/remote_sharing.html#id4">示例1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/remote_sharing.html#id6">示例2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/remote_sharing.html#wireshark">Wireshark 抓包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/remote_control.html">Remote Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/remote_control.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/remote_control.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../5.practice/webrtc_security.html">WebRTC Security</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/webrtc_security.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/webrtc_security.html#id4">遵循浏览器的安全模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/webrtc_security.html#webrtc">WebRTC 应用的安全</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/webrtc_security.html#id10">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../5.practice/webrtc_security.html#id11">参考资料</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">6. WebRTC 工具</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 常用工具</a></li>
-<li class="toctree-l2"><a class="reference internal" href="devtools.html">Devtools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="netcat.html">netcat</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scapy.html">scapy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sox.html">SoX</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ffmpeg.html">FFmpeg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gstreamer.html">GStreamer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openssl.html">OpenSSL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vnc.html">VNC vs. RDP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">WebRTC 常用工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#binutils">binutils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#linux-tools">Linux Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#python-tools">Python Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Devtools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="devtools.html#webrtc-internals">Webrtc internals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devtools.html#chome-devtools">Chome Devtools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devtools.html#rtp-log-analyzer">RTP Log Analyzer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devtools.html#video-replay">Video Replay</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netcat.html">netcat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="netcat.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netcat.html#udp-server-and-client">UDP server and client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netcat.html#samples">Samples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netcat.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scapy.html">scapy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scapy.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scapy.html#commands">Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scapy.html#id5">抓包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scapy.html#id6">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sox.html">SoX</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sox.html#id4">简介</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ffmpeg.html">FFmpeg</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html#id4">ffmpeg 是什么?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html#id5">组件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html#ffmpeg-flow">ffmpeg flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html#id8">用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html#faq">FAQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ffmpeg.html#id11">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html">GStreamer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer_dev.html">GStreamer Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer_webrtc.html">GStreamer WebRTC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#get-started">Get started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#id9">基本概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#id10">PIPELINE 示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#faq">FAQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="openssl.html">OpenSSL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="openssl.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="openssl.html#snippets">Snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="openssl.html#bio">BIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="openssl.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="vnc.html">VNC vs. RDP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="vnc.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vnc.html#tight-vnc-on-ubuntu">Tight VNC on Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vnc.html#novnc">novnc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vnc.html#reference">Reference</a></li>
+</ul>
+</li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Linux Traffic Control</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">简介</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tc">TC 中的基本概念</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#qdiscs">QDISCS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#classes">CLASSES</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#filters">FILTERS 过滤器</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#qevents">QEVENTS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#classless-qdiscs-qdiscs">CLASSLESS QDISCS 不可分类 QDISCS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">配置 CLASSLESS QDISCS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#classful-qdiscs-qdiscs">CLASSFUL QDISCS 可分类 QDISCS</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">TC 用法</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id6">命令</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id7">TC 命令实例</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#tc-tbf">tc-tbf</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id9">实例</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tc">TC 中的基本概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">TC 用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tc-tbf">tc-tbf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tc-netem">tc-netem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#netimpair">netimpair</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#netimpair">netimpair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">参考资料</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">参考资料</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iperf.html">iPerf</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="iperf.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iperf.html#id4">安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iperf.html#id5">用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iperf.html#id6">实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iperf.html#reference">Reference</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="iperf.html">iPerf</a></li>
-<li class="toctree-l2"><a class="reference internal" href="perf.html">Linux Performance tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tcpdump.html">tcpdump</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wireshark.html">wireshark</a></li>
-<li class="toctree-l2"><a class="reference internal" href="network_simulator.html">Network Simulator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="analytics.html">Data Analytics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a></li>
-<li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="selenium.html">selenium</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fuzzer.html">Fuzzer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kitty.html">Kitty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf.html">Linux Performance tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="perf.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perf.html#reference">Reference</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">7. WebRTC 关联技术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcpdump.html">tcpdump</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tcpdump.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tcpdump.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tcpdump.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wireshark.html">wireshark</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#tools">Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#capturing-rtp-streams">Capturing RTP streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#capturing-turn-rtp-streams">Capturing TURN RTP streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#text2cap">text2cap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#faq">FAQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wireshark.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="network_simulator.html">Network Simulator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id5">安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id6">测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id7">基本概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id8">示例程序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id9">基本框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="network_simulator.html#id10">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="analytics.html">Data Analytics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analytics.html#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cookbook.html">WebRTC 常用工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cookbook.html#binutils">binutils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cookbook.html#id4">如何阻塞端口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cookbook.html#id5">其他常用工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cookbook.html#id6">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="buildtools.html">Build Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="buildtools.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildtools.html#gn">gn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildtools.html#clang">clang</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buildtools.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmake_quick_guide.html">CMake Quick Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cmake_quick_guide.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_quick_guide.html#id4">基本语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_quick_guide.html#cmakelists-txt">CMakeLists.txt 结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_quick_guide.html#id5">常用命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_quick_guide.html#webrtc">WebRTC 相关构建示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_quick_guide.html#id9">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#id4">快速上手</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#docker-with-selenium">Docker with Selenium</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#docker-image">Docker image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#docker-hub">Docker Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#docker-container">Docker Container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#docker-data-volume">Docker data volume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#tips">Tips</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker.html#id5">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lal.html">lal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lal.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lal.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selenium.html">selenium</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selenium.html#what">What</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selenium.html#how">How</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selenium.html#why">Why</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fuzzer.html">Fuzzer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fuzzer.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fuzzer.html#getting-started">Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fuzzer.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kitty.html">Kitty</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kitty.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kitty.html#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../7.misc/index.html">7. WebRTC 关联技术</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/signal.html">信号处理基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/signal.html#id5">信号</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/signal.html#id7">滤波</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/signal.html#ft">傅立叶变换 FT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/signal.html#dct">离散余弦变换 DCT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/signal.html#id8">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/dsp.html">数字信号处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/dsp.html#id5">信号是什么</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/dsp.html#id7">信号处理中用到的统计值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/dsp.html#id8">什么是数字信号处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/dsp.html#id11">数字信号处理的关键技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/dsp.html#id15">滤波</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/kalman.html">卡尔曼滤波笔记</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/kalman.html#id5">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/kalman.html#id6">预备知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/kalman.html#id10">术语</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/kalman.html#id11">离散卡尔曼滤波</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/security.html">Security</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/security.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/security.html#simple-authentication-and-security-layer">Simple Authentication and Security Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/security.html#security-check-list">Security Check list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/security.html#glossary">Glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/security.html#kerberos">Kerberos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/security.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/matlab.html">Matlab 科学计算</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/matlab.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/matlab.html#id4">常量</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/multimedia.html">多媒体技术</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/multimedia_audio.html">数字音频处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/multimedia_image.html">数字图像处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/multimedia_video.html">数字视频处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/multimedia.html#id5">主要内容</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/mathematics.html">数理基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/mathematics.html#id2">数学</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/statistics.html">概率与统计</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/statistics.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/statistics.html#glossary">Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/scientific_calculation.html">科学计算</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/scientific_calculation.html#numpy">numpy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/jenkins.html">Jenkins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/jenkins.html#id4">简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/jenkins.html#pipeline">Pipeline 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/jenkins.html#webrtc">WebRTC 构建自动化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/jenkins.html#id7">测试集成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/jenkins.html#id11">常用 Jenkins 插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/jenkins.html#id12">参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/sphinx.html">Sphinx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/sphinx.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/sphinx.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/sphinx.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/linux.html">linux environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/linux.html#id4">简介</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../7.misc/ai_and_webrtc.html">AI 对 WebRTC 技术发展的影响</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id3">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#ai">音频处理中的 AI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id4">视频处理中的 AI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id7">网络自适应中的 AI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id10">AI 驱动的新应用场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id14">AI 推理的部署架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id15">未来展望</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../7.misc/ai_and_webrtc.html#id16">参考资料</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">webrtc_tutorial</a>
+          <a href="../index.html">WebRTC 学习笔记</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">6. WebRTC 工具</a></li>
       <li class="breadcrumb-item active">Linux Traffic Control</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/6.tool/tc.rst.txt" rel="nofollow"> View page source</a>
       </li>
-  </ul>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="顺序式页面导航">
+        <a href="vnc.html" class="btn btn-neutral float-left" title="VNC vs. RDP" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="iperf.html" class="btn btn-neutral float-right" title="iPerf" accesskey="n">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -150,130 +1207,130 @@
 <td><p>v1</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Updated</strong></p></td>
-<td><p>2024-08-21</p></td>
+<td><p>2026-03-05</p></td>
 </tr>
 </tbody>
 </table>
-<nav class="contents local" id="contents">
+<nav class="contents local" id="id3">
 <ul class="simple">
-<li><p><a class="reference internal" href="#id3" id="id12">简介</a></p></li>
-<li><p><a class="reference internal" href="#tc" id="id13">TC 中的基本概念</a></p>
+<li><p><a class="reference internal" href="#id4" id="id13">简介</a></p></li>
+<li><p><a class="reference internal" href="#tc" id="id14">TC 中的基本概念</a></p>
 <ul>
-<li><p><a class="reference internal" href="#qdiscs" id="id14">QDISCS</a></p>
+<li><p><a class="reference internal" href="#qdiscs" id="id15">QDISCS</a></p>
 <ul>
-<li><p><a class="reference internal" href="#classful-qdiscs" id="id15">classful qdiscs</a></p></li>
-<li><p><a class="reference internal" href="#classless-qdiscs" id="id16">classless qdiscs</a></p></li>
+<li><p><a class="reference internal" href="#classful-qdiscs" id="id16">classful qdiscs</a></p></li>
+<li><p><a class="reference internal" href="#classless-qdiscs" id="id17">classless qdiscs</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#classes" id="id17">CLASSES</a></p></li>
-<li><p><a class="reference internal" href="#filters" id="id18">FILTERS 过滤器</a></p>
+<li><p><a class="reference internal" href="#classes" id="id18">CLASSES</a></p></li>
+<li><p><a class="reference internal" href="#filters" id="id19">FILTERS 过滤器</a></p>
 <ul>
-<li><p><a class="reference internal" href="#basic" id="id19">basic</a></p></li>
-<li><p><a class="reference internal" href="#bpf" id="id20">bpf</a></p></li>
-<li><p><a class="reference internal" href="#cgroup" id="id21">cgroup</a></p></li>
-<li><p><a class="reference internal" href="#flow-flower" id="id22">flow, flower</a></p></li>
-<li><p><a class="reference internal" href="#fw" id="id23">fw</a></p></li>
-<li><p><a class="reference internal" href="#route" id="id24">route</a></p></li>
-<li><p><a class="reference internal" href="#rsvp" id="id25">rsvp</a></p></li>
-<li><p><a class="reference internal" href="#tcindex" id="id26">tcindex</a></p></li>
-<li><p><a class="reference internal" href="#u32" id="id27">u32</a></p></li>
-<li><p><a class="reference internal" href="#matchall" id="id28">matchall</a></p></li>
+<li><p><a class="reference internal" href="#basic" id="id20">basic</a></p></li>
+<li><p><a class="reference internal" href="#bpf" id="id21">bpf</a></p></li>
+<li><p><a class="reference internal" href="#cgroup" id="id22">cgroup</a></p></li>
+<li><p><a class="reference internal" href="#flow-flower" id="id23">flow, flower</a></p></li>
+<li><p><a class="reference internal" href="#fw" id="id24">fw</a></p></li>
+<li><p><a class="reference internal" href="#route" id="id25">route</a></p></li>
+<li><p><a class="reference internal" href="#rsvp" id="id26">rsvp</a></p></li>
+<li><p><a class="reference internal" href="#tcindex" id="id27">tcindex</a></p></li>
+<li><p><a class="reference internal" href="#u32" id="id28">u32</a></p></li>
+<li><p><a class="reference internal" href="#matchall" id="id29">matchall</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#qevents" id="id29">QEVENTS</a></p></li>
-<li><p><a class="reference internal" href="#classless-qdiscs-qdiscs" id="id30">CLASSLESS QDISCS 不可分类 QDISCS</a></p>
+<li><p><a class="reference internal" href="#qevents" id="id30">QEVENTS</a></p></li>
+<li><p><a class="reference internal" href="#classless-qdiscs-qdiscs" id="id31">CLASSLESS QDISCS 不可分类 QDISCS</a></p>
 <ul>
-<li><p><a class="reference internal" href="#choke" id="id31">choke</a></p></li>
-<li><p><a class="reference internal" href="#codel" id="id32">codel</a></p></li>
-<li><p><a class="reference internal" href="#p-b-fifo" id="id33">[p|b]fifo</a></p></li>
-<li><p><a class="reference internal" href="#fq" id="id34">fq</a></p></li>
-<li><p><a class="reference internal" href="#fq-codel" id="id35">fq_codel</a></p></li>
-<li><p><a class="reference internal" href="#fq-pie" id="id36">fq_pie</a></p></li>
-<li><p><a class="reference internal" href="#gred" id="id37">gred</a></p></li>
-<li><p><a class="reference internal" href="#hhf" id="id38">hhf</a></p></li>
-<li><p><a class="reference internal" href="#ingress" id="id39">ingress</a></p></li>
-<li><p><a class="reference internal" href="#mqprio" id="id40">mqprio</a></p></li>
-<li><p><a class="reference internal" href="#multiq" id="id41">multiq</a></p></li>
-<li><p><a class="reference internal" href="#netem" id="id42"><strong>netem</strong></a></p></li>
-<li><p><a class="reference internal" href="#pfifo-fast" id="id43">pfifo_fast</a></p></li>
-<li><p><a class="reference internal" href="#pie" id="id44">pie</a></p></li>
-<li><p><a class="reference internal" href="#red" id="id45">red</a></p></li>
-<li><p><a class="reference internal" href="#rr" id="id46">rr</a></p></li>
-<li><p><a class="reference internal" href="#sfb" id="id47">sfb</a></p></li>
-<li><p><a class="reference internal" href="#sfq" id="id48">sfq</a></p></li>
-<li><p><a class="reference internal" href="#tbf" id="id49">tbf</a></p></li>
+<li><p><a class="reference internal" href="#choke" id="id32">choke</a></p></li>
+<li><p><a class="reference internal" href="#codel" id="id33">codel</a></p></li>
+<li><p><a class="reference internal" href="#p-b-fifo" id="id34">[p|b]fifo</a></p></li>
+<li><p><a class="reference internal" href="#fq" id="id35">fq</a></p></li>
+<li><p><a class="reference internal" href="#fq-codel" id="id36">fq_codel</a></p></li>
+<li><p><a class="reference internal" href="#fq-pie" id="id37">fq_pie</a></p></li>
+<li><p><a class="reference internal" href="#gred" id="id38">gred</a></p></li>
+<li><p><a class="reference internal" href="#hhf" id="id39">hhf</a></p></li>
+<li><p><a class="reference internal" href="#ingress" id="id40">ingress</a></p></li>
+<li><p><a class="reference internal" href="#mqprio" id="id41">mqprio</a></p></li>
+<li><p><a class="reference internal" href="#multiq" id="id42">multiq</a></p></li>
+<li><p><a class="reference internal" href="#netem" id="id43"><strong>netem</strong></a></p></li>
+<li><p><a class="reference internal" href="#pfifo-fast" id="id44">pfifo_fast</a></p></li>
+<li><p><a class="reference internal" href="#pie" id="id45">pie</a></p></li>
+<li><p><a class="reference internal" href="#red" id="id46">red</a></p></li>
+<li><p><a class="reference internal" href="#rr" id="id47">rr</a></p></li>
+<li><p><a class="reference internal" href="#sfb" id="id48">sfb</a></p></li>
+<li><p><a class="reference internal" href="#sfq" id="id49">sfq</a></p></li>
+<li><p><a class="reference internal" href="#tbf" id="id50">tbf</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id4" id="id50">配置 CLASSLESS QDISCS</a></p></li>
-<li><p><a class="reference internal" href="#classful-qdiscs-qdiscs" id="id51">CLASSFUL QDISCS 可分类 QDISCS</a></p>
+<li><p><a class="reference internal" href="#id5" id="id51">配置 CLASSLESS QDISCS</a></p></li>
+<li><p><a class="reference internal" href="#classful-qdiscs-qdiscs" id="id52">CLASSFUL QDISCS 可分类 QDISCS</a></p>
 <ul>
-<li><p><a class="reference internal" href="#atm" id="id52">ATM</a></p></li>
-<li><p><a class="reference internal" href="#cbq" id="id53">CBQ</a></p></li>
-<li><p><a class="reference internal" href="#drr" id="id54">DRR</a></p></li>
-<li><p><a class="reference internal" href="#dsmark" id="id55">DSMARK</a></p></li>
-<li><p><a class="reference internal" href="#ets" id="id56">ETS</a></p></li>
-<li><p><a class="reference internal" href="#hfsc" id="id57">HFSC</a></p></li>
-<li><p><a class="reference internal" href="#htb" id="id58">HTB</a></p></li>
-<li><p><a class="reference internal" href="#prio" id="id59">PRIO</a></p></li>
-<li><p><a class="reference internal" href="#qfq" id="id60">QFQ</a></p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#id5" id="id61">TC 用法</a></p>
-<ul>
-<li><p><a class="reference internal" href="#id6" id="id62">命令</a></p>
-<ul>
-<li><p><a class="reference internal" href="#add" id="id63">add</a></p></li>
-<li><p><a class="reference internal" href="#delete" id="id64">delete</a></p></li>
-<li><p><a class="reference internal" href="#change" id="id65">change</a></p></li>
-<li><p><a class="reference internal" href="#replace" id="id66">replace</a></p></li>
-<li><p><a class="reference internal" href="#get" id="id67">get</a></p></li>
-<li><p><a class="reference internal" href="#show" id="id68">show</a></p></li>
-<li><p><a class="reference internal" href="#link" id="id69">link</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#id7" id="id70">TC 命令实例</a></p>
-<ul>
-<li><p><a class="reference internal" href="#usage" id="id71">Usage</a></p></li>
-<li><p><a class="reference internal" href="#example-1" id="id72">Example 1</a></p></li>
-<li><p><a class="reference internal" href="#example-3" id="id73">Example 3</a></p></li>
-<li><p><a class="reference internal" href="#example-4" id="id74">Example 4</a></p></li>
+<li><p><a class="reference internal" href="#atm" id="id53">ATM</a></p></li>
+<li><p><a class="reference internal" href="#cbq" id="id54">CBQ</a></p></li>
+<li><p><a class="reference internal" href="#drr" id="id55">DRR</a></p></li>
+<li><p><a class="reference internal" href="#dsmark" id="id56">DSMARK</a></p></li>
+<li><p><a class="reference internal" href="#ets" id="id57">ETS</a></p></li>
+<li><p><a class="reference internal" href="#hfsc" id="id58">HFSC</a></p></li>
+<li><p><a class="reference internal" href="#htb" id="id59">HTB</a></p></li>
+<li><p><a class="reference internal" href="#prio" id="id60">PRIO</a></p></li>
+<li><p><a class="reference internal" href="#qfq" id="id61">QFQ</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#tc-tbf" id="id75">tc-tbf</a></p>
+<li><p><a class="reference internal" href="#id6" id="id62">TC 用法</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id9" id="id76">实例</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id63">命令</a></p>
+<ul>
+<li><p><a class="reference internal" href="#add" id="id64">add</a></p></li>
+<li><p><a class="reference internal" href="#delete" id="id65">delete</a></p></li>
+<li><p><a class="reference internal" href="#change" id="id66">change</a></p></li>
+<li><p><a class="reference internal" href="#replace" id="id67">replace</a></p></li>
+<li><p><a class="reference internal" href="#get" id="id68">get</a></p></li>
+<li><p><a class="reference internal" href="#show" id="id69">show</a></p></li>
+<li><p><a class="reference internal" href="#link" id="id70">link</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#tc-netem" id="id77">tc-netem</a></p></li>
-<li><p><a class="reference internal" href="#netimpair" id="id78">netimpair</a></p>
+<li><p><a class="reference internal" href="#id8" id="id71">TC 命令实例</a></p>
 <ul>
-<li><p><a class="reference internal" href="#features" id="id79">Features</a></p>
-<ul>
-<li><p><a class="reference internal" href="#jitter" id="id80">Jitter</a></p></li>
-<li><p><a class="reference internal" href="#delay" id="id81">Delay</a></p></li>
-<li><p><a class="reference internal" href="#loss" id="id82">Loss</a></p></li>
-<li><p><a class="reference internal" href="#rate-control" id="id83">Rate Control</a></p></li>
-<li><p><a class="reference internal" href="#impair-inbound-traffic" id="id84">Impair inbound traffic</a></p></li>
-<li><p><a class="reference internal" href="#selectively-impair-certain-traffic" id="id85">Selectively impair certain traffic</a></p></li>
-<li><p><a class="reference internal" href="#additional-parameters-can-be-found-with-the-help-option" id="id86">Additional parameters can be found with the help option</a></p></li>
+<li><p><a class="reference internal" href="#usage" id="id72">Usage</a></p></li>
+<li><p><a class="reference internal" href="#example-1" id="id73">Example 1</a></p></li>
+<li><p><a class="reference internal" href="#example-3" id="id74">Example 3</a></p></li>
+<li><p><a class="reference internal" href="#example-4" id="id75">Example 4</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id11" id="id87">参考资料</a></p></li>
+<li><p><a class="reference internal" href="#tc-tbf" id="id76">tc-tbf</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id10" id="id77">实例</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#tc-netem" id="id78">tc-netem</a></p></li>
+<li><p><a class="reference internal" href="#netimpair" id="id79">netimpair</a></p>
+<ul>
+<li><p><a class="reference internal" href="#features" id="id80">Features</a></p>
+<ul>
+<li><p><a class="reference internal" href="#jitter" id="id81">Jitter</a></p></li>
+<li><p><a class="reference internal" href="#delay" id="id82">Delay</a></p></li>
+<li><p><a class="reference internal" href="#loss" id="id83">Loss</a></p></li>
+<li><p><a class="reference internal" href="#rate-control" id="id84">Rate Control</a></p></li>
+<li><p><a class="reference internal" href="#impair-inbound-traffic" id="id85">Impair inbound traffic</a></p></li>
+<li><p><a class="reference internal" href="#selectively-impair-certain-traffic" id="id86">Selectively impair certain traffic</a></p></li>
+<li><p><a class="reference internal" href="#additional-parameters-can-be-found-with-the-help-option" id="id87">Additional parameters can be found with the help option</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id12" id="id88">参考资料</a></p></li>
 </ul>
 </nav>
-<section id="id3">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">简介</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="id4">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">简介</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p>Linux 的 netem 模块和 tc 命令常用来控制网络流量，模拟网络中常见的各种问题, 例如丢包，延迟，抖动等。</p>
 <p>在网络控制时有两个方向</p>
 <ul class="simple">
-<li><p>inbound 进来的流量 –&gt; uplink 入口</p></li>
-<li><p>outbound 出去的流量 –&gt; downlink 出口</p></li>
+<li><p>inbound 进来的流量 --&gt; uplink 入口</p></li>
+<li><p>outbound 出去的流量 --&gt; downlink 出口</p></li>
 </ul>
 <p>tc 可以通过本地的发送队列，很容易地控制出去的流量，而对于进来的流量，需要结合虚拟设备 ifb(Intermediate Functional Block device) 来做流量控制。
 可以认为 ifb 是虚拟的网卡设备</p>
@@ -283,7 +1340,7 @@ You need one ifb interface per physical interface, to redirect ingress traffic f
 <p>When inserting the ifb module, tell it the number of virtual interfaces you need. The default is 2:</p>
 <p><cite>modprobe ifb numifbs=1</cite></p>
 <p>Now, enable all ifb interfaces:</p>
-<p><cite>ip link set dev ifb0 up # repeat for ifb1, ifb2, …</cite></p>
+<p><cite>ip link set dev ifb0 up # repeat for ifb1, ifb2, ...</cite></p>
 <p>And redirect ingress traffic from the physical interfaces to corresponding ifb interface.
 For eth0 -&gt; ifb0:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">eth0</span> <span class="n">handle</span> <span class="n">ffff</span><span class="p">:</span> <span class="n">ingress</span>
@@ -292,7 +1349,7 @@ For eth0 -&gt; ifb0:</p>
 </div>
 </section>
 <section id="tc">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">TC 中的基本概念</a><a class="headerlink" href="#tc" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">TC 中的基本概念</a><a class="headerlink" href="#tc" title="Link to this heading"></a></h2>
 <p>Tc 用于在 Linux 内核中配置流量控制。流量控制包括以下内容：</p>
 <ul class="simple">
 <li><p>SHAPING 整形</p></li>
@@ -341,11 +1398,11 @@ For eth0 -&gt; ifb0:</p>
 <p>特殊 handle - ffff:0 为 ingress qdisc 保留。</p>
 <p>handle 在 tc filter 语句的 classid 和 flowid 短语中用作目标。这些 handle 是对象的外部标识符，可供用户级应用程序使用。内核维护每个对象的内部标识符。</p>
 <section id="qdiscs">
-<h3><a class="toc-backref" href="#id14" role="doc-backlink">QDISCS</a><a class="headerlink" href="#qdiscs" title="Link to this heading"></a></h3>
-<p>qdisc 是 “queueing discipline”（排队规则）的缩写，它是理解流量控制的基础。
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">QDISCS</a><a class="headerlink" href="#qdiscs" title="Link to this heading"></a></h3>
+<p>qdisc 是 &quot;queueing discipline&quot;（排队规则）的缩写，它是理解流量控制的基础。
 每当内核需要向接口发送数据包时，它就会被放入为该接口配置的 qdisc 队列中。
 紧接着，内核尝试从 qdisc 中获取尽可能多的数据包，以便将它们提供给网络适配器驱动程序。</p>
-<p>一个简单的 QDISC 是 “pfifo”，它根本不进行任何处理，是一个纯粹的先进先出队列。
+<p>一个简单的 QDISC 是 &quot;pfifo&quot;，它根本不进行任何处理，是一个纯粹的先进先出队列。
 但是，当网络接口暂时无法处理流量时，它会存储流量。</p>
 <p>qdisc 分为有类的 classful qdiscs 和无类的 classless qdiscs</p>
 <p>每一个 interface 可以包含出口 egress(outbound traffic) 和入口 ingress(inbound traffic)</p>
@@ -355,17 +1412,17 @@ For eth0 -&gt; ifb0:</p>
 一个 ingress qdisc 只能支持一个 policer 以限制其接收的流量</p>
 <p>简而言之， 我们可以使用 egress qdisc 做更多的控制，因为它包含真正全功能的 qdisc</p>
 <section id="classful-qdiscs">
-<h4><a class="toc-backref" href="#id15" role="doc-backlink">classful qdiscs</a><a class="headerlink" href="#classful-qdiscs" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id16" role="doc-backlink">classful qdiscs</a><a class="headerlink" href="#classful-qdiscs" title="Link to this heading"></a></h4>
 <p>classful qdiscs 可以包含 class，并提供一个 handle 来附加 filter。</p>
 <p>classful qdiscs 当然也可以不包含 class，尽管这样做没有任何好处，只是空转并消耗系统资源。</p>
 </section>
 <section id="classless-qdiscs">
-<h4><a class="toc-backref" href="#id16" role="doc-backlink">classless qdiscs</a><a class="headerlink" href="#classless-qdiscs" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id17" role="doc-backlink">classless qdiscs</a><a class="headerlink" href="#classless-qdiscs" title="Link to this heading"></a></h4>
 <p>classless qdiscs 不能包含任何 class, 也不能附着任何 filter， 因为 classless qdiscs 不包含任何类型的子类，所以称之为无类的 qdisc</p>
 </section>
 </section>
 <section id="classes">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">CLASSES</a><a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">CLASSES</a><a class="headerlink" href="#classes" title="Link to this heading"></a></h3>
 <p>classful qdisc 可以包含类，这些类可包含更多的 qdiscs - 然后流量可以在任何内部 qdisc 中排队，这些内部 qdisc 在类中。
 当内核试图从这样一个有类的 qdisc 队列中取出一个数据包时，它可以来自任何类。</p>
 <p>例如，一个 qdisc 可以通过尝试在其他类之前从某些类中出列来对某些类型的流量进行优先级排序。</p>
@@ -373,7 +1430,7 @@ For eth0 -&gt; ifb0:</p>
 <p>叶类 leaf class 是 qdisc 中的终端类。 它包含一个 qdisc（默认 FIFO）并且永远不会包含子类。 任何包含子类的类都是内部类（或根类），而不是叶类。</p>
 </section>
 <section id="filters">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">FILTERS 过滤器</a><a class="headerlink" href="#filters" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">FILTERS 过滤器</a><a class="headerlink" href="#filters" title="Link to this heading"></a></h3>
 <p>过滤器 filter 是Linux流量控制系统中最复杂的组件。 过滤器提供了一种方便的机制，可以将流量控制的几个关键元素粘合在一起。</p>
 <p>过滤器最简单、最明显的作用是对数据包进行分类。 Linux 过滤器允许用户使用几个不同的过滤器或单个过滤器将数据包分类到一个输出队列中。</p>
 <p>过滤器可以附加到有类 qdisc 或类，但是入队的数据包总是首先进入根 qdisc。 在遍历了附加到根 qdisc 的过滤器之后，数据包可以被定向到任何子类（可以有自己的过滤器），数据包可以在这些子类中进行进一步的分类。</p>
@@ -383,48 +1440,48 @@ For eth0 -&gt; ifb0:</p>
 <p>重要的是要注意过滤器驻留在 qdiscs 中——它们从属于 qdisc，是从属者而非掌控者。</p>
 <p>可用的过滤器有:</p>
 <section id="basic">
-<h4><a class="toc-backref" href="#id19" role="doc-backlink">basic</a><a class="headerlink" href="#basic" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id20" role="doc-backlink">basic</a><a class="headerlink" href="#basic" title="Link to this heading"></a></h4>
 <p>Filter packets based on an ematch expression. See tc-ematch(8) for details.</p>
 </section>
 <section id="bpf">
-<h4><a class="toc-backref" href="#id20" role="doc-backlink">bpf</a><a class="headerlink" href="#bpf" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id21" role="doc-backlink">bpf</a><a class="headerlink" href="#bpf" title="Link to this heading"></a></h4>
 <p>Filter packets using (e)BPF, see tc-bpf(8) for details.</p>
 </section>
 <section id="cgroup">
-<h4><a class="toc-backref" href="#id21" role="doc-backlink">cgroup</a><a class="headerlink" href="#cgroup" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id22" role="doc-backlink">cgroup</a><a class="headerlink" href="#cgroup" title="Link to this heading"></a></h4>
 <p>Filter packets based on the control group of their process. See tc-cgroup(8) for details.</p>
 </section>
 <section id="flow-flower">
-<h4><a class="toc-backref" href="#id22" role="doc-backlink">flow, flower</a><a class="headerlink" href="#flow-flower" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id23" role="doc-backlink">flow, flower</a><a class="headerlink" href="#flow-flower" title="Link to this heading"></a></h4>
 <p>Flow-based classifiers, filtering packets based on their flow (identified by selectable keys). See tc-flow(8) and tc-flower(8) for details.</p>
 </section>
 <section id="fw">
-<h4><a class="toc-backref" href="#id23" role="doc-backlink">fw</a><a class="headerlink" href="#fw" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id24" role="doc-backlink">fw</a><a class="headerlink" href="#fw" title="Link to this heading"></a></h4>
 <p>Filter based on fwmark. Directly maps fwmark value to traffic class. See tc-fw(8).</p>
 </section>
 <section id="route">
-<h4><a class="toc-backref" href="#id24" role="doc-backlink">route</a><a class="headerlink" href="#route" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id25" role="doc-backlink">route</a><a class="headerlink" href="#route" title="Link to this heading"></a></h4>
 <p>Filter packets based on routing table. See tc-route(8) for  details.</p>
 </section>
 <section id="rsvp">
-<h4><a class="toc-backref" href="#id25" role="doc-backlink">rsvp</a><a class="headerlink" href="#rsvp" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id26" role="doc-backlink">rsvp</a><a class="headerlink" href="#rsvp" title="Link to this heading"></a></h4>
 <p>Match Resource Reservation Protocol (RSVP) packets.</p>
 </section>
 <section id="tcindex">
-<h4><a class="toc-backref" href="#id26" role="doc-backlink">tcindex</a><a class="headerlink" href="#tcindex" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id27" role="doc-backlink">tcindex</a><a class="headerlink" href="#tcindex" title="Link to this heading"></a></h4>
 <p>Filter packets based on traffic control index. See tc-tcindex(8).</p>
 </section>
 <section id="u32">
-<h4><a class="toc-backref" href="#id27" role="doc-backlink">u32</a><a class="headerlink" href="#u32" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id28" role="doc-backlink">u32</a><a class="headerlink" href="#u32" title="Link to this heading"></a></h4>
 <p>Generic filtering on arbitrary packet data, assisted by syntax to abstract common operations. See tc-u32(8) for details.</p>
 </section>
 <section id="matchall">
-<h4><a class="toc-backref" href="#id28" role="doc-backlink">matchall</a><a class="headerlink" href="#matchall" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id29" role="doc-backlink">matchall</a><a class="headerlink" href="#matchall" title="Link to this heading"></a></h4>
 <p>Traffic control filter that matches every packet. See tc-matchall(8) for details.</p>
 </section>
 </section>
 <section id="qevents">
-<h3><a class="toc-backref" href="#id29" role="doc-backlink">QEVENTS</a><a class="headerlink" href="#qevents" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">QEVENTS</a><a class="headerlink" href="#qevents" title="Link to this heading"></a></h3>
 <p>当 qdisc 中发生某些有趣的事件时，Qdisc 可能会调用用户配置的操作。 每个 qevent 可以不使用，也可以附加一个块。 然后使用 <cite>tc block BLOCK_IDX</cite> 语法将过滤器附加到该块。</p>
 <p>当与连接点关联的 qevent 发生时，执行该块。 例如，数据包可能会被丢弃或延迟等，具体取决于所讨论的 qdisc 和 qevent。</p>
 <p>例如:</p>
@@ -437,9 +1494,9 @@ For eth0 -&gt; ifb0:</p>
 </div>
 </section>
 <section id="classless-qdiscs-qdiscs">
-<h3><a class="toc-backref" href="#id30" role="doc-backlink">CLASSLESS QDISCS 不可分类 QDISCS</a><a class="headerlink" href="#classless-qdiscs-qdiscs" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">CLASSLESS QDISCS 不可分类 QDISCS</a><a class="headerlink" href="#classless-qdiscs-qdiscs" title="Link to this heading"></a></h3>
 <section id="choke">
-<h4><a class="toc-backref" href="#id31" role="doc-backlink">choke</a><a class="headerlink" href="#choke" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id32" role="doc-backlink">choke</a><a class="headerlink" href="#choke" title="Link to this heading"></a></h4>
 <p>CHOKe (CHOose and Keep for responsive flows, CHOose and
 Kill for unresponsive flows) is a classless qdisc designed
 to both identify and penalize flows that monopolize the
@@ -447,24 +1504,24 @@ queue. CHOKe is a variation of RED, and the configuration
 is similar to RED.</p>
 </section>
 <section id="codel">
-<h4><a class="toc-backref" href="#id32" role="doc-backlink">codel</a><a class="headerlink" href="#codel" title="Link to this heading"></a></h4>
-<p>CoDel (pronounced “coddle”) is an adaptive “no-knobs”
+<h4><a class="toc-backref" href="#id33" role="doc-backlink">codel</a><a class="headerlink" href="#codel" title="Link to this heading"></a></h4>
+<p>CoDel (pronounced &quot;coddle&quot;) is an adaptive &quot;no-knobs&quot;
 active queue management algorithm (AQM) scheme that was
 developed to address the shortcomings of RED and its
 variants.</p>
 </section>
 <section id="p-b-fifo">
-<h4><a class="toc-backref" href="#id33" role="doc-backlink">[p|b]fifo</a><a class="headerlink" href="#p-b-fifo" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id34" role="doc-backlink">[p|b]fifo</a><a class="headerlink" href="#p-b-fifo" title="Link to this heading"></a></h4>
 <p>Simplest usable qdisc, pure First In, First Out behaviour.
 Limited in packets or in bytes.</p>
 </section>
 <section id="fq">
-<h4><a class="toc-backref" href="#id34" role="doc-backlink">fq</a><a class="headerlink" href="#fq" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id35" role="doc-backlink">fq</a><a class="headerlink" href="#fq" title="Link to this heading"></a></h4>
 <p>Fair Queue Scheduler realises TCP pacing and scales to
 millions of concurrent flows per qdisc.</p>
 </section>
 <section id="fq-codel">
-<h4><a class="toc-backref" href="#id35" role="doc-backlink">fq_codel</a><a class="headerlink" href="#fq-codel" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id36" role="doc-backlink">fq_codel</a><a class="headerlink" href="#fq-codel" title="Link to this heading"></a></h4>
 <p>Fair Queuing Controlled Delay is queuing discipline that
 combines Fair Queuing with the CoDel AQM scheme. FQ_Codel
 uses a stochastic model to classify incoming packets into
@@ -475,7 +1532,7 @@ within a flow is avoided since Codel internally uses a
 FIFO queue.</p>
 </section>
 <section id="fq-pie">
-<h4><a class="toc-backref" href="#id36" role="doc-backlink">fq_pie</a><a class="headerlink" href="#fq-pie" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id37" role="doc-backlink">fq_pie</a><a class="headerlink" href="#fq-pie" title="Link to this heading"></a></h4>
 <p>FQ-PIE (Flow Queuing with Proportional Integral controller
 Enhanced) is a queuing discipline that combines Flow
 Queuing with the PIE AQM scheme. FQ-PIE uses a Jenkins
@@ -485,13 +1542,13 @@ to all the flows using the qdisc. Each such flow is
 managed by the PIE algorithm.</p>
 </section>
 <section id="gred">
-<h4><a class="toc-backref" href="#id37" role="doc-backlink">gred</a><a class="headerlink" href="#gred" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id38" role="doc-backlink">gred</a><a class="headerlink" href="#gred" title="Link to this heading"></a></h4>
 <p>Generalized Random Early Detection combines multiple RED
 queues in order to achieve multiple drop priorities. This
 is required to realize Assured Forwarding (RFC 2597).</p>
 </section>
 <section id="hhf">
-<h4><a class="toc-backref" href="#id38" role="doc-backlink">hhf</a><a class="headerlink" href="#hhf" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id39" role="doc-backlink">hhf</a><a class="headerlink" href="#hhf" title="Link to this heading"></a></h4>
 <p>Heavy-Hitter Filter differentiates between small flows and
 the opposite, heavy-hitters. The goal is to catch the
 heavy-hitters and move them to a separate queue with less
@@ -499,13 +1556,13 @@ priority so that bulk traffic does not affect the latency
 of critical traffic.</p>
 </section>
 <section id="ingress">
-<h4><a class="toc-backref" href="#id39" role="doc-backlink">ingress</a><a class="headerlink" href="#ingress" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id40" role="doc-backlink">ingress</a><a class="headerlink" href="#ingress" title="Link to this heading"></a></h4>
 <p>This is a special qdisc as it applies to incoming traffic
 on an interface, allowing for it to be filtered and
 policed.</p>
 </section>
 <section id="mqprio">
-<h4><a class="toc-backref" href="#id40" role="doc-backlink">mqprio</a><a class="headerlink" href="#mqprio" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id41" role="doc-backlink">mqprio</a><a class="headerlink" href="#mqprio" title="Link to this heading"></a></h4>
 <p>The Multiqueue Priority Qdisc is a simple queuing
 discipline that allows mapping traffic flows to hardware
 queue ranges using priorities and a configurable priority
@@ -514,7 +1571,7 @@ is a set of contiguous qdisc classes which map 1:1 to a
 set of hardware exposed queues.</p>
 </section>
 <section id="multiq">
-<h4><a class="toc-backref" href="#id41" role="doc-backlink">multiq</a><a class="headerlink" href="#multiq" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id42" role="doc-backlink">multiq</a><a class="headerlink" href="#multiq" title="Link to this heading"></a></h4>
 <p>Multiqueue is a qdisc optimized for devices with multiple
 Tx queues. It has been added for hardware that wishes to
 avoid head-of-line blocking.  It will cycle though the
@@ -522,40 +1579,40 @@ bands and verify that the hardware queue associated with
 the band is not stopped prior to dequeuing a packet.</p>
 </section>
 <section id="netem">
-<h4><a class="toc-backref" href="#id42" role="doc-backlink"><strong>netem</strong></a><a class="headerlink" href="#netem" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id43" role="doc-backlink"><strong>netem</strong></a><a class="headerlink" href="#netem" title="Link to this heading"></a></h4>
 <p>Network Emulator is an enhancement of the Linux traffic
 control facilities that allow to add delay, packet loss,
 duplication and more other characteristics to packets
 outgoing from a selected network interface.</p>
 </section>
 <section id="pfifo-fast">
-<h4><a class="toc-backref" href="#id43" role="doc-backlink">pfifo_fast</a><a class="headerlink" href="#pfifo-fast" title="Link to this heading"></a></h4>
-<p>Standard qdisc for ‘Advanced Router’ enabled kernels.
+<h4><a class="toc-backref" href="#id44" role="doc-backlink">pfifo_fast</a><a class="headerlink" href="#pfifo-fast" title="Link to this heading"></a></h4>
+<p>Standard qdisc for 'Advanced Router' enabled kernels.
 Consists of a three-band queue which honors Type of
 Service flags, as well as the priority that may be
 assigned to a packet.</p>
 </section>
 <section id="pie">
-<h4><a class="toc-backref" href="#id44" role="doc-backlink">pie</a><a class="headerlink" href="#pie" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id45" role="doc-backlink">pie</a><a class="headerlink" href="#pie" title="Link to this heading"></a></h4>
 <p>Proportional Integral controller-Enhanced (PIE) is a
 control theoretic active queue management scheme. It is
 based on the proportional integral controller but aims to
 control delay.</p>
 </section>
 <section id="red">
-<h4><a class="toc-backref" href="#id45" role="doc-backlink">red</a><a class="headerlink" href="#red" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id46" role="doc-backlink">red</a><a class="headerlink" href="#red" title="Link to this heading"></a></h4>
 <p>Random Early Detection simulates physical congestion by
 randomly dropping packets when nearing configured
 bandwidth allocation. Well suited to very large bandwidth
 applications.</p>
 </section>
 <section id="rr">
-<h4><a class="toc-backref" href="#id46" role="doc-backlink">rr</a><a class="headerlink" href="#rr" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id47" role="doc-backlink">rr</a><a class="headerlink" href="#rr" title="Link to this heading"></a></h4>
 <p>Round-Robin qdisc with support for multiqueue network
 devices. Removed from Linux since kernel version 2.6.27.</p>
 </section>
 <section id="sfb">
-<h4><a class="toc-backref" href="#id47" role="doc-backlink">sfb</a><a class="headerlink" href="#sfb" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id48" role="doc-backlink">sfb</a><a class="headerlink" href="#sfb" title="Link to this heading"></a></h4>
 <p>Stochastic Fair Blue is a classless qdisc to manage
 congestion based on packet loss and link utilization
 history while trying to prevent non-responsive flows (i.e.
@@ -566,19 +1623,19 @@ configured, BLUE tries to determine the ideal marking
 probability automatically.</p>
 </section>
 <section id="sfq">
-<h4><a class="toc-backref" href="#id48" role="doc-backlink">sfq</a><a class="headerlink" href="#sfq" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id49" role="doc-backlink">sfq</a><a class="headerlink" href="#sfq" title="Link to this heading"></a></h4>
 <p>Stochastic Fairness Queueing reorders queued traffic so
-each ‘session’ gets to send a packet in turn.</p>
+each 'session' gets to send a packet in turn.</p>
 </section>
 <section id="tbf">
-<h4><a class="toc-backref" href="#id49" role="doc-backlink">tbf</a><a class="headerlink" href="#tbf" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id50" role="doc-backlink">tbf</a><a class="headerlink" href="#tbf" title="Link to this heading"></a></h4>
 <p>The Token Bucket Filter is suited for slowing traffic down
 to a precisely configured rate. Scales well to large
 bandwidths.</p>
 </section>
 </section>
-<section id="id4">
-<h3><a class="toc-backref" href="#id50" role="doc-backlink">配置 CLASSLESS QDISCS</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id5">
+<h3><a class="toc-backref" href="#id51" role="doc-backlink">配置 CLASSLESS QDISCS</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <p>In the absence of classful qdiscs, classless qdiscs can only be
 attached at the root of a device. Full syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="n">qdisc</span> <span class="n">add</span> <span class="n">dev</span> <span class="n">DEV</span> <span class="n">root</span> <span class="n">QDISC</span> <span class="n">QDISC</span><span class="o">-</span><span class="n">PARAMETERS</span>
@@ -591,66 +1648,66 @@ attached at the root of a device. Full syntax:</p>
 <p>The pfifo_fast qdisc is the automatic default in the absence of a configured qdisc.</p>
 </section>
 <section id="classful-qdiscs-qdiscs">
-<h3><a class="toc-backref" href="#id51" role="doc-backlink">CLASSFUL QDISCS 可分类 QDISCS</a><a class="headerlink" href="#classful-qdiscs-qdiscs" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id52" role="doc-backlink">CLASSFUL QDISCS 可分类 QDISCS</a><a class="headerlink" href="#classful-qdiscs-qdiscs" title="Link to this heading"></a></h3>
 <p>可分类的 qdiscs 有:</p>
 <section id="atm">
-<h4><a class="toc-backref" href="#id52" role="doc-backlink">ATM</a><a class="headerlink" href="#atm" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id53" role="doc-backlink">ATM</a><a class="headerlink" href="#atm" title="Link to this heading"></a></h4>
 <p>Map flows to virtual circuits of an underlying asynchronous transfer mode device.</p>
 </section>
 <section id="cbq">
-<h4><a class="toc-backref" href="#id53" role="doc-backlink">CBQ</a><a class="headerlink" href="#cbq" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id54" role="doc-backlink">CBQ</a><a class="headerlink" href="#cbq" title="Link to this heading"></a></h4>
 <p>Class Based Queueing implements a rich linksharing hierarchy of classes.
 It contains shaping elements as well as prioritizing capabilities.</p>
 <p>Shaping is performed using link idle time calculations based on average packet size and underlying link bandwidth.</p>
 <p>The latter may be ill-defined for some interfaces.</p>
 </section>
 <section id="drr">
-<h4><a class="toc-backref" href="#id54" role="doc-backlink">DRR</a><a class="headerlink" href="#drr" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id55" role="doc-backlink">DRR</a><a class="headerlink" href="#drr" title="Link to this heading"></a></h4>
 <p>The Deficit Round Robin Scheduler is a more flexible replacement for Stochastic Fairness Queuing.</p>
-<p>Unlike SFQ,there are no built-in queues – you need to add classes and then set up filters to classify packets accordingly.
+<p>Unlike SFQ,there are no built-in queues -- you need to add classes and then set up filters to classify packets accordingly.
 This can be useful e.g. for using RED qdiscs with different settings for particular traffic.</p>
-<p>There is no default class – if a packet cannot be classified, it is dropped.</p>
+<p>There is no default class -- if a packet cannot be classified, it is dropped.</p>
 </section>
 <section id="dsmark">
-<h4><a class="toc-backref" href="#id55" role="doc-backlink">DSMARK</a><a class="headerlink" href="#dsmark" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id56" role="doc-backlink">DSMARK</a><a class="headerlink" href="#dsmark" title="Link to this heading"></a></h4>
 <p>Classify packets based on TOS field, change TOS field of  packets based on classification.</p>
 </section>
 <section id="ets">
-<h4><a class="toc-backref" href="#id56" role="doc-backlink">ETS</a><a class="headerlink" href="#ets" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id57" role="doc-backlink">ETS</a><a class="headerlink" href="#ets" title="Link to this heading"></a></h4>
 <p>The ETS qdisc is a queuing discipline that merges functionality of PRIO and DRR qdiscs in one scheduler.</p>
 <p>ETS makes it easy to configure a set of strict and bandwidth-sharing bands to implement the transmission selection described in 802.1Qaz.</p>
 </section>
 <section id="hfsc">
-<h4><a class="toc-backref" href="#id57" role="doc-backlink">HFSC</a><a class="headerlink" href="#hfsc" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id58" role="doc-backlink">HFSC</a><a class="headerlink" href="#hfsc" title="Link to this heading"></a></h4>
 <p>Hierarchical Fair Service Curve guarantees precise bandwidth and delay allocation for leaf classes and
 allocates excess bandwidth fairly.</p>
 <p>Unlike HTB, it makes use of packet dropping to achieve low delays which interactive sessions benefit from.</p>
 </section>
 <section id="htb">
-<h4><a class="toc-backref" href="#id58" role="doc-backlink">HTB</a><a class="headerlink" href="#htb" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id59" role="doc-backlink">HTB</a><a class="headerlink" href="#htb" title="Link to this heading"></a></h4>
 <p>The Hierarchy Token Bucket implements a rich linksharing hierarchy of classes with an emphasis on conforming to existing practices.</p>
 <p>HTB facilitates guaranteeing bandwidth to classes, while also allowing specification of upper limits to inter-class sharing.</p>
 <p>It contains shaping elements, based on TBF and can prioritize classes.</p>
 </section>
 <section id="prio">
-<h4><a class="toc-backref" href="#id59" role="doc-backlink">PRIO</a><a class="headerlink" href="#prio" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id60" role="doc-backlink">PRIO</a><a class="headerlink" href="#prio" title="Link to this heading"></a></h4>
 <p>The PRIO qdisc is a non-shaping container for a configurable number of classes which are dequeued in        order.</p>
 <p>This allows for easy prioritization of traffic, where lower classes are only able to send if higher ones        have no packets available.</p>
 <p>To facilitate configuration, Type Of Service bits are honored by default.</p>
 </section>
 <section id="qfq">
-<h4><a class="toc-backref" href="#id60" role="doc-backlink">QFQ</a><a class="headerlink" href="#qfq" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id61" role="doc-backlink">QFQ</a><a class="headerlink" href="#qfq" title="Link to this heading"></a></h4>
 <p>Quick Fair Queueing is an O(1) scheduler that provides near-optimal guarantees, and is the first to achieve that goal with a constant cost also with respect to the number of groups and the packet length.</p>
 <p>The QFQ algorithm has no loops, and uses very simple instructions and data structures that lend themselves very well to a hardware implementation.</p>
 </section>
 </section>
 </section>
-<section id="id5">
-<h2><a class="toc-backref" href="#id61" role="doc-backlink">TC 用法</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
 <section id="id6">
-<h3><a class="toc-backref" href="#id62" role="doc-backlink">命令</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<h2><a class="toc-backref" href="#id62" role="doc-backlink">TC 用法</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id63" role="doc-backlink">命令</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <section id="add">
-<h4><a class="toc-backref" href="#id63" role="doc-backlink">add</a><a class="headerlink" href="#add" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id64" role="doc-backlink">add</a><a class="headerlink" href="#add" title="Link to this heading"></a></h4>
 <p>Add a qdisc, class or filter to a node. For all entities,
 a parent must be passed, either by passing its ID or by
 attaching directly to the root of a device.  When creating
@@ -658,44 +1715,44 @@ a qdisc or a filter, it can be named with the handle
 parameter. A class is named with the classid parameter.</p>
 </section>
 <section id="delete">
-<h4><a class="toc-backref" href="#id64" role="doc-backlink">delete</a><a class="headerlink" href="#delete" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id65" role="doc-backlink">delete</a><a class="headerlink" href="#delete" title="Link to this heading"></a></h4>
 <p>A qdisc can be deleted by specifying its handle, which may
-also be ‘root’. All subclasses and their leaf qdiscs are
+also be 'root'. All subclasses and their leaf qdiscs are
 automatically deleted, as well as any filters attached to
 them.</p>
 </section>
 <section id="change">
-<h4><a class="toc-backref" href="#id65" role="doc-backlink">change</a><a class="headerlink" href="#change" title="Link to this heading"></a></h4>
-<p>Some entities can be modified ‘in place’. Shares the
-syntax of ‘add’, with the exception that the handle cannot
+<h4><a class="toc-backref" href="#id66" role="doc-backlink">change</a><a class="headerlink" href="#change" title="Link to this heading"></a></h4>
+<p>Some entities can be modified 'in place'. Shares the
+syntax of 'add', with the exception that the handle cannot
 be changed and neither can the parent. In other words,
 change cannot move a node.</p>
 </section>
 <section id="replace">
-<h4><a class="toc-backref" href="#id66" role="doc-backlink">replace</a><a class="headerlink" href="#replace" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id67" role="doc-backlink">replace</a><a class="headerlink" href="#replace" title="Link to this heading"></a></h4>
 <p>Performs a nearly atomic remove/add on an existing node
 id. If the node does not exist yet it is created.</p>
 </section>
 <section id="get">
-<h4><a class="toc-backref" href="#id67" role="doc-backlink">get</a><a class="headerlink" href="#get" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id68" role="doc-backlink">get</a><a class="headerlink" href="#get" title="Link to this heading"></a></h4>
 <p>Displays a single filter given the interface DEV, qdisc-
 id, priority, protocol and filter-id.</p>
 </section>
 <section id="show">
-<h4><a class="toc-backref" href="#id68" role="doc-backlink">show</a><a class="headerlink" href="#show" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id69" role="doc-backlink">show</a><a class="headerlink" href="#show" title="Link to this heading"></a></h4>
 <p>Displays all filters attached to the given interface. A
 valid parent ID must be passed.</p>
 </section>
 <section id="link">
-<h4><a class="toc-backref" href="#id69" role="doc-backlink">link</a><a class="headerlink" href="#link" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id70" role="doc-backlink">link</a><a class="headerlink" href="#link" title="Link to this heading"></a></h4>
 <p>Only available for qdiscs and performs a replace where the
 node must exist already.</p>
 </section>
 </section>
-<section id="id7">
-<h3><a class="toc-backref" href="#id70" role="doc-backlink">TC 命令实例</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<section id="id8">
+<h3><a class="toc-backref" href="#id71" role="doc-backlink">TC 命令实例</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <section id="usage">
-<h4><a class="toc-backref" href="#id71" role="doc-backlink">Usage</a><a class="headerlink" href="#usage" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id72" role="doc-backlink">Usage</a><a class="headerlink" href="#usage" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Usage: tc [ OPTIONS ] OBJECT { COMMAND | help }
 where  OBJECT := { qdisc | class | filter }
    OPTIONS := { -s[tatistics] | -d[etails] | -r[aw] }
@@ -723,7 +1780,7 @@ tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </spa
 </div>
 </section>
 <section id="example-1">
-<h4><a class="toc-backref" href="#id72" role="doc-backlink">Example 1</a><a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id73" role="doc-backlink">Example 1</a><a class="headerlink" href="#example-1" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc qdisc add    \ (1)</span>
 <span class="o">&gt;</span>    <span class="n">dev</span> <span class="n">eth0</span>     \ <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="o">&gt;</span>    <span class="n">root</span>         \ <span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -739,7 +1796,7 @@ tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </spa
 </div>
 </section>
 <section id="example-3">
-<h4><a class="toc-backref" href="#id73" role="doc-backlink">Example 3</a><a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id74" role="doc-backlink">Example 3</a><a class="headerlink" href="#example-3" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc class add    \ (1)</span>
 <span class="o">&gt;</span>    <span class="n">dev</span> <span class="n">eth0</span>     \ <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="o">&gt;</span>    <span class="n">parent</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span>   \ <span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -753,12 +1810,12 @@ tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </spa
 <span class="o">-</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">Specify</span> <span class="n">the</span> <span class="n">parent</span> <span class="n">handle</span> <span class="n">to</span> <span class="n">which</span> <span class="n">we</span> <span class="n">are</span> <span class="n">attaching</span> <span class="n">the</span> <span class="n">new</span> <span class="n">class</span><span class="o">.</span>
 <span class="o">-</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">unique</span> <span class="n">handle</span> <span class="p">(</span><span class="n">major</span><span class="p">:</span><span class="n">minor</span><span class="p">)</span> <span class="n">identifying</span> <span class="n">this</span> <span class="n">class</span><span class="o">.</span> <span class="n">The</span> <span class="n">minor</span> <span class="n">number</span> <span class="n">must</span> <span class="n">be</span> <span class="nb">any</span> <span class="n">non</span><span class="o">-</span><span class="n">zero</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">number</span><span class="o">.</span>
 <span class="o">-</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">Both</span> <span class="n">of</span> <span class="n">the</span> <span class="n">classful</span> <span class="n">qdiscs</span> <span class="n">require</span> <span class="n">that</span> <span class="nb">any</span> <span class="n">children</span> <span class="n">classes</span> <span class="n">be</span> <span class="n">classes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">same</span> <span class="nb">type</span> <span class="k">as</span> <span class="n">the</span> <span class="n">parent</span><span class="o">.</span> <span class="n">Thus</span> <span class="n">an</span> <span class="n">HTB</span> <span class="n">qdisc</span> <span class="n">will</span> <span class="n">contain</span> <span class="n">HTB</span> <span class="n">classes</span><span class="o">.</span>
-<span class="o">-</span> <span class="p">(</span><span class="mi">6</span><span class="p">)(</span><span class="mi">7</span><span class="p">)</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="k">class</span> <span class="nc">specific</span> <span class="n">parameter</span>
+<span class="o">-</span> <span class="p">(</span><span class="mi">6</span><span class="p">)(</span><span class="mi">7</span><span class="p">)</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="k">class</span><span class="w"> </span><span class="nc">specific</span> <span class="n">parameter</span>
 </pre></div>
 </div>
 </section>
 <section id="example-4">
-<h4><a class="toc-backref" href="#id74" role="doc-backlink">Example 4</a><a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id75" role="doc-backlink">Example 4</a><a class="headerlink" href="#example-4" title="Link to this heading"></a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># tc filter add               \ (1)
 &gt;    dev eth0                 \ (2)
 &gt;    parent 1:0               \ (3)
@@ -793,7 +1850,7 @@ tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </spa
 </section>
 </section>
 <section id="tc-tbf">
-<h2><a class="toc-backref" href="#id75" role="doc-backlink">tc-tbf</a><a class="headerlink" href="#tc-tbf" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id76" role="doc-backlink">tc-tbf</a><a class="headerlink" href="#tc-tbf" title="Link to this heading"></a></h2>
 <p>tbf 即 Token Bucket Filter 令牌桶过滤器，参见 <a class="reference external" href="https://man7.org/linux/man-pages/man8/tc-tbf.8.html">tc-tbf</a></p>
 <p>令牌桶过滤器是一种分类队列规则，可用于使用 tc(8) 命令进行流量控制。</p>
 <p>TBF 是一个纯粹的 shaper 整形者，从不安排流量。</p>
@@ -809,8 +1866,8 @@ tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </spa
 <span class="n">minburst</span><span class="o">.</span>
 </pre></div>
 </div>
-<section id="id9">
-<h3><a class="toc-backref" href="#id76" role="doc-backlink">实例</a><a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<section id="id10">
+<h3><a class="toc-backref" href="#id77" role="doc-backlink">实例</a><a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
 <p>附加一个持续最大速率为 0.5 mbit/s, 峰值速率为 1.0 mbit/s, 5 KB 缓冲区的 TBF, 计算了预存储桶队列大小限制, 因此 TBF 导致最多 70 毫秒的延迟，具有完美的峰值速率行为， 命令如下：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>handle<span class="w"> </span><span class="m">10</span>:<span class="w"> </span>root<span class="w"> </span>tbf<span class="w"> </span>rate<span class="w"> </span><span class="m">0</span>.5mbit<span class="w"> </span><span class="se">\</span>
 burst<span class="w"> </span>5kb<span class="w"> </span>latency<span class="w"> </span>70ms<span class="w"> </span>peakrate<span class="w"> </span>1mbit<span class="w">       </span><span class="se">\</span>
@@ -825,7 +1882,7 @@ minburst<span class="w"> </span><span class="m">1540</span>
 </section>
 </section>
 <section id="tc-netem">
-<h2><a class="toc-backref" href="#id77" role="doc-backlink">tc-netem</a><a class="headerlink" href="#tc-netem" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id78" role="doc-backlink">tc-netem</a><a class="headerlink" href="#tc-netem" title="Link to this heading"></a></h2>
 <p>NetEm 即 Network Emulator 网络模拟器， 参见 <a class="reference external" href="https://man7.org/linux/man-pages/man8/tc-netem.8.html">tc-netem</a></p>
 <p>NetEm 是 Linux 流量控制工具的增强版，它允许为从选定网络接口传出的数据包添加延迟、数据包丢失、重复和更多其他特征。
 NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (diffserv) 工具构建的。</p>
@@ -865,11 +1922,11 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 </div>
 </section>
 <section id="netimpair">
-<h2><a class="toc-backref" href="#id78" role="doc-backlink">netimpair</a><a class="headerlink" href="#netimpair" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id79" role="doc-backlink">netimpair</a><a class="headerlink" href="#netimpair" title="Link to this heading"></a></h2>
 <p>tc 实在太强大，也太复杂了，netimpair 是对 tc 命令进行封装的一个 python 脚本
 <a class="reference external" href="https://github.com/urbenlegend/netimpair">https://github.com/urbenlegend/netimpair</a></p>
 <section id="features">
-<h3><a class="toc-backref" href="#id79" role="doc-backlink">Features</a><a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id80" role="doc-backlink">Features</a><a class="headerlink" href="#features" title="Link to this heading"></a></h3>
 <p>netimpair.py can do the following things:</p>
 <ul class="simple">
 <li><p>Simulate packet loss, duplication, jitter, reordering, and rate limiting</p></li>
@@ -879,35 +1936,35 @@ NetEm 是使用 Linux 内核中现有的服务质量 (QoS) 和差异化服务 (d
 </ul>
 <p>netimpair.py supports both Python 2 and 3.</p>
 <section id="jitter">
-<h4><a class="toc-backref" href="#id80" role="doc-backlink">Jitter</a><a class="headerlink" href="#jitter" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id81" role="doc-backlink">Jitter</a><a class="headerlink" href="#jitter" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 200ms jitter</span>
 sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>netem<span class="w"> </span>--jitter<span class="w"> </span><span class="m">200</span>
 </pre></div>
 </div>
 </section>
 <section id="delay">
-<h4><a class="toc-backref" href="#id81" role="doc-backlink">Delay</a><a class="headerlink" href="#delay" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id82" role="doc-backlink">Delay</a><a class="headerlink" href="#delay" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 200ms delay</span>
 sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>netem<span class="w"> </span>--delay<span class="w"> </span><span class="m">200</span>
 </pre></div>
 </div>
 </section>
 <section id="loss">
-<h4><a class="toc-backref" href="#id82" role="doc-backlink">Loss</a><a class="headerlink" href="#loss" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id83" role="doc-backlink">Loss</a><a class="headerlink" href="#loss" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 5% loss</span>
 sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
 </pre></div>
 </div>
 </section>
 <section id="rate-control">
-<h4><a class="toc-backref" href="#id83" role="doc-backlink">Rate Control</a><a class="headerlink" href="#rate-control" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id84" role="doc-backlink">Rate Control</a><a class="headerlink" href="#rate-control" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Limit rate to 1mbit</span>
 sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>rate<span class="w"> </span>--limit<span class="w"> </span><span class="m">1000</span>
 </pre></div>
 </div>
 </section>
 <section id="impair-inbound-traffic">
-<h4><a class="toc-backref" href="#id84" role="doc-backlink">Impair inbound traffic</a><a class="headerlink" href="#impair-inbound-traffic" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id85" role="doc-backlink">Impair inbound traffic</a><a class="headerlink" href="#impair-inbound-traffic" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Append --inbound flag before the impairment keyword to apply inbound impairment</span>
 <span class="c1"># For example, this applies 5% loss on inbound eth0</span>
 sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--inbound<span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
@@ -915,7 +1972,7 @@ sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class=
 </div>
 </section>
 <section id="selectively-impair-certain-traffic">
-<h4><a class="toc-backref" href="#id85" role="doc-backlink">Selectively impair certain traffic</a><a class="headerlink" href="#selectively-impair-certain-traffic" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id86" role="doc-backlink">Selectively impair certain traffic</a><a class="headerlink" href="#selectively-impair-certain-traffic" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 5% loss on packets with source IP of 10.194.247.50 and destination port 9001</span>
 <span class="c1"># NOTE: Specifying include flag overrides the default include, which impairs everything</span>
 sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class="w"> </span>eth0<span class="w"> </span>--include<span class="w"> </span><span class="nv">src</span><span class="o">=</span><span class="m">10</span>.194.247.50,dport<span class="o">=</span><span class="m">9001</span><span class="w"> </span>netem<span class="w"> </span>--loss_ratio<span class="w"> </span><span class="m">5</span>
@@ -929,7 +1986,7 @@ sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class=
 </div>
 </section>
 <section id="additional-parameters-can-be-found-with-the-help-option">
-<h4><a class="toc-backref" href="#id86" role="doc-backlink">Additional parameters can be found with the help option</a><a class="headerlink" href="#additional-parameters-can-be-found-with-the-help-option" title="Link to this heading"></a></h4>
+<h4><a class="toc-backref" href="#id87" role="doc-backlink">Additional parameters can be found with the help option</a><a class="headerlink" href="#additional-parameters-can-be-found-with-the-help-option" title="Link to this heading"></a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic help</span>
 ./netimpair.py<span class="w"> </span>-h
 <span class="c1"># Help for the netem subcommand</span>
@@ -941,8 +1998,8 @@ sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class=
 </section>
 </section>
 </section>
-<section id="id11">
-<h2><a class="toc-backref" href="#id87" role="doc-backlink">参考资料</a><a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<section id="id12">
+<h2><a class="toc-backref" href="#id88" role="doc-backlink">参考资料</a><a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://netbeez.net/blog/how-to-use-the-linux-traffic-control/">https://netbeez.net/blog/how-to-use-the-linux-traffic-control/</a></p></li>
 <li><p><a class="reference external" href="https://man7.org/linux/man-pages/man8/tc.8.html">https://man7.org/linux/man-pages/man8/tc.8.html</a></p></li>
@@ -954,20 +2011,20 @@ sudo<span class="w"> </span>./netimpair.py<span class="w"> </span>-n<span class=
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="vnc.html" class="btn btn-neutral float-left" title="VNC vs. RDP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="iperf.html" class="btn btn-neutral float-right" title="iPerf" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="vnc.html" class="btn btn-neutral float-left" title="VNC vs. RDP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="iperf.html" class="btn btn-neutral float-right" title="iPerf" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 ~ 2023, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.</p>
+    <p>&#169; 版权所有 2021 ~ 2026, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License。</p>
   </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
    
 
 </footer>

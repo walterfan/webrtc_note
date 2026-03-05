@@ -28,7 +28,7 @@ Audio Level
 * 有效声压
 
 .. math::
-   :name: 有效声压
+   :name: eq-effective-sound-pressure
 
    p_x = \sqrt{ \frac{1}{T}  \sum_{n=1}^N x^2 \Delta t}
 
@@ -45,7 +45,7 @@ Audio Level
 * 声压级
 
 .. math::
-   :name: 声压级
+   :name: eq-sound-pressure-level
 
     L_p = 20 lg \frac{p_e}{p_ref}
 

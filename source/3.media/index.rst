@@ -2,10 +2,11 @@
 3. WebRTC 媒体
 ################
 
+本章涵盖 WebRTC 的媒体处理技术，包括音视频编解码、拥塞控制算法 (GCC/REMB/TWCC)、QoS 策略 (FEC/RTX/RED)、Simulcast/SVC 等。
 
 .. toctree::
    :maxdepth: 1
-   :caption: 目录:
+   :caption: 目录
 
    overview
    streaming
@@ -16,9 +17,6 @@
    webrtc_sharing
 
    webrtc_qos
-   webrtc_cc
-   webrtc_fec
-   webrtc_rtx
    webrtc_red
    webrtc_temporal_scalability
    webrtc_feedback
@@ -28,6 +26,4 @@
    web_transport
 
    webrtc_svc
-   webrtc_metrics
-   webrtc_e2e_delay
    webrtc_simulcast

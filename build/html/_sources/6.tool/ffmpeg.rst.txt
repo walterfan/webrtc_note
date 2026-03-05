@@ -116,9 +116,10 @@ FAQ
 
 转换 mp4 到 avi
 ------------------------
-```
-ffmpeg -i input.mp4 output.avi
-```
+
+.. code-block:: bash
+
+   ffmpeg -i input.mp4 output.avi
 
 如何根据图片和音频制作视频文件
 ------------------------------

@@ -1,6 +1,15 @@
+/* WebRTC 学习笔记 - 自定义样式 */
+
+/* 加宽内容区域 */
+.wy-nav-content {
+    max-width: 1200px !important;
+}
+
+/* 折叠面板 */
 .toggle .header {
     display: block;
     clear: both;
+    cursor: pointer;
 }
 
 .toggle .header:after {
@@ -11,6 +20,69 @@
     content: " ▼";
 }
 
-.wy-nav-content {
-    max-width: 1200px !important;
+/* 代码块优化 */
+.highlight pre {
+    font-size: 0.85em;
+    line-height: 1.5;
+    border-radius: 4px;
+}
+
+/* 表格优化 */
+table.docutils {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.docutils td, table.docutils th {
+    padding: 8px 12px;
+}
+
+/* 图片居中 */
+.figure {
+    text-align: center;
+}
+
+.figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 目录树优化 */
+.toctree-wrapper .toctree-l1 > a {
+    font-weight: bold;
+}
+
+/* admonition 优化 */
+.admonition {
+    border-radius: 4px;
+    margin: 1em 0;
+}
+
+/* 数学公式间距 */
+div.math {
+    margin: 1em 0;
+}
+
+/* 行内代码样式 */
+code.literal {
+    background-color: #f4f4f4;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 0.9em;
+}
+
+/* Mermaid 图表居中 */
+.mermaid {
+    text-align: center;
+    margin: 1em 0;
+}
+
+/* 改善中文排版 */
+p, li, dd, dt {
+    line-height: 1.8;
+}
+
+/* 侧边栏当前项高亮 */
+.wy-menu-vertical li.current > a {
+    border-left: 3px solid #2980B9;
 }

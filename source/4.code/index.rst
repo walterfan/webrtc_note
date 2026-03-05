@@ -2,10 +2,11 @@
 4. WebRTC 源码分析
 ###################
 
+本章深入 Chromium WebRTC 源码，分析 GCC 拥塞控制、Pacer 发送调度、DTLS 握手、RTP/RTCP 模块等核心实现。
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: 目录
 
    overview
 

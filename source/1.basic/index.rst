@@ -2,10 +2,11 @@
 1. WebRTC 基础
 ################
 
+本章介绍 WebRTC 的核心概念，包括浏览器架构、API 接口、信令机制、SDP 协商、媒体捕获等基础知识。
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: 目录
 
    overview
 
