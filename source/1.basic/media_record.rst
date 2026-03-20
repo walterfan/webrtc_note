@@ -9,7 +9,7 @@ WebRTC API 之 Media Record
 ============ ==========================
 **Abstract** Media Record
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

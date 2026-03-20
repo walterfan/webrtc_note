@@ -10,7 +10,7 @@ WebRTC 客户端能力
 ============ ==========================
 **Abstract** WebRTC 客户端能力
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Category** LearningNote
 **Updated**  |date|
 ============ ==========================
@@ -46,12 +46,10 @@ This includes entries for resource loading, event timing, first input delay (FID
 
 OveruseFrameDetector
 --------------------------
-参见 WebRTC OveruseFrameDetector
+参见 :doc:`../6.code/overuse_frame_decoder`
 
 
 Reference
 ==========================
 
 * https://developer.chrome.com/en/docs/web-platform/webgpu/
-
-.. _WebRTC OveruseFrameDetector: ../5.code/WebRTC OveruseFrameDetector

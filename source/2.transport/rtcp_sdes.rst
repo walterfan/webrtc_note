@@ -8,9 +8,9 @@ RTCP SDES
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** RTCP Sender Description
+**Abstract** RTCP Source Description
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

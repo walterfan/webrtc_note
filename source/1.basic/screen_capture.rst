@@ -10,7 +10,7 @@ WebRTC API 之 Screen Capture
 ============ ==========================
 **Abstract** WebRTC Screen Capture
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Category** LearningNote
 **Updated**  |date|
 ============ ==========================

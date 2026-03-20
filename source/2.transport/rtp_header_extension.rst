@@ -10,7 +10,7 @@ WebRTC RTP Header extension
 ============ ==========================
 **Abstract** WebRTC RTP
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

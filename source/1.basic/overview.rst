@@ -9,7 +9,7 @@ WebRTC 概论
 ============ ==========================
 **Abstract** WebRTC 概论
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 
@@ -155,6 +155,66 @@ Browser RTC Trapezoid 浏览器实时通信三角
     |           |                                |           |
     +-----------+                                +-----------+
 
+WebRTC 呼叫建立流程
+===================================
+
+以下时序图展示了一次完整的 WebRTC 点对点呼叫建立流程：
+
+.. uml::
+
+   @startuml
+   skinparam sequenceArrowThickness 1.5
+   skinparam participantPadding 20
+   skinparam sequenceGroupBorderThickness 1
+
+   participant "Alice\n(Browser)" as A
+   participant "Signaling\nServer" as S
+   participant "Bob\n(Browser)" as B
+
+   == 1. 信令协商 (Signaling) ==
+
+   A -> A: getUserMedia()\n获取本地音视频流
+   A -> A: new RTCPeerConnection()
+   A -> A: addTrack(localStream)
+   A -> A: createOffer()
+   A -> A: setLocalDescription(offer)
+   A -> S: send SDP Offer
+   S -> B: forward SDP Offer
+
+   B -> B: getUserMedia()
+   B -> B: new RTCPeerConnection()
+   B -> B: setRemoteDescription(offer)
+   B -> B: addTrack(localStream)
+   B -> B: createAnswer()
+   B -> B: setLocalDescription(answer)
+   B -> S: send SDP Answer
+   S -> A: forward SDP Answer
+   A -> A: setRemoteDescription(answer)
+
+   == 2. ICE 连通性检查 ==
+
+   A -> A: onicecandidate
+   A -> S: send ICE Candidate
+   S -> B: forward ICE Candidate
+   B -> B: addIceCandidate()
+
+   B -> B: onicecandidate
+   B -> S: send ICE Candidate
+   S -> A: forward ICE Candidate
+   A -> A: addIceCandidate()
+
+   A <-> B: STUN Binding Check\n(Connectivity Check)
+
+   == 3. 安全握手 & 媒体传输 ==
+
+   A <-> B: DTLS Handshake\n(密钥协商)
+   A <-> B: SRTP/SRTCP\n(加密音视频传输)
+
+   @enduml
+
+详见 :doc:`webrtc_flow` 了解完整的呼叫流程和代码示例。
+
+
 WebRTC 应用的核心功能
 ===================================
 * 用户管理 User management
@@ -204,6 +264,18 @@ Local system support functions
 --------------------------------------------
 
 一些不需要统一指定的功能，因为每个参与者都可以根据自己的选择实现这些功能，而不会以其他人必须认识到的方式影响线上传输的数据。 例如回声消除（以它的某些形式）、本地身份验证和授权机制、操作系统访问控制以及对对话进行本地记录的能力。
+
+
+相关章节
+===============================
+
+- :doc:`webrtc_api` — WebRTC JavaScript API 详解
+- :doc:`webrtc_sdp` — SDP 协议与 Offer/Answer 模型
+- :doc:`webrtc_signal` — 信令机制
+- :doc:`media_capture` — 媒体设备访问与采集
+- :doc:`webrtc_flow` — WebRTC 通话完整流程
+- :doc:`../2.transport/overview` — 传输层协议栈
+- :doc:`../0.tutorial/overview` — 4 周学习路线
 
 
 参考资料

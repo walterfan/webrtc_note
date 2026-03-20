@@ -10,7 +10,7 @@ RTCP App
 ============ ==========================
 **Abstract** RTCP Application
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

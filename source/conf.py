@@ -6,7 +6,7 @@
 project = 'WebRTC 学习笔记'
 copyright = '2021 ~ 2026, Walter Fan, Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License'
 author = 'Walter Fan'
-release = '2.0'
+release = '3.0'
 language = 'zh_CN'
 
 # -- General configuration ---------------------------------------------------
@@ -21,11 +21,12 @@ extensions = [
     'sphinx_copybutton',
 ]
 
-plantuml = 'java -jar /usr/local/bin/plantuml.jar'
+import shutil
+plantuml = 'java -jar /usr/local/bin/plantuml.jar' if shutil.which('java') else 'plantuml'
 mermaid_version = "11"
 
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns = ['_backup']
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -46,7 +47,7 @@ html_theme_options = {
 
 html_show_sourcelink = False
 html_title = 'WebRTC 学习笔记'
-html_short_title = 'WebRTC Notes'
+html_short_title = 'AV Handbook'
 
 # -- Copy button configuration -----------------------------------------------
 

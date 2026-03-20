@@ -10,7 +10,7 @@ WebRTC API
 ============ ==========================
 **Abstract** WebRTC API
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Category** LearningNote
 **Updated**  |date|
 ============ ==========================

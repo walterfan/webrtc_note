@@ -11,7 +11,7 @@ WebRTC 标准，协议和规范
 ============ ==========================
 **Abstract** WebRTC Spec
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Category** LearningNote
 **Updated**  |date|
 ============ ==========================

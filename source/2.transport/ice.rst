@@ -10,7 +10,7 @@ Interactive Connectivity Establishment
 ============ =========================================
 **Abstract** Interactive Connectivity Establishment
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ =========================================
 
@@ -20,7 +20,7 @@ Interactive Connectivity Establishment
    :local:
 
 
-Ovewview
+Overview
 ================
 `RFC8445`_ Interactive Connectivity Establishment (ICE) 交互式连接建立是一个网络地址转换 NAT 穿透的协议
 
@@ -59,10 +59,10 @@ ICE procedure
 6. Communication
 
 
-ICE candidae
+ICE candidate
 =========================
 
-ICE candiate type
+ICE candidate type
 
 * host: Host Candidate
 
@@ -167,6 +167,6 @@ The session descriptions in Figures 3 and 4 define a TCP RTP/AVP  session.
 Reference
 ================
 
-* `RFC8445`_: Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal 
+* `RFC8445`_: Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal
 
-* _RFC8445: https://datatracker.ietf.org/doc/html/rfc8445
+.. _RFC8445: https://datatracker.ietf.org/doc/html/rfc8445

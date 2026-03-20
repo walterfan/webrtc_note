@@ -11,13 +11,10 @@ WebRTC Entities
 ============ ==========================
 **Abstract** WebRTC 实体
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Category** LearningNote
 **Updated**  |date|
 ============ ==========================
-
-.. contents::
-    :local:
 
 .. contents::
     :local:

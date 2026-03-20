@@ -8,9 +8,9 @@ TURN
 .. include:: ../abbrs.ref
 
 ============ =========================================
-**Abstract** Interactive Connectivity Establishment
+**Abstract** Traversal Using Relays around NAT
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ =========================================
 

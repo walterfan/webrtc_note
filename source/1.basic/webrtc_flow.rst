@@ -10,7 +10,7 @@ WebRTC 呼叫流程
 ============ ==========================
 **Abstract** WebRTC 呼叫流程
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Category** LearningNote
 **Updated**  |date|
 ============ ==========================

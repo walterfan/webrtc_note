@@ -9,7 +9,7 @@ WebRTC API 之 Media Capture
 ============ ==========================
 **Abstract** Media Capture
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

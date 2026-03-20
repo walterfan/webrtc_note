@@ -1,5 +1,5 @@
 ######################
-WebRTC Tutorial
+教程概览
 ######################
 
 .. include:: ../links.ref
@@ -7,36 +7,95 @@ WebRTC Tutorial
 .. include:: ../abbrs.ref
 
 ============ ==========================
-**Abstract** WebRTC Learn Path
-**Authors**  Walter Fan
-**Status**   WIP as draft
-**Updated**  |date|
+**摘要**     WebRTC 简明教程概览
+**作者**     Walter Fan
+**状态**     持续更新中
+**更新日期** |date|
 ============ ==========================
 
 .. contents::
    :local:
 
-Target readers
+这个教程适合谁
 =====================
-Front-end or back-end engineers who is interested in webrtc technology,
+
+这份教程面向两类读者：
+
+- **初学者**：对实时音视频通信感兴趣的前端或后端工程师，想从零建立 WebRTC 的全局认知
+- **中级开发者**：已有一定网络或音视频基础，希望系统梳理 WebRTC 技术栈并进阶到 QoS、SFU 架构等深水区
+
+教程按 4 周规划，覆盖从 API 入门到多人会议系统搭建的完整主线。有基础的工程师可以在 4 周内完成；如果你是纯初学者或每周时间有限，建议把节奏拉长到 8~12 周，循序渐进，不要急于求成。
 
 
-Features
+前置知识
 =====================
-* Each knowledge point has a corresponding example
-* Start with theory and end with practice
-* Extracted some commonly used methods and patterns in the industry
 
-Problems to be solved
-==============================
-* The WebRTC technology stack is both deep and broad. In order not to get lost , a learning path is needed.
-* The client-side standards are relatively substantial, while the server-side standards are relatively poor.
-* There is a lack of some standard or easy-to-use models and methods, we need to reduce the learning curve and entry threshold
-* There are some valuable new technologies that have not yet been promoted and need to be explored
+你不需要是音视频专家，但以下基础知识会让学习更顺畅：
 
-Highlight
-==============
-* WebRTC gets started quickly from shallow to deep
-* Combined with existing protocols and practices, some common patterns and best practices are summarized
-* An in-depth look at quality control techniques including congestion control, packet recovery, etc.
-* Rich diagram, chart and examples
+- **HTML/JavaScript 基础** — 能写简单的网页和 JS 代码
+- **网络基础** — 了解 TCP/UDP、HTTP、IP 地址等基本概念
+- **命令行基础** — 能在终端执行简单命令
+
+如果你对以上内容还不太熟悉，建议先花几天时间补一补。也可以边学边补，遇到陌生概念时先了解它在系统中的作用，再逐步深入。
+
+
+教程特色
+=====================
+
+- **由浅入深** — 从 "Hello World" 级别的视频通话开始，逐步深入协议和原理
+- **理论 + 实践** — 每个知识点都配有对应的示例或动手练习
+- **中文友好** — 核心概念用中文讲解，专业术语保留英文原文
+- **丰富的图表** — 用流程图、时序图、架构图帮助理解
+- **分层设计** — 每周区分核心内容和扩展内容，便于不同水平的读者把握节奏
+
+
+学完能收获什么
+=====================
+
+.. list-table::
+   :header-rows: 1
+   :widths: 15 85
+
+   * - 阶段
+     - 能力
+   * - 第一周后
+     - 理解 WebRTC 核心概念，能跑通一个 P2P 视频通话 Demo
+   * - 第二周后
+     - 掌握传输协议栈，能用 Wireshark 分析 WebRTC 数据包
+   * - 第三周后
+     - 了解音视频编解码和处理流水线，能做简单的媒体处理
+   * - 第四周后
+     - 理解 QoS 机制，能搭建基于 SFU 的多人会议系统
+
+
+给不同读者的建议
+=====================
+
+**有前后端或网络基础的工程师**
+
+- 可以按 4 周节奏紧凑推进
+- 每天投入 1~2 小时，周末做实战项目
+- 重点关注实践产出，确保每周的里程碑项目完成
+
+**纯初学者**
+
+- 建议将 4 周计划拉长到 8~12 周
+- 遇到不熟悉的概念，先了解它在系统中的作用，不急着一次学透
+- 遇到工具不会用，先照着命令跑通，再回头补原理
+- 每周确保有一个可运行的产出，消化比速度更重要
+
+**中级开发者 / 进阶方向**
+
+- 基础部分可以快速浏览，重点关注第三、四周的深入主题
+- 建议结合源码分析（ :doc:`../6.code/index` ）和工具实践（ :doc:`../8.tool/index` ）做进一步探索
+- 可以尝试在弱网环境下做对比实验，加深对 QoS 机制的理解
+
+
+学习建议
+=====================
+
+1. **动手为先** — 每个知识点都尝试跑一下示例代码
+2. **善用工具** — Chrome 的 ``chrome://webrtc-internals`` 是你的好朋友
+3. **抓包分析** — 用 Wireshark 看看真实的 RTP/RTCP 包长什么样
+4. **不要贪多** — 按周计划推进，消化比速度更重要
+5. **记录笔记** — 把遇到的问题和解决方案记下来，这就是你的知识库

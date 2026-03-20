@@ -10,7 +10,7 @@ Network Device Interface
 ============ ==========================
 **Abstract** Network Device Interface
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

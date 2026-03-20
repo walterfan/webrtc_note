@@ -20,7 +20,7 @@ WebRTC RTCP Usage
 ============ ==========================
 **Abstract** WebRTC RTCP Usage
 **Authors**  Walter Fan
-**Status**   WIP
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 
@@ -56,7 +56,7 @@ RTCP 在多媒体终端的源端与目的端之间交换指定的消息，主要
 
 
 .. csv-table:: RTCP Packet
-   :header: "类型", "缩写", "名称“， ”参考文档"
+   :header: "类型", "缩写", "名称", "参考文档"
    :widths: 20, 20, 30, 30
 
     200, SR, Sender Report, `RFC3550`_
@@ -205,10 +205,10 @@ a value of the RTCP bandwidth below the intended average
 `RTCP Bye <rtcp_bye.html>`_
 
 
-204 Goodbye RTCP Packets (BYE)
------------------------------------
+204 Application-Defined RTCP Packets (APP)
+----------------------------------------------
 
-`RTCP Bye <rtcp_bye.html>`_
+`RTCP APP <rtcp_app.html>`_
 
 
 Reference

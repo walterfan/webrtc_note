@@ -10,7 +10,7 @@ RTCP Bye
 ============ ==========================
 **Abstract** RTCP Bye
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 
@@ -38,7 +38,7 @@ A participant sends a BYE packet to indicate that one or more sources are no lon
     |     length    |               reason for leaving (opt)       ...
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-* V, P, PT, L, SSRC/CSRC: As described for SR packets, with the packet type code 202 set.
+* V, P, PT, L, SSRC/CSRC: As described for SR packets, with the packet type code 203 set.
 * SC:5 bits, The number of SSRC/CSRC identifiers contained in this BYE packet.
 
 

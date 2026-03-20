@@ -9,7 +9,7 @@ WebRTC Elements
 ============ ==========================
 **Abstract** HTML5 for WebRTC
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

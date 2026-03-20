@@ -10,7 +10,7 @@ SRTP 协议
 ============ ==========================
 **Abstract** SRTP protocol
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

@@ -10,7 +10,7 @@ BFCP 协议
 ============ ==========================
 **Abstract** BFCP protocol
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 
@@ -149,4 +149,62 @@ BFCP Attributes
 
 
 
-TBD...
+典型交互流程
+=======================
+
+以一个简单的发言权请求场景为例：
+
+.. code-block:: text
+
+   Participant(P)                       Server(S)                        Chair(Ch)
+       |                                   |                                |
+       |--- FloorRequest ----------------->|                                |
+       |                                   |--- FloorRequestStatus -------->|
+       |                                   |   (Status: Pending)            |
+       |                                   |                                |
+       |                                   |<--- ChairAction ---------------|
+       |                                   |    (accept/deny)               |
+       |                                   |--- ChairActionAck ------------>|
+       |                                   |                                |
+       |<-- FloorRequestStatus ------------|                                |
+       |    (Status: Granted/Denied)       |                                |
+       |                                   |                                |
+
+发言权的状态可以是：
+
+- **Pending**：等待主席审批
+- **Accepted**：主席同意，等待发言权可用
+- **Granted**：已获得发言权
+- **Denied**：被拒绝
+- **Cancelled**：被取消
+- **Released**：已释放
+- **Revoked**：被撤销
+
+
+在 WebRTC/SIP 中的应用
+==========================
+
+BFCP 主要用于视频会议系统中的内容共享（Content Sharing）场景。
+在 SDP 中声明 BFCP 流：
+
+.. code-block:: text
+
+   m=application 50000 UDP/BFCP *
+   a=setup:actpass
+   a=connection:new
+   a=floorctrl:c-s
+   a=confid:4321
+   a=userid:1234
+   a=floorid:1 mstrm:2
+   m=video 50002 RTP/AVP 31
+   a=label:2
+
+其中 ``a=floorid:1 mstrm:2`` 将 floor ID 1 关联到 label 为 2 的视频流（即内容共享流）。
+
+
+参考资料
+=======================
+
+- `RFC 8855 <https://datatracker.ietf.org/doc/html/rfc8855>`_: The Binary Floor Control Protocol (BFCP)
+- `RFC 8856 <https://datatracker.ietf.org/doc/html/rfc8856>`_: SDP Format for BFCP Streams
+- `RFC 4582 <https://datatracker.ietf.org/doc/html/rfc4582>`_: The Binary Floor Control Protocol (已被 RFC 8855 废弃)

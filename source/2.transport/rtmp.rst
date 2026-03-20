@@ -10,7 +10,7 @@ RTMP 协议
 ============ ==========================
 **Abstract** RTMP protocol
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 

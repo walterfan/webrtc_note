@@ -10,7 +10,7 @@ WebRTC 传输的多路复用
 ============ ==========================
 **Abstract** WebRTC RTP
 **Authors**  Walter Fan
-**Status**   WIP as draft
+**Status**   v1.0
 **Updated**  |date|
 ============ ==========================
 
