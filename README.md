@@ -94,8 +94,9 @@ cd build/html && python -m http.server 8000
 make publish
 ```
 
-`make publish` 会先执行本地构建，然后推送当前分支并触发 GitHub Pages workflow。
-首次启用时，请在仓库设置中将 Pages 的部署来源配置为 GitHub Actions，并确保本地已经完成 `gh auth login`。
+`make publish` 会先执行本地构建，然后推送当前分支。
+GitHub Pages workflow 会在推送到 `master` 或 `main` 时自动部署站点。
+首次启用时，请在仓库设置中将 Pages 的部署来源配置为 GitHub Actions。
 
 ## 📊 项目统计
 
