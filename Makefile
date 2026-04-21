@@ -32,15 +32,25 @@ build:
 
 publish: build
 	@TMPDIR="$$(mktemp -d)"; \
-	trap 'git worktree remove --force "$$TMPDIR" >/dev/null 2>&1 || true' EXIT; \
-	git worktree add --detach "$$TMPDIR" HEAD >/dev/null; \
-	rm -rf "$$TMPDIR/$(BUILDDIR)/html"; \
-	mkdir -p "$$TMPDIR/$(BUILDDIR)"; \
-	cp -R "$(BUILDDIR)/html" "$$TMPDIR/$(BUILDDIR)/html"; \
-	touch "$$TMPDIR/$(BUILDDIR)/html/.nojekyll"; \
-	git -C "$$TMPDIR" add -f "$(BUILDDIR)/html"; \
-	git -C "$$TMPDIR" commit -m "update notes" >/dev/null; \
-	git -C "$$TMPDIR" subtree push --prefix "$(BUILDDIR)/html" origin gh-pages
+	TMPBRANCH="gh-pages-publish-$$"; \
+	trap 'git worktree remove --force "$$TMPDIR" >/dev/null 2>&1 || true; git branch -D "$$TMPBRANCH" >/dev/null 2>&1 || true' EXIT; \
+	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
+		git worktree add -B "$$TMPBRANCH" "$$TMPDIR" origin/gh-pages >/dev/null; \
+	else \
+		git worktree add --detach "$$TMPDIR" HEAD >/dev/null; \
+		git -C "$$TMPDIR" checkout --orphan "$$TMPBRANCH" >/dev/null 2>&1; \
+	fi; \
+	git -C "$$TMPDIR" rm -r -q . >/dev/null 2>&1 || true; \
+	git -C "$$TMPDIR" clean -fdx >/dev/null; \
+	cp -R "$(BUILDDIR)/html/." "$$TMPDIR/"; \
+	touch "$$TMPDIR/.nojekyll"; \
+	git -C "$$TMPDIR" add -A; \
+	if git -C "$$TMPDIR" diff --cached --quiet; then \
+		echo "No site changes to publish."; \
+	else \
+		git -C "$$TMPDIR" commit -m "update notes" >/dev/null; \
+		git -C "$$TMPDIR" push origin HEAD:gh-pages; \
+	fi
 
 .PHONY: help setup build publish Makefile
 
