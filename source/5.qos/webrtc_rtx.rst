@@ -188,7 +188,7 @@ SDP 协商示例
 
 在 SDP 中，RTX 通过 ``a=rtpmap`` 和 ``a=fmtp`` 进行协商：
 
-.. code-block:: sdp
+.. code-block:: text
 
    m=video 9 UDP/TLS/RTP/SAVPF 96 97
    a=rtpmap:96 VP8/90000

@@ -21,8 +21,19 @@ extensions = [
     'sphinx_copybutton',
 ]
 
+import os
 import shutil
-plantuml = 'java -jar /usr/local/bin/plantuml.jar' if shutil.which('java') else 'plantuml'
+
+plantuml_cmd = os.environ.get('PLANTUML') or shutil.which('plantuml')
+plantuml_jar = '/usr/local/bin/plantuml.jar'
+
+if plantuml_cmd:
+    plantuml = plantuml_cmd
+elif shutil.which('java') and os.path.exists(plantuml_jar):
+    plantuml = f'java -jar {plantuml_jar}'
+else:
+    plantuml = 'plantuml'
+
 mermaid_version = "11"
 
 templates_path = ['_templates']

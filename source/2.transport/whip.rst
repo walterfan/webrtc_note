@@ -341,7 +341,7 @@ HTTP OPTIONS: 发现 endpoint 能力
 
 WHIP 使用标准的 HTTP 认证机制，推荐使用 Bearer Token（通常是 JWT）：
 
-.. code-block:: http
+.. code-block:: text
 
    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 
@@ -428,7 +428,7 @@ WHIP 与 WHEP 的区别
 =======================
 
 完整的 WHIP 信令交换时序
------------------------
+----------------------------
 
 以下是一个完整的 WHIP 推流会话的时序图：
 
@@ -646,7 +646,7 @@ Mediasoup 通过社区贡献的 WHIP handler 支持 WHIP 协议。
    });
 
 SRS (Simple Realtime Server)
------------------------
+-----------------------------
 
 SRS 从 v5 版本开始原生支持 WHIP 协议，可以直接接收 WebRTC 推流。
 

@@ -44,15 +44,11 @@ def rst2md(c, src, dest=None):
 
 @task(hosts=default_hosts)
 def make_note(c):
-    build_cmd = 'make clean html'
+    build_cmd = "make build"
     c.local(build_cmd)
 
 
 
 @task(hosts=default_hosts)
 def publish_note(c):
-    c.local("touch ./build/html/.nojekyll")
-    c.local("git add source")
-    c.local("git add -f build")
-    c.local('git commit -m "update notes"')
-    c.local("git subtree push --prefix build/html origin gh-pages")
+    c.local("make publish")

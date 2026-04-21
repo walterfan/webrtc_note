@@ -59,21 +59,25 @@
 
 ```bash
 # macOS
-brew install python3 graphviz
-pip install virtualenv
-virtualenv -p python3 venv
-source venv/bin/activate
-pip install -r requirements.txt
+brew install python3 graphviz plantuml
+make setup
 ```
 
 ### PlantUML (可选)
 
-下载 [plantuml.jar](https://plantuml.com/download) 并放到 `/usr/local/bin/`
+默认优先使用系统里的 `plantuml` 可执行文件。
+
+```bash
+# macOS
+brew install plantuml graphviz
+```
+
+如果你希望显式指定命令，也可以在构建前设置 `PLANTUML` 环境变量。
 
 ### 构建 HTML
 
 ```bash
-make html
+make build
 # 输出在 build/html/ 目录
 ```
 
@@ -87,8 +91,11 @@ cd build/html && python -m http.server 8000
 ### 发布到 GitHub Pages
 
 ```bash
-fab publish-note
+make publish
 ```
+
+`make publish` 会先执行本地构建，然后推送当前分支并触发 GitHub Pages workflow。
+首次启用时，请在仓库设置中将 Pages 的部署来源配置为 GitHub Actions，并确保本地已经完成 `gh auth login`。
 
 ## 📊 项目统计
 

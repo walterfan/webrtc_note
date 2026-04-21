@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "webrtc-primer-tutorial"
+version = "0.1.0"
+description = "Sphinx documentation for WebRTC learning notes."
+authors = ["Walter Fan"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+sphinx = ">=7.0,<9.0"
+sphinx-rtd-theme = ">=2.0,<4.0"
+sphinxcontrib-plantuml = ">=0.30,<1.0"
+sphinxcontrib-mermaid = ">=1.0,<2.0"
+sphinx-copybutton = ">=0.5,<1.0"
+fabric = ">=3.0,<4.0"
+markdown = ">=3.0,<4.0"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
