@@ -30,27 +30,18 @@ setup:
 build:
 	@$(POETRY_PATH) poetry run sphinx-build -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-publish: build
+publish:
+	@$(POETRY_PATH) poetry run sphinx-build -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -a
 	@TMPDIR="$$(mktemp -d)"; \
-	TMPBRANCH="gh-pages-publish-$$"; \
-	trap 'git worktree remove --force "$$TMPDIR" >/dev/null 2>&1 || true; git branch -D "$$TMPBRANCH" >/dev/null 2>&1 || true' EXIT; \
-	if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then \
-		git worktree add -B "$$TMPBRANCH" "$$TMPDIR" origin/gh-pages >/dev/null; \
-	else \
-		git worktree add --detach "$$TMPDIR" HEAD >/dev/null; \
-		git -C "$$TMPDIR" checkout --orphan "$$TMPBRANCH" >/dev/null 2>&1; \
-	fi; \
-	git -C "$$TMPDIR" rm -r -q . >/dev/null 2>&1 || true; \
-	git -C "$$TMPDIR" clean -fdx >/dev/null; \
+	trap 'rm -rf "$$TMPDIR"' EXIT; \
 	cp -R "$(BUILDDIR)/html/." "$$TMPDIR/"; \
 	touch "$$TMPDIR/.nojekyll"; \
-	git -C "$$TMPDIR" add -A; \
-	if git -C "$$TMPDIR" diff --cached --quiet; then \
-		echo "No site changes to publish."; \
-	else \
-		git -C "$$TMPDIR" commit -m "update notes" >/dev/null; \
-		git -C "$$TMPDIR" push origin HEAD:gh-pages; \
-	fi
+	cd "$$TMPDIR" && \
+	git init -q && \
+	git checkout -q -b gh-pages && \
+	git add -A && \
+	git commit -q -m "update notes" && \
+	git push --force "$(shell git remote get-url origin)" gh-pages:gh-pages
 
 .PHONY: help setup build publish Makefile
 
