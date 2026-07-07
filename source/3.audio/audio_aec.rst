@@ -424,16 +424,22 @@ Render Buffer 是 AEC3 中用于缓存远端信号的环形缓冲区：
 
 AEC3 使用 PBFDAF 进行回声路径估计，核心组件包括：
 
-* ``AdaptiveFirFilter``: 自适应 FIR 滤波器，在频域中操作
-* ``MainFilter``: 主滤波器，用于生成回声估计
-* ``ShadowFilter``: 影子滤波器，使用不同的步长，用于监测主滤波器的性能
+* ``AdaptiveFirFilter``: 自适应 FIR 滤波器，在频域中操作；AEC3 用它同时实例化两路滤波器
+* **Refined Filter（精细滤波器）**: 收敛慢但稳态性能好，用于生成回声估计
+* **Coarse Filter（粗略滤波器）**: 自适应更快，用于快速跟踪回声路径变化
 * ``FilterAnalyzer``: 分析滤波器状态，检测收敛/发散
 
-主滤波器和影子滤波器的双滤波器结构是 AEC3 的一个重要设计：
+.. note::
 
-* 主滤波器使用较小的步长，收敛慢但稳态性能好
-* 影子滤波器使用较大的步长，收敛快但稳态失调大
-* 当影子滤波器性能优于主滤波器时，将影子滤波器的系数复制到主滤波器
+   早期 AEC3 曾使用 “main filter / shadow filter”（主/影子滤波器）的命名，
+   约 2020 年中被重命名为 “refined filter / coarse filter”（精细/粗略滤波器）。
+   本文以当前主干代码的命名为准。
+
+精细滤波器和粗略滤波器的双滤波器结构是 AEC3 的一个重要设计：
+
+* 精细滤波器（refined）适应较慢，收敛慢但稳态性能好
+* 粗略滤波器（coarse）适应较快，收敛快但稳态失调大
+* 当粗略滤波器性能优于精细滤波器时，将其系数复制到精细滤波器
 
 **残余回声抑制 (Residual Echo Suppression)**
 
@@ -485,16 +491,28 @@ AEC3 使用 PBFDAF 进行回声路径估计，核心组件包括：
 
 .. code-block:: cpp
 
+   // 注意：该配置结构体当前位于 api/audio/echo_canceller3_config.h
    struct EchoCanceller3Config {
      struct Filter {
-       // 主滤波器长度（以 block 为单位）
-       size_t main_length_blocks = 13;    // ~170ms @ 48kHz
-       // 影子滤波器长度
-       size_t shadow_length_blocks = 13;
-       // 主滤波器初始步长
-       float main_initial_step_size = 0.1f;
-       // 影子滤波器初始步长
-       float shadow_initial_step_size = 0.5f;
+       struct RefinedConfiguration {
+         size_t length_blocks;    // 精细滤波器长度（以 block 为单位）
+         float leakage_converged;
+         float leakage_diverged;
+         float error_floor;
+         float error_ceil;
+         float noise_gate;
+       };
+       struct CoarseConfiguration {
+         size_t length_blocks;    // 粗略滤波器长度
+         float rate;              // 粗略滤波器自适应速率（非“步长”字段）
+         float noise_gate;
+       };
+       // 稳态阶段配置
+       RefinedConfiguration refined;   // length_blocks 默认 13，约 170ms @ 48kHz
+       CoarseConfiguration  coarse;    // length_blocks 默认 13
+       // 初始（快速自适应）阶段配置
+       RefinedConfiguration refined_initial;
+       CoarseConfiguration  coarse_initial;
      } filter;
 
      struct Delay {
@@ -722,7 +740,7 @@ NLMS - Normalized Least-Mean-Squares
 
 Non-linear processing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Winner Filter
+Wiener Filter
 
 Comfort Noise
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

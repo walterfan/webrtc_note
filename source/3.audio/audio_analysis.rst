@@ -631,7 +631,7 @@ MFCC (Mel-Frequency Cepstral Coefficients) 是语音识别和说话人识别中�
 例如:
 
 - 1000 Hz → 1000 Mel (梅尔刻度以 1000 Hz = 1000 Mel 为参考点)
-- 2000 Hz → 1500 Mel
+- 2000 Hz → 1521 Mel
 - 4000 Hz → 2146 Mel
 - 8000 Hz → 2840 Mel
 
@@ -725,7 +725,7 @@ POLQA
 
 POLQA (Perceptual Objective Listening Quality Analysis, ITU-T P.863) 是 PESQ 的下一代标准:
 
-- 支持超宽带 (Super-Wideband, 48 kHz) 音频
+- 支持超宽带 (Super-Wideband, 32 kHz) 乃至全带 (Fullband, 48 kHz) 音频
 - 更好地处理时间拉伸和压缩
 - 对 VoIP 和移动网络的评估更准确
 - MOS 分数范围: 1.0-5.0

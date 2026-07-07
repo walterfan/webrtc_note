@@ -390,10 +390,10 @@ The RNN-VAD is used when complexity setting >= 7 (float), which means when compl
 VAD in G.711
 --------------------------
 
-G.711 编解码器本身不包含 VAD，但 ITU-T 定义了两种附加的 VAD/CNG 方案：
+G.711 编解码器本身不包含 VAD。需要注意区分 ITU-T 为 G.711 定义的两个附录：
 
-* **G.711 Appendix I**: 基于能量的简单 VAD
-* **G.711 Appendix II**: 更复杂的 VAD，包含噪声估计和自适应阈值
+* **G.711 Appendix I**: 丢包隐藏（PLC，Packet Loss Concealment），**不是 VAD**
+* **G.711 Appendix II**: 才是 VAD/CNG/DTX 方案，包含语音活动检测、舒适噪声生成和不连续传输
 
 
 VAD 的应用场景

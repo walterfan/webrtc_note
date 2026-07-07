@@ -255,10 +255,12 @@ Legacy AGC 使用预计算的增益表来加速增益计算。增益表将输入
 * 压缩曲线的形状
 
 
-AGC2 (AdaptiveDigitalGainController)
+AGC2 (GainController2)
 -----------------------------------------
 
-AGC2 是 WebRTC 的现代 AGC 实现，位于 ``modules/audio_processing/agc2/`` 目录下。相比 Legacy AGC，AGC2 具有更好的音质和更灵活的架构。
+AGC2 是 WebRTC 的现代 AGC 实现，位于 ``modules/audio_processing/agc2/`` 目录下，
+顶层类为 ``GainController2``（``AdaptiveDigitalGainController`` 只是其内部的一个子组件）。
+相比 Legacy AGC，AGC2 具有更好的音质和更灵活的架构。
 
 AGC2 的处理流水线由以下几个阶段组成：
 

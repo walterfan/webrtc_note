@@ -116,7 +116,7 @@ Noise reduction techniques exist for audio and images. Noise reduction algorithm
 1. 语音算法本身的丢包健壮性
 2. 多描述语音编码 MDSC(Multiple Description Speech Coding)
 3. 滑动窗算法
-4. 交织及前身纠错技术
+4. 交织及前向纠错技术 (FEC, Forward Error Correction)
 5. 丢包隐藏技术
 
 
