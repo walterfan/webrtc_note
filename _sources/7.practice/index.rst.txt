@@ -1,0 +1,47 @@
+################
+7. WebRTC 实践
+################
+
+本章记录 WebRTC 的实战经验，包括 SFU 架构设计、Janus/Pion/MediaSoup 等开源项目、FreeSWITCH 集成、音视频质量评估、安全实践等。
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 目录
+
+   overview
+   faq
+   wasm
+
+   coturn
+   apprtc
+   aiortc
+   recordrtc
+
+   sfu
+   owt
+   janus
+   janus_plugins
+   janus_modules
+   mediasoup
+   pion
+   srs
+   webrtc_transcriber
+   lazy_rabbit_meeting
+
+   freeswitch_overview
+   freeswitch_architecture
+   freeswitch_webrtc
+   freeswitch_sip
+   freeswitch_media
+   freeswitch_conference
+   freeswitch_ivr
+   freeswitch_cluster
+   freeswitch_esl
+   freeswitch_troubleshooting
+
+   video_quality
+   audio_quality
+   remote_sharing
+   remote_control
+
+   webrtc_security
