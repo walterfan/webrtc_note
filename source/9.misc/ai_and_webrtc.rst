@@ -24,10 +24,18 @@ AI 降噪 (AI-based Noise Suppression)
 传统的 ANS（Adaptive Noise Suppression）基于统计模型估计噪声谱，对非平稳噪声（如键盘声、狗叫）效果有限。
 基于深度学习的降噪模型可以在频域或时域上直接学习语音与噪声的分离：
 
-- **RNNoise**: Mozilla 开源的基于 RNN 的降噪库，模型仅 85KB，可在浏览器中实时运行
+- **RNNoise**: Xiph.Org 出品、由 Jean-Marc Valin 开发并获 Mozilla 赞助的基于 GRU 的降噪库，
+  模型仅约 85KB，可在浏览器中实时运行
 - **DTLN (Dual-Signal Transformation LSTM Network)**: 双路 LSTM 网络，分别在 STFT 域和时域处理
-- **PercepNet**: Google 提出的感知网络，结合传统 DSP 和深度学习，已集成到 WebRTC M94+
+- **PercepNet**: Jean-Marc Valin 等人（发表时供职于 Amazon，Interspeech 2020）提出的感知网络，
+  结合传统 DSP 和深度学习。它是 RNNoise 思路的发展，**并未集成进 WebRTC 官方代码**
 - **Krisp / NVIDIA Maxine**: 商业级 AI 降噪方案
+
+.. warning::
+
+   以上均为**第三方或研究成果**，都**不在 WebRTC 官方 ``modules/audio_processing/ns/`` 模块内**。
+   官方 NS（包括社区俗称的 “NS2”/``NoiseSuppressor``）始终是传统维纳滤波，未使用神经网络。
+   要在 WebRTC 里用上 AI 降噪，只能自行集成（如下方 AudioWorklet 外挂或 fork libwebrtc）。
 
 WebRTC 中的集成方式：
 
@@ -50,11 +58,21 @@ WebRTC 中的集成方式：
 AI 回声消除 (AI-based AEC)
 -------------------------------
 
-Google 在 WebRTC M125 中引入了基于神经网络的 AEC3 增强模块，相比传统自适应滤波器：
+.. warning::
+
+   需要澄清：WebRTC 官方的 **AEC3**（``modules/audio_processing/aec3/``）核心是**传统自适应滤波**
+   （自适应 FIR 滤波器、匹配滤波、ERLE 估计等），**不是神经网络回声消除**。
+   主干代码中确有一个较新的 ``aec3/neural_residual_echo_estimator/``（神经**残余回声估计**子模块），
+   但那只是 AEC3 的一个子组件，并不等于"整个 AEC 变成了神经网络"，也没有可靠证据把它对应到某个具体版本（如所谓 “M125”）。
+
+学术界与工业界（含 Google 的研究团队）确实在探索基于深度学习的回声消除 / 残余回声抑制，
+相比纯传统自适应滤波器，其潜在优势包括：
 
 - 对非线性失真的处理能力更强
 - 在双讲（double-talk）场景下表现更好
 - 对延迟变化的鲁棒性更高
+
+但这些大多属于研究或厂商自研范畴，libwebrtc 主干的核心 AEC 仍是自适应滤波实现。
 
 
 视频处理中的 AI

@@ -172,6 +172,18 @@ MMSE-LSA 的增益函数为：
 
 近年来，基于深度学习的噪声抑制方法取得了显著进展，在非平稳噪声和低信噪比条件下远超传统方法。
 
+.. note::
+
+   下面这几种方案都是**真正基于神经网络**的降噪，但它们**都不属于 WebRTC 官方的 ``ns/`` 模块**：
+
+   * **RNNoise** 在 Chromium 中以第三方库形式存在（``third_party/rnnoise``），
+     主要用于 VAD 等语音处理场景，而非替换 APM 的标准 NS。
+   * 各家会议/通话软件宣传的 “AI 降噪” 大多是**厂商在 libwebrtc 之外自研**的，
+     常见做法是通过 Audio Worklet / Insertable Streams 外挂一层模型，
+     或 fork libwebrtc 后替换 APM 里的 NS。
+
+   换句话说，想在 WebRTC 里用上 NN 降噪，现实路径是**自己集成**，而不是指望官方 ``ns/`` 模块。
+
 **RNNoise**
 
 RNNoise 是由 Mozilla 的 Jean-Marc Valin 提出的基于 RNN 的噪声抑制方案，其特点包括：
@@ -199,7 +211,8 @@ DTLN 是一种双阶段的噪声抑制网络：
 
 **PercepNet**
 
-PercepNet 是 WebRTC 团队提出的感知驱动的噪声抑制方案：
+PercepNet 是 Jean-Marc Valin 等人（发表时供职于 Amazon）提出的感知驱动噪声抑制方案，
+是 RNNoise 思路的进一步发展，**与 Google 的 WebRTC 团队无关**：
 
 * 结合了传统信号处理和深度学习
 * 在感知频率尺度（Bark scale）上操作
@@ -223,16 +236,42 @@ Multiple talker
 WebRTC ANS 实现
 ===================================
 
-WebRTC 中的噪声抑制经历了多个版本的演进，目前主要有两套实现：传统的基于信号处理的 NS 和基于神经网络的 NS2。
+.. warning::
 
-传统 NS 实现
+   **一个常见误解需要先澄清。** WebRTC 官方的噪声抑制模块（``modules/audio_processing/ns/``）
+   **自始至终都是基于传统信号处理（维纳滤波 + 噪声谱估计）的实现，从未引入过神经网络（RNN/GRU 等）。**
+   社区里有人把 2020 年前后那次代码重写（新的 C++ ``NoiseSuppressor`` 类）非正式地称为 “NS2”，
+   但那只是**对旧实现的重构**，算法内核没变，仍是维纳滤波，**不是深度学习降噪**。
+
+   如果你在 ``ns/`` 目录下找不到任何神经网络代码，这是正常的——不是"后来被删了"，
+   而是它从来就不在那里。真正基于深度学习的降噪方案（RNNoise、DTLN 等）
+   属于**第三方库或厂商自研**，详见后文"基于深度学习的噪声抑制"一节。
+
+WebRTC 中的噪声抑制经历过一次较大的代码演进，但两套实现**在算法层面都属于传统信号处理**：
+
+* **旧实现**：早期的 C 语言实现，核心接口是 ``WebRtcNs_*``（float 版）和 ``WebRtcNsx_*``（定点版），
+  由 ``NoiseSuppressionImpl`` 封装。
+* **新实现（社区俗称 NS2）**：2020 年前后重写的 C++ 版本，核心类为 ``NoiseSuppressor``，
+  代码更现代、结构更清晰，但**算法仍是维纳滤波 + 噪声谱估计**。
+
+下面分别介绍。
+
+旧 NS 实现
 ----------------------------------------------
 
-传统的噪声抑制实现位于 ``modules/audio_processing/ns/`` 目录下，核心类为 ``NoiseSuppression``。
+早期的噪声抑制实现位于 ``modules/audio_processing/ns/`` 目录下，
+核心接口为 C 语言的 ``WebRtcNs_*`` 系列函数，由 ``NoiseSuppressionImpl`` 类封装。
 
 **NS 等级 (Suppression Level)**
 
-WebRTC NS 提供了 4 个抑制等级，对应不同的噪声抑制强度：
+.. note::
+
+   等级命名在不同层面略有差异：旧的 C 接口 ``WebRtcNs_set_policy`` 只有 3 档
+   （``0: Mild``、``1: Medium``、``2: Aggressive``）；而对外的 APM 配置
+   ``AudioProcessing::Config::NoiseSuppression`` 提供 4 档（``kLow``、``kModerate``、``kHigh``、``kVeryHigh``）。
+   下表以对外的 4 档配置为准。
+
+WebRTC APM 对外提供 4 个抑制等级，对应不同的噪声抑制强度：
 
 .. list-table:: NS 抑制等级
    :header-rows: 1
@@ -320,53 +359,75 @@ NS 的处理流程如下：
    };
 
 
-NS2: 基于神经网络的噪声抑制
+新 NS 实现（NoiseSuppressor，社区俗称 NS2）
 ----------------------------------------------
 
-从 WebRTC M87 版本开始，引入了基于 RNN 的噪声抑制器 ``NoiseSuppressor``（通常称为 NS2），
-位于 ``modules/audio_processing/ns/`` 目录下。
+2020 年前后，WebRTC 把旧的 C 语言 NS 代码**重写**成了更现代的 C++ 实现，
+核心类为 ``NoiseSuppressor``，同样位于 ``modules/audio_processing/ns/`` 目录下。
+社区里有人非正式地把它称为 “NS2”。
+
+.. important::
+
+   “NS2” 只是**代码层面的重写（refactor）**，不是算法层面的换代。
+   它**依然使用维纳滤波 + 噪声谱估计**，**没有引入任何神经网络**。
+   把它理解成"基于 RNN 的降噪"是一个流传较广的误解。
 
 **NoiseSuppressor 类**
 
-``NoiseSuppressor`` 是 NS2 的核心类，其主要特点：
+从当前主干代码（``ns/noise_suppressor.cc``）可以看到，``NoiseSuppressor`` 的真实结构是：
 
-* 使用 RNN（基于 GRU）进行噪声抑制
-* 在 Bark 频率尺度上操作，减少计算量
-* 同时输出降噪信号和语音存在概率
-* 支持多通道处理
+* 每个通道持有一个 **维纳滤波器**（``WienerFilter``）、一个 **噪声估计器**（``NoiseEstimator``）
+  和一个 **语音存在概率估计器**（``SpeechProbabilityEstimator``）
+* 多通道时对各通道的维纳滤波增益取逐频点最小值（``AggregateWienerFilters``）
+* 使用 Decision-Directed 方法估计先验 SNR，再由维纳滤波公式计算频域增益
+* 相比旧实现，主要改进是代码结构、可读性和多通道支持，**算法内核不变**
 
 .. code-block:: cpp
 
-   // NoiseSuppressor 的核心接口
+   // NoiseSuppressor 的核心接口（algorithm 仍为维纳滤波，无神经网络）
    class NoiseSuppressor {
    public:
      NoiseSuppressor(const NsConfig& config,
                      size_t sample_rate_hz,
                      size_t num_channels);
 
-     // 处理一帧音频数据
+     // 估计当前帧的噪声（不修改信号）
      void Analyze(const AudioBuffer& audio);
+     // 对信号施加噪声抑制增益
      void Process(AudioBuffer* audio);
 
    private:
-     // RNN 模型权重
-     std::unique_ptr<RnnModel> rnn_model_;
-     // 每个通道的处理状态
-     std::vector<ChannelState> channel_states_;
+     // 每个通道独立维护的处理状态
+     struct ChannelState {
+       NoiseEstimator noise_estimator;                 // 噪声谱估计（Minimum Statistics / 分位数法）
+       WienerFilter wiener_filter;                     // 维纳滤波增益
+       SpeechProbabilityEstimator speech_probability_estimator;  // 语音存在概率
+       // ... 频谱缓存、prev spectrum 等
+     };
+     std::vector<std::unique_ptr<ChannelState>> channels_;
    };
 
-**NS2 的优势**
+**新实现（NS2）相比旧实现的改进**
 
-相比传统 NS，NS2 具有以下优势：
+注意这里对比的是**同为传统算法**的新旧两版实现，而不是"传统 vs 深度学习"：
 
-* 对非平稳噪声（如键盘声、背景人声）的抑制效果显著提升
-* 在低 SNR 条件下仍能保持较好的语音质量
-* 音乐噪声（Musical Noise）问题大幅减少
-* 语音失真更小
+* C++ 重写，结构清晰、更易维护
+* 原生支持多通道处理
+* 更规范的多频带（split-band）处理，适配 16/32/48kHz
+* 在同样的维纳滤波框架下，参数和实现细节有所打磨，语音质量略有提升
+
+如果需要对非平稳噪声、低 SNR 场景有质的提升，仍然需要**真正的深度学习方案**
+（见下一节），而这些方案并不在 WebRTC 官方 ``ns/`` 模块之内。
 
 
 传统方法 vs 深度学习方法对比
 ===================================
+
+.. note::
+
+   这里对比的是两类**算法**：传统信号处理 vs 深度学习。
+   请注意 WebRTC 官方的 NS（无论旧实现还是新的 ``NoiseSuppressor``/“NS2”）
+   都属于左列的"传统方法"；右列的深度学习方法对应 RNNoise、DTLN 等，需另行集成。
 
 .. list-table:: 传统 NS vs 深度学习 NS 对比
    :header-rows: 1
@@ -445,11 +506,10 @@ WebRTC 中的配置
    const constraints = {
      audio: {
        advanced: [{
-         noiseSuppression: { exact: true },
-         // 某些浏览器支持的扩展约束
-         googNoiseSuppression: true,
-         googHighpassFilter: true,
-         googNoiseSuppression2: true  // 启用 NS2
+         noiseSuppression: { exact: true }
+         // 注意：早期 Chrome 的 goog* 私有约束（如 googNoiseSuppression、
+         // googHighpassFilter 等）大多已废弃，行为不可靠，不建议在生产中使用。
+         // 标准约束只有 noiseSuppression 一个开关，无法通过约束选择"新/旧 NS 实现"。
        }]
      }
    };
@@ -542,10 +602,11 @@ WebRTC 中有专门的 ``TransientSuppressor`` 模块来处理瞬态噪声：
 WebRTC 源码
 ----------------------------------------------
 
-* WebRTC NS 模块: https://webrtc.googlesource.com/src/+/refs/heads/main/modules/audio_processing/ns/
+* WebRTC NS 模块（传统维纳滤波，非神经网络）: https://webrtc.googlesource.com/src/+/refs/heads/main/modules/audio_processing/ns/
+* WebRTC NoiseSuppressor（“NS2”，同为维纳滤波）: https://webrtc.googlesource.com/src/+/refs/heads/main/modules/audio_processing/ns/noise_suppressor.cc
 * WebRTC APM 配置: https://webrtc.googlesource.com/src/+/refs/heads/main/modules/audio_processing/include/audio_processing.h
 * WebRTC Transient Suppressor: https://webrtc.googlesource.com/src/+/refs/heads/main/modules/audio_processing/transient/
-* RNNoise 项目: https://github.com/xiph/rnnoise
+* RNNoise 项目（第三方，Chromium 中位于 third_party/rnnoise）: https://github.com/xiph/rnnoise
 
 其他资源
 ----------------------------------------------
