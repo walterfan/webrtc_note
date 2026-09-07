@@ -24,18 +24,18 @@ WebRTC NACK 实现
 NACK（Negative Acknowledgement）是 WebRTC 中最基本的丢包恢复机制。
 当接收端检测到 RTP 包丢失时，通过 RTCP NACK 消息通知发送端重传丢失的包。
 
-.. code-block:: text
+.. mermaid::
 
-   发送端                                    接收端
-     │                                         │
-     │── RTP seq=100 ─────────────────────────►│
-     │── RTP seq=101 ────── ✗ 丢失              │
-     │── RTP seq=102 ─────────────────────────►│
-     │                                         │ 检测到 seq=101 缺失
-     │◄── RTCP NACK (seq=101) ────────────────│
-     │                                         │
-     │── RTP seq=101 (重传) ─────────────────►│
-     │                                         │ 恢复完整
+   sequenceDiagram
+     participant S as 发送端
+     participant R as 接收端
+     S->>R: RTP seq=100
+     S--xR: RTP seq=101 丢失
+     S->>R: RTP seq=102
+     Note over R: 检测到 seq=101 缺失
+     R->>S: RTCP NACK seq=101
+     S->>R: RTP seq=101 重传
+     Note over R: 恢复完整
 
 相比 FEC（前向纠错），NACK 的优势是不浪费带宽（只在丢包时重传），
 劣势是增加至少一个 RTT 的延迟。
@@ -60,8 +60,8 @@ NACK 使用 RTCP 反馈消息（RFC 4585），格式如下：
    |          PID (丢失包序号)      |        BLP (位掩码)           |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-- **PID**：丢失包的序号
-- **BLP**：位掩码，指示 PID 之后的 16 个包中哪些也丢失了（1 个 NACK FCI 可报告最多 17 个丢包）
+- **PID**\ ：丢失包的序号
+- **BLP**\ ：位掩码，指示 PID 之后的 16 个包中哪些也丢失了（1 个 NACK FCI 可报告最多 17 个丢包）
 
 
 核心类
@@ -88,23 +88,19 @@ NACK 使用 RTCP 反馈消息（RFC 4585），格式如下：
 NackRequester 工作流程
 ======================================
 
-.. code-block:: text
+.. mermaid::
 
-   RTP 包到达
-       │
-       ▼
-   OnReceivedPacket(seq_num)
-       │
-       ├── seq_num == newest? → 忽略（重复包）
-       │
-       ├── seq_num < newest? → 乱序到达
-       │   └── 从 nack_list_ 中移除（已恢复）
-       │       └── 返回该包被 NACK 的次数
-       │
-       └── seq_num > newest? → 新包
-           ├── 将 (newest+1, seq_num) 之间的缺失包加入 nack_list_
-           ├── 更新 newest_seq_num_
-           └── 触发 GetNackBatch() 发送 NACK
+   flowchart TD
+     A[RTP 包到达] --> B["OnReceivedPacket seq_num"]
+     B --> C{seq_num vs newest}
+     C -->|相等| D[忽略 重复包]
+     C -->|小于 newest| E[乱序到达]
+     E --> F[从 nack_list 中移除]
+     F --> G[返回该包被 NACK 的次数]
+     C -->|大于 newest| H[新包]
+     H --> I["将 newest+1 到 seq_num 之间缺失包加入 nack_list"]
+     I --> J[更新 newest_seq_num]
+     J --> K["GetNackBatch 发送 NACK"]
 
 关键源码：
 
@@ -218,21 +214,21 @@ WebRTC 会转为请求关键帧（PLI/FIR），重新同步视频流。
    };
 
 重传的包通常通过 RTX（Retransmission）通道发送，使用独立的 SSRC 和 PT，
-避免与原始流混淆。详见 :doc:`webrtc_rtx_code`。
+避免与原始流混淆。详见 :doc:`webrtc_rtx_code`\ 。
 
 
 NACK 与其他丢包恢复的协同
 ======================================
 
-.. code-block:: text
+.. mermaid::
 
-   丢包检测
-       │
-       ├── FEC 能恢复？ ──► 直接恢复，不发 NACK
-       │
-       ├── RTX 重传 ──► 通过 NACK 触发，独立 SSRC 发送
-       │
-       └── 都无法恢复 ──► 请求关键帧 (PLI/FIR)
+   flowchart TD
+     A[丢包检测] --> B{FEC 能恢复?}
+     B -->|是| C[直接恢复，不发 NACK]
+     B -->|否| D[RTX 重传]
+     D --> E[通过 NACK 触发，独立 SSRC 发送]
+     D --> F{仍无法恢复?}
+     F -->|是| G["请求关键帧 PLI/FIR"]
 
 WebRTC 的策略是优先使用 FEC 恢复（零延迟），FEC 无法恢复时使用 NACK 请求重传，
 大面积丢包时退化为请求关键帧。

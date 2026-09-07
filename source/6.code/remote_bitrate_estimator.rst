@@ -26,47 +26,19 @@ RemoteBitrateEstimator 是 WebRTC 接收端带宽估计的核心组件。
 它通过分析接收到的 RTP 包的到达时间和大小，估算网络可用带宽，
 并检测网络是否过载（Overuse）。
 
-在 GCC（Google Congestion Control）算法中，它属于 **基于延迟的估计器**（Delay-based estimator），
+在 GCC（Google Congestion Control）算法中，它属于 **基于延迟的估计器**\ （Delay-based estimator），
 与发送端的基于丢包估计器协同工作。
 
-.. code-block:: text
+.. mermaid::
 
-   ┌────────────────────────────────────────────────────┐
-   │                    接收端                           │
-   │                                                    │
-   │  RTP 包到达                                        │
-   │      │                                             │
-   │      ▼                                             │
-   │  ┌─────────────────────────────────┐               │
-   │  │   InterArrival                  │               │
-   │  │   计算包间到达时间差            │               │
-   │  │   和发送时间差                  │               │
-   │  └──────────┬──────────────────────┘               │
-   │             │ (arrival_delta, send_delta)           │
-   │             ▼                                      │
-   │  ┌─────────────────────────────────┐               │
-   │  │   OveruseEstimator              │               │
-   │  │   Kalman 滤波估计传播延迟斜率   │               │
-   │  └──────────┬──────────────────────┘               │
-   │             │ (offset)                             │
-   │             ▼                                      │
-   │  ┌─────────────────────────────────┐               │
-   │  │   OveruseDetector               │               │
-   │  │   判断当前网络状态              │               │
-   │  │   Normal / Overuse / Underuse   │               │
-   │  └──────────┬──────────────────────┘               │
-   │             │                                      │
-   │             ▼                                      │
-   │  ┌─────────────────────────────────┐               │
-   │  │   AimdRateControl               │               │
-   │  │   AIMD 算法调整估计比特率       │               │
-   │  │   Overuse → 乘性降低 (×0.85)    │               │
-   │  │   Underuse → 加性增加           │               │
-   │  └──────────┬──────────────────────┘               │
-   │             │                                      │
-   │             ▼                                      │
-   │  通过 REMB / TWCC 反馈给发送端                     │
-   └────────────────────────────────────────────────────┘
+   flowchart TD
+     subgraph Recv[接收端]
+       RTP[RTP 包到达] --> IA["InterArrival<br/>计算包间到达时间差和发送时间差"]
+       IA --> OE["OveruseEstimator<br/>Kalman 滤波估计传播延迟斜率"]
+       OE --> OD["OveruseDetector<br/>Normal / Overuse / Underuse"]
+       OD --> AIMD["AimdRateControl<br/>AIMD 调整估计比特率"]
+       AIMD --> FB["通过 REMB / TWCC 反馈给发送端"]
+     end
 
 
 带宽使用状态
@@ -125,9 +97,9 @@ InterArrival
    arrival_delta = arrival_time[i] - arrival_time[i-1]
    delay_delta   = arrival_delta - send_delta
 
-- ``delay_delta > 0``：包在网络中排队时间增加，可能过载
-- ``delay_delta < 0``：包在网络中排队时间减少，网络有余量
-- ``delay_delta ≈ 0``：网络稳定
+- ``delay_delta > 0``\ ：包在网络中排队时间增加，可能过载
+- ``delay_delta < 0``\ ：包在网络中排队时间减少，网络有余量
+- ``delay_delta ≈ 0``\ ：网络稳定
 
 OveruseEstimator
 --------------------------
@@ -151,8 +123,8 @@ AimdRateControl
 
 根据检测结果调整估计比特率（AIMD = Additive Increase Multiplicative Decrease）：
 
-- **Overuse**：比特率 *= 0.85（乘性降低，快速退让）
-- **Normal/Underuse**：比特率 += increment（加性增加，缓慢探测）
+- **Overuse**\ ：比特率 \*= 0.85（乘性降低，快速退让）
+- **Normal/Underuse**\ ：比特率 += increment（加性增加，缓慢探测）
 
 这与 TCP 的 AIMD 拥塞控制思想一致。
 
@@ -175,10 +147,10 @@ AimdRateControl
      - 接收端只反馈包到达时间，带宽估计移到发送端
 
 现代 WebRTC 主要使用 TWCC，发送端的 ``SendSideBandwidthEstimation`` 取代了
-接收端的 ``RemoteBitrateEstimator``。但理解 RemoteBitrateEstimator 的算法原理
+接收端的 ``RemoteBitrateEstimator``\ 。但理解 RemoteBitrateEstimator 的算法原理
 对掌握 GCC 仍然至关重要，因为核心算法（InterArrival → Kalman → AIMD）未变。
 
-详见 :doc:`webrtc_bwe_remb` 和 :doc:`../5.qos/webrtc_twcc`。
+详见 :doc:`webrtc_bwe_remb` 和 :doc:`../5.qos/webrtc_twcc`\ 。
 
 
 参考资料

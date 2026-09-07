@@ -20,7 +20,7 @@
 开源项目速查
 ==========================
 
-学习 WebRTC 离不开这些优秀的开源项目。详细内容参见 :doc:`../7.practice/index`。
+学习 WebRTC 离不开这些优秀的开源项目。详细内容参见 :doc:`../7.practice/index`\ 。
 
 .. list-table::
    :header-rows: 1
@@ -51,13 +51,13 @@
      - C++/JS
      - Intel 开源的 WebRTC 工具包
 
-**参考阅读**：:doc:`../7.practice/janus` · :doc:`../7.practice/mediasoup` · :doc:`../7.practice/pion` · :doc:`../7.practice/coturn` · :doc:`../7.practice/aiortc` · :doc:`../7.practice/srs` · :doc:`../7.practice/owt`
+**参考阅读**\ ：:doc:`../7.practice/janus` · :doc:`../7.practice/mediasoup` · :doc:`../7.practice/pion` · :doc:`../7.practice/coturn` · :doc:`../7.practice/aiortc` · :doc:`../7.practice/srs` · :doc:`../7.practice/owt`
 
 
 常用工具速查
 ==========================
 
-详细内容参见 :doc:`../8.tool/index`。
+详细内容参见 :doc:`../8.tool/index`\ 。
 
 .. list-table::
    :header-rows: 1
@@ -82,13 +82,13 @@
    * - **Linux TC**
      - 流量控制，模拟弱网环境（丢包、延迟、抖动）
 
-**参考阅读**：:doc:`../8.tool/wireshark` · :doc:`../8.tool/tcpdump` · :doc:`../8.tool/ffmpeg` · :doc:`../8.tool/gstreamer` · :doc:`../8.tool/sox` · :doc:`../8.tool/iperf` · :doc:`../8.tool/tc`
+**参考阅读**\ ：:doc:`../8.tool/wireshark` · :doc:`../8.tool/tcpdump` · :doc:`../8.tool/ffmpeg` · :doc:`../8.tool/gstreamer` · :doc:`../8.tool/sox` · :doc:`../8.tool/iperf` · :doc:`../8.tool/tc`
 
 
 关联技术
 ==========================
 
-想要深入理解 WebRTC 的底层原理，这些基础知识会很有帮助。详细内容参见 :doc:`../9.misc/index`。
+想要深入理解 WebRTC 的底层原理，这些基础知识会很有帮助。详细内容参见 :doc:`../9.misc/index`\ 。
 
 .. list-table::
    :header-rows: 1

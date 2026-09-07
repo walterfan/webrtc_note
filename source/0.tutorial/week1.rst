@@ -11,7 +11,7 @@
 **作者**     Walter Fan
 **状态**     持续更新中
 **更新日期** |date|
-=============================  =============================
+============ =============================
 
 .. contents::
     :local:
@@ -38,118 +38,118 @@
 Day 1：WebRTC 是什么
 --------------------------
 
-**目标**：建立对 WebRTC 的整体认知
+**目标**\ ：建立对 WebRTC 的整体认知
 
-**学习内容**：
+**学习内容**\ ：
 
 - WebRTC 的历史和发展
 - WebRTC 的核心能力：音视频通话、屏幕共享、数据传输
 - WebRTC 的架构：浏览器端 vs 服务器端
 - WebRTC 涉及的标准和规范
 
-**动手练习**：
+**动手练习**\ ：
 
 - 打开 Chrome，访问 https://appr.tc 体验一次 WebRTC 通话
-- 打开 ``chrome://webrtc-internals``，观察通话过程中的统计数据
+- 打开 ``chrome://webrtc-internals``\ ，观察通话过程中的统计数据
 
-**思考问题**：
+**思考问题**\ ：
 
 - WebRTC 为什么需要信令服务器？
 - 音视频数据是通过信令传输的吗？
 - WebRTC 为什么需要 ICE？
 
-**参考阅读**：:doc:`../1.basic/overview` · :doc:`../1.basic/web_browser` · :doc:`../1.basic/webrtc_spec`
+**参考阅读**\ ：:doc:`../1.basic/overview` · :doc:`../1.basic/web_browser` · :doc:`../1.basic/webrtc_spec`
 
 
 Day 2：WebRTC API 入门
 --------------------------
 
-**目标**：掌握三大核心 API
+**目标**\ ：掌握三大核心 API
 
-**学习内容**：
+**学习内容**\ ：
 
 - ``getUserMedia`` — 获取摄像头和麦克风
 - ``RTCPeerConnection`` — 建立点对点连接
 - ``RTCDataChannel`` — 传输任意数据
 - WebRTC 的关键元素和实体
 
-**动手练习**：
+**动手练习**\ ：
 
 - 写一个网页，用 ``getUserMedia`` 获取摄像头画面并显示
 - 尝试获取不同分辨率和帧率的视频流
 
-**参考阅读**：:doc:`../1.basic/webrtc_api` · :doc:`../1.basic/webrtc_elements` · :doc:`../1.basic/webrtc_entities`
+**参考阅读**\ ：:doc:`../1.basic/webrtc_api` · :doc:`../1.basic/webrtc_elements` · :doc:`../1.basic/webrtc_entities`
 
 
 Day 3：媒体捕获与录制
 --------------------------
 
-**目标**：掌握媒体采集的各种方式
+**目标**\ ：掌握媒体采集的各种方式
 
-**学习内容**：
+**学习内容**\ ：
 
 - 摄像头和麦克风的捕获（Media Capture）
 - 屏幕共享（Screen Capture）
 - 媒体录制（MediaRecorder API）
 
-**动手练习**：
+**动手练习**\ ：
 
 - 实现屏幕共享功能
 - 实现录制功能，把视频保存为 WebM 文件
 
-**参考阅读**：:doc:`../1.basic/media_capture` · :doc:`../1.basic/screen_capture` · :doc:`../1.basic/media_record`
+**参考阅读**\ ：:doc:`../1.basic/media_capture` · :doc:`../1.basic/screen_capture` · :doc:`../1.basic/media_record`
 
 
 Day 4：信令与 SDP
 --------------------------
 
-**目标**：理解 WebRTC 连接建立的核心机制
+**目标**\ ：理解 WebRTC 连接建立的核心机制
 
-**学习内容**：
+**学习内容**\ ：
 
 - 为什么需要信令服务器
 - SDP（Session Description Protocol）的结构和含义
 - Offer/Answer 模型
 - ICE Candidate 的交换
 
-**动手练习**：
+**动手练习**\ ：
 
 - 用 ``console.log`` 打印出 SDP 内容，逐行分析
 - 手动复制粘贴 SDP 完成一次 "手动信令" 的连接
 
-**学习提示**：
+**学习提示**\ ：
 
 - 理解 SDP 不需要逐字段背诵，重点掌握 Offer/Answer 模型和 ICE Candidate 交换的流程
 - "手动信令"（手动复制粘贴 SDP）是理解信令流程最直观的方式
 
-**参考阅读**：:doc:`../1.basic/webrtc_signal` · :doc:`../1.basic/webrtc_sdp` · :doc:`../1.basic/webrtc_flow`
+**参考阅读**\ ：:doc:`../1.basic/webrtc_signal` · :doc:`../1.basic/webrtc_sdp` · :doc:`../1.basic/webrtc_flow`
 
 
 Day 5：WebRTC 呼叫流程
 --------------------------
 
-**目标**：串联整个连接建立过程
+**目标**\ ：串联整个连接建立过程
 
-**学习内容**：
+**学习内容**\ ：
 
 - 完整的 WebRTC 呼叫流程（从 createOffer 到媒体流通）
 - WebRTC 扩展能力
 - WebRTC 统计信息（getStats API）
 
-**动手练习**：
+**动手练习**\ ：
 
 - 画一张 WebRTC 呼叫的时序图
 - 用 ``getStats()`` 获取连接的实时统计数据
 
-**参考阅读**：:doc:`../1.basic/webrtc_flow` · :doc:`../1.basic/webrtc_extension` · :doc:`../1.basic/webrtc_stats`
+**参考阅读**\ ：:doc:`../1.basic/webrtc_flow` · :doc:`../1.basic/webrtc_extension` · :doc:`../1.basic/webrtc_stats`
 
 
 Day 6-7：实战 — P2P 视频通话
 -------------------------------
 
-**目标**：完成本周的里程碑项目 🎯
+**目标**\ ：完成本周的里程碑项目 🎯
 
-**实战任务**：
+**实战任务**\ ：
 
 搭建一个完整的 P2P 视频通话应用：
 
@@ -162,9 +162,9 @@ Day 6-7：实战 — P2P 视频通话
 
    如果你是初学者，可以先用两个标签页 + 手动复制 SDP 的方式跑通连接，建立直观感受后再实现信令服务器。
 
-**参考阅读**：:doc:`../1.basic/video_chat` · :doc:`../1.basic/webrtc_capacity`
+**参考阅读**\ ：:doc:`../1.basic/video_chat` · :doc:`../1.basic/webrtc_capacity`
 
-**检查清单**：
+**检查清单**\ ：
 
 - [ ] 能获取本地摄像头画面
 - [ ] 能通过信令服务器交换 SDP

@@ -183,15 +183,13 @@ API 中最主要的就是 MediaStream, RTCPeerConnection 和 DataChannel.
 
 我们从包头的第一个字节就能够区分
 
-::
+.. mermaid::
 
-                      +----------------+
-                      | 127 < B < 192 -+--> forward to RTP
-                      |                |
-          packet -->  |  19 < B < 64  -+--> forward to DTLS
-                      |                |
-                      |       B < 2   -+--> forward to STUN
-                      +----------------+
+   flowchart TB
+     pkt[packet] --> chk{"First byte B"}
+     chk -->|"127 < B < 192"| rtp[forward to RTP]
+     chk -->|"19 < B < 64"| dtls[forward to DTLS]
+     chk -->|"B < 2"| stun[forward to STUN]
 
 代码示例如下:
 
@@ -372,7 +370,7 @@ simulcast 会有多个 SSRC。 更好的方法是用一个 ID 将它们联系起
 
 ..
 
-   Offerers and answerers `RFC3264`_ can associate identification-tags
+   Offerers and answerers `RFC3264`_\  can associate identification-tags
    with “m=” sections within offers and answers, using the procedures
    in `RFC5888`_. Each identification-tag uniquely represents an “m=”
    section.
@@ -418,26 +416,24 @@ simulcast 会有多个 SSRC。 更好的方法是用一个 ID 将它们联系起
 -  `RFC8860`_: Sending Multiple Types of Media in a Single RTP Session
 -  `RFC8872`_: Guidelines for Using the Multiplexing Features of RTP to
    Support Multiple Media Streams
--  `RFC 8834`_: Media Transport and Use of RTP in WebRTC
--  `RFC 5245`_: Interactive Connectivity Establishment (ICE): A Protocol
+-  `RFC8834`_: Media Transport and Use of RTP in WebRTC
+-  `RFC5245`_: Interactive Connectivity Establishment (ICE): A Protocol
    for Network Address Translator (NAT) Traversal for Offer/Answer
    Protocols
--  `RFC 8445`_: Interactive Connectivity Establishment (ICE): A Protocol
+-  `RFC8445`_: Interactive Connectivity Establishment (ICE): A Protocol
    for Network Address Translator (NAT) Traversal
--  `RFC 8489`_: Session Traversal Utilities for NAT (STUN)
--  `RFC 5766`_: Traversal Using Relays around NAT (TURN):Relay
+-  `RFC8489`_: Session Traversal Utilities for NAT (STUN)
+-  `RFC5766`_: Traversal Using Relays around NAT (TURN):Relay
    Extensions to Session Traversal Utilities for NAT (STUN)
--  `RFC 5888`_: The Session Description Protocol (SDP) Grouping
+-  `RFC5888`_: The Session Description Protocol (SDP) Grouping
    Framework
 
 
 
 .. _RFC5888: https://www.rfc-editor.org/rfc/rfc8843#RFC5888
 .. _RFC8851: https://www.rfc-editor.org/rfc/rfc8851.html
-.. _RFC 8834: https://tools.ietf.org/html/rfc8834
-.. _RFC 5245: http://tools.ietf.org/html/rfc5245
-.. _RFC 8445: https://tools.ietf.org/html/rfc8445
-.. _RFC 8489: https://tools.ietf.org/html/rfc8489
-.. _RFC 5766: https://tools.ietf.org/html/rfc5766
-.. _RFC 5888: https://tools.ietf.org/html/rfc5888
+.. _RFC8834: https://tools.ietf.org/html/rfc8834
+.. _RFC5245: http://tools.ietf.org/html/rfc5245
+.. _RFC8489: https://tools.ietf.org/html/rfc8489
+.. _RFC5766: https://tools.ietf.org/html/rfc5766
 

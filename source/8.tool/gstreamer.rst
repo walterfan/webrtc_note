@@ -174,9 +174,9 @@ Pad
 
 Pad 是 Element 的输入/输出端口：
 
-- **Sink Pad**：数据输入
-- **Source Pad**：数据输出
-- **Sometimes Pad**：运行时才创建的动态 Pad（如 ``decodebin``）
+- **Sink Pad**\ ：数据输入
+- **Source Pad**\ ：数据输出
+- **Sometimes Pad**\ ：运行时才创建的动态 Pad（如 ``decodebin``\ ）
 
 Caps (Capabilities)
 --------------------------
@@ -203,7 +203,7 @@ gst-launch-1.0
 
 用于快速构建和测试 pipeline 的命令行工具。
 
-**基本语法**：
+**基本语法**\ ：
 
 .. code-block:: bash
 

@@ -60,7 +60,7 @@ STUN 头部包含以下字段：
 
 * **Message Type (消息类型)**: 14 位，标识消息的类别和方法
 * **Message Length (消息长度)**: 16 位，表示 STUN 负载的总长度（不包括 20 字节头部），必须是 4 的倍数
-* **Magic Cookie**: 固定值 ``0x2112A442``，用于区分新旧版本的 STUN 消息
+* **Magic Cookie**: 固定值 ``0x2112A442``\ ，用于区分新旧版本的 STUN 消息
 * **Transaction ID**: 96 位（12 字节），用于关联请求和响应
 
 .. code-block::
@@ -158,7 +158,7 @@ XOR 运算规则：
 
 **USERNAME (0x0006)**
 
-用于消息完整性检查的用户名。在 ICE 连接性检查中，USERNAME 的格式为 ``ufrag:ufrag``，由远端和本地的 ICE 用户名片段组成。
+用于消息完整性检查的用户名。在 ICE 连接性检查中，USERNAME 的格式为 ``ufrag:ufrag``\ ，由远端和本地的 ICE 用户名片段组成。
 
 **MESSAGE-INTEGRITY (0x0008)**
 

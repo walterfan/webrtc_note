@@ -100,28 +100,35 @@ FreeSWITCH 的事件系统是其架构的核心，所有内部状态变化都通
 ESL（Event Socket Library）允许外部程序通过 TCP 连接订阅和发送事件，
 这使得开发者可以使用任何编程语言来控制 FreeSWITCH。
 
-.. code-block:: text
+.. mermaid::
 
-    +---------------------------------------------------+
-    |                  FreeSWITCH Core                   |
-    |                                                   |
-    |  +----------+  +---------+  +------------------+  |
-    |  | Session  |  | Event   |  | Thread           |  |
-    |  | Manager  |  | System  |  | Manager          |  |
-    |  +----------+  +---------+  +------------------+  |
-    |                                                   |
-    |  +----------+  +---------+  +------------------+  |
-    |  | Memory   |  | DB      |  | Module           |  |
-    |  | Pool     |  | Layer   |  | Loader           |  |
-    |  +----------+  +---------+  +------------------+  |
-    +---------------------------------------------------+
-           |              |               |
-    +------+------+ +-----+-----+ +-------+-------+
-    |  Endpoints  | | Codecs    | | Applications  |
-    | mod_sofia   | | mod_opus  | | mod_conference|
-    | mod_verto   | | mod_h264  | | mod_voicemail |
-    | mod_skinny  | | mod_g722  | | mod_callcenter|
-    +-------------+ +-----------+ +---------------+
+   flowchart TB
+     subgraph CORE["FreeSWITCH Core"]
+       SM[Session Manager]
+       ES[Event System]
+       TM[Thread Manager]
+       MP[Memory Pool]
+       DB[DB Layer]
+       ML[Module Loader]
+     end
+     subgraph EP["Endpoints"]
+       SO[mod_sofia]
+       VE[mod_verto]
+       SK[mod_skinny]
+     end
+     subgraph CO["Codecs"]
+       OP[mod_opus]
+       H264[mod_h264]
+       G722[mod_g722]
+     end
+     subgraph APP["Applications"]
+       CF[mod_conference]
+       VM[mod_voicemail]
+       CC[mod_callcenter]
+     end
+     CORE --> EP
+     CORE --> CO
+     CORE --> APP
 
 
 与其他项目的比较
@@ -258,9 +265,11 @@ WebRTC 网关
 
 FreeSWITCH 可以作为 WebRTC 网关，将浏览器客户端与传统 SIP/PSTN 网络桥接：
 
-.. code-block:: text
+.. mermaid::
 
-    浏览器 (WebRTC) <--WSS/Verto--> FreeSWITCH <--SIP--> PSTN/SIP 网络
+   flowchart LR
+     B["浏览器 WebRTC"] -->|WSS/Verto| FS[FreeSWITCH]
+     FS -->|SIP| PSTN["PSTN/SIP 网络"]
 
 
 安装方法

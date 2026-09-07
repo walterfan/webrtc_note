@@ -95,10 +95,10 @@
      - 主题
      - 说明
    * - 核心
-     - ``getUserMedia``、``RTCPeerConnection``、信令、SDP、ICE
+     - ``getUserMedia``\ 、``RTCPeerConnection``\ 、信令、SDP、ICE
      - 跑通最小 Demo 的必备知识
    * - 核心
-     - ``chrome://webrtc-internals``、``getStats()``
+     - ``chrome://webrtc-internals``\ 、``getStats()``
      - 排查问题的基本工具
    * - 重要
      - RTP/RTCP、DTLS/SRTP、DataChannel、编解码基础

@@ -22,31 +22,35 @@ WebRTC Pacer
 =============
 
 Pacer（发送节奏控制器）是 WebRTC 拥塞控制中的关键组件。
-它的核心作用是**将突发的编码输出平滑为均匀的发送速率**，避免网络瞬时拥塞。
+它的核心作用是**将突发的编码输出平滑为均匀的发送速率**\ ，避免网络瞬时拥塞。
 
 没有 Pacer 的话，编码器输出一个关键帧（可能 50KB+）会一次性将所有 RTP 包发送出去，
 造成网络突发拥塞和丢包。Pacer 则将这些包排入队列，按照目标比特率匀速发送。
 
-.. code-block:: text
+.. mermaid::
 
-   编码器输出（突发）                    Pacer 输出（平滑）
-
-   ┃█████████████┃                    ┃██ ██ ██ ██ ██ ██ ██┃
-   ┃             ┃                    ┃                     ┃
-   ┃    ████     ┃                    ┃██ ██ ██ ██          ┃
-   ┃  ██    ██   ┃       ──►         ┃██ ██ ██ ██          ┃
-   ┃██        ██ ┃                    ┃██ ██ ██ ██          ┃
-   ━━━━━━━━━━━━━━━ 时间               ━━━━━━━━━━━━━━━━━━━━━━ 时间
+   flowchart LR
+     subgraph Burst[编码器输出 突发]
+       B1[大关键帧突发]
+       B2[普通帧]
+     end
+     subgraph Smooth[Pacer 输出 平滑]
+       S1[匀速发包]
+     end
+     Burst --> Smooth
 
 
 在 WebRTC 中的位置
 ========================
 
-.. code-block:: text
+.. mermaid::
 
-   编码器 → RTP 打包 → Pacer 队列 → SRTP 加密 → ICE/UDP 发送
-                            ↑
-                     GCC 带宽估计 → 设定发送速率
+   flowchart LR
+     Enc[编码器] --> RTP[RTP 打包]
+     RTP --> PQ[Pacer 队列]
+     PQ --> SRTP[SRTP 加密]
+     SRTP --> ICE[ICE/UDP 发送]
+     GCC[GCC 带宽估计] -->|设定发送速率| PQ
 
 
 核心类
@@ -92,15 +96,13 @@ RtpPacketPacer
 
 主要调用链：
 
-.. code-block:: text
+.. mermaid::
 
-   TaskQueuePacedSender::EnqueuePackets()
-     → PacingController::EnqueuePacket()
-
-   TaskQueuePacedSender::MaybeProcessPackets()  (定时器触发)
-     → PacingController::ProcessPackets()
-       → PacketRouter::SendPacket()
-         → ModuleRtpRtcpImpl::TrySendPacket()
+   flowchart TD
+     A["TaskQueuePacedSender::EnqueuePackets()"] --> B["PacingController::EnqueuePacket()"]
+     C["TaskQueuePacedSender::MaybeProcessPackets()"] --> D["PacingController::ProcessPackets()"]
+     D --> E["PacketRouter::SendPacket()"]
+     E --> F["ModuleRtpRtcpImpl::TrySendPacket()"]
 
 
 包类型与优先级
@@ -150,24 +152,19 @@ Pacer 按照包类型分配不同的发送优先级：
 
 Pacer 的发送速率由 GCC（Google Congestion Control）算法决定：
 
-.. code-block:: text
+.. mermaid::
 
-   GCC 估计可用带宽
-       │
-       ▼
-   设定 pacing_rate = estimated_bitrate × multiplier (通常 2.5x)
-       │
-       ▼
-   Pacer 按照 pacing_rate 匀速发送队列中的包
-       │
-       ▼
-   如果队列为空且带宽有富余 → 发送 padding 包以探测更高带宽
+   flowchart TD
+     A[GCC 估计可用带宽] --> B["设定 pacing_rate = estimated_bitrate × multiplier"]
+     B --> C[Pacer 按 pacing_rate 匀速发送]
+     C --> D{队列为空且带宽有富余?}
+     D -->|是| E[发送 padding 包探测更高带宽]
 
 关键参数：
 
-- **Pacing rate**：通常是目标比特率的 2.5 倍（允许突发恢复，同时不过度占用带宽）
-- **Padding rate**：当没有媒体数据时的填充发送速率，用于保持带宽估计准确
-- **Max queue time**：队列中包的最大等待时间（默认 2 秒），超过则丢弃
+- **Pacing rate**\ ：通常是目标比特率的 2.5 倍（允许突发恢复，同时不过度占用带宽）
+- **Padding rate**\ ：当没有媒体数据时的填充发送速率，用于保持带宽估计准确
+- **Max queue time**\ ：队列中包的最大等待时间（默认 2 秒），超过则丢弃
 
 .. code-block:: c++
 
@@ -183,21 +180,13 @@ Probe 探测
 Pacer 还负责带宽探测（Probing）。在连接初期或带宽变化时，
 GCC 会要求 Pacer 以特定速率发送探测包来估算可用带宽：
 
-.. code-block:: text
+.. mermaid::
 
-   连接建立
-     │
-     ▼
-   Probe Cluster 1: 以 900 kbps 发送 5 个包
-     │
-     ▼
-   Probe Cluster 2: 以 1800 kbps 发送 5 个包
-     │
-     ▼
-   根据接收端反馈（TWCC）计算实际可用带宽
-     │
-     ▼
-   进入正常 GCC 速率控制
+   flowchart TD
+     A[连接建立] --> B["Probe Cluster 1: 以 900 kbps 发送 5 个包"]
+     B --> C["Probe Cluster 2: 以 1800 kbps 发送 5 个包"]
+     C --> D[根据 TWCC 反馈计算实际可用带宽]
+     D --> E[进入正常 GCC 速率控制]
 
 探测包优先使用排队中的媒体包，只在媒体包不足时才补充 padding。
 
@@ -205,22 +194,14 @@ GCC 会要求 Pacer 以特定速率发送探测包来估算可用带宽：
 与 GCC 的协作
 ==============
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-   │  Encoder    │     │    Pacer     │     │   Network   │
-   │             │     │              │     │             │
-   │ 输出 RTP 包 ──────► 排队 + 调度  ──────► 发送        │
-   │             │     │     ↑        │     │             │
-   └─────────────┘     │  设定速率    │     └──────┬──────┘
-                       │     ↑        │            │
-                       └─────┼────────┘            │
-                             │                     │
-                       ┌─────┴────────┐     ┌──────▼──────┐
-                       │     GCC      │     │  Receiver   │
-                       │              │◄────│  TWCC/REMB  │
-                       │ 估计可用带宽  │     │  反馈       │
-                       └──────────────┘     └─────────────┘
+   flowchart LR
+     Enc[Encoder] -->|输出 RTP 包| Pacer[Pacer 排队加调度]
+     Pacer -->|发送| Net[Network]
+     Net --> Recv[Receiver]
+     Recv -->|TWCC/REMB 反馈| GCC[GCC 估计可用带宽]
+     GCC -->|设定速率| Pacer
 
 
 参考资料

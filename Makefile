@@ -5,6 +5,7 @@ SHELL         := /bin/bash
 SPHINXOPTS    ?=
 SOURCEDIR     = source
 BUILDDIR      = build
+PORT          ?= 9028
 POETRY_PATH   = export PATH="$(HOME)/.local/bin:$$PATH";
 
 # Put it first so that "make" without argument is like "make help".
@@ -12,6 +13,7 @@ help:
 	@printf "Project targets:\n"
 	@printf "  setup       install Poetry if needed and run 'poetry install'\n"
 	@printf "  build       build HTML docs via 'poetry run sphinx-build -M html'\n"
+	@printf "  serve       serve generated HTML on http://127.0.0.1:$(PORT)\n"
 	@printf "  publish     build docs and publish local HTML to the 'gh-pages' branch\n\n"
 	@if command -v poetry >/dev/null 2>&1 || [ -x "$(HOME)/.local/bin/poetry" ]; then \
 		printf "Sphinx targets:\n"; \
@@ -30,6 +32,14 @@ setup:
 build:
 	@$(POETRY_PATH) poetry run sphinx-build -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+serve:
+	@if [ ! -d "$(BUILDDIR)/html" ]; then \
+		printf "HTML not found in $(BUILDDIR)/html. Run 'make build' first.\n"; \
+		exit 1; \
+	fi
+	@printf "Serving docs at http://127.0.0.1:$(PORT)\n"
+	@python3 -m http.server $(PORT) --directory "$(BUILDDIR)/html"
+
 publish:
 	@$(POETRY_PATH) poetry run sphinx-build -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -a
 	@TMPDIR="$$(mktemp -d)"; \
@@ -43,7 +53,7 @@ publish:
 	git commit -q -m "update notes" && \
 	git push --force "$(shell git remote get-url origin)" gh-pages:gh-pages
 
-.PHONY: help setup build publish Makefile
+.PHONY: help setup build serve publish Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).

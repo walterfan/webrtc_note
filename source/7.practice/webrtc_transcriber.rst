@@ -29,7 +29,7 @@ WebRTC Transcriber 是一个基于 Pion WebRTC 构建的实时语音转写应用
 
 项目同时支持纯录音模式（recorder），可以只录制 WAV 文件而不做转写。
 
-**项目地址**：https://github.com/walterfan/webrtc-transcriber
+**项目地址**\ ：https://github.com/walterfan/webrtc-transcriber
 
 .. list-table:: 核心特性
    :header-rows: 1
@@ -71,18 +71,17 @@ WebRTC Transcriber 是一个基于 Pion WebRTC 构建的实时语音转写应用
 架构
 ========================
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────┐     WebRTC      ┌─────────────────┐     Audio      ┌──────────────┐
-   │   Browser   │ ◄─────────────► │  Go Server      │ ─────────────► │  Whisper AI  │
-   │  (Vue 3)    │                 │  (Pion WebRTC)  │                │  (or Cloud)  │
-   └─────────────┘                 └─────────────────┘                └──────────────┘
-          │                               │                                  │
-          │    DataChannel               │                                  │
-          ◄──────────────────────────────┼──────────────────────────────────┘
-                 (Transcription Results)
+   flowchart LR
+     B["Browser<br/>Vue 3"]
+     S["Go Server<br/>Pion WebRTC"]
+     W["Whisper AI<br/>or Cloud"]
+     B <-->|WebRTC| S
+     S -->|Audio| W
+     W -->|DataChannel<br/>Transcription Results| B
 
-**数据流**：
+**数据流**\ ：
 
 1. 浏览器通过 ``getUserMedia`` 采集音频
 2. 音频通过 WebRTC（Opus 编码的 RTP）发送到 Go 后端
@@ -90,7 +89,7 @@ WebRTC Transcriber 是一个基于 Pion WebRTC 构建的实时语音转写应用
 4. PCM 音频送入转写服务（Whisper / Google / Azure / 百度 / 讯飞）
 5. 转写结果通过 DataChannel 以 JSON 格式回传给浏览器
 
-**核心模块**：
+**核心模块**\ ：
 
 .. code-block:: text
 
@@ -130,13 +129,13 @@ WebRTC Transcriber 是一个基于 Pion WebRTC 构建的实时语音转写应用
 安装与运行
 ========================
 
-**前置条件**：
+**前置条件**\ ：
 
 - Go 1.21+
 - Node.js 18+
 - Whisper（默认转写引擎）：``pip install whisper-ctranslate2``
 
-**构建与启动**：
+**构建与启动**\ ：
 
 .. code-block:: bash
 
@@ -149,7 +148,7 @@ WebRTC Transcriber 是一个基于 Pion WebRTC 构建的实时语音转写应用
    # 浏览器访问
    open http://localhost:9070
 
-**命令行选项**：
+**命令行选项**\ ：
 
 .. code-block:: bash
 
@@ -181,7 +180,7 @@ WebRTC 相关要点
 **单向媒体流**
 
 与双向视频通话不同，这个项目只需要浏览器 → 服务器的单向音频流。
-``RTCPeerConnection`` 的 ``addTransceiver`` 配置为 ``sendonly``，服务端配置为 ``recvonly``。
+``RTCPeerConnection`` 的 ``addTransceiver`` 配置为 ``sendonly``\ ，服务端配置为 ``recvonly``\ 。
 
 
 参考

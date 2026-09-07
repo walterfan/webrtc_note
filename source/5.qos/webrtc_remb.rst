@@ -106,7 +106,7 @@ SDP 协商
 - ``a=rtcp-fb:<payload type> goog-remb`` 声明该 payload type 支持 REMB 反馈
 - ``a=extmap:3 ...abs-send-time`` 声明使用 Absolute Send Time 头扩展，这是 REMB 估计所依赖的时间戳信息
 
-如果 SDP Offer/Answer 双方都声明了 ``goog-remb``，则 REMB 机制被启用。
+如果 SDP Offer/Answer 双方都声明了 ``goog-remb``\ ，则 REMB 机制被启用。
 接收端会开始进行带宽估计，并定期发送 REMB 消息给发送端。
 
 
@@ -150,7 +150,7 @@ REMB 消息的 RTCP 数据包格式如下：
 
 * **是否填充 Padding (P)** (1 bit): 如果设置，表示数据包末尾包含额外的填充字节，这些字节不属于控制信息但包含在长度字段中。通常为 0。
 
-* **反馈消息类型 Feedback Message Type (FMT)** (5 bits): 标识反馈消息的类型。对于 REMB，固定为 15，表示应用层反馈消息。参见 `RFC 4585 section 6.4 <https://tools.ietf.org/html/rfc4585#section-6.4>`_。
+* **反馈消息类型 Feedback Message Type (FMT)** (5 bits): 标识反馈消息的类型。对于 REMB，固定为 15，表示应用层反馈消息。参见 `RFC 4585 section 6.4 <https://tools.ietf.org/html/rfc4585#section-6.4>`_\ 。
 
 * **荷载类型 Payload Type (PT)** (8 bits): RTCP 包类型，标识该包为 RTCP FB 消息。对于 REMB，固定为 PSFB (206)，表示 Payload-specific FB 消息。
 
@@ -272,21 +272,17 @@ REMB 使用自适应卡尔曼滤波器（Adaptive Kalman Filter）来估计网�
 
 速率控制器根据过载检测器的输出，使用 AIMD（Additive Increase Multiplicative Decrease）策略调整估计带宽：
 
-.. code-block::
+.. mermaid::
 
-   状态机:
-   ┌──────────┐   Overuse    ┌──────────┐
-   │ Increase ├─────────────►│ Decrease │
-   │  (加性增) │              │  (乘性减) │
-   └────┬─────┘              └────┬─────┘
-        │                         │
-        │ Normal                  │ Normal/Underuse
-        │                         │
-        ▼                         ▼
-   ┌──────────┐              ┌──────────┐
-   │   Hold   │◄─────────────┤   Hold   │
-   │  (保持)   │   Underuse   │  (保持)   │
-   └──────────┘              └──────────┘
+   stateDiagram-v2
+     [*] --> Increase
+     Increase: Increase 加性增
+     Decrease: Decrease 乘性减
+     Hold: Hold 保持
+     Increase --> Decrease: Overuse
+     Increase --> Hold: Normal
+     Decrease --> Hold: Normal / Underuse
+     Hold --> Hold: Underuse
 
 三种状态的行为：
 
@@ -411,7 +407,7 @@ REMB 的实现涉及 WebRTC 源码中的多个类：
 REMB 消息的编解码
 ----------------------------
 
-REMB 的实现可以参考 WebRTC 的源码 `remb.cc`_：
+REMB 的实现可以参考 WebRTC 的源码 `remb.cc`_\ ：
 
 **编码（发送端构造 REMB 消息）**:
 
@@ -526,22 +522,20 @@ REMB 作为 WebRTC 早期的带宽估计方案，其核心思想——基于延�
 现代拥塞控制算法（如 GCC 的发送端版本）的基础。理解 REMB 的工作原理，
 有助于深入理解 WebRTC 的整个拥塞控制体系。
 
-.. code-block::
+.. mermaid::
 
-   REMB 工作流程总结:
-
-   接收端                                          发送端
-   ┌─────────────────────────────────┐    ┌──────────────────────┐
-   │ 1. 接收 RTP 包                   │    │                      │
-   │ 2. InterArrival: 计算延迟梯度     │    │  发送 RTP 媒体数据    │
-   │ 3. OveruseEstimator: 卡尔曼滤波  │    │  (abs-send-time)     │
-   │ 4. OveruseDetector: 检测过载状态  │    │         ▲            │
-   │ 5. AimdRateControl: 计算估计带宽  │    │         │            │
-   │ 6. 构造 REMB RTCP 消息           │    │  调整编码码率         │
-   │         │                        │    │         ▲            │
-   │         ▼                        │    │         │            │
-   │    发送 REMB ──────────────────────────► 解析 REMB           │
-   └─────────────────────────────────┘    └──────────────────────┘
+   sequenceDiagram
+     participant R as 接收端
+     participant S as 发送端
+     S->>R: 发送 RTP 媒体数据 abs-send-time
+     Note over R: 1. 接收 RTP 包
+     Note over R: 2. InterArrival 计算延迟梯度
+     Note over R: 3. OveruseEstimator 卡尔曼滤波
+     Note over R: 4. OveruseDetector 检测过载状态
+     Note over R: 5. AimdRateControl 计算估计带宽
+     Note over R: 6. 构造 REMB RTCP 消息
+     R->>S: 发送 REMB
+     Note over S: 解析 REMB 并调整编码码率
 
 
 参考资料

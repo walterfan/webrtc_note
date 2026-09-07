@@ -63,22 +63,22 @@ GStreamer 通过 ``webrtcbin`` 插件提供完整的 WebRTC 支持，可以用�
 webrtcbin 类层次
 ======================================
 
-.. code-block:: text
+.. mermaid::
 
-   GInitiallyUnowned
-     └── GstObject
-           └── GstElement
-                 └── GstBin
-                       └── GstWebRTCBin
+   classDiagram
+     GInitiallyUnowned <|-- GstObject
+     GstObject <|-- GstElement
+     GstElement <|-- GstBin
+     GstBin <|-- GstWebRTCBin
 
 ``webrtcbin`` 是一个 Bin，内部封装了 ICE agent、DTLS transport、RTP/RTCP 处理等组件。
 
-**Pad**：
+**Pad**\ ：
 
-- ``GstWebRTCBinSinkPad``：接收本地媒体数据（发送给远端）
-- ``GstWebRTCBinSrcPad``：输出远端媒体数据（接收自远端）
+- ``GstWebRTCBinSinkPad``\ ：接收本地媒体数据（发送给远端）
+- ``GstWebRTCBinSrcPad``\ ：输出远端媒体数据（接收自远端）
 
-Sink Pad 通过请求（request）方式创建，命名格式为 ``sink_%u``。
+Sink Pad 通过请求（request）方式创建，命名格式为 ``sink_%u``\ 。
 Source Pad 在远端媒体到达时自动创建（sometimes pad）。
 
 
@@ -104,7 +104,7 @@ Source Pad 在远端媒体到达时自动创建（sometimes pad）。
    * - ``prepare-data-channel``
      - DataChannel 准备就绪时触发（本地或远端）
 
-**信号回调签名**：
+**信号回调签名**\ ：
 
 .. code-block:: c
 
@@ -185,37 +185,26 @@ Action 信号用于主动调用 ``webrtcbin`` 的功能：
 
 使用 ``webrtcbin`` 建立 WebRTC 连接的典型流程：
 
-.. code-block:: text
+.. mermaid::
 
-   应用层                    webrtcbin                      远端
-     │                          │                            │
-     │  add media elements      │                            │
-     │─────────────────────────►│                            │
-     │                          │                            │
-     │  on-negotiation-needed   │                            │
-     │◄─────────────────────────│                            │
-     │                          │                            │
-     │  create-offer             │                            │
-     │─────────────────────────►│                            │
-     │  set-local-description   │                            │
-     │─────────────────────────►│                            │
-     │                          │                            │
-     │  send offer via signaling │───────────────────────────►│
-     │                          │                            │
-     │  receive answer          │◄───────────────────────────│
-     │  set-remote-description  │                            │
-     │─────────────────────────►│                            │
-     │                          │                            │
-     │  on-ice-candidate        │                            │
-     │◄─────────────────────────│                            │
-     │  send candidate          │───────────────────────────►│
-     │                          │                            │
-     │  receive candidate       │◄───────────────────────────│
-     │  add-ice-candidate       │                            │
-     │─────────────────────────►│                            │
-     │                          │                            │
-     │                    ICE connected, DTLS handshake       │
-     │                    Media flowing                       │
+   sequenceDiagram
+     participant A as 应用层
+     participant W as webrtcbin
+     participant R as 远端
+
+     A->>W: add media elements
+     W-->>A: on-negotiation-needed
+     A->>W: create-offer
+     A->>W: set-local-description
+     A->>R: send offer via signaling
+     R-->>A: receive answer
+     A->>W: set-remote-description
+     W-->>A: on-ice-candidate
+     A->>R: send candidate
+     R-->>A: receive candidate
+     A->>W: add-ice-candidate
+     Note over A,R: ICE connected, DTLS handshake
+     Note over A,R: Media flowing
 
 
 发送端示例 (C)
@@ -451,10 +440,17 @@ DataChannel
 录制 WebRTC 接收的流
 --------------------------
 
-.. code-block:: text
+.. mermaid::
 
-   webrtcbin → decodebin → videoconvert → x264enc → mp4mux → filesink
-                         → audioconvert → opusenc ↗
+   flowchart LR
+     W[webrtcbin] --> D[decodebin]
+     D --> VC[videoconvert]
+     VC --> X[x264enc]
+     X --> M[mp4mux]
+     D --> AC[audioconvert]
+     AC --> O[opusenc]
+     O --> M
+     M --> F[filesink]
 
 
 调试
@@ -484,9 +480,9 @@ GStreamer 提供了完整的 WebRTC 示例，包括 C、Python、JavaScript、Ru
 
 示例包括：
 
-- ``sendrecv/``：1:1 音视频通话（C、Python、JavaScript）
-- ``multiparty-sendrecv/``：多人通话
-- ``signalling/``：Python 信令服务器
+- ``sendrecv/``\ ：1:1 音视频通话（C、Python、JavaScript）
+- ``multiparty-sendrecv/``\ ：多人通话
+- ``signalling/``\ ：Python 信令服务器
 
 社区示例：
 

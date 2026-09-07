@@ -29,16 +29,14 @@ WebRTC Packet Buffer
 - 组装完整的视频帧（从多个 RTP 包中）
 - 为丢包恢复（NACK/FEC）提供时间
 
-.. code-block:: text
+.. mermaid::
 
-   网络      →    Packet Buffer    →    解码器
-   (乱序/丢包)    (排序/组帧/等待)      (完整帧)
-
-   RTP 包流:  [3] [1] [5] [2] [4]
-                      ↓
-   排序后:    [1] [2] [3] [4] [5]
-                      ↓
-   组帧:      [Frame 1: pkt 1,2,3] [Frame 2: pkt 4,5]
+   flowchart LR
+     Net["网络 乱序/丢包"] --> PB["Packet Buffer<br/>排序/组帧/等待"]
+     PB --> Dec["解码器 完整帧"]
+     P1["RTP: 3,1,5,2,4"] --> Sort["排序: 1,2,3,4,5"]
+     Sort --> F1["Frame 1: pkt 1,2,3"]
+     Sort --> F2["Frame 2: pkt 4,5"]
 
 
 视频 Packet Buffer
@@ -66,33 +64,15 @@ WebRTC Packet Buffer
 PacketBuffer 工作流程
 --------------------------
 
-.. code-block:: text
+.. mermaid::
 
-   RTP 包到达
-       │
-       ▼
-   ┌─────────────────────────┐
-   │  按序号插入环形缓冲区    │
-   │  (大小通常 2048 个槽位)  │
-   └────────┬────────────────┘
-            │
-            ▼
-   ┌─────────────────────────┐
-   │  检测帧边界              │
-   │  (RTP Marker bit = 1    │
-   │   表示帧的最后一个包)    │
-   └────────┬────────────────┘
-            │
-            ▼
-   ┌─────────────────────────┐
-   │  向前搜索帧的第一个包    │
-   │  (检查序号连续性)        │
-   └────────┬────────────────┘
-            │
-       ┌────┴────┐
-       │完整?    │不完整
-       ▼         ▼
-   组装帧输出   等待/请求 NACK
+   flowchart TD
+     A[RTP 包到达] --> B[按序号插入环形缓冲区]
+     B --> C["检测帧边界 RTP Marker bit = 1"]
+     C --> D[向前搜索帧的第一个包]
+     D --> E{完整?}
+     E -->|是| F[组装帧输出]
+     E -->|否| G[等待/请求 NACK]
 
 核心代码逻辑：
 
@@ -119,10 +99,10 @@ PacketBuffer 工作流程
 音频的 Jitter Buffer 通常独立于视频，因为音频帧较小（一个 Opus 帧通常只有一个 RTP 包）
 且对延迟更敏感。
 
-WebRTC 中音频 Jitter Buffer 的核心实现是 **NetEQ**，它不仅负责缓冲，
+WebRTC 中音频 Jitter Buffer 的核心实现是 **NetEQ**\ ，它不仅负责缓冲，
 还集成了丢包隐藏（PLC）、加速播放、减速播放等功能。
 
-详细内容参见 :doc:`../5.qos/audio_jitter_buffer` 和 :doc:`../5.qos/neteq_deep_dive`。
+详细内容参见 :doc:`../5.qos/audio_jitter_buffer` 和 :doc:`../5.qos/neteq_deep_dive`\ 。
 
 
 关键参数

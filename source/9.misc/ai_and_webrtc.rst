@@ -33,8 +33,8 @@ AI 降噪 (AI-based Noise Suppression)
 
 .. warning::
 
-   以上均为**第三方或研究成果**，都**不在 WebRTC 官方 ``modules/audio_processing/ns/`` 模块内**。
-   官方 NS（包括社区俗称的 “NS2”/``NoiseSuppressor``）始终是传统维纳滤波，未使用神经网络。
+   以上均为**第三方或研究成果**\ ，都**不在 WebRTC 官方 ``modules/audio_processing/ns/`` 模块内**\ 。
+   官方 NS（包括社区俗称的 “NS2”/``NoiseSuppressor``\ ）始终是传统维纳滤波，未使用神经网络。
    要在 WebRTC 里用上 AI 降噪，只能自行集成（如下方 AudioWorklet 外挂或 fork libwebrtc）。
 
 WebRTC 中的集成方式：
@@ -60,9 +60,9 @@ AI 回声消除 (AI-based AEC)
 
 .. warning::
 
-   需要澄清：WebRTC 官方的 **AEC3**（``modules/audio_processing/aec3/``）核心是**传统自适应滤波**
-   （自适应 FIR 滤波器、匹配滤波、ERLE 估计等），**不是神经网络回声消除**。
-   主干代码中确有一个较新的 ``aec3/neural_residual_echo_estimator/``（神经**残余回声估计**子模块），
+   需要澄清：WebRTC 官方的 **AEC3**\ （``modules/audio_processing/aec3/``\ ）核心是**传统自适应滤波**
+   （自适应 FIR 滤波器、匹配滤波、ERLE 估计等），**不是神经网络回声消除**\ 。
+   主干代码中确有一个较新的 ``aec3/neural_residual_echo_estimator/``\ （神经**残余回声估计**\ 子模块），
    但那只是 AEC3 的一个子组件，并不等于"整个 AEC 变成了神经网络"，也没有可靠证据把它对应到某个具体版本（如所谓 “M125”）。
 
 学术界与工业界（含 Google 的研究团队）确实在探索基于深度学习的回声消除 / 残余回声抑制，
@@ -81,7 +81,7 @@ AI 回声消除 (AI-based AEC)
 虚拟背景与人像分割
 -----------------------
 
-这是 AI 在 WebRTC 中最广泛的应用之一。核心技术是 **语义分割（Semantic Segmentation）**：
+这是 AI 在 WebRTC 中最广泛的应用之一。核心技术是 **语义分割（Semantic Segmentation）**\ ：
 
 - **MediaPipe Selfie Segmentation**: Google 开源，基于 MobileNetV3，可在浏览器中以 30fps 运行
 - **BodyPix**: TensorFlow.js 模型，支持人体部位分割
@@ -111,7 +111,7 @@ AI 超分辨率 (Super Resolution)
 - **Real-ESRGAN**: 开源超分模型，可通过 WebGPU/WebNN 在浏览器中运行
 - **Google Project Starline**: 结合 AI 超分和 3D 重建的沉浸式通信
 
-这种方案可以在相同带宽下提升 **感知质量 30-50%**。
+这种方案可以在相同带宽下提升 **感知质量 30-50%**\ 。
 
 AI 视频编码优化
 -------------------

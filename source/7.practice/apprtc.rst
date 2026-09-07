@@ -36,56 +36,55 @@ AppRTC 是 Google 官方提供的 WebRTC 示例应用，也是最经典的 WebRT
 架构
 ===============
 
-.. code-block:: text
+.. mermaid::
 
-   ┌──────────────┐                              ┌──────────────┐
-   │   Browser A  │                              │   Browser B  │
-   │              │                              │              │
-   │  apprtc.js   │◄──── WebRTC P2P Media ──────►│  apprtc.js   │
-   │              │                              │              │
-   └──────┬───────┘                              └──────┬───────┘
-          │                                             │
-          │  WebSocket / Channel API                    │
-          │                                             │
-   ┌──────▼─────────────────────────────────────────────▼──────┐
-   │                  Signaling Server                          │
-   │           (Google App Engine / Python)                     │
-   │                                                           │
-   │  - Room management (创建/加入房间)                          │
-   │  - Message relay (转发 SDP/ICE)                            │
-   │  - Collider (WebSocket 服务)                               │
-   └───────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph CLIENTS["客户端"]
+       BA["Browser A<br/>apprtc.js"]
+       BB["Browser B<br/>apprtc.js"]
+     end
+     subgraph SIG["Signaling Server<br/>Google App Engine / Python"]
+       RM["Room management<br/>创建/加入房间"]
+       MR["Message relay<br/>转发 SDP/ICE"]
+       CO["Collider<br/>WebSocket 服务"]
+     end
+     BA <-->|WebRTC P2P Media| BB
+     BA -->|WebSocket / Channel API| SIG
+     BB -->|WebSocket / Channel API| SIG
 
 组件：
 
-- **Web Client**：HTML5 + JavaScript，使用 WebRTC API
-- **App Engine Server**：Python，负责房间管理和初始信令
-- **Collider**：Go 编写的 WebSocket 服务，负责实时信令中继
-- **TURN Server**：可选的 TURN 中继服务
+- **Web Client**\ ：HTML5 + JavaScript，使用 WebRTC API
+- **App Engine Server**\ ：Python，负责房间管理和初始信令
+- **Collider**\ ：Go 编写的 WebSocket 服务，负责实时信令中继
+- **TURN Server**\ ：可选的 TURN 中继服务
 
 
 信令流程
 ===============
 
-.. code-block:: text
+.. mermaid::
 
-   Browser A                   Server                    Browser B
-       │                         │                          │
-       │── GET /join/room123 ──►│                          │
-       │◄── room_config + is_initiator=true ──│            │
-       │                         │                          │
-       │                         │◄── GET /join/room123 ───│
-       │                         │── room_config + is_initiator=false ──►│
-       │                         │                          │
-       │── WebSocket connect ──►│◄── WebSocket connect ───│
-       │                         │                          │
-       │── SDP Offer ──────────►│── SDP Offer ───────────►│
-       │                         │                          │
-       │◄── SDP Answer ─────── │◄── SDP Answer ──────────│
-       │                         │                          │
-       │◄─── ICE Candidates ──►│◄── ICE Candidates ─────►│
-       │                         │                          │
-       │◄════════ P2P Media (RTP/RTCP) ═══════════════════►│
+   sequenceDiagram
+     participant BA as Browser A
+     participant S as Server
+     participant BB as Browser B
+
+     BA->>S: GET /join/room123
+     S-->>BA: room_config + is_initiator=true
+     BB->>S: GET /join/room123
+     S-->>BB: room_config + is_initiator=false
+     BA->>S: WebSocket connect
+     BB->>S: WebSocket connect
+     BA->>S: SDP Offer
+     S->>BB: SDP Offer
+     BB->>S: SDP Answer
+     S->>BA: SDP Answer
+     BA->>S: ICE Candidates
+     S->>BB: ICE Candidates
+     BB->>S: ICE Candidates
+     S->>BA: ICE Candidates
+     Note over BA,BB: P2P Media RTP/RTCP
 
 
 本地部署
@@ -123,11 +122,11 @@ Docker 部署方式更方便，包含了 App Engine 模拟器、Collider 和 cot
 
 从 AppRTC 源码中可以学到的关键 WebRTC 知识：
 
-1. **完整的信令流程**：SDP Offer/Answer 交换 + ICE Candidate Trickle
-2. **房间管理模型**：两人房间的创建、加入、离开
-3. **PeerConnection 配置**：ICE Server、编解码器偏好、带宽限制
-4. **错误处理**：ICE 连接失败回退、浏览器兼容性处理
-5. **UI/UX 模式**：本地预览、远端视频显示、通话控制
+1. **完整的信令流程**\ ：SDP Offer/Answer 交换 + ICE Candidate Trickle
+2. **房间管理模型**\ ：两人房间的创建、加入、离开
+3. **PeerConnection 配置**\ ：ICE Server、编解码器偏好、带宽限制
+4. **错误处理**\ ：ICE 连接失败回退、浏览器兼容性处理
+5. **UI/UX 模式**\ ：本地预览、远端视频显示、通话控制
 
 
 参考资料

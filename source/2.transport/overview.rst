@@ -36,27 +36,34 @@ WebRTC 的传输层是一个精心设计的协议栈，从底层的 UDP/TCP 传�
 
 WebRTC 的传输协议栈可以从下到上分为以下几层：
 
-.. code-block:: text
+.. mermaid::
 
-    ┌─────────────────────────────────────────────────────────┐
-    │              Application Layer 应用层                     │
-    │         Audio / Video / DataChannel Data                 │
-    ├──────────────┬──────────────────────┬───────────────────┤
-    │  媒体传输层   │    RTP / RTCP        │   SCTP            │
-    │              │  (Audio & Video)     │  (DataChannel)    │
-    ├──────────────┴──────────────────────┴───────────────────┤
-    │              安全层 Security Layer                        │
-    │         SRTP / SRTCP          │        DTLS             │
-    ├───────────────────────────────┴─────────────────────────┤
-    │              NAT 穿越层 NAT Traversal Layer               │
-    │              ICE / STUN / TURN                           │
-    ├─────────────────────────────────────────────────────────┤
-    │              传输层 Transport Layer                       │
-    │              UDP (主要) / TCP (备选)                      │
-    ├─────────────────────────────────────────────────────────┤
-    │              网络层 Network Layer                         │
-    │              IP (IPv4 / IPv6)                            │
-    └─────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph L6 [Application Layer 应用层]
+       APP[Audio / Video / DataChannel Data]
+     end
+     subgraph L5 [媒体传输层]
+       RTP["RTP / RTCP<br/>(Audio and Video)"]
+       SCTP["SCTP<br/>(DataChannel)"]
+     end
+     subgraph L4 [安全层 Security Layer]
+       SRTP[SRTP / SRTCP]
+       DTLS[DTLS]
+     end
+     subgraph L3 [NAT 穿越层 NAT Traversal Layer]
+       ICE[ICE / STUN / TURN]
+     end
+     subgraph L2 [传输层 Transport Layer]
+       UDP["UDP (主要) / TCP (备选)"]
+     end
+     subgraph L1 [网络层 Network Layer]
+       IP["IP (IPv4 / IPv6)"]
+     end
+     L6 --> L5
+     L5 --> L4
+     L4 --> L3
+     L3 --> L2
+     L2 --> L1
 
 各层的职责如下：
 
@@ -214,18 +221,12 @@ SCTP (Stream Control Transmission Protocol, RFC 4960) 在 WebRTC 中用于 DataC
 
 DataChannel 的协议栈为：
 
-.. code-block:: text
+.. mermaid::
 
-    ┌──────────────────┐
-    │   DataChannel    │
-    │   Application    │
-    ├──────────────────┤
-    │      SCTP        │
-    ├──────────────────┤
-    │      DTLS        │
-    ├──────────────────┤
-    │    ICE / UDP     │
-    └──────────────────┘
+   flowchart TB
+     A[DataChannel Application] --> B[SCTP]
+     B --> C[DTLS]
+     C --> D[ICE / UDP]
 
 
 多路复用
@@ -239,15 +240,13 @@ WebRTC 使用 BUNDLE（RFC 8843）机制将多路媒体流复用到单个传输�
 在 BUNDLE 模式下，所有类型的数据包共享同一个 UDP 端口（即同一个 5-tuple）。
 接收端通过检查数据包的第一个字节来区分不同类型的协议：
 
-.. code-block:: text
+.. mermaid::
 
-                  +----------------+
-                  | 127 < B < 192 -+--> RTP/RTCP
-                  |                |
-      packet -->  |  19 < B < 64  -+--> DTLS
-                  |                |
-                  |       B < 2   -+--> STUN
-                  +----------------+
+   flowchart TB
+     pkt[packet] --> chk{"First byte B"}
+     chk -->|"127 < B < 192"| rtp[RTP/RTCP]
+     chk -->|"19 < B < 64"| dtls[DTLS]
+     chk -->|"B < 2"| stun[STUN]
 
 其中 B 是数据包第一个字节的值。这种区分方式定义在 RFC 7983 中。
 
@@ -277,33 +276,33 @@ Offer/Answer 模型
 WebRTC 使用 SDP (Session Description Protocol) 的 Offer/Answer 模型（RFC 3264）来协商媒体参数。
 基本流程如下：
 
-1. **Offerer 创建 Offer**: 调用 ``createOffer()``，生成包含本端能力的 SDP
-2. **设置本地描述**: 调用 ``setLocalDescription(offer)``，将 Offer 设置为本地描述
+1. **Offerer 创建 Offer**: 调用 ``createOffer()``\ ，生成包含本端能力的 SDP
+2. **设置本地描述**: 调用 ``setLocalDescription(offer)``\ ，将 Offer 设置为本地描述
 3. **发送 Offer**: 通过信令通道将 Offer SDP 发送给对端
-4. **Answerer 接收 Offer**: 调用 ``setRemoteDescription(offer)``，设置远端描述
-5. **Answerer 创建 Answer**: 调用 ``createAnswer()``，生成包含协商结果的 SDP
+4. **Answerer 接收 Offer**: 调用 ``setRemoteDescription(offer)``\ ，设置远端描述
+5. **Answerer 创建 Answer**: 调用 ``createAnswer()``\ ，生成包含协商结果的 SDP
 6. **设置本地描述**: 调用 ``setLocalDescription(answer)``
 7. **发送 Answer**: 通过信令通道将 Answer SDP 发送回 Offerer
 8. **Offerer 接收 Answer**: 调用 ``setRemoteDescription(answer)``
 
-.. code-block:: text
+.. mermaid::
 
-    Offerer                          Signaling Server                     Answerer
-      |                                    |                                 |
-      |  1. createOffer()                  |                                 |
-      |  2. setLocalDescription(offer)     |                                 |
-      |  3. send offer ------------------>  |                                 |
-      |                                    |  4. forward offer ------------> |
-      |                                    |                                 |
-      |                                    |     5. setRemoteDescription()   |
-      |                                    |     6. createAnswer()           |
-      |                                    |     7. setLocalDescription()    |
-      |                                    |  8. send answer <-------------- |
-      |  9. receive answer <-------------- |                                 |
-      |  10. setRemoteDescription(answer)  |                                 |
-      |                                    |                                 |
-      |  ============= Media Flow ======================================== |
-      |                                    |                                 |
+   sequenceDiagram
+     participant Offerer
+     participant Sig as Signaling Server
+     participant Answerer
+
+     Offerer->>Offerer: 1. createOffer()
+     Offerer->>Offerer: 2. setLocalDescription(offer)
+     Offerer->>Sig: 3. send offer
+     Sig->>Answerer: 4. forward offer
+     Answerer->>Answerer: 5. setRemoteDescription()
+     Answerer->>Answerer: 6. createAnswer()
+     Answerer->>Answerer: 7. setLocalDescription()
+     Answerer->>Sig: 8. send answer
+     Sig->>Offerer: 9. receive answer
+     Offerer->>Offerer: 10. setRemoteDescription(answer)
+     Note over Offerer,Answerer: Media Flow
 
 
 SDP 结构概览
@@ -367,21 +366,21 @@ ICE candidate 的交换可以采用两种方式：
 
 candidate 一旦收集到就立即通过信令通道发送，不等待所有 candidate 收集完毕：
 
-.. code-block:: text
+.. mermaid::
 
-    Offerer                        Answerer
-      |                               |
-      |  Offer (no candidates) -----> |
-      |  candidate: host  ----------> |
-      |  candidate: srflx ----------> |
-      |                               |
-      |  <----- Answer (no candidates)|
-      |  <---------- candidate: host  |
-      |  <---------- candidate: srflx |
-      |  candidate: relay ----------> |
-      |  <---------- candidate: relay |
-      |                               |
-      |  === Connectivity Checks ===  |
+   sequenceDiagram
+     participant Offerer
+     participant Answerer
+
+     Offerer->>Answerer: Offer (no candidates)
+     Offerer->>Answerer: candidate host
+     Offerer->>Answerer: candidate srflx
+     Answerer->>Offerer: Answer (no candidates)
+     Answerer->>Offerer: candidate host
+     Answerer->>Offerer: candidate srflx
+     Offerer->>Answerer: candidate relay
+     Answerer->>Offerer: candidate relay
+     Note over Offerer,Answerer: Connectivity Checks
 
 Trickle ICE 的优势在于可以显著减少连接建立时间，因为不需要等待所有 candidate（特别是 TURN relay candidate）收集完毕才开始连通性检查。
 
@@ -442,21 +441,27 @@ RTCPeerConnection 的信令状态机（RTCSignalingState）描述了 SDP 协商�
 
 状态变迁的触发条件总结：
 
-.. code-block:: text
+.. mermaid::
 
-    stable ──setLocalDescription(offer)──> have-local-offer
-    stable ──setRemoteDescription(offer)──> have-remote-offer
-
-    have-local-offer ──setRemoteDescription(answer)──> stable
-    have-local-offer ──setRemoteDescription(pranswer)──> have-remote-pranswer
-
-    have-remote-offer ──setLocalDescription(answer)──> stable
-    have-remote-offer ──setLocalDescription(pranswer)──> have-local-pranswer
-
-    have-local-pranswer ──setLocalDescription(answer)──> stable
-    have-remote-pranswer ──setRemoteDescription(answer)──> stable
-
-    任意状态 ──close()──> closed
+   stateDiagram-v2
+     [*] --> stable
+     stable --> hlo: setLocalDescription(offer)
+     stable --> hro: setRemoteDescription(offer)
+     hlo --> stable: setRemoteDescription(answer)
+     hlo --> hrpa: setRemoteDescription(pranswer)
+     hro --> stable: setLocalDescription(answer)
+     hro --> hlpa: setLocalDescription(pranswer)
+     hlpa --> stable: setLocalDescription(answer)
+     hrpa --> stable: setRemoteDescription(answer)
+     stable --> closed: close()
+     hlo --> closed: close()
+     hro --> closed: close()
+     hlpa --> closed: close()
+     hrpa --> closed: close()
+     hlo: have-local-offer
+     hro: have-remote-offer
+     hlpa: have-local-pranswer
+     hrpa: have-remote-pranswer
 
 
 ICE Connection State Machine 互通连接状态机
@@ -521,25 +526,24 @@ ICE 连接状态机（RTCIceConnectionState）描述了 ICE 连接建立和维�
 
 状态变迁的典型路径：
 
-.. code-block:: text
+.. mermaid::
 
-    正常连接流程:
-    new → checking → connected → completed
-
-    连接失败:
-    new → checking → failed
-
-    连接中断后恢复:
-    completed → disconnected → completed
-
-    连接中断后失败:
-    completed → disconnected → failed
-
-    ICE restart:
-    failed → checking → connected → completed
-
-    关闭连接:
-    任意状态 → closed
+   stateDiagram-v2
+     [*] --> new
+     new --> checking
+     checking --> connected: 正常连接
+     connected --> completed
+     checking --> failed: 连接失败
+     completed --> disconnected: 连接中断
+     disconnected --> completed: 恢复
+     disconnected --> failed: 失败
+     failed --> checking: ICE restart
+     new --> closed: close()
+     checking --> closed: close()
+     connected --> closed: close()
+     completed --> closed: close()
+     failed --> closed: close()
+     disconnected --> closed: close()
 
 需要注意的是，RTCPeerConnection 还有一个 ``iceGatheringState`` 属性，描述 ICE candidate 收集的状态：
 

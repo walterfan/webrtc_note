@@ -186,18 +186,20 @@ DataChannel
 架构说明
 ========================
 
-.. code-block:: text
+.. mermaid::
 
-   aiortc 内部结构：
-
-   RTCPeerConnection
-   ├── RTCDtlsTransport     ← DTLS 握手与密钥导出
-   │   └── RTCIceTransport  ← ICE 连通性检查
-   ├── RTCRtpSender         ← RTP 发送（编码 + SRTP）
-   ├── RTCRtpReceiver       ← RTP 接收（SRTP + 解码）
-   ├── RTCSctpTransport     ← SCTP over DTLS
-   │   └── RTCDataChannel   ← 数据通道
-   └── SDP 协商逻辑
+   flowchart TB
+     subgraph PC["RTCPeerConnection"]
+       DTLS["RTCDtlsTransport<br/>DTLS 握手与密钥导出"]
+       ICE["RTCIceTransport<br/>ICE 连通性检查"]
+       SEND["RTCRtpSender<br/>RTP 发送 编码 + SRTP"]
+       RECV["RTCRtpReceiver<br/>RTP 接收 SRTP + 解码"]
+       SCTP["RTCSctpTransport<br/>SCTP over DTLS"]
+       DC["RTCDataChannel<br/>数据通道"]
+       SDP["SDP 协商逻辑"]
+       DTLS --> ICE
+       SCTP --> DC
+     end
 
 aiortc 的所有网络 I/O 都通过 ``asyncio`` 事件循环驱动，
 单线程即可处理多个并发连接。

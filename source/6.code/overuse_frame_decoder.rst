@@ -29,30 +29,18 @@ WebRTC OveruseFrameDetector
 它通过监控编码耗时与采集间隔的比率，判断编码器是否跟不上采集速度，
 然后触发自适应降级（降低分辨率或帧率）。
 
-.. code-block:: text
+.. mermaid::
 
-   摄像头采集 (30fps = 33ms 间隔)
-       │
-       ▼
-   ┌──────────────────────────┐
-   │   OveruseFrameDetector   │
-   │                          │
-   │   编码占用率 = 编码耗时   │
-   │                ────────  │
-   │                采集间隔   │
-   │                          │
-   │   占用率 > 阈值 → 过载   │
-   │   占用率 < 阈值 → 欠载   │
-   └────────┬─────────────────┘
-            │
-            ▼
-   ┌──────────────────────────┐
-   │   QualityScaler /        │
-   │   AdaptationController   │
-   │                          │
-   │   过载 → 降分辨率/帧率   │
-   │   欠载 → 升分辨率/帧率   │
-   └──────────────────────────┘
+   flowchart TD
+     Cam["摄像头采集<br/>30fps = 33ms 间隔"] --> OFD[OveruseFrameDetector]
+     OFD --> QS["QualityScaler / AdaptationController"]
+     OFD -.-> U{编码占用率}
+     U -->|大于阈值| Over[过载]
+     U -->|小于阈值| Under[欠载]
+     Over --> QS
+     Under --> QS
+     QS -->|过载| Down[降分辨率/帧率]
+     QS -->|欠载| Up[升分辨率/帧率]
 
 
 关键指标
@@ -64,8 +52,8 @@ WebRTC OveruseFrameDetector
 
    encode_usage = encode_duration / capture_interval
 
-- ``encode_duration``：编码一帧所消耗的时间
-- ``capture_interval``：两次采集之间的时间间隔（30fps 时约 33ms）
+- ``encode_duration``\ ：编码一帧所消耗的时间
+- ``capture_interval``\ ：两次采集之间的时间间隔（30fps 时约 33ms）
 
 当 ``encode_usage`` 接近或超过 1.0 时，说明编码已经跟不上采集，必须降级。
 
@@ -173,7 +161,7 @@ OveruseFrameDetector 输出三种状态：
 与 QualityScaler 的关系
 ============================
 
-除了 CPU 过载检测，WebRTC 还有 **QualityScaler**，它通过监控编码器输出的 QP（Quantization Parameter）值来判断是否需要降级：
+除了 CPU 过载检测，WebRTC 还有 **QualityScaler**\ ，它通过监控编码器输出的 QP（Quantization Parameter）值来判断是否需要降级：
 
 - QP 过高 → 画质已经很差 → 降低分辨率让编码器有更多比特处理每个像素
 - QP 过低 → 画质很好，编码器有余力 → 可以尝试提高分辨率

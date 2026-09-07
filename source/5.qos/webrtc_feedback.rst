@@ -663,12 +663,19 @@ RTCP 反馈机制是 WebRTC 自适应码率控制（Adaptive Bitrate Control）�
 
 **典型的质量适配循环：**
 
-.. code-block:: text
+.. mermaid::
 
-   网络拥塞 → 丢包增加 → NACK 重传 + transport-cc 检测到延迟增加
-       → GCC 降低目标码率 → 编码器降低码率/分辨率/帧率
-       → 网络拥塞缓解 → transport-cc 检测到延迟减少
-       → GCC 逐步提高目标码率 → 编码器提高码率/分辨率/帧率
+   flowchart TD
+     A[网络拥塞] --> B[丢包增加]
+     B --> C[NACK 重传]
+     B --> D[transport-cc 检测到延迟增加]
+     C --> E[GCC 降低目标码率]
+     D --> E
+     E --> F[编码器降低码率/分辨率/帧率]
+     F --> G[网络拥塞缓解]
+     G --> H[transport-cc 检测到延迟减少]
+     H --> I[GCC 逐步提高目标码率]
+     I --> J[编码器提高码率/分辨率/帧率]
 
 这个反馈循环使得 WebRTC 能够在不断变化的网络条件下，
 自动调整视频质量以维持最佳的用户体验。

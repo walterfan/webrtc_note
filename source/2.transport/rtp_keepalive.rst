@@ -43,28 +43,20 @@ RFC 6263 "Application Mechanism for Keeping Alive the NAT Mappings Associated wi
 
 5. **ICE 连接维护**: 即使 ICE 连接已建立，如果没有持续的数据流，NAT 映射仍可能超时。
 
-.. code-block::
+.. mermaid::
 
-    典型的 NAT binding 超时场景:
-
-    时间线:
-    t=0s     发送方发送最后一个 RTP 包
-    t=0s     发送方进入静音状态 (VAD 检测到静音)
-    ...      (无 RTP 包发送)
-    t=30s    NAT 设备开始考虑回收该 binding
-    t=60s    NAT binding 被删除 ✗
-    t=65s    发送方恢复发送 RTP 包
-             → 包被 NAT 丢弃，接收方收不到
-             → 通信中断！
-
-    使用 Keepalive 后:
-    t=0s     发送方发送最后一个 RTP 包
-    t=0s     发送方进入静音状态
-    t=15s    发送 keepalive 包 → NAT binding 刷新 ✓
-    t=30s    发送 keepalive 包 → NAT binding 刷新 ✓
-    t=45s    发送 keepalive 包 → NAT binding 刷新 ✓
-    t=65s    发送方恢复发送 RTP 包
-             → NAT binding 仍然有效，包正常转发 ✓
+   flowchart TB
+     subgraph noKa [Without Keepalive]
+       A1["t=0s last RTP / VAD silence"] --> A2["t=30s NAT considers reclaim"]
+       A2 --> A3["t=60s NAT binding deleted"]
+       A3 --> A4["t=65s RTP dropped by NAT"]
+     end
+     subgraph withKa [With Keepalive]
+       B1["t=0s last RTP / silence"] --> B2["t=15s keepalive refreshes NAT"]
+       B2 --> B3["t=30s keepalive refreshes NAT"]
+       B3 --> B4["t=45s keepalive refreshes NAT"]
+       B4 --> B5["t=65s RTP forwarded OK"]
+     end
 
 
 NAT 映射超时问题
@@ -103,10 +95,10 @@ NAT 设备对 UDP 流的 binding 超时时间因设备类型和配置而异。RF
 
 .. note::
 
-    RFC 4787 建议 NAT 设备的 UDP binding 超时时间不应少于 **2 分钟 (120 秒)**，但实际上许多设备并未遵循此建议。因此，keepalive 间隔通常设置为远小于 120 秒的值。
+    RFC 4787 建议 NAT 设备的 UDP binding 超时时间不应少于 **2 分钟 (120 秒)**\ ，但实际上许多设备并未遵循此建议。因此，keepalive 间隔通常设置为远小于 120 秒的值。
 
 TCP vs UDP NAT Binding 差异
---------------------------
+---------------------------
 
 TCP 和 UDP 在 NAT binding 方面有显著差异：
 
@@ -181,23 +173,20 @@ RFC 6263 定义了多种维持 NAT 映射的方法。以下逐一介绍各种方
 
 利用 RTCP 报文（Sender Report 或 Receiver Report）作为 keepalive 机制。由于 RTCP 本身就需要定期发送，这种方法不需要额外的协议支持。
 
-.. code-block::
+.. mermaid::
 
-    RTCP 作为 Keepalive 的工作方式:
+   sequenceDiagram
+     participant S as Sender
+     participant R as Receiver
 
-    发送方                                    接收方
-      |                                         |
-      |--- RTP (媒体数据) --------------------->|
-      |--- RTP (媒体数据) --------------------->|
-      |                                         |
-      | (进入静音期，停止发送 RTP)               |
-      |                                         |
-      |--- RTCP SR --------------------------->| ← 维持 NAT binding
-      |                                         |
-      |<-- RTCP RR -----------------------------|  ← 维持反向 NAT binding
-      |                                         |
-      |--- RTCP SR --------------------------->| ← 再次维持
-      |                                         |
+     S->>R: RTP media
+     S->>R: RTP media
+     Note over S: silence, stop RTP
+     S->>R: RTCP SR
+     Note over R: refresh NAT binding
+     R->>S: RTCP RR
+     Note over S: refresh reverse NAT binding
+     S->>R: RTCP SR
 
 **局限性**: RTCP 的发送间隔由 RTCP bandwidth 规则控制（RFC 3550），最小间隔通常为 5 秒，但在参与者较多的会话中，间隔可能远大于 NAT 超时时间。此外，如果 RTP 和 RTCP 使用不同的端口（非 RTCP-mux），RTCP 只能维持 RTCP 端口的 NAT binding，无法维持 RTP 端口的 binding。
 
@@ -236,19 +225,15 @@ RFC 6263 定义了多种维持 NAT 映射的方法。以下逐一介绍各种方
 
 与 Binding Indication 类似，但使用 STUN Binding Request，对端需要回复 Binding Response。这种方法不仅能维持 NAT binding，还能检测连接的活跃性 (liveness check)。
 
-.. code-block::
+.. mermaid::
 
-    STUN Binding Request/Response 流程:
+   sequenceDiagram
+     participant A as Endpoint A
+     participant B as Endpoint B
 
-    端点 A                                    端点 B
-      |                                         |
-      |--- STUN Binding Request --------------->|
-      |                                         |
-      |<-- STUN Binding Response ---------------|
-      |                                         |
-
-    优点: 可以确认对端仍然可达
-    缺点: 需要对端响应，开销略大
+     A->>B: STUN Binding Request
+     B->>A: STUN Binding Response
+     Note over A,B: confirms peer reachability<br/>requires a response
 
 各方法优缺点对比
 --------------------------
@@ -295,7 +280,7 @@ Keepalive 间隔
 推荐间隔
 --------------------------
 
-RFC 6263 推荐的 keepalive 间隔为 **15 秒**。这个值的选择基于以下考虑：
+RFC 6263 推荐的 keepalive 间隔为 **15 秒**\ 。这个值的选择基于以下考虑：
 
 .. code-block::
 
@@ -314,25 +299,17 @@ RFC 6263 推荐的 keepalive 间隔为 **15 秒**。这个值的选择基于以�
 与 NAT 超时的关系
 --------------------------
 
-.. code-block::
+.. mermaid::
 
-    Keepalive 间隔与 NAT 超时的关系:
-
-    NAT 超时 (T_nat)    推荐 Keepalive 间隔 (T_ka)
-    ─────────────────    ──────────────────────────
-    20s (移动网络)       ≤ 10s (更激进)
-    30s (家用路由器)     ≤ 15s (标准)
-    60s (企业防火墙)     ≤ 15s (标准)
-    120s (CGN)           ≤ 15s (标准，无需更长)
-    300s (宽松配置)      ≤ 15s (标准，无需更长)
-
-    一般原则:
-    T_ka ≤ T_nat / 2
-
-    考虑丢包:
-    如果 keepalive 包可能丢失，应确保:
-    2 * T_ka < T_nat
-    即连续丢失一个 keepalive 包后，下一个仍能在超时前到达
+   flowchart TB
+     P["T_ka ≤ T_nat / 2<br/>2 * T_ka less than T_nat"]
+     N20["NAT 20s 移动网络"] -->|"≤ 10s"| K10[更激进]
+     N30["NAT 30s 家用路由器"] -->|"≤ 15s"| K15[标准]
+     N60["NAT 60s 企业防火墙"] -->|"≤ 15s"| K15
+     N120["NAT 120s CGN"] -->|"≤ 15s"| K15
+     N300["NAT 300s 宽松配置"] -->|"≤ 15s"| K15
+     P --- K15
+     P --- K10
 
 自适应间隔
 --------------------------
@@ -408,24 +385,19 @@ RTCP 作为隐式 Keepalive
 
 在 RTCP-mux (RFC 5761) 场景下，RTP 和 RTCP 共享同一端口。此时，定期发送的 RTCP 报文（SR/RR）可以作为隐式的 keepalive，帮助维持 NAT binding。
 
-.. code-block::
+.. mermaid::
 
-    RTCP-mux 下的隐式 Keepalive:
+   flowchart TB
+     subgraph port ["Port 5004 RTP + RTCP mux"]
+       T0["t=0.0s RTP"] --> T1["t=0.02s RTP"]
+       T1 --> T5["t=5.0s last RTP silence"]
+       T5 --> T10["t=10.0s RTCP SR/RR"]
+       T10 --> T15["t=15.0s STUN Binding Indication"]
+       T15 --> T20["t=20.0s RTCP SR/RR"]
+       T20 --> T25["t=25.0s STUN Binding Indication"]
+     end
 
-    端口 5004 (RTP + RTCP 复用)
-    ─────────────────────────────
-    t=0.0s   RTP 包 (媒体数据)
-    t=0.02s  RTP 包 (媒体数据)
-    ...
-    t=5.0s   最后一个 RTP 包 (进入静音)
-    t=10.0s  RTCP SR/RR → 刷新 NAT binding ✓
-    t=15.0s  STUN Binding Indication → 刷新 NAT binding ✓
-    t=20.0s  RTCP SR/RR → 刷新 NAT binding ✓
-    t=25.0s  STUN Binding Indication → 刷新 NAT binding ✓
-    ...
-
-    在 RTCP-mux 模式下，RTCP 和 STUN keepalive 共同维持 NAT binding，
-    提供了双重保障。
+在 RTCP-mux 模式下，RTCP 和 STUN keepalive 共同维持 NAT binding，提供了双重保障。
 
 然而，仅依赖 RTCP 作为 keepalive 是不够的，原因包括：
 
@@ -502,18 +474,22 @@ WebRTC 使用 DTLS-SRTP 进行密钥协商和媒体加密。DTLS 本身也提供
         opaque padding[padding_length];
     } HeartbeatMessage;
 
-    工作流程:
-    端点 A                                    端点 B
-      |                                         |
-      |--- Heartbeat Request ------------------>|
-      |                                         |
-      |<-- Heartbeat Response ------------------|
-      |                                         |
+工作流程:
 
-    特点:
-    - 双向确认，可检测连接活跃性
-    - 在 DTLS 层工作，独立于 RTP/RTCP
-    - 可用于 DTLS 连接的 keepalive
+.. mermaid::
+
+   sequenceDiagram
+     participant A as Endpoint A
+     participant B as Endpoint B
+
+     A->>B: Heartbeat Request
+     B->>A: Heartbeat Response
+
+特点:
+
+* 双向确认，可检测连接活跃性
+* 在 DTLS 层工作，独立于 RTP/RTCP
+* 可用于 DTLS 连接的 keepalive
 
 .. warning::
 
@@ -522,29 +498,17 @@ WebRTC 使用 DTLS-SRTP 进行密钥协商和媒体加密。DTLS 本身也提供
 在 WebRTC 中，DTLS heartbeat 通常不作为主要的 keepalive 机制，因为 ICE 层的 STUN keepalive 已经足够。但在某些特殊场景下（如 DTLS 连接需要独立维护时），heartbeat 仍然有用。
 
 DTLS 与 ICE Keepalive 的关系
---------------------------
+----------------------------
 
-.. code-block::
+.. mermaid::
 
-    WebRTC 协议栈中的 Keepalive 层次:
-
-    ┌─────────────────────────────────┐
-    │  应用层 (Application)            │
-    ├─────────────────────────────────┤
-    │  SRTP/SRTCP (加密媒体)           │  ← RTP keepalive (空包)
-    ├─────────────────────────────────┤
-    │  DTLS (密钥协商)                 │  ← DTLS heartbeat
-    ├─────────────────────────────────┤
-    │  ICE (连接管理)                  │  ← STUN Binding Indication ★
-    ├─────────────────────────────────┤
-    │  UDP (传输层)                    │
-    └─────────────────────────────────┘
-
-    在 WebRTC 中:
-    - ICE keepalive (STUN) 是主要的 keepalive 机制 ★
-    - RTCP 提供隐式 keepalive
-    - DTLS heartbeat 通常不使用
-    - 空 RTP 包在某些实现中作为补充
+   flowchart TB
+     L1[应用层 Application]
+     L2["SRTP/SRTCP 加密媒体<br/>RTP keepalive 空包"]
+     L3["DTLS 密钥协商<br/>DTLS heartbeat"]
+     L4["ICE 连接管理<br/>STUN Binding Indication"]
+     L5[UDP 传输层]
+     L1 --> L2 --> L3 --> L4 --> L5
 
 
 多路复用场景
@@ -555,23 +519,18 @@ BUNDLE 下的 Keepalive 策略
 
 WebRTC 中广泛使用 BUNDLE (RFC 8843) 将多个媒体流复用到同一传输通道上。在 BUNDLE 模式下，所有音频和视频 RTP/RTCP 流共享同一个 UDP 端口。
 
-.. code-block::
+.. mermaid::
 
-    BUNDLE 模式下的端口复用:
-
-    非 BUNDLE 模式:
-    ┌──────────────┐     端口 5000: 音频 RTP
-    │              │     端口 5001: 音频 RTCP
-    │   WebRTC     │     端口 5002: 视频 RTP
-    │   端点       │     端口 5003: 视频 RTCP
-    │              │     → 需要维持 4 个 NAT binding
-    └──────────────┘
-
-    BUNDLE + RTCP-mux 模式:
-    ┌──────────────┐     端口 5000: 音频 RTP + RTCP + 视频 RTP + RTCP
-    │   WebRTC     │     → 只需维持 1 个 NAT binding ✓
-    │   端点       │     → 一个 keepalive 包即可维持所有流
-    └──────────────┘
+   flowchart TB
+     subgraph nobundle [Non-BUNDLE]
+       E1[WebRTC 端点] --> P5000[端口 5000 音频 RTP]
+       E1 --> P5001[端口 5001 音频 RTCP]
+       E1 --> P5002[端口 5002 视频 RTP]
+       E1 --> P5003[端口 5003 视频 RTCP]
+     end
+     subgraph bundle [BUNDLE + RTCP-mux]
+       E2[WebRTC 端点] --> P1["端口 5000<br/>音频 RTP+RTCP + 视频 RTP+RTCP"]
+     end
 
 BUNDLE 模式下的 keepalive 策略：
 

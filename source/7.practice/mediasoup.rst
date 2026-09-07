@@ -23,7 +23,7 @@ MediaSoup
 ===============
 
 Mediasoup 是一个开源的 WebRTC SFU（Selective Forwarding Unit）项目，由 Iñaki Baz Castillo 和 José Luis Millán 创建并维护。
-它的设计哲学是 **极简主义（minimalist）**：只处理媒体层（media layer），不涉及信令（signaling）、房间管理（room management）或业务逻辑。
+它的设计哲学是 **极简主义（minimalist）**\ ：只处理媒体层（media layer），不涉及信令（signaling）、房间管理（room management）或业务逻辑。
 开发者可以在 mediasoup 之上自由构建任何类型的实时通信应用。
 
 Mediasoup is a opensource project, its server and client side libraries are designed to accomplish with the following goals:
@@ -107,48 +107,36 @@ C++ Worker 进程负责数据面（RTP/RTCP 包的接收、转发、处理）。
 整体架构
 --------------------------
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────────┐
-   │                    Node.js Application                   │
-   │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
-   │  │  Signaling   │  │   Room      │  │   Auth      │     │
-   │  │  Server      │  │   Manager   │  │   Module    │     │
-   │  └──────┬───────┘  └──────┬──────┘  └─────────────┘     │
-   │         │                 │                               │
-   │  ┌──────┴─────────────────┴──────────────────────┐       │
-   │  │           mediasoup Node.js Library            │       │
-   │  │  ┌────────┐  ┌────────┐  ┌────────┐           │       │
-   │  │  │ Worker  │  │ Router │  │Transport│          │       │
-   │  │  │ Manager │  │ Manager│  │ Manager │          │       │
-   │  │  └────┬───┘  └────┬───┘  └────┬────┘          │       │
-   │  └───────┼────────────┼──────────┼────────────────┘       │
-   └──────────┼────────────┼──────────┼────────────────────────┘
-              │ (IPC)      │          │
-   ┌──────────┼────────────┼──────────┼────────────────────────┐
-   │  ┌───────┴────────────┴──────────┴────────────────┐       │
-   │  │           C++ Worker Process #1                 │       │
-   │  │  ┌────────────────────────────────────┐        │       │
-   │  │  │            Router                   │        │       │
-   │  │  │  ┌──────────┐  ┌──────────┐        │        │       │
-   │  │  │  │ Producer │  │ Consumer │        │        │       │
-   │  │  │  │  (Audio) │  │  (Audio) │        │        │       │
-   │  │  │  └──────────┘  └──────────┘        │        │       │
-   │  │  │  ┌──────────┐  ┌──────────┐        │        │       │
-   │  │  │  │ Producer │  │ Consumer │        │        │       │
-   │  │  │  │  (Video) │  │  (Video) │        │        │       │
-   │  │  │  └──────────┘  └──────────┘        │        │       │
-   │  │  └────────────────────────────────────┘        │       │
-   │  └────────────────────────────────────────────────┘       │
-   │                                                           │
-   │  ┌────────────────────────────────────────────────┐       │
-   │  │           C++ Worker Process #2                 │       │
-   │  │  ┌────────────────────────────────────┐        │       │
-   │  │  │            Router                   │        │       │
-   │  │  │           ...                       │        │       │
-   │  │  └────────────────────────────────────┘        │       │
-   │  └────────────────────────────────────────────────┘       │
-   └───────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph APP["Node.js Application"]
+       SIG[Signaling Server]
+       RM[Room Manager]
+       AUTH[Auth Module]
+       subgraph LIB["mediasoup Node.js Library"]
+         WM[Worker Manager]
+         ROM[Router Manager]
+         TM[Transport Manager]
+       end
+       SIG --> LIB
+       RM --> LIB
+     end
+     subgraph W1["C++ Worker Process 1"]
+       subgraph R1["Router"]
+         PA["Producer Audio"]
+         CA["Consumer Audio"]
+         PV["Producer Video"]
+         CV["Consumer Video"]
+       end
+     end
+     subgraph W2["C++ Worker Process 2"]
+       R2["Router ..."]
+     end
+     WM -->|IPC| W1
+     ROM -->|IPC| W1
+     TM -->|IPC| W1
+     WM -->|IPC| W2
 
 核心对象
 --------------------------
@@ -261,27 +249,39 @@ Consumer 代表一个媒体接收端。当客户端需要接收某个 Producer �
 
 **对象关系图**:
 
-.. code-block:: text
+.. mermaid::
 
-   Worker
-   ├── Router
-   │   ├── WebRtcTransport (for User A)
-   │   │   ├── Producer (audio)    ← User A sends audio
-   │   │   ├── Producer (video)    ← User A sends video
-   │   │   ├── Consumer (audio)    ← User A receives B's audio
-   │   │   └── Consumer (video)    ← User A receives B's video
-   │   │
-   │   ├── WebRtcTransport (for User B)
-   │   │   ├── Producer (audio)    ← User B sends audio
-   │   │   ├── Producer (video)    ← User B sends video
-   │   │   ├── Consumer (audio)    ← User B receives A's audio
-   │   │   └── Consumer (video)    ← User B receives A's video
-   │   │
-   │   └── PlainTransport (for recording)
-   │       └── Consumer (audio+video) → FFmpeg
-   │
-   └── Router (another room)
-       └── ...
+   flowchart TB
+     W[Worker]
+     RA["Router room A"]
+     RB["Router another room"]
+     TA["WebRtcTransport User A"]
+     TB["WebRtcTransport User B"]
+     PT["PlainTransport recording"]
+     PAA["Producer audio<br/>User A sends audio"]
+     PAV["Producer video<br/>User A sends video"]
+     CAA["Consumer audio<br/>User A receives B audio"]
+     CAV["Consumer video<br/>User A receives B video"]
+     PBA["Producer audio<br/>User B sends audio"]
+     PBV["Producer video<br/>User B sends video"]
+     CBA["Consumer audio<br/>User B receives A audio"]
+     CBV["Consumer video<br/>User B receives A video"]
+     REC["Consumer audio+video"]
+     FF[FFmpeg]
+     W --> RA
+     W --> RB
+     RA --> TA
+     RA --> TB
+     RA --> PT
+     TA --> PAA
+     TA --> PAV
+     TA --> CAA
+     TA --> CAV
+     TB --> PBA
+     TB --> PBV
+     TB --> CBA
+     TB --> CBV
+     PT --> REC --> FF
 
 
 安装与配置
@@ -1151,20 +1151,19 @@ PipeTransport 跨服务器
 负载均衡策略
 --------------------------
 
-.. code-block:: text
+.. mermaid::
 
-   ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-   │   Server 1   │     │   Server 2   │     │   Server 3   │
-   │  Workers: 4  │◄───►│  Workers: 4  │◄───►│  Workers: 4  │
-   │  Rooms: A,B  │     │  Rooms: C,D  │     │  Rooms: E,F  │
-   └──────┬───────┘     └──────┬───────┘     └──────┬───────┘
-          │                    │                    │
-          └────────────────────┼────────────────────┘
-                               │
-                    ┌──────────┴──────────┐
-                    │   Load Balancer     │
-                    │  (Room → Server)    │
-                    └─────────────────────┘
+   flowchart TB
+     LB["Load Balancer<br/>Room to Server"]
+     S1["Server 1<br/>Workers: 4<br/>Rooms: A,B"]
+     S2["Server 2<br/>Workers: 4<br/>Rooms: C,D"]
+     S3["Server 3<br/>Workers: 4<br/>Rooms: E,F"]
+     LB --> S1
+     LB --> S2
+     LB --> S3
+     S1 <--> S2
+     S2 <--> S3
+     S1 <--> S3
 
 常见的负载均衡策略：
 

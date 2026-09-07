@@ -32,7 +32,7 @@ WHIP 协议
 WHIP 是什么
 -----------------------
 
-WHIP 全称为 **WebRTC-HTTP Ingestion Protocol**，即 WebRTC-HTTP 推流协议。
+WHIP 全称为 **WebRTC-HTTP Ingestion Protocol**\ ，即 WebRTC-HTTP 推流协议。
 它是一个基于 HTTP 的简单信令协议，用于在 WebRTC 端点和媒体服务器之间建立单向的推流（ingestion）会话。
 
 WHIP 的核心思想非常简单：
@@ -432,64 +432,30 @@ WHIP 与 WHEP 的区别
 
 以下是一个完整的 WHIP 推流会话的时序图：
 
-.. code-block::
+.. mermaid::
 
-   Publisher                    WHIP Endpoint              Media Server
-   (Browser/OBS)                (HTTP Server)              (SFU/MCU)
-       |                             |                          |
-       |  1. OPTIONS /whip/endpoint  |                          |
-       |---------------------------->|                          |
-       |  200 OK                     |                          |
-       |  Link: <stun:...>           |                          |
-       |  Link: <turn:...>           |                          |
-       |<----------------------------|                          |
-       |                             |                          |
-       |  [Create RTCPeerConnection] |                          |
-       |  [getUserMedia()]           |                          |
-       |  [createOffer()]            |                          |
-       |                             |                          |
-       |  2. POST /whip/endpoint     |                          |
-       |  Content-Type: application/sdp                         |
-       |  Authorization: Bearer xxx  |                          |
-       |  Body: SDP Offer            |                          |
-       |---------------------------->|  Create session           |
-       |                             |------------------------->|
-       |                             |  SDP Answer              |
-       |                             |<-------------------------|
-       |  201 Created                |                          |
-       |  Location: /whip/resource/id|                          |
-       |  Body: SDP Answer           |                          |
-       |<----------------------------|                          |
-       |                             |                          |
-       |  [setRemoteDescription()]   |                          |
-       |                             |                          |
-       |  3. PATCH /whip/resource/id |                          |
-       |  Content-Type:              |                          |
-       |   application/trickle-ice-sdpfrag                      |
-       |  Body: ICE candidates       |                          |
-       |---------------------------->|  Forward candidates       |
-       |                             |------------------------->|
-       |  204 No Content             |                          |
-       |<----------------------------|                          |
-       |                             |                          |
-       |  [ICE Connectivity Check]   |                          |
-       |   location===================|=========================>|
-       |                             |                          |
-       |  [DTLS Handshake]           |                          |
-       |  <==========================>=========================>|
-       |                             |                          |
-       |  [SRTP Media Flow]          |                          |
-       |  ========================== |=========================>|
-       |  (Audio + Video)            |                          |
-       |                             |                          |
-       |  ... streaming ...          |                          |
-       |                             |                          |
-       |  4. DELETE /whip/resource/id|                          |
-       |---------------------------->|  Terminate session        |
-       |                             |------------------------->|
-       |  200 OK                     |                          |
-       |<----------------------------|                          |
-       |                             |                          |
+   sequenceDiagram
+     participant Publisher
+     participant Whip as WHIP Endpoint
+     participant MS as Media Server
+
+     Publisher->>Whip: OPTIONS /whip/endpoint
+     Whip-->>Publisher: 200 OK Link stun/turn
+     Note over Publisher: Create RTCPeerConnection getUserMedia createOffer
+     Publisher->>Whip: POST /whip/endpoint application/sdp SDP Offer Bearer token
+     Whip->>MS: Create session
+     MS-->>Whip: SDP Answer
+     Whip-->>Publisher: 201 Created Location /whip/resource/id SDP Answer
+     Note over Publisher: setRemoteDescription
+     Publisher->>Whip: PATCH /whip/resource/id application/trickle-ice-sdpfrag ICE candidates
+     Whip->>MS: Forward candidates
+     Whip-->>Publisher: 204 No Content
+     Note over Publisher,MS: ICE Connectivity Check
+     Note over Publisher,MS: DTLS Handshake
+     Publisher->>MS: SRTP Media Flow Audio+Video
+     Publisher->>Whip: DELETE /whip/resource/id
+     Whip->>MS: Terminate session
+     Whip-->>Publisher: 200 OK
 
 简化流程说明
 -----------------------
@@ -504,7 +470,7 @@ WHIP 与 WHEP 的区别
 SDP 协商细节
 =======================
 
-WHIP 中的 SDP 协商遵循 WebRTC 的标准 SDP Offer/Answer 模型（`RFC3264`_），但有一些特定的约定。
+WHIP 中的 SDP 协商遵循 WebRTC 的标准 SDP Offer/Answer 模型（`RFC3264`_\ ），但有一些特定的约定。
 
 Codec 选择
 -----------------------
@@ -548,7 +514,7 @@ ICE-lite
 BUNDLE
 -----------------------
 
-WHIP 推荐使用 BUNDLE（`RFC8843`_）将所有媒体流复用到同一个传输通道上，
+WHIP 推荐使用 BUNDLE（`RFC8843`_\ ）将所有媒体流复用到同一个传输通道上，
 这样只需要一个 ICE/DTLS 连接即可传输音频和视频。
 
 .. code-block::
@@ -1030,20 +996,20 @@ JavaScript 浏览器端推流
 
 WHIP + WHEP 的组合为低延迟直播提供了端到端的解决方案：
 
-.. code-block::
+.. mermaid::
 
-   推流端                    媒体服务器                   拉流端
-   (OBS/Browser)            (SFU)                      (Browser)
-       |                       |                           |
-       |--- WHIP (推流) ------>|                           |
-       |   WebRTC (SRTP)       |                           |
-       |=======================>                           |
-       |                       |--- WHEP (拉流) --------->|
-       |                       |   WebRTC (SRTP)           |
-       |                       |==========================>|
-       |                       |                           |
-   延迟: < 200ms            处理: < 50ms              延迟: < 200ms
-                                                    总延迟: < 500ms
+   sequenceDiagram
+     participant Pub as Publisher
+     participant MS as Media Server
+     participant Sub as Subscriber
+
+     Pub->>MS: WHIP 推流
+     Pub->>MS: WebRTC SRTP
+     MS->>Sub: WHEP 拉流
+     MS->>Sub: WebRTC SRTP
+     Note over Pub: delay under 200ms
+     Note over MS: processing under 50ms
+     Note over Sub: delay under 200ms total under 500ms
 
 与传统直播方案的延迟对比：
 
@@ -1062,15 +1028,17 @@ WHIP 的 HTTP 特性使其天然适合与 CDN 集成：
 3. **认证代理**: CDN 可以在边缘验证 Bearer Token
 4. **地理路由**: 基于客户端位置将 WHIP 请求路由到最近的媒体服务器
 
-.. code-block::
+.. mermaid::
 
-   推流端 --WHIP--> CDN Edge --> Origin Media Server
-                       |
-                       +--> Edge SFU 1 --WHEP--> 观众 A
-                       |
-                       +--> Edge SFU 2 --WHEP--> 观众 B
-                       |
-                       +--> Edge SFU 3 --WHEP--> 观众 C
+   flowchart TB
+     Pub[推流端] -->|WHIP| Edge[CDN Edge]
+     Edge --> Origin[Origin Media Server]
+     Edge --> SFU1[Edge SFU 1]
+     Edge --> SFU2[Edge SFU 2]
+     Edge --> SFU3[Edge SFU 3]
+     SFU1 -->|WHEP| VA[观众 A]
+     SFU2 -->|WHEP| VB[观众 B]
+     SFU3 -->|WHEP| VC[观众 C]
 
 RTMP → WebRTC 转换
 -----------------------
@@ -1078,13 +1046,15 @@ RTMP → WebRTC 转换
 在过渡期间，许多场景需要同时支持 RTMP 和 WebRTC。
 媒体服务器可以同时接收 RTMP 和 WHIP 推流，并转换为多种输出格式：
 
-.. code-block::
+.. mermaid::
 
-   RTMP 推流 ──┐
-               ├──> 媒体服务器 ──┬──> WHEP (WebRTC 低延迟拉流)
-   WHIP 推流 ──┘                ├──> HLS  (兼容性拉流)
-                                ├──> DASH (自适应码率)
-                                └──> RTMP (转推到其他平台)
+   flowchart LR
+     RTMP[RTMP 推流] --> MS[媒体服务器]
+     WHIP[WHIP 推流] --> MS
+     MS --> WHEP["WHEP WebRTC 低延迟拉流"]
+     MS --> HLS["HLS 兼容性拉流"]
+     MS --> DASH["DASH 自适应码率"]
+     MS --> RTMPout[RTMP 转推到其他平台]
 
 SRS 等媒体服务器已经支持这种多协议转换能力。例如：
 
@@ -1155,12 +1125,12 @@ SRS 等媒体服务器已经支持这种多协议转换能力。例如：
 参考文献
 =============
 
-* `RFC 9725`_: WebRTC-HTTP Ingestion Protocol (WHIP)
+* `RFC9725`_: WebRTC-HTTP Ingestion Protocol (WHIP)
 * `draft-murillo-whep`_: WebRTC-HTTP Egress Protocol (WHEP)
 * `State of #webrtc in Media Streaming and Broadcast`_
 
 .. _State of #webrtc in Media Streaming and Broadcast: http://webrtcbydralex.com/index.php/2020/04/14/state-of-webrtc-in-media-streaming-and-broadcast/
-.. _RFC 9725: https://datatracker.ietf.org/doc/rfc9725/
+.. _RFC9725: https://datatracker.ietf.org/doc/rfc9725/
 .. _draft-murillo-whep: https://datatracker.ietf.org/doc/draft-murillo-whep/
 
 * https://www.meetecho.com/blog/whip-janus/

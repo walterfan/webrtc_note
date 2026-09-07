@@ -28,7 +28,7 @@ Lazy Rabbit Meeting 是一个轻量级的自托管多人视频会议系统，基
 
 项目采用分层架构，从领域模型到 SFU 引擎再到前端 UI，层次清晰，适合作为学习 WebRTC SFU 开发的参考实现。
 
-**项目地址**：https://github.com/walterfan/lazy-rabbit-meeting
+**项目地址**\ ：https://github.com/walterfan/lazy-rabbit-meeting
 
 .. list-table:: 核心特性
    :header-rows: 1
@@ -78,38 +78,31 @@ Lazy Rabbit Meeting 是一个轻量级的自托管多人视频会议系统，基
 架构
 ========================
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────────┐
-   │                    Vue.js Frontend                       │
-   │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────┐ │
-   │  │LoginView │  │LobbyView │  │PreJoinView│  │Meeting │ │
-   │  │          │  │          │  │          │  │  View  │ │
-   │  └──────────┘  └──────────┘  └──────────┘  └────────┘ │
-   │  ┌──────────────────────────────────────────────────┐  │
-   │  │  useWebSocket  │  useWebRTC  │  useMediaDevices  │  │
-   │  └──────────────────────────────────────────────────┘  │
-   └───────────────────────┬─────────────────────────────────┘
-                           │ HTTP REST + WebSocket (JMPP) + WebRTC
-   ┌───────────────────────┴─────────────────────────────────┐
-   │                    Go Backend                            │
-   │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────┐ │
-   │  │  Auth    │  │  Room    │  │  Chat    │  │  WS    │ │
-   │  │ Handler  │  │ Handler  │  │ Service  │  │Handler │ │
-   │  └──────────┘  └──────────┘  └──────────┘  └────────┘ │
-   │  ┌──────────────────────────────────────────────────┐  │
-   │  │  SFU Engine  │  Recorder  │  Signaling Service   │  │
-   │  └──────────────────────────────────────────────────┘  │
-   │  ┌──────────────────────────────────────────────────┐  │
-   │  │  GORM Repositories (SQLite / MySQL)              │  │
-   │  └──────────────────────────────────────────────────┘  │
-   └─────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph FE["Vue.js Frontend"]
+       LV[LoginView]
+       LO[LobbyView]
+       PJ[PreJoinView]
+       MV[MeetingView]
+       HOOKS["useWebSocket | useWebRTC | useMediaDevices"]
+     end
+     subgraph BE["Go Backend"]
+       AH["Auth Handler"]
+       RH["Room Handler"]
+       CS["Chat Service"]
+       WH["WS Handler"]
+       CORE["SFU Engine | Recorder | Signaling Service"]
+       DB["GORM Repositories<br/>SQLite / MySQL"]
+     end
+     FE -->|"HTTP REST + WebSocket JMPP + WebRTC"| BE
 
-**三条通信通道**：
+**三条通信通道**\ ：
 
-- **HTTP REST**：用于认证、房间管理、录制文件下载
-- **WebSocket（JMPP 协议）**：用于信令（SDP/ICE 交换）、聊天、状态同步
-- **WebRTC 媒体流**：用于音视频和屏幕共享的实时传输
+- **HTTP REST**\ ：用于认证、房间管理、录制文件下载
+- **WebSocket（JMPP 协议）**\ ：用于信令（SDP/ICE 交换）、聊天、状态同步
+- **WebRTC 媒体流**\ ：用于音视频和屏幕共享的实时传输
 
 
 JMPP 信令协议
@@ -175,7 +168,7 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
    * - ``track_forwarder.go``
      - 将一个参与者的 Track 转发给房间内其他参与者
 
-**SFU 媒体转发流程**：
+**SFU 媒体转发流程**\ ：
 
 1. 用户加入房间，通过 JMPP 发送 ``join`` 消息
 2. 服务端为该用户创建 Pion PeerConnection
@@ -187,7 +180,7 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
 关键源码
 ========================
 
-**后端**：
+**后端**\ ：
 
 .. list-table::
    :header-rows: 1
@@ -212,7 +205,7 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
    * - ``backend/internal/message/jmpp.go``
      - JMPP 消息类型定义
 
-**前端**：
+**前端**\ ：
 
 .. list-table::
    :header-rows: 1
@@ -233,13 +226,13 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
 安装与运行
 ========================
 
-**前置条件**：
+**前置条件**\ ：
 
 - Go 1.23+
 - Node.js 20+
 - （可选）Docker & Docker Compose
 
-**本地开发**：
+**本地开发**\ ：
 
 .. code-block:: bash
 
@@ -256,7 +249,7 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
    # 浏览器访问
    open http://localhost:9070
 
-**Docker 部署**：
+**Docker 部署**\ ：
 
 .. code-block:: bash
 
@@ -266,7 +259,7 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
    # MySQL 模式
    make docker-up-mysql
 
-**配置文件** ``config/config.yaml``：
+**配置文件** ``config/config.yaml``\ ：
 
 .. code-block:: yaml
 
@@ -293,7 +286,7 @@ SFU 引擎是整个项目的核心，位于 ``backend/internal/webrtc/`` 目录�
 REST API
 ========================
 
-**认证**：
+**认证**\ ：
 
 .. list-table::
    :header-rows: 1
@@ -309,7 +302,7 @@ REST API
      - ``/api/v1/auth/login``
      - 登录，返回 JWT
 
-**房间管理**：
+**房间管理**\ ：
 
 .. list-table::
    :header-rows: 1
@@ -334,7 +327,7 @@ REST API
      - ``/api/v1/rooms/:id/messages``
      - 获取聊天历史
 
-**录制**：
+**录制**\ ：
 
 .. list-table::
    :header-rows: 1

@@ -1009,7 +1009,7 @@ Chrome 浏览器内置了强大的 WebRTC 调试工具，可通过地址栏输�
 
 .. note::
 
-   Firefox 也提供了类似的工具: ``about:webrtc``。
+   Firefox 也提供了类似的工具: ``about:webrtc``\ 。
 
 
 getStats() 轮询模式
@@ -1119,25 +1119,14 @@ getStats() 轮询模式
 
 自建监控系统的基本架构:
 
-.. code-block:: text
+.. mermaid::
 
-    ┌──────────┐    getStats()    ┌──────────────┐
-    │  Browser │ ──────────────> │  Stats        │
-    │  Client  │                 │  Collector    │
-    └──────────┘                 └──────┬───────┘
-                                        │ HTTP/WebSocket
-                                        ▼
-                                 ┌──────────────┐
-                                 │  Monitoring   │
-                                 │  Backend      │
-                                 └──────┬───────┘
-                                        │
-                          ┌─────────────┼─────────────┐
-                          ▼             ▼             ▼
-                   ┌───────────┐ ┌───────────┐ ┌───────────┐
-                   │ Time-     │ │ Alert     │ │ Dashboard │
-                   │ Series DB │ │ Engine    │ │ (Grafana) │
-                   └───────────┘ └───────────┘ └───────────┘
+   flowchart TB
+     Browser[Browser Client] -->|getStats| Collector[Stats Collector]
+     Collector -->|HTTP/WebSocket| Backend[Monitoring Backend]
+     Backend --> TSDB[Time-Series DB]
+     Backend --> Alert[Alert Engine]
+     Backend --> Dash[Dashboard Grafana]
 
 
 参考资料

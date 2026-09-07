@@ -88,7 +88,7 @@ FFmpeg 的内部处理流程如下：
 4. ``libavcodec`` 将处理后的帧重新编码
 5. ``libavformat`` 将编码数据包写入输出文件
 
-如果使用 ``-c copy``（stream copy），则跳过解码和编码步骤，直接复制数据包。
+如果使用 ``-c copy``\ （stream copy），则跳过解码和编码步骤，直接复制数据包。
 
 
 基本用法
@@ -340,7 +340,7 @@ RTSP 推拉流
 
 
 YUV 原始视频处理
-==============
+================
 
 WebRTC 内部使用 YUV（通常是 I420）作为原始视频格式。FFmpeg 可以方便地处理 YUV 文件。
 
@@ -358,7 +358,7 @@ WebRTC 内部使用 YUV（通常是 I420）作为原始视频格式。FFmpeg 可
 
 
 PCM 原始音频处理
-==============
+================
 
 .. code-block:: bash
 
@@ -639,7 +639,7 @@ FFmpeg 库编程
 
 .. tip::
 
-   Opus 解码器输出的采样格式通常是 ``AV_SAMPLE_FMT_FLT``（32 位浮点）。
+   Opus 解码器输出的采样格式通常是 ``AV_SAMPLE_FMT_FLT``\ （32 位浮点）。
    如果需要 16 位整数 PCM（大多数语音处理库要求），需要用 libswresample 做格式转换。
 
 
@@ -855,7 +855,7 @@ WebRTC 音频通常是 48kHz，但语音识别引擎常要求 16kHz。
 
 .. note::
 
-   ``swr_alloc_set_opts2`` 是 FFmpeg 6.0+ 的新 API，替代了弃用的 ``swr_alloc_set_opts``。
+   ``swr_alloc_set_opts2`` 是 FFmpeg 6.0+ 的新 API，替代了弃用的 ``swr_alloc_set_opts``\ 。
    旧版本请使用旧 API 或通过 ``av_opt_set_*`` 逐项设置。
 
 
@@ -1263,7 +1263,7 @@ WebRTC 音频通常是 48kHz，但语音识别引擎常要求 16kHz。
    * - 陷阱
      - 说明
    * - Planar vs Interleaved
-     - Opus/AAC 解码输出通常是 planar float (``fltp``)，各声道数据在 ``data[0]``、``data[1]``...。
+     - Opus/AAC 解码输出通常是 planar float (``fltp``)，各声道数据在 ``data[0]``\ 、``data[1]``...。
        直接把 ``data[0]`` 当成交错数据会得到错误结果
    * - linesize ≠ width
      - 视频帧的 ``linesize`` 包含内存对齐 padding，不能直接用 ``width * bytes_per_pixel`` 计算行大小
@@ -1273,7 +1273,7 @@ WebRTC 音频通常是 48kHz，但语音识别引擎常要求 16kHz。
      - 不同阶段的时间基不同（解码器 vs 流 vs 编码器）。
        必须用 ``av_packet_rescale_ts`` 或 ``av_rescale_q`` 正确转换
    * - 内存泄漏
-     - ``AVPacket`` 和 ``AVFrame`` 使用后必须 ``unref``，上下文必须用对应的 ``free`` 函数释放
+     - ``AVPacket`` 和 ``AVFrame`` 使用后必须 ``unref``\ ，上下文必须用对应的 ``free`` 函数释放
    * - 线程安全
      - ``AVCodecContext`` 不是线程安全的。多线程环境中每个线程需要独立的上下文
 

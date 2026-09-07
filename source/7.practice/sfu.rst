@@ -118,10 +118,15 @@ Ingress 模块负责接收发布者（Publisher）的媒体流。其主要职责
 * **Simulcast 层识别**: 识别发布者发送的不同 Simulcast 层（通过 RID 或 SSRC 映射）
 * **关键帧缓存**: 缓存最近的关键帧，以便新订阅者快速加入
 
-.. code-block:: text
+.. mermaid::
 
-   Publisher A ──RTP/RTCP──> [DTLS/SRTP] ──> [Jitter Buffer] ──> [Ingress Router]
-   Publisher B ──RTP/RTCP──> [DTLS/SRTP] ──> [Jitter Buffer] ──> [Ingress Router]
+   flowchart LR
+     PA[Publisher A] -->|RTP/RTCP| DA[DTLS/SRTP]
+     DA --> JA[Jitter Buffer]
+     JA --> IR[Ingress Router]
+     PB[Publisher B] -->|RTP/RTCP| DB[DTLS/SRTP]
+     DB --> JB[Jitter Buffer]
+     JB --> IR
 
 Routing（路由模块）
 --------------------
@@ -135,9 +140,13 @@ Routing 模块是 SFU 的核心，负责决定将哪些媒体流转发给哪些�
 * **主讲人检测**: 检测当前的主讲人（Dominant Speaker），优先转发其视频
 * **带宽分配**: 根据可用带宽在多个流之间分配比特率
 
-.. code-block:: text
+.. mermaid::
 
-   [Ingress Router] ──> [Subscription Manager] ──> [Layer Selector] ──> [Bandwidth Allocator] ──> [Egress]
+   flowchart LR
+     IR[Ingress Router] --> SM[Subscription Manager]
+     SM --> LS[Layer Selector]
+     LS --> BA[Bandwidth Allocator]
+     BA --> EG[Egress]
 
 Egress（出口模块）
 --------------------
@@ -152,9 +161,14 @@ Egress 模块负责将选定的媒体流发送给订阅者。其主要职责包�
 * **NACK 处理**: 响应订阅者的 NACK 请求，重传丢失的包
 * **FEC 生成**: 可选地为订阅者生成前向纠错包
 
-.. code-block:: text
+.. mermaid::
 
-   [Egress] ──> [SSRC Rewriter] ──> [Seq# Rewriter] ──> [Pacer] ──> [DTLS/SRTP] ──> Subscriber
+   flowchart LR
+     EG[Egress] --> SR[SSRC Rewriter]
+     SR --> SQ[Seq Rewriter]
+     SQ --> PC[Pacer]
+     PC --> DT[DTLS/SRTP]
+     DT --> SUB[Subscriber]
 
 Signaling（信令模块）
 -----------------------
@@ -229,12 +243,15 @@ SFU 根据以下因素选择转发的 Simulcast 层：
 3. **网络拥塞状态**: 当网络拥塞时自动降级到低层
 4. **优先级**: 主讲人的视频优先分配高层
 
-.. code-block:: text
+.. mermaid::
 
-   Publisher ──[High 720p]──>
-              ──[Med  360p]──> SFU ──[根据订阅者带宽选择层]──> Subscriber A (720p)
-              ──[Low  180p]──>                                 Subscriber B (360p)
-                                                               Subscriber C (180p)
+   flowchart LR
+     P[Publisher] -->|High 720p| SFU[SFU]
+     P -->|Med 360p| SFU
+     P -->|Low 180p| SFU
+     SFU -->|根据订阅者带宽选择层| SA["Subscriber A 720p"]
+     SFU --> SB["Subscriber B 360p"]
+     SFU --> SC["Subscriber C 180p"]
 
 SVC 转发
 --------------------
@@ -249,19 +266,26 @@ SVC（Scalable Video Coding）是另一种可伸缩视频编码方式，与 Simu
 
 VP9 SVC 是 WebRTC 中最常用的 SVC 编码方式，支持灵活的时间层和空间层组合。
 
-.. code-block:: text
+.. mermaid::
 
-   VP9 SVC 示例（2 空间层 x 3 时间层）:
+   flowchart LR
+     subgraph S1["空间层 1 720p"]
+       A1[T0] --> B1[T1] --> C1[T2] --> D1[T0] --> E1[T1] --> F1[T2]
+     end
+     subgraph S0["空间层 0 360p"]
+       A0[T0] --> B0[T1] --> C0[T2] --> D0[T0] --> E0[T1] --> F0[T2]
+     end
+     A1 --- A0
+     C1 --- C0
+     D1 --- D0
+     F1 --- F0
 
-   空间层 1 (720p): T0 ── T1 ── T2 ── T0 ── T1 ── T2
-                      |         |         |         |
-   空间层 0 (360p): T0 ── T1 ── T2 ── T0 ── T1 ── T2
+SFU 可以选择转发:
 
-   SFU 可以选择转发:
-   - S1T2: 720p@30fps（完整质量）
-   - S1T0: 720p@7.5fps（低帧率高分辨率）
-   - S0T2: 360p@30fps（低分辨率高帧率）
-   - S0T0: 360p@7.5fps（最低质量）
+- S1T2: 720p@30fps（完整质量）
+- S1T0: 720p@7.5fps（低帧率高分辨率）
+- S0T2: 360p@30fps（低分辨率高帧率）
+- S0T0: 360p@7.5fps（最低质量）
 
 带宽估算
 --------------------
@@ -272,13 +296,15 @@ SFU 需要为每个订阅者独立估算可用带宽，以便做出正确的层�
 
 * **Transport-CC（Transport-wide Congestion Control）**: 订阅者通过 RTCP Transport-CC feedback 向 SFU 报告每个 RTP 包的接收时间，SFU 在发送端使用 GCC（Google Congestion Control）算法估算可用带宽。这是目前推荐的方法。
 
-.. code-block:: text
+.. mermaid::
 
-   Transport-CC 工作流程:
+   sequenceDiagram
+     participant S as SFU
+     participant U as Subscriber
 
-   SFU ──[RTP + transport-cc ext]──> Subscriber
-   SFU <──[RTCP Transport-CC FB]──── Subscriber
-   SFU: 根据 feedback 计算 delay gradient → 估算带宽 → 调整发送速率
+     S->>U: RTP + transport-cc ext
+     U->>S: RTCP Transport-CC FB
+     Note over S: delay gradient to 估算带宽 to 调整发送速率
 
 Last-N 策略
 --------------------
@@ -293,13 +319,14 @@ Last-N 策略
 4. 当发言者变化时，动态切换转发的视频流
 5. 对于不在 Last-N 列表中的参与者，只转发音频流
 
-.. code-block:: text
+.. mermaid::
 
-   20 个参与者, Last-N = 4:
-
-   活跃发言者: [Alice, Bob, Charlie, David, ...]
-   转发视频:    Alice(720p), Bob(360p), Charlie(360p), David(180p)
-   其余 16 人:  只转发音频
+   flowchart TB
+     ALL["20 个参与者 Last-N = 4"]
+     V["转发视频<br/>Alice 720p, Bob 360p<br/>Charlie 360p, David 180p"]
+     A["其余 16 人<br/>只转发音频"]
+     ALL --> V
+     ALL --> A
 
 主讲人检测（Dominant Speaker Detection）
 ------------------------------------------
@@ -463,15 +490,18 @@ SFU 可扩展性
 
 当单个 SFU 节点无法承载所有参与者时，可以使用级联 SFU 架构。多个 SFU 节点通过内部连接（PipeTransport 或专用协议）互相转发媒体流。
 
-.. code-block:: text
+.. mermaid::
 
-   Region A                    Region B
-   ┌──────────────┐            ┌──────────────┐
-   │   SFU Node 1 │◄──Pipe──►│   SFU Node 2 │
-   │              │            │              │
-   │ User A ──►   │            │   ──► User C │
-   │ User B ──►   │            │   ──► User D │
-   └──────────────┘            └──────────────┘
+   flowchart LR
+     subgraph RA["Region A"]
+       UA[User A] --> N1["SFU Node 1"]
+       UB[User B] --> N1
+     end
+     subgraph RB["Region B"]
+       N2["SFU Node 2"] --> UC[User C]
+       N2 --> UD[User D]
+     end
+     N1 <-->|Pipe| N2
 
 **级联策略**:
 
@@ -500,14 +530,13 @@ SFU 的负载均衡需要考虑以下因素：
 * **房间亲和性**: 同一房间的参与者尽量分配到同一节点，减少跨节点转发
 * **地理亲和性**: 将用户分配到地理位置最近的节点
 
-.. code-block:: text
+.. mermaid::
 
-   Load Balancer 决策流程:
-
-   新用户请求 → 检查房间所在节点 → 节点负载是否可接受?
-                                      ├── 是 → 分配到该节点
-                                      └── 否 → 选择同区域负载最低的节点
-                                                → 建立级联连接
+   flowchart TB
+     REQ[新用户请求] --> CHK{房间所在节点<br/>负载是否可接受}
+     CHK -->|是| SAME[分配到该节点]
+     CHK -->|否| LOW[选择同区域负载最低的节点]
+     LOW --> PIPE[建立级联连接]
 
 
 SFU 优化

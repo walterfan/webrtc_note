@@ -41,26 +41,17 @@ WebRTC 的安全在 "RFC8826 Security Considerations for WebRTC" 有较为详细
 
 以一个简单的 WebRTC 应用为例, 我们需要考虑浏览器在客户端的安全及隐私，通信和传输的安全
 
-.. code-block::
+.. mermaid::
 
-                          +----------------+
-                          |                |
-                          |   Web Server   |
-                          |                |
-                          +----------------+
-                              ^        ^
-                             /          \
-                    HTTPS   /            \   HTTPS
-                      or   /              \   or
-               WebSockets /                \ WebSockets
-                         v                  v
-                      JS API              JS API
-                +-----------+            +-----------+
-                |           |    Media   |           |
-                |  Browser  |<---------->|  Browser  |
-                |           |            |           |
-                +-----------+            +-----------+
-                    Alice                     Bob
+   flowchart TB
+     WS["Web Server"]
+     subgraph CLIENTS["客户端"]
+       A["Browser<br/>Alice<br/>JS API"]
+       B["Browser<br/>Bob<br/>JS API"]
+     end
+     A -->|HTTPS or WebSockets| WS
+     B -->|HTTPS or WebSockets| WS
+     A <-->|Media| B
 
 
 遵循浏览器的安全模型

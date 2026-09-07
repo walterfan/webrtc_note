@@ -53,14 +53,16 @@ Kitty **不是** 一个开箱即用的 fuzzer，它也不包含任何特定协�
 框架架构
 ================
 
-.. code-block:: text
+.. mermaid::
 
-   Fuzzer ─── Model ─── Template ─── Field
-     │
-     ├─── Target ─── Controller
-     │            └── Monitor(s)
-     │
-     └─── Interface (Web UI)
+   flowchart TB
+     F[Fuzzer] --> M[Model]
+     M --> TPL[Template]
+     TPL --> FLD[Field]
+     F --> TGT[Target]
+     TGT --> CTL[Controller]
+     TGT --> MON[Monitors]
+     F --> UI["Interface Web UI"]
 
 .. list-table::
    :header-rows: 1
@@ -71,7 +73,7 @@ Kitty **不是** 一个开箱即用的 fuzzer，它也不包含任何特定协�
    * - **Data Model**
      - 定义消息结构：字段类型（字符串、整数、校验和、长度等）、字段关系、消息顺序
    * - **Target**
-     - 管理被测目标的交互，分为 ``ServerTarget``（测试服务端）和 ``ClientTarget``（测试客户端）
+     - 管理被测目标的交互，分为 ``ServerTarget``\ （测试服务端）和 ``ClientTarget``\ （测试客户端）
    * - **Controller**
      - 控制被测目标的状态（启动、重启、重置等），确保每次测试前目标处于正确状态
    * - **Monitor**
@@ -153,7 +155,7 @@ Kitty 支持多阶段的有状态模糊测试，例如先通过认证阶段再�
 
 
 Server Fuzzing 示例
-================
+===================
 
 测试一个 TCP 服务端：
 
@@ -190,7 +192,7 @@ Server Fuzzing 示例
 
 
 Client Fuzzing 示例
-================
+===================
 
 测试一个客户端应用（fuzzer 作为服务端，向客户端发送变异响应）：
 

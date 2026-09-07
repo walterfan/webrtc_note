@@ -21,11 +21,11 @@
 
 视频聊天是 WebRTC 最典型的应用场景。一个完整的视频聊天系统需要解决以下核心问题：
 
-1. **媒体采集**：获取摄像头和麦克风的音视频流
-2. **信令交换**：协商连接参数（SDP Offer/Answer）和网络地址（ICE Candidate）
-3. **NAT 穿越**：在各种网络环境下建立点对点或中继连接
-4. **媒体传输**：实时传输加密的音视频数据
-5. **媒体渲染**：解码并播放远端的音视频流
+1. **媒体采集**\ ：获取摄像头和麦克风的音视频流
+2. **信令交换**\ ：协商连接参数（SDP Offer/Answer）和网络地址（ICE Candidate）
+3. **NAT 穿越**\ ：在各种网络环境下建立点对点或中继连接
+4. **媒体传输**\ ：实时传输加密的音视频数据
+5. **媒体渲染**\ ：解码并播放远端的音视频流
 
 本章将从系统设计到代码实现，完整地介绍如何构建一个视频聊天应用。
 
@@ -38,37 +38,23 @@
 
 一个典型的视频聊天系统包含以下组件：
 
-::
+.. mermaid::
 
-    ┌─────────────────────────────────────────────────────┐
-    │                    Web Application                   │
-    │  ┌──────────┐    ┌──────────┐    ┌──────────┐      │
-    │  │  Camera  │    │   Mic    │    │  Screen  │      │
-    │  └────┬─────┘    └────┬─────┘    └────┬─────┘      │
-    │       │               │               │             │
-    │  ┌────▼───────────────▼───────────────▼─────┐      │
-    │  │         RTCPeerConnection                 │      │
-    │  └────────────────┬──────────────────────────┘      │
-    └───────────────────┼──────────────────────────────────┘
-                        │
-           ┌────────────┼────────────┐
-           │            │            │
-    ┌──────▼──────┐ ┌───▼────┐ ┌────▼─────┐
-    │   Signal    │ │  STUN  │ │   TURN   │
-    │   Server    │ │ Server │ │  Server  │
-    │ (WebSocket) │ │        │ │ (coturn) │
-    └──────┬──────┘ └────────┘ └──────────┘
-           │
-    ┌──────▼──────────────────────────────────────────────┐
-    │                    Web Application                   │
-    │  ┌────────────────────────────────────────────┐     │
-    │  │         RTCPeerConnection                  │     │
-    │  └────┬───────────────┬───────────────┬───────┘     │
-    │  ┌────▼─────┐    ┌────▼─────┐    ┌────▼─────┐      │
-    │  │  Video   │    │  Audio   │    │  Screen  │      │
-    │  │  Player  │    │  Player  │    │  Player  │      │
-    │  └──────────┘    └──────────┘    └──────────┘      │
-    └─────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph wa1 [Web Application]
+       Cam[Camera] --> PC1[RTCPeerConnection]
+       Mic[Mic] --> PC1
+       Scr[Screen] --> PC1
+     end
+     PC1 --> Sig["Signal Server<br/>(WebSocket)"]
+     PC1 --> STUN[STUN Server]
+     PC1 --> TURN["TURN Server<br/>(coturn)"]
+     Sig --> PC2[RTCPeerConnection]
+     subgraph wa2 [Web Application]
+       PC2 --> VP[Video Player]
+       PC2 --> AP[Audio Player]
+       PC2 --> SP[Screen Player]
+     end
 
 组件详解
 ----------------
@@ -590,10 +576,10 @@ SDP Offer/Answer
 
 SDP 协商是 WebRTC 连接建立的核心。需要注意：
 
-- **Offer 方**：通常是先加入房间的用户，或者收到 ``user-joined`` 事件的用户
-- **Answer 方**：收到 Offer 的用户
-- **Renegotiation**：添加/移除媒体轨道时需要重新协商
-- **Rollback**：协商失败时可以回滚到之前的状态
+- **Offer 方**\ ：通常是先加入房间的用户，或者收到 ``user-joined`` 事件的用户
+- **Answer 方**\ ：收到 Offer 的用户
+- **Renegotiation**\ ：添加/移除媒体轨道时需要重新协商
+- **Rollback**\ ：协商失败时可以回滚到之前的状态
 
 .. code-block:: javascript
 
@@ -745,9 +731,9 @@ HTTPS 要求
 
 WebRTC 的 ``getUserMedia`` API 要求安全上下文（Secure Context）：
 
-- **生产环境**：必须使用 HTTPS
-- **本地开发**：``localhost`` 和 ``127.0.0.1`` 可以使用 HTTP
-- **局域网测试**：需要自签名证书或使用 ngrok 等隧道工具
+- **生产环境**\ ：必须使用 HTTPS
+- **本地开发**\ ：``localhost`` 和 ``127.0.0.1`` 可以使用 HTTP
+- **局域网测试**\ ：需要自签名证书或使用 ngrok 等隧道工具
 
 .. code-block:: bash
 
@@ -785,11 +771,11 @@ TURN 服务器部署
 测试工具
 --------------------
 
-- **chrome://webrtc-internals**：Chrome 内置的 WebRTC 调试工具，查看详细统计
-- **about:webrtc**：Firefox 的 WebRTC 调试页面
-- **WebRTC Test Pages**：https://webrtc.github.io/samples/
-- **Trickle ICE**：https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
-- **网络模拟**：Chrome DevTools Network Throttling 模拟弱网
+- **chrome://webrtc-internals**\ ：Chrome 内置的 WebRTC 调试工具，查看详细统计
+- **about:webrtc**\ ：Firefox 的 WebRTC 调试页面
+- **WebRTC Test Pages**\ ：https://webrtc.github.io/samples/
+- **Trickle ICE**\ ：https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/
+- **网络模拟**\ ：Chrome DevTools Network Throttling 模拟弱网
 
 
 参考文献

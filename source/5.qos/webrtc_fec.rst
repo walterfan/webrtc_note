@@ -27,8 +27,8 @@ FEC 即 Forward Error Correction（前向纠错），是一种在发送端添加
 
 在实时音视频通信中，FEC 和 NACK/RTX 是应对丢包的两大主要手段：
 
-- **NACK/RTX**：接收端检测到丢包后请求重传，延迟 = RTT
-- **FEC**：发送端预先发送冗余包，接收端自行恢复，延迟 ≈ 0
+- **NACK/RTX**\ ：接收端检测到丢包后请求重传，延迟 = RTT
+- **FEC**\ ：发送端预先发送冗余包，接收端自行恢复，延迟 ≈ 0
 
 两者的选择取决于网络条件：
 
@@ -106,10 +106,10 @@ FEC 最基本的原理是异或（XOR）运算。XOR 运算有一个关键性质
 
 N 个数据包生成 1 个 FEC 包的方案称为 (N, 1) FEC：
 
-- **(1, 1)**：100% 冗余，每个包都有备份，可恢复任意单包丢失
-- **(2, 1)**：50% 冗余，每 2 个包生成 1 个 FEC 包
-- **(4, 1)**：25% 冗余，每 4 个包生成 1 个 FEC 包
-- **(10, 1)**：10% 冗余
+- **(1, 1)**\ ：100% 冗余，每个包都有备份，可恢复任意单包丢失
+- **(2, 1)**\ ：50% 冗余，每 2 个包生成 1 个 FEC 包
+- **(4, 1)**\ ：25% 冗余，每 4 个包生成 1 个 FEC 包
+- **(10, 1)**\ ：10% 冗余
 
 保护比率越高，恢复能力越强，但带宽开销也越大。
 
@@ -132,11 +132,11 @@ Parity FEC 是最简单的 FEC 方案，基于 XOR 运算：
 
 其中：
 
-- **SN Base**：被保护的第一个 RTP 包的序列号
-- **Length Recovery**：被保护包长度的 XOR
-- **PT Recovery**：被保护包 Payload Type 的 XOR
-- **Mask**：位掩码，指示哪些包被此 FEC 包保护
-- **TS Recovery**：被保护包时间戳的 XOR
+- **SN Base**\ ：被保护的第一个 RTP 包的序列号
+- **Length Recovery**\ ：被保护包长度的 XOR
+- **PT Recovery**\ ：被保护包 Payload Type 的 XOR
+- **Mask**\ ：位掩码，指示哪些包被此 FEC 包保护
+- **TS Recovery**\ ：被保护包时间戳的 XOR
 
 
 ULP FEC 详解
@@ -175,8 +175,8 @@ ULP FEC 包格式
 
 ULP FEC 支持多级保护（Uneven Level Protection）：
 
-- **Level 0**：保护 payload 的前 N 个字节（最重要的部分）
-- **Level 1**：保护 payload 的后续字节（次要部分）
+- **Level 0**\ ：保护 payload 的前 N 个字节（最重要的部分）
+- **Level 1**\ ：保护 payload 的后续字节（次要部分）
 
 这种不均匀保护的设计理念是：视频帧的头部（如 slice header、运动向量）比尾部（如高频 DCT 系数）更重要，丢失头部会导致整帧不可解码，而丢失尾部只会降低质量。
 
@@ -199,23 +199,24 @@ WebRTC 中的 ULP FEC 实现
 
 WebRTC 中 ULP FEC 的核心类：
 
-- ``ForwardErrorCorrection``：FEC 编解码的核心类
-- ``UlpfecGenerator``：在发送端生成 FEC 包
-- ``UlpfecReceiver``：在接收端接收和恢复 FEC 包
+- ``ForwardErrorCorrection``\ ：FEC 编解码的核心类
+- ``UlpfecGenerator``\ ：在发送端生成 FEC 包
+- ``UlpfecReceiver``\ ：在接收端接收和恢复 FEC 包
 
-.. code-block:: text
+.. mermaid::
 
-   发送端流程：
-   1. UlpfecGenerator 收集一组媒体包
-   2. 根据丢包率选择保护比率（FEC rate）
-   3. 根据 Mask 表计算 FEC 包
-   4. FEC 包使用 RED (RFC 2198) 封装后发送
-
-   接收端流程：
-   1. UlpfecReceiver 解析 RED 包，分离媒体包和 FEC 包
-   2. 检测丢包（通过序列号间隙）
-   3. 尝试使用 FEC 包恢复丢失的媒体包
-   4. 恢复成功则将包交给解码器
+   flowchart TD
+     subgraph Send[发送端流程]
+       S1[UlpfecGenerator 收集一组媒体包] --> S2[根据丢包率选择保护比率]
+       S2 --> S3[根据 Mask 表计算 FEC 包]
+       S3 --> S4["FEC 包使用 RED RFC 2198 封装后发送"]
+     end
+     subgraph Recv[接收端流程]
+       R1[UlpfecReceiver 解析 RED 包] --> R2[检测丢包]
+       R2 --> R3[尝试使用 FEC 包恢复]
+       R3 --> R4[恢复成功则交给解码器]
+     end
+     Send --> Recv
 
 
 FlexFEC 详解
@@ -259,37 +260,59 @@ FlexFEC 支持三种保护模式：
 
 **1D 行保护（Row FEC）**
 
-.. code-block:: text
+.. mermaid::
 
-   P1  P2  P3  P4  → FEC_R1
-   P5  P6  P7  P8  → FEC_R2
+   flowchart LR
+     subgraph Row1[行 1]
+       P1[P1] --- P2[P2] --- P3[P3] --- P4[P4]
+     end
+     subgraph Row2[行 2]
+       P5[P5] --- P6[P6] --- P7[P7] --- P8[P8]
+     end
+     Row1 --> FECR1[FEC_R1]
+     Row2 --> FECR2[FEC_R2]
 
-   每行独立保护，可恢复每行中的 1 个丢包
+每行独立保护，可恢复每行中的 1 个丢包
 
 **1D 列保护（Column FEC）**
 
-.. code-block:: text
+.. mermaid::
 
-   P1  P2  P3  P4
-   P5  P6  P7  P8
-   ↓   ↓   ↓   ↓
-   FC1 FC2 FC3 FC4
+   flowchart TB
+     P1[P1] --- P2[P2] --- P3[P3] --- P4[P4]
+     P5[P5] --- P6[P6] --- P7[P7] --- P8[P8]
+     P1 --> FC1[FC1]
+     P5 --> FC1
+     P2 --> FC2[FC2]
+     P6 --> FC2
+     P3 --> FC3[FC3]
+     P7 --> FC3
+     P4 --> FC4[FC4]
+     P8 --> FC4
 
-   每列独立保护，可恢复每列中的 1 个丢包
-   对突发丢包（连续丢失多个包）特别有效
+每列独立保护，可恢复每列中的 1 个丢包，对突发丢包特别有效
 
 **2D 保护（Row + Column FEC）**
 
-.. code-block:: text
+.. mermaid::
 
-   P1  P2  P3  P4  → FEC_R1
-   P5  P6  P7  P8  → FEC_R2
-   ↓   ↓   ↓   ↓
-   FC1 FC2 FC3 FC4
+   flowchart TB
+     subgraph Row[行保护]
+       P1[P1] --- P2[P2] --- P3[P3] --- P4[P4]
+       P5[P5] --- P6[P6] --- P7[P7] --- P8[P8]
+     end
+     P1 --- P2 --- P3 --- P4 --> FECR1[FEC_R1]
+     P5 --- P6 --- P7 --- P8 --> FECR2[FEC_R2]
+     P1 --> FC1[FC1]
+     P5 --> FC1
+     P2 --> FC2[FC2]
+     P6 --> FC2
+     P3 --> FC3[FC3]
+     P7 --> FC3
+     P4 --> FC4[FC4]
+     P8 --> FC4
 
-   同时使用行和列保护
-   可恢复更复杂的丢包模式（如同时丢失 P2 和 P5）
-   但带宽开销更大
+同时使用行和列保护，可恢复更复杂的丢包模式，但带宽开销更大
 
 FlexFEC 包格式
 --------------------------
@@ -322,16 +345,13 @@ Opus In-band FEC
 
 Opus 编解码器内置了 FEC 功能（In-band FEC），通过在当前帧中嵌入前一帧的低码率编码来实现：
 
-.. code-block:: text
+.. mermaid::
 
-   正常 Opus 帧:
-   [Frame N 高质量编码]
-
-   启用 In-band FEC 的 Opus 帧:
-   [Frame N 高质量编码 | Frame N-1 低质量编码]
-
-   如果 Frame N-1 的包丢失：
-   → 从 Frame N 的包中提取 Frame N-1 的低质量编码进行解码
+   flowchart TD
+     A[正常 Opus 帧<br/>Frame N 高质量编码] --> B[启用 In-band FEC]
+     B --> C["Frame N 高质量编码 | Frame N-1 低质量编码"]
+     C --> D{Frame N-1 丢失?}
+     D -->|是| E[从 Frame N 提取 N-1 低质量编码解码]
 
 SDP 协商中通过 ``useinbandfec=1`` 启用：
 
@@ -412,9 +432,9 @@ FEC/NACK Rate
 
 WebRTC 中 FEC 和 NACK 的协同策略：
 
-- **低 RTT（< 100ms）**：优先使用 NACK，FEC 作为补充
-- **中 RTT（100-300ms）**：NACK + FEC 并用
-- **高 RTT（> 300ms）**：主要依赖 FEC，NACK 效果有限
+- **低 RTT（< 100ms）**\ ：优先使用 NACK，FEC 作为补充
+- **中 RTT（100-300ms）**\ ：NACK + FEC 并用
+- **高 RTT（> 300ms）**\ ：主要依赖 FEC，NACK 效果有限
 
 .. code-block:: text
 

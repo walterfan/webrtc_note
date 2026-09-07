@@ -24,28 +24,13 @@ WebRTC Thread Model
 WebRTC 的线程模型是其架构的核心，理解它是阅读源码的前提。
 WebRTC 使用三个主要线程，每个线程有明确的职责边界和严格的调用规则。
 
-.. code-block:: text
+.. mermaid::
 
-   ┌──────────────────────────────────────────────────────┐
-   │                  应用层 (JavaScript / Native API)     │
-   └──────────┬───────────────────────────────────────────┘
-              │ API 调用 & 回调
-   ┌──────────▼───────────────────────────────────────────┐
-   │              Signaling Thread (信令线程)              │
-   │  - PeerConnection 的 API 入口                        │
-   │  - SDP 创建与解析                                    │
-   │  - Observer 回调                                     │
-   └──────┬──────────────────────────┬────────────────────┘
-          │ 同步调用                  │ 同步调用
-   ┌──────▼────────────┐    ┌───────▼─────────────────────┐
-   │  Worker Thread    │    │   Network Thread             │
-   │  (工作线程)        │    │   (网络线程)                  │
-   │                   │    │                              │
-   │  - 编解码          │───►│  - ICE/DTLS/SRTP             │
-   │  - 媒体处理        │    │  - Socket 读写               │
-   │  - 拥塞控制        │    │  - 数据收发                   │
-   │  - 音频设备管理    │    │  - TURN 中继                  │
-   └───────────────────┘    └──────────────────────────────┘
+   flowchart TB
+     App[应用层 JavaScript / Native API] -->|API 调用与回调| Sig["Signaling Thread 信令线程<br/>PeerConnection API 入口<br/>SDP 创建与解析<br/>Observer 回调"]
+     Sig -->|同步调用| W["Worker Thread 工作线程<br/>编解码 / 媒体处理<br/>拥塞控制 / 音频设备"]
+     Sig -->|同步调用| N["Network Thread 网络线程<br/>ICE/DTLS/SRTP<br/>Socket 读写 / 数据收发 / TURN"]
+     W --> N
 
 调用规则
 ==============
@@ -72,7 +57,7 @@ WebRTC 对线程间调用有严格约束，违反会触发 ``RTC_DCHECK`` 断言
      - 任意线程
      - 可以异步 Post 消息（非阻塞）
 
-关键原则：**Network Thread 永远不能被阻塞**，因为它直接处理网络 I/O，
+关键原则：**Network Thread 永远不能被阻塞**\ ，因为它直接处理网络 I/O，
 阻塞会导致丢包和连接超时。
 
 
@@ -109,9 +94,9 @@ Thread
        static Thread* Current();
    };
 
-- ``Invoke()``：跨线程同步调用，内部通过消息队列传递任务并等待完成
-- ``PostTask()``：异步投递，不等待结果
-- ``RTC_DCHECK_RUN_ON(thread)``：编译期+运行期检查当前是否在指定线程上
+- ``Invoke()``\ ：跨线程同步调用，内部通过消息队列传递任务并等待完成
+- ``PostTask()``\ ：异步投递，不等待结果
+- ``RTC_DCHECK_RUN_ON(thread)``\ ：编译期+运行期检查当前是否在指定线程上
 
 
 TaskQueue
@@ -192,26 +177,18 @@ WebRTC 大量使用 Clang 线程安全注解来在编译期检测错误：
 
 以发送视频为例：
 
-.. code-block:: text
+.. mermaid::
 
-   摄像头采集 (Capture Thread)
-       │
-       │ OnFrame() 回调
-       ▼
-   Signaling Thread
-       │ 通过 VideoTrackSource 分发
-       ▼
-   Worker Thread
-       │ VideoStreamEncoder::OnFrame()
-       │ → 编码 (可能在编码器自己的线程)
-       │ → PacedSender::EnqueuePackets()
-       ▼
-   Network Thread (Pacer 线程)
-       │ → RTP 打包
-       │ → SRTP 加密
-       │ → Socket 发送
-       ▼
-   网络
+   flowchart TD
+     Cap[摄像头采集 Capture Thread] -->|OnFrame 回调| Sig[Signaling Thread]
+     Sig -->|VideoTrackSource 分发| W[Worker Thread]
+     W --> Enc["VideoStreamEncoder::OnFrame 编码"]
+     Enc --> Pac["PacedSender::EnqueuePackets"]
+     Pac --> Net[Network Thread]
+     Net --> RTP[RTP 打包]
+     RTP --> SRTP[SRTP 加密]
+     SRTP --> Sock[Socket 发送]
+     Sock --> NW[网络]
 
 
 FAQ

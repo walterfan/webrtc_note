@@ -153,7 +153,7 @@ Extended Highest Sequence Number Received (32 bits)
     这个字段使得接收方可以跟踪超过 65535 个数据包的序列。
 
 Interarrival Jitter (32 bits)
---------------------------
+-----------------------------
 
 到达间隔抖动 (interarrival jitter) 的估计值，以 RTP 时间戳单位表示。这是 RTP 数据包到达时间间隔与发送时间间隔之差的统计方差的估计。
 
@@ -235,33 +235,17 @@ RTT (Round-Trip Time) 可以通过 SR 和 RR 报文中的时间戳信息计算�
 
 计算过程示意图：
 
-.. code-block::
+.. mermaid::
 
-    发送方 (Sender)                          接收方 (Receiver)
-        |                                        |
-        |--- SR (NTP timestamp T1) ------------->|
-        |                                        |
-        |                                        | (处理延迟 = DLSR)
-        |                                        |
-        |<-- RR (LSR=T1, DLSR=delay) ------------|
-        |                                        |
-        | 收到 RR 的时间 = A                      |
-        |                                        |
-        | RTT = A - LSR - DLSR                   |
-        |     = A - T1 - delay                   |
-        |                                        |
+   sequenceDiagram
+     participant S as Sender
+     participant R as Receiver
 
-    具体数值示例:
-    T1 (SR 发送时间):     10:00:00.000  → LSR = 0x00000000
-    SR 到达接收方时间:     10:00:00.050  (传播延迟 50ms)
-    RR 发送时间:          10:00:00.150  → DLSR = 0.1s = 6554
-    RR 到达发送方时间:     10:00:00.200  → A
-
-    RTT = A - LSR - DLSR
-        = 0.200s - 0.000s - 0.100s
-        = 0.100s (100ms)
-
-    单向延迟 ≈ RTT / 2 = 50ms
+     S->>R: SR NTP timestamp T1
+     Note over R: processing delay = DLSR
+     R->>S: RR LSR=T1 DLSR=delay
+     Note over S: "receive time A; RTT = A - LSR - DLSR"
+     Note over S,R: "T1=10:00:00.000 LSR=0x00000000; RR at 10:00:00.150 DLSR=0.1s; A=10:00:00.200 RTT=100ms"
 
 .. note::
 
@@ -360,7 +344,7 @@ WebRTC 的拥塞控制算法（如 GCC - Google Congestion Control）使用 RTT 
 
 
 RTCP Sender Report (SR) 格式
-==========================
+============================
 
 为了更好地理解 RR，有必要了解与之配合使用的 Sender Report (SR) 格式。SR 的 Payload Type 为 200。
 
@@ -409,21 +393,13 @@ RTCP 复合报文
 2. 必须包含 SDES (Source Description) 报文，至少包含 CNAME 项
 3. 可以包含其他 RTCP 报文（如 BYE、APP）
 
-.. code-block::
+.. mermaid::
 
-    RTCP 复合报文结构:
-
-    +------------------+
-    | SR 或 RR          |  ← 必须是第一个
-    +------------------+
-    | SDES (CNAME)     |  ← 必须包含
-    +------------------+
-    | BYE (可选)        |  ← 参与者离开时发送
-    +------------------+
-    | APP (可选)        |  ← 应用特定数据
-    +------------------+
-    | XR (可选)         |  ← 扩展报告 (RFC 3611)
-    +------------------+
+   flowchart TB
+     A["SR or RR<br/>必须是第一个"] --> B["SDES (CNAME)<br/>必须包含"]
+     B --> C["BYE (可选)<br/>参与者离开时发送"]
+     C --> D["APP (可选)<br/>应用特定数据"]
+     D --> E["XR (可选)<br/>扩展报告 RFC 3611"]
 
 常见的 RTCP 报文类型：
 
@@ -481,7 +457,7 @@ RFC 3550 规定：
 
 * RTCP 流量不应超过会话总带宽的 **5%**
 * 其中 **25%** 分配给发送方（SR），**75%** 分配给接收方（RR）
-* 最小发送间隔为 **5 秒**（可通过 reduced minimum 降低到约 360ms / 参与者数量）
+* 最小发送间隔为 **5 秒**\ （可通过 reduced minimum 降低到约 360ms / 参与者数量）
 
 .. code-block::
 
@@ -505,23 +481,21 @@ RFC 3550 规定：
 
 
 Reduced-Size RTCP (RFC 5506)
-==========================
+============================
 
 传统的 RTCP 复合报文规则要求每个 UDP 数据包必须以 SR/RR 开头并包含 SDES，这增加了不必要的开销。RFC 5506 定义了 Reduced-Size RTCP，允许发送不包含 SR/RR 和 SDES 的单独 RTCP 报文。
 
 在 WebRTC 中，Reduced-Size RTCP 被广泛使用：
 
-.. code-block::
+.. mermaid::
 
-    传统 RTCP 复合报文:
-    +------+------+------+
-    | SR/RR| SDES | NACK |  ← 即使只需要发送 NACK，也必须包含 SR/RR 和 SDES
-    +------+------+------+
-
-    Reduced-Size RTCP:
-    +------+
-    | NACK |  ← 可以单独发送 NACK，减少开销和延迟
-    +------+
+   flowchart LR
+     subgraph trad [传统 RTCP 复合报文]
+       T1[SR/RR] --> T2[SDES] --> T3[NACK]
+     end
+     subgraph rsize [Reduced-Size RTCP]
+       R1[NACK]
+     end
 
 Reduced-Size RTCP 的优势：
 

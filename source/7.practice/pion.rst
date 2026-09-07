@@ -28,10 +28,10 @@ Pion 是一个用纯 Go 语言编写的 WebRTC 实现，不依赖 C/C++ 的 libw
 
 核心特点：
 
-- **纯 Go 实现**：无 CGO 依赖，交叉编译方便，部署简单
-- **模块化设计**：WebRTC、ICE、DTLS、SRTP、SCTP、RTP 等协议分别独立为子包
-- **Interceptor 框架**：可插拔的 RTP/RTCP 中间件，支持 NACK、TWCC、报告生成等
-- **活跃社区**：GitHub 12k+ stars，持续维护
+- **纯 Go 实现**\ ：无 CGO 依赖，交叉编译方便，部署简单
+- **模块化设计**\ ：WebRTC、ICE、DTLS、SRTP、SCTP、RTP 等协议分别独立为子包
+- **Interceptor 框架**\ ：可插拔的 RTP/RTCP 中间件，支持 NACK、TWCC、报告生成等
+- **活跃社区**\ ：GitHub 12k+ stars，持续维护
 
 项目地址: https://github.com/pion/webrtc
 
@@ -161,24 +161,18 @@ Interceptor 框架
 
 Interceptor 是 Pion 的 RTP/RTCP 中间件机制，可以在包发送/接收路径上插入处理逻辑：
 
-.. code-block:: text
+.. mermaid::
 
-   应用层
-     │
-     ▼
-   ┌─────────────────────────┐
-   │   Interceptor Chain     │
-   │  ┌───────────────────┐  │
-   │  │  TWCC Interceptor │  │  ← 生成 TWCC 反馈
-   │  ├───────────────────┤  │
-   │  │  NACK Interceptor │  │  ← 处理 NACK 请求和重传
-   │  ├───────────────────┤  │
-   │  │  Report Interceptor│ │  ← 生成 SR/RR 报告
-   │  └───────────────────┘  │
-   └─────────────────────────┘
-     │
-     ▼
-   SRTP/网络层
+   flowchart TB
+     APP[应用层]
+     subgraph CHAIN["Interceptor Chain"]
+       TWCC["TWCC Interceptor<br/>生成 TWCC 反馈"]
+       NACK["NACK Interceptor<br/>处理 NACK 请求和重传"]
+       RPT["Report Interceptor<br/>生成 SR/RR 报告"]
+       TWCC --> NACK --> RPT
+     end
+     NET["SRTP/网络层"]
+     APP --> CHAIN --> NET
 
 内置 Interceptor：
 

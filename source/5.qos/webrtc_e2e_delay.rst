@@ -54,17 +54,18 @@ WebRTC E2E Delay
 
 端到端延迟并非单一的延迟，而是由多个环节的延迟累加而成。下面的 ASCII 图展示了完整的延迟管道：
 
-.. code-block::
+.. mermaid::
 
-   发送端                          网络                          接收端
-   ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
-   │  捕获延迟  │→│  编码延迟  │→│ 打包/排队  │→│  网络传输  │→│ Jitter   │→│  解码延迟  │→ 渲染
-   │ Capture  │  │ Encoding │  │ Pacing   │  │ Network  │  │ Buffer   │  │ Decoding │
-   └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────────┘
-       T1            T2            T3            T4             T5            T6         T7
+   flowchart LR
+     T1["捕获延迟<br/>Capture"] --> T2["编码延迟<br/>Encoding"]
+     T2 --> T3["打包/排队<br/>Pacing"]
+     T3 --> T4["网络传输<br/>Network"]
+     T4 --> T5[Jitter Buffer]
+     T5 --> T6["解码延迟<br/>Decoding"]
+     T6 --> T7[渲染]
 
-   E2E Delay = T7 - T1 = T_capture + T_encode + T_packetize + T_network
-                        + T_jitter_buffer + T_decode + T_render
+E2E Delay = T7 - T1 = T_capture + T_encode + T_packetize + T_network
++ T_jitter_buffer + T_decode + T_render
 
 各环节延迟详解如下：
 
@@ -264,15 +265,16 @@ RTCP SR/RR 测量 RTT
 
 RTCP Sender Report (SR) 和 Receiver Report (RR) 可以用来测量往返时间（RTT）：
 
-.. code-block::
+.. mermaid::
 
-   1. 发送端在 SR 中包含 NTP 时间戳 T1
-   2. 接收端收到 SR，记录接收时间
-   3. 接收端在 RR 中包含:
-      - LSR (Last SR): 最近收到的 SR 中的 NTP 时间戳中间 32 位
-      - DLSR (Delay since Last SR): 从收到 SR 到发送 RR 的时间间隔
-   4. 发送端收到 RR，记录接收时间 T4
-   5. RTT = T4 - LSR - DLSR
+   sequenceDiagram
+     participant S as 发送端
+     participant R as 接收端
+     S->>R: SR 含 NTP 时间戳 T1
+     Note over R: 记录接收时间
+     R->>S: RR 含 LSR 与 DLSR
+     Note over S: 记录接收时间 T4
+     Note over S: RTT = T4 - LSR - DLSR
 
 RTT 可以用来估计单向延迟（假设路径对称）：
 

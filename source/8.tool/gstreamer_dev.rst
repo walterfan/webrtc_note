@@ -235,7 +235,7 @@ GStreamer Pipeline 有四个状态：
    * - ``PLAYING``
      - 正在处理数据，时钟运行中
 
-状态转换必须按顺序进行：``NULL → READY → PAUSED → PLAYING``，反向亦然。
+状态转换必须按顺序进行：``NULL → READY → PAUSED → PLAYING``\ ，反向亦然。
 
 .. code-block:: c
 
@@ -320,10 +320,10 @@ GStreamer 的扩展性完全依赖插件系统。开发自定义插件的基本�
 1. 定义 Element 的数据结构（状态、属性）
 2. 定义 Element 的类（继承 ``GstElement`` 或 ``GstBaseTransform`` 等）
 3. 定义标准宏（类型检查、类型转换）
-4. 实现 ``_class_init``：注册属性、Pad 模板、信号
-5. 实现 ``_init``：初始化实例
-6. 实现核心功能函数（如 ``chain``、``transform`` 等）
-7. 实现 ``plugin_init``：注册 Element
+4. 实现 ``_class_init``\ ：注册属性、Pad 模板、信号
+5. 实现 ``_init``\ ：初始化实例
+6. 实现核心功能函数（如 ``chain``\ 、``transform`` 等）
+7. 实现 ``plugin_init``\ ：注册 Element
 
 头文件模板
 --------------------------

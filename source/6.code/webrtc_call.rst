@@ -21,7 +21,7 @@ WebRTC Call
 Overview
 =============
 
-``Call`` 是 WebRTC 原生代码中的核心类之一，位于 ``call/call.h``，
+``Call`` 是 WebRTC 原生代码中的核心类之一，位于 ``call/call.h``\ ，
 它代表一个完整的通话会话，负责管理所有的音视频发送流和接收流，
 并协调带宽估计、拥塞控制等传输层功能。
 
@@ -42,7 +42,7 @@ Call 类的职责
 ``Call`` 类是 ``PeerConnection`` 和底层媒体引擎之间的桥梁，主要职责包括：
 
 1. **媒体流管理**: 创建和销毁 AudioSendStream、AudioReceiveStream、VideoSendStream、VideoReceiveStream
-2. **带宽估计**: 持有全局的 ``SendSideCongestionController``，统一管理所有流的带宽分配
+2. **带宽估计**: 持有全局的 ``SendSideCongestionController``\ ，统一管理所有流的带宽分配
 3. **Pacer 管理**: 通过 ``PacedSender`` 控制所有媒体包的发送节奏
 4. **RTCP 处理**: 汇总处理所有流的 RTCP 反馈
 5. **比特率分配**: 通过 ``BitrateAllocator`` 在多条流之间分配可用带宽

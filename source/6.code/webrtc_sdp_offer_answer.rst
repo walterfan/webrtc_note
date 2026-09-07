@@ -23,14 +23,14 @@ Overview
 
 SDP Offer/Answer 模型是 WebRTC 建立连接的核心协商机制，遵循 RFC 3264。
 在 WebRTC 原生代码中，``SdpOfferAnswerHandler`` 类是处理 SDP 协商的核心，
-它管理 ``CreateOffer``、``CreateAnswer``、``SetLocalDescription``、``SetRemoteDescription``
+它管理 ``CreateOffer``\ 、``CreateAnswer``\ 、``SetLocalDescription``\ 、``SetRemoteDescription``
 等关键操作的完整流程。
 
 
 SdpOfferAnswerHandler 类
 ======================================
 
-``SdpOfferAnswerHandler`` 位于 ``pc/sdp_offer_answer.h``，是从 ``PeerConnection`` 中
+``SdpOfferAnswerHandler`` 位于 ``pc/sdp_offer_answer.h``\ ，是从 ``PeerConnection`` 中
 拆分出来的专门处理 SDP 协商逻辑的类。它的主要职责：
 
 * 管理 SDP 状态机 (stable → have-local-offer → have-remote-offer → stable)
@@ -56,7 +56,7 @@ CreateOffer 流程
 
 当应用调用 ``PeerConnection::CreateOffer()`` 时，内部流程如下：
 
-1. **收集 Transceiver 信息**: 遍历所有 ``RtpTransceiver``，获取每个媒体的方向、编解码器等
+1. **收集 Transceiver 信息**: 遍历所有 ``RtpTransceiver``\ ，获取每个媒体的方向、编解码器等
 2. **生成 MediaDescription**: 为每个 m= 行创建对应的媒体描述
 3. **添加 ICE 候选参数**: 包含 ICE ufrag、password、DTLS fingerprint
 4. **添加编解码器列表**: 根据本地支持的编解码器生成 codec 列表

@@ -24,6 +24,7 @@ Overview
 signal 在英语中有两个不同的意思，一是信令，一是信号，这里我们主要讲信令。
 
 信令的意思是呼叫流程的控制，包括媒体通道的搭建，媒体参数的协商，媒体流的控制。
+电话网与呼叫中心侧的 SIP 协议栈见 :doc:`../3.signaling/overview`\ 。
 
 在 WebRTC 中，信令控制主要的协议是 4 个
 
@@ -85,7 +86,7 @@ SDP
 * 然后，应用程序使用该 Offer 通过 setLocalDescription() API来设置其本地配置。offer 最终通过其首选的信令机制（例如WebSockets）发送到远程端；
 * 收到该 offer 后，远程方将使用 setRemoteDescription()API进行安置。
 * 为了完成 Offer/Answer 交换，接收方会使用 createAnswer() API生成适当的 answer，使用 setLocalDescription() API应用该 answer，并将 answer 通过信令通道发送回发起方。
-* 发起方获得该`answer`后，它将使用 setRemoteDescription() API进行设置，并且初始设置已完成。可以重复此过程以进行其他 Offer/Answer 交换。
+* 发起方获得该`answer`\ 后，它将使用 setRemoteDescription() API进行设置，并且初始设置已完成。可以重复此过程以进行其他 Offer/Answer 交换。
 
 参见 `RFC3264`_ : An Offer/Answer Model with the Session Description Protocol (SDP)
 
@@ -169,3 +170,4 @@ nginx + nodejs + redis
 * `WebIDL Checker`_
 * `RFC3264`_: An Offer/Answer Model with the Session Description Protocol (SDP)
 * `SDP for the WebRTC`_
+* :doc:`../3.signaling/overview` — SIP 与呼叫中心信令地图

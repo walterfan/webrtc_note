@@ -8,16 +8,7 @@ WebRTC 拥塞控制
 .. include:: ../abbrs.ref
 
 
-.. toctree::
-   :maxdepth: 1
-   :caption: 控制方法
-
-
-   webrtc_gcc
-   webrtc_remb
-   webrtc_twcc
-   webrtc_bw_probe
-   webrtc_cc_evaluation
+相关章节：:doc:`webrtc_gcc` · :doc:`webrtc_remb` · :doc:`webrtc_twcc` · :doc:`webrtc_bw_probe` · :doc:`webrtc_cc_evaluation`
 
 ============ ==========================
 **Abstract** WebRTC Congestion Control
@@ -389,23 +380,31 @@ Self-Clocked Rate Adaptation for Multimedia(SCReAM) 由爱立信提出，应用�
 
 基本的测试环境如下
 
-.. code-block::
+.. mermaid::
 
-      +---+                                                        +---+
-      |S1 |====== \               Forward -->             / =======|R1 |
-      +---+       \\                                     //        +---+
-                   \\                                   //
-      +---+       +-----+                            +-----+       +---+
-      |S2 |=======|  A  |--------------------------->|  B  |=======|R2 |
-      +---+       |     |<---------------------------|     |       +---+
-                  +-----+                            +-----+
-      (...)         //                                  \\         (...)
-                   //          <-- Backward              \\
-      +---+       //                                      \\       +---+
-      |Sn |====== /                                        \ ======|Rn |
-      +---+                                                        +---+
-
-                   Figure 1: Example of a Testbed Topology
+   sequenceDiagram
+     participant S1
+     participant S2
+     participant Sn
+     participant A
+     participant B
+     participant R1
+     participant R2
+     participant Rn
+     S1->>A: Forward
+     S2->>A: Forward
+     Sn->>A: Forward
+     A->>B: Forward
+     B->>R1: Forward
+     B->>R2: Forward
+     B->>Rn: Forward
+     R1->>B: Backward
+     R2->>B: Backward
+     Rn->>B: Backward
+     B->>A: Backward
+     A->>S1: Backward
+     A->>S2: Backward
+     A->>Sn: Backward
 
 度量指标
 -------------------------
@@ -451,36 +450,33 @@ Having a common log format simplifies running analyses across different measurem
 
 现代 WebRTC 采用发送端拥塞控制架构，核心组件包括：
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────────┐
-   │                     发送端                               │
-   │                                                         │
-   │  ┌──────────┐    ┌────────────────┐    ┌─────────────┐ │
-   │  │ Encoder  │───→│ BitrateAllocator│───→│ PacedSender │─┼──→ 网络
-   │  └──────────┘    └────────────────┘    └─────────────┘ │
-   │       ↑                  ↑                    ↑         │
-   │       │           ┌──────┴──────┐      ┌──────┴──────┐ │
-   │       │           │ GoogCcCtrl  │      │ProbeControl │ │
-   │       │           └──────┬──────┘      └─────────────┘ │
-   │       │                  ↑                              │
-   │       │           ┌──────┴──────┐                       │
-   │       │           │ TWCC 反馈   │←── RTCP Transport-CC  │
-   │       │           └─────────────┘                       │
-   │       │                                                 │
-   │  ┌────┴──────────────────────────┐                      │
-   │  │ CongestionWindowPushback      │                      │
-   │  │ Controller                    │                      │
-   │  └───────────────────────────────┘                      │
-   └─────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph Sender[发送端]
+       Enc[Encoder]
+       BA[BitrateAllocator]
+       PS[PacedSender]
+       GCC[GoogCcCtrl]
+       Probe[ProbeControl]
+       TWCC[TWCC 反馈]
+       CW["CongestionWindowPushback<br/>Controller"]
+       Enc --> BA --> PS
+       GCC --> BA
+       Probe --> PS
+       TWCC --> GCC
+       CW --> Enc
+     end
+     PS --> Net[网络]
+     RTCP[RTCP Transport-CC] --> TWCC
 
-**BitrateAllocator**：带宽分配器，负责将估算的总带宽分配给各个媒体流。根据流的优先级、最小/最大码率约束进行分配。
+**BitrateAllocator**\ ：带宽分配器，负责将估算的总带宽分配给各个媒体流。根据流的优先级、最小/最大码率约束进行分配。
 
-**PacedSender（TaskQueuePacedSender）**：包发送节奏控制器，确保 RTP 包以平滑的速率发送，避免突发发送导致网络拥塞。典型的发送间隔为 5ms。
+**PacedSender（TaskQueuePacedSender）**\ ：包发送节奏控制器，确保 RTP 包以平滑的速率发送，避免突发发送导致网络拥塞。典型的发送间隔为 5ms。
 
-**ProbeController**：带宽探测控制器，在会话开始或带宽变化时，通过发送探测包（probe clusters）来快速探测可用带宽。
+**ProbeController**\ ：带宽探测控制器，在会话开始或带宽变化时，通过发送探测包（probe clusters）来快速探测可用带宽。
 
-**CongestionWindowPushbackController**：拥塞窗口回退控制器，当网络拥塞时，通过限制发送窗口来降低发送速率，防止过度发送。
+**CongestionWindowPushbackController**\ ：拥塞窗口回退控制器，当网络拥塞时，通过限制发送窗口来降低发送速率，防止过度发送。
 
 
 带宽分配策略
@@ -521,11 +517,13 @@ Simulcast 层选择
 
 在 Simulcast 模式下，发送端同时编码多个分辨率层：
 
-.. code-block:: text
+.. mermaid::
 
-   高层 (High):    1280x720  @ 30fps  ~2500 kbps
-   中层 (Medium):   640x360  @ 30fps  ~500 kbps
-   低层 (Low):      320x180  @ 15fps  ~150 kbps
+   flowchart TB
+     High["高层 High<br/>1280x720 @ 30fps ~2500 kbps"]
+     Mid["中层 Medium<br/>640x360 @ 30fps ~500 kbps"]
+     Low["低层 Low<br/>320x180 @ 15fps ~150 kbps"]
+     High --> Mid --> Low
 
 SFU 根据接收端的可用带宽选择转发哪一层。当带宽不足时，优先降低视频层级而非丢弃音频。
 
@@ -534,11 +532,13 @@ SFU 根据接收端的可用带宽选择转发哪一层。当带宽不足时，�
 
 VP8/VP9 支持时域分层，可以在不重新编码的情况下降低帧率：
 
-.. code-block:: text
+.. mermaid::
 
-   TL2: 30fps (所有帧)     ← 带宽充足时
-   TL1: 15fps (基础帧+TL1) ← 带宽中等时
-   TL0: 7.5fps (仅基础帧)  ← 带宽紧张时
+   flowchart TB
+     TL2["TL2: 30fps 所有帧<br/>带宽充足时"]
+     TL1["TL1: 15fps 基础帧+TL1<br/>带宽中等时"]
+     TL0["TL0: 7.5fps 仅基础帧<br/>带宽紧张时"]
+     TL2 --> TL1 --> TL0
 
 
 码率自适应流程
@@ -546,24 +546,19 @@ VP8/VP9 支持时域分层，可以在不重新编码的情况下降低帧率：
 
 端到端的码率自适应流程：
 
-.. code-block:: text
+.. mermaid::
 
-   1. 带宽估计
-      TWCC 反馈 → GoogCcNetworkController → 估算可用带宽 A
-
-   2. 带宽分配
-      BitrateAllocator 将 A 分配给各流：
-      A_audio = min(A, audio_max)
-      A_video = A - A_audio - A_overhead
-
-   3. 编码器重配置
-      VideoStreamEncoder 收到新目标码率后：
-      - 如果码率 > 当前分辨率的最小码率 → 调整 QP
-      - 如果码率 < 当前分辨率的最小码率 → 降低分辨率
-      - 如果码率 < 最低分辨率的最小码率 → 降低帧率
-
-   4. 质量降级顺序（GracefulDegradation）
-      QP 增大 → 分辨率降低 → 帧率降低 → 暂停发送
+   flowchart TD
+     A["1. 带宽估计<br/>TWCC 反馈 → GoogCcNetworkController → 估算可用带宽 A"] --> B["2. 带宽分配<br/>BitrateAllocator 将 A 分配给各流"]
+     B --> C["3. 编码器重配置<br/>VideoStreamEncoder 收到新目标码率"]
+     C --> D{码率 vs 分辨率最小码率}
+     D -->|大于| E[调整 QP]
+     D -->|小于当前分辨率最小码率| F[降低分辨率]
+     D -->|小于最低分辨率最小码率| G[降低帧率]
+     E --> H["4. 质量降级顺序 GracefulDegradation"]
+     F --> H
+     G --> H
+     H --> I[QP 增大 → 分辨率降低 → 帧率降低 → 暂停发送]
 
 编码器的质量缩放器（QualityScaler）监控编码 QP 值：
 
@@ -611,27 +606,27 @@ WebRTC 通过 TWCC 反馈中的到达时间来计算 OWD 变化。
 
 测试中常用的丢包模型：
 
-- **随机丢包（Random Loss）**：每个包独立地以概率 p 丢失
-- **突发丢包（Burst Loss）**：使用 Gilbert-Elliott 模型，丢包呈突发性
-- **周期性丢包**：每 N 个包丢失 1 个
+- **随机丢包（Random Loss）**\ ：每个包独立地以概率 p 丢失
+- **突发丢包（Burst Loss）**\ ：使用 Gilbert-Elliott 模型，丢包呈突发性
+- **周期性丢包**\ ：每 N 个包丢失 1 个
 
 5. Jitter Modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 抖动模型用于模拟网络延迟变化：
 
-- **均匀分布抖动**：延迟在 [min, max] 范围内均匀分布
-- **正态分布抖动**：延迟服从正态分布 N(μ, σ²)
-- **突发抖动**：偶尔出现大幅延迟跳变
+- **均匀分布抖动**\ ：延迟在 [min, max] 范围内均匀分布
+- **正态分布抖动**\ ：延迟服从正态分布 N(μ, σ²)
+- **突发抖动**\ ：偶尔出现大幅延迟跳变
 
 6. Traffic Models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RFC 8593 定义了用于评估的视频流量模型：
 
-- **恒定码率（CBR）**：固定大小的帧，固定间隔
-- **可变码率（VBR）**：帧大小变化，I 帧较大
-- **真实编码器模型**：使用实际编码器（VP8/H.264）生成流量
+- **恒定码率（CBR）**\ ：固定大小的帧，固定间隔
+- **可变码率（VBR）**\ ：帧大小变化，I 帧较大
+- **真实编码器模型**\ ：使用实际编码器（VP8/H.264）生成流量
 
 
 实际部署中的挑战
@@ -640,8 +635,8 @@ RFC 8593 定义了用于评估的视频流量模型：
 WiFi vs 蜂窝网络
 --------------------------
 
-- **WiFi**：突发性延迟和丢包（信道竞争、干扰），半双工特性，带宽波动大
-- **蜂窝网络**：延迟较高但相对稳定，上行带宽有限，切换基站时可能出现短暂中断
+- **WiFi**\ ：突发性延迟和丢包（信道竞争、干扰），半双工特性，带宽波动大
+- **蜂窝网络**\ ：延迟较高但相对稳定，上行带宽有限，切换基站时可能出现短暂中断
 - 拥塞控制算法需要针对不同网络类型调整参数
 
 跨区域延迟

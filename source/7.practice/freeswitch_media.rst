@@ -46,17 +46,14 @@ FreeSWITCH 的媒体引擎（Media Engine）采用模块化设计，通过加载
 作为核心音频格式，所有编解码器的输入输出都会经过 L16 的转换，这使得不同编解码器
 之间的转码变得透明和统一。
 
-.. code-block:: text
+.. mermaid::
 
-   +-------------------+
-   |   Application     |  (bridge, record, playback, conference ...)
-   +-------------------+
-   |   Media Engine    |  (codec encode/decode, mixing, processing)
-   +-------------------+
-   |   RTP/RTCP Stack  |  (packet send/recv, jitter buffer, DTMF)
-   +-------------------+
-   |   Network I/O     |  (UDP sockets, ICE, DTLS-SRTP for WebRTC)
-   +-------------------+
+   flowchart TB
+     APP["Application<br/>bridge record playback conference"]
+     ENG["Media Engine<br/>codec encode/decode mixing processing"]
+     RTP["RTP/RTCP Stack<br/>packet send/recv jitter buffer DTMF"]
+     NET["Network I/O<br/>UDP sockets ICE DTLS-SRTP for WebRTC"]
+     APP --> ENG --> RTP --> NET
 
 
 支持的音频编解码器
@@ -323,10 +320,11 @@ FreeSWITCH 提供了三种媒体处理模式，适用于不同的应用场景：
 在默认模式下，所有 RTP 媒体流都经过 FreeSWITCH。FreeSWITCH 完全参与媒体处理，
 可以进行转码、录音、播放提示音等操作。
 
-.. code-block:: text
+.. mermaid::
 
-   终端 A  <--RTP-->  FreeSWITCH  <--RTP-->  终端 B
-                    (完全媒体处理)
+   flowchart LR
+     A[终端 A] <-->|RTP| FS["FreeSWITCH 完全媒体处理"]
+     FS <-->|RTP| B[终端 B]
 
 **代理媒体模式（Proxy Media）**
 
@@ -339,10 +337,11 @@ FreeSWITCH 提供了三种媒体处理模式，适用于不同的应用场景：
    <action application="set" data="proxy_media=true"/>
    <action application="bridge" data="sofia/gateway/provider/$1"/>
 
-.. code-block:: text
+.. mermaid::
 
-   终端 A  <--RTP-->  FreeSWITCH  <--RTP-->  终端 B
-                    (透明转发，不解码)
+   flowchart LR
+     A[终端 A] <-->|RTP 透明转发| FS[FreeSWITCH]
+     FS <-->|RTP 透明转发| B[终端 B]
 
 **媒体绕行模式（Bypass Media）**
 
@@ -356,10 +355,12 @@ FreeSWITCH 仅处理 SIP 信令。这种模式最大程度地降低了服务器�
    <action application="set" data="bypass_media=true"/>
    <action application="bridge" data="sofia/gateway/provider/$1"/>
 
-.. code-block:: text
+.. mermaid::
 
-   终端 A  <------------ RTP ------------>  终端 B
-                FreeSWITCH (仅信令)
+   flowchart LR
+     A[终端 A] <-->|RTP| B[终端 B]
+     FS["FreeSWITCH 仅信令"] -.-> A
+     FS -.-> B
 
 .. list-table:: 三种媒体模式对比
    :header-rows: 1

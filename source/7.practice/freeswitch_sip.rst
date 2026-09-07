@@ -184,7 +184,7 @@ FreeSWITCH 使用 XML 格式的用户目录（Directory）来管理 SIP 用户�
 SIP 终端注册到 FreeSWITCH 的流程如下：
 
 1. 终端发送 ``REGISTER`` 请求到 FreeSWITCH
-2. FreeSWITCH 返回 ``401 Unauthorized``，携带 ``WWW-Authenticate`` 头
+2. FreeSWITCH 返回 ``401 Unauthorized``\ ，携带 ``WWW-Authenticate`` 头
 3. 终端使用用户名和密码计算摘要认证（Digest Authentication）响应
 4. 终端重新发送带有 ``Authorization`` 头的 ``REGISTER`` 请求
 5. FreeSWITCH 验证凭据，成功则返回 ``200 OK``

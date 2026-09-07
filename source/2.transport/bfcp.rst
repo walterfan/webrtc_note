@@ -172,13 +172,13 @@ BFCP Attributes
 
 发言权的状态可以是：
 
-- **Pending**：等待主席审批
-- **Accepted**：主席同意，等待发言权可用
-- **Granted**：已获得发言权
-- **Denied**：被拒绝
-- **Cancelled**：被取消
-- **Released**：已释放
-- **Revoked**：被撤销
+- **Pending**\ ：等待主席审批
+- **Accepted**\ ：主席同意，等待发言权可用
+- **Granted**\ ：已获得发言权
+- **Denied**\ ：被拒绝
+- **Cancelled**\ ：被取消
+- **Released**\ ：已释放
+- **Revoked**\ ：被撤销
 
 
 在 WebRTC/SIP 中的应用

@@ -52,7 +52,7 @@ WebSocket 使用两种 URI scheme：
 * ``ws://`` —— 未加密的 WebSocket 连接，默认端口 80
 * ``wss://`` —— 通过 TLS 加密的 WebSocket 连接，默认端口 443
 
-在生产环境中，强烈建议使用 ``wss://``，原因如下：
+在生产环境中，强烈建议使用 ``wss://``\ ，原因如下：
 
 1. 数据传输加密，防止中间人攻击
 2. 许多代理服务器和防火墙会拦截未加密的 WebSocket 连接
@@ -328,35 +328,30 @@ Offer/Answer/ICE Candidate 交换流程
 
 WebRTC 通过 WebSocket 进行信令交换的典型流程如下：
 
-.. code-block:: text
+.. mermaid::
 
-   Alice (Caller)              Signaling Server              Bob (Callee)
-       |                            |                            |
-       |--- join(room-001) -------->|                            |
-       |                            |<--- join(room-001) --------|
-       |                            |                            |
-       |<-- user-joined(bob) -------|                            |
-       |                            |--- user-joined(alice) ---->|
-       |                            |                            |
-       |  [createOffer()]           |                            |
-       |  [setLocalDescription()]   |                            |
-       |                            |                            |
-       |--- offer(sdp) ----------->|--- offer(sdp) ------------>|
-       |                            |                            |
-       |                            |          [setRemoteDescription()]
-       |                            |          [createAnswer()]
-       |                            |          [setLocalDescription()]
-       |                            |                            |
-       |<-- answer(sdp) -----------|<-- answer(sdp) ------------|
-       |                            |                            |
-       |  [setRemoteDescription()]  |                            |
-       |                            |                            |
-       |--- candidate(ice) ------->|--- candidate(ice) -------->|
-       |<-- candidate(ice) --------|<-- candidate(ice) ---------|
-       |                            |                            |
-       |  [ICE connectivity check]  |  [ICE connectivity check] |
-       |                            |                            |
-       |<========== P2P Media Stream (Audio/Video) ============>|
+   sequenceDiagram
+     participant Alice as Alice Caller
+     participant Sig as Signaling Server
+     participant Bob as Bob Callee
+
+     Alice->>Sig: join room-001
+     Bob->>Sig: join room-001
+     Sig->>Alice: user-joined bob
+     Sig->>Bob: user-joined alice
+     Note over Alice: createOffer setLocalDescription
+     Alice->>Sig: offer sdp
+     Sig->>Bob: offer sdp
+     Note over Bob: setRemoteDescription createAnswer setLocalDescription
+     Bob->>Sig: answer sdp
+     Sig->>Alice: answer sdp
+     Note over Alice: setRemoteDescription
+     Alice->>Sig: candidate ice
+     Sig->>Bob: candidate ice
+     Bob->>Sig: candidate ice
+     Sig->>Alice: candidate ice
+     Note over Alice,Bob: ICE connectivity check
+     Note over Alice,Bob: P2P Media Stream Audio/Video
 
 
 WebSocket vs 其他信令方案

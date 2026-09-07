@@ -35,28 +35,30 @@ Open WebRTC Toolkit (OWT) 是 Intel 开源的 WebRTC 媒体服务器和客户端
 
 OWT 由以下核心组件构成：
 
-::
+.. mermaid::
 
-  ┌──────────────────────────────────────────────┐
-  │              OWT Client SDK                  │
-  │  (JavaScript / iOS / Android / Windows / C++)│
-  ├──────────────────────────────────────────────┤
-  │              Management API                  │
-  │         (RESTful API / Socket.IO)            │
-  ├──────────────────────────────────────────────┤
-  │           OWT Media Server                   │
-  │  ┌────────────┐  ┌────────────┐              │
-  │  │ Conference  │  │  Streaming │              │
-  │  │   Agent     │  │   Agent    │              │
-  │  ├────────────┤  ├────────────┤              │
-  │  │  Video     │  │  Audio     │              │
-  │  │  Agent     │  │  Agent     │              │
-  │  ├────────────┤  ├────────────┤              │
-  │  │  WebRTC    │  │  SIP       │              │
-  │  │  Agent     │  │  Agent     │              │
-  │  └────────────┘  └────────────┘              │
-  │           Cluster Manager (Portal)           │
-  └──────────────────────────────────────────────┘
+   flowchart TB
+     subgraph SDK["OWT Client SDK"]
+       C["JavaScript / iOS / Android / Windows / C++"]
+     end
+     subgraph API["Management API"]
+       M["RESTful API / Socket.IO"]
+     end
+     subgraph MS["OWT Media Server"]
+       CA["Conference Agent"]
+       SA["Streaming Agent"]
+       VA["Video Agent"]
+       AA["Audio Agent"]
+       WA["WebRTC Agent"]
+       SIP["SIP Agent"]
+       CA --- SA
+       VA --- AA
+       WA --- SIP
+     end
+     subgraph CM["Cluster Manager Portal"]
+       P[Portal]
+     end
+     SDK --> API --> MS --> CM
 
 核心组件说明：
 

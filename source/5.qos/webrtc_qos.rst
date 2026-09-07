@@ -7,15 +7,7 @@ WebRTC QoS
 .. include:: ../abbrs.ref
 
 
-.. toctree::
-   :maxdepth: 1
-   :caption: 方法
-
-   webrtc_cc
-   webrtc_fec
-   webrtc_rtx
-   webrtc_metrics
-   webrtc_e2e_delay
+相关章节：:doc:`webrtc_cc` · :doc:`webrtc_fec` · :doc:`webrtc_rtx` · :doc:`webrtc_metrics` · :doc:`webrtc_e2e_delay`
 
 ============ ==========================
 **Abstract** WebRTC QoS
@@ -61,7 +53,7 @@ WebRTC QoS
   
   在弱网环境下降低带宽使用率（升码率，帧率或分辨率）在网络恢复后再提高带宽使用率（升码率, 帧率或分辨率）
   也有称它为码率控制，拥塞控制 congestion control，主要关注于在网络拥塞时如何应对， 
-  相关的协议有 `REMB`_，`GCC`_, TMMBR，TMMBN 等
+  相关的协议有 `REMB`_\ ，`GCC`_, TMMBR，TMMBN 等
 
 * 抗抖动 Dejitter Buffer
 

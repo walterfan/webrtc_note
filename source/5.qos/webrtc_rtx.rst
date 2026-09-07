@@ -249,7 +249,7 @@ NACK 使用 RTCP Generic NACK 格式，其 Feedback Message Type (FMT) 为 1，P
 接收方 NACK 生成
 -------------------------
 
-在 WebRTC 中，接收方的 NACK 生成由 ``NackRequester`` （早期版本中叫 ``NackModule`` 或 ``NackModule2``）负责。其核心逻辑如下：
+在 WebRTC 中，接收方的 NACK 生成由 ``NackRequester`` （早期版本中叫 ``NackModule`` 或 ``NackModule2``\ ）负责。其核心逻辑如下：
 
 1. **丢包检测** ：当接收方收到一个 RTP 包时，检查其序列号是否连续。如果发现序列号间隙（gap），则将缺失的序列号加入 NACK 列表。
 
@@ -470,7 +470,7 @@ RTX 包的还原
 RTX 用于带宽探测
 =========================
 
-除了丢包重传，RTX 在 WebRTC 中还有一个重要用途：**带宽探测（Bandwidth Probing）**。
+除了丢包重传，RTX 在 WebRTC 中还有一个重要用途：**带宽探测（Bandwidth Probing）**\ 。
 
 带宽探测的需求
 -------------------------

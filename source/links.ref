@@ -60,6 +60,10 @@
 .. _RFC8445: https://datatracker.ietf.org/doc/html/rfc8445
 .. _RFC7742: https://datatracker.ietf.org/doc/html/rfc7742
 .. _RFC7874: https://datatracker.ietf.org/doc/html/rfc7874
+.. _RFC2198: https://datatracker.ietf.org/doc/html/rfc2198
+.. _RFC3389: https://datatracker.ietf.org/doc/html/rfc3389
+.. _RFC6716: https://datatracker.ietf.org/doc/html/rfc6716
+.. _RFC7587: https://datatracker.ietf.org/doc/html/rfc7587
 
 .. _RFC4588: https://datatracker.ietf.org/doc/html/rfc4588
 .. _RFC4582: https://datatracker.ietf.org/doc/html/rfc4582
@@ -140,3 +144,41 @@
 
 .. _RFC9147: https://datatracker.ietf.org/doc/html/rfc9147
 .. _DTLS1.3: https://datatracker.ietf.org/doc/html/draft-ietf-tls-dtls13-43
+
+.. _RFC3261: https://datatracker.ietf.org/doc/html/rfc3261
+.. _RFC3262: https://datatracker.ietf.org/doc/html/rfc3262
+.. _RFC3311: https://datatracker.ietf.org/doc/html/rfc3311
+.. _RFC3323: https://datatracker.ietf.org/doc/html/rfc3323
+.. _RFC3325: https://datatracker.ietf.org/doc/html/rfc3325
+.. _RFC3326: https://datatracker.ietf.org/doc/html/rfc3326
+.. _RFC3515: https://datatracker.ietf.org/doc/html/rfc3515
+.. _RFC3725: https://datatracker.ietf.org/doc/html/rfc3725
+.. _RFC3891: https://datatracker.ietf.org/doc/html/rfc3891
+.. _RFC3892: https://datatracker.ietf.org/doc/html/rfc3892
+.. _RFC4028: https://datatracker.ietf.org/doc/html/rfc4028
+.. _RFC4235: https://datatracker.ietf.org/doc/html/rfc4235
+.. _RFC4244: https://datatracker.ietf.org/doc/html/rfc4244
+.. _RFC4353: https://datatracker.ietf.org/doc/html/rfc4353
+.. _RFC4575: https://datatracker.ietf.org/doc/html/rfc4575
+.. _RFC4733: https://datatracker.ietf.org/doc/html/rfc4733
+.. _RFC4916: https://datatracker.ietf.org/doc/html/rfc4916
+.. _RFC5359: https://datatracker.ietf.org/doc/html/rfc5359
+.. _RFC5366: https://datatracker.ietf.org/doc/html/rfc5366
+.. _RFC5411: https://datatracker.ietf.org/doc/html/rfc5411
+.. _RFC5806: https://datatracker.ietf.org/doc/html/rfc5806
+.. _RFC5850: https://datatracker.ietf.org/doc/html/rfc5850
+.. _RFC6026: https://datatracker.ietf.org/doc/html/rfc6026
+.. _RFC6086: https://datatracker.ietf.org/doc/html/rfc6086
+.. _RFC6432: https://datatracker.ietf.org/doc/html/rfc6432
+.. _RFC6665: https://datatracker.ietf.org/doc/html/rfc6665
+.. _RFC7044: https://datatracker.ietf.org/doc/html/rfc7044
+.. _RFC7131: https://datatracker.ietf.org/doc/html/rfc7131
+.. _RFC7544: https://datatracker.ietf.org/doc/html/rfc7544
+.. _RFC7865: https://datatracker.ietf.org/doc/html/rfc7865
+.. _RFC7866: https://datatracker.ietf.org/doc/html/rfc7866
+.. _RFC8224: https://datatracker.ietf.org/doc/html/rfc8224
+.. _RFC7118: https://datatracker.ietf.org/doc/html/rfc7118
+.. _RFC6455: https://datatracker.ietf.org/doc/html/rfc6455
+.. _RFC6120: https://datatracker.ietf.org/doc/html/rfc6120
+.. _RFC7395: https://datatracker.ietf.org/doc/html/rfc7395
+.. _ITU-T H.323: https://www.itu.int/rec/T-REC-H.323/

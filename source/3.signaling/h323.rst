@@ -1,0 +1,189 @@
+################
+H.323
+################
+
+
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
+
+.. contents::
+   :local:
+
+
+What
+============
+
+H.323 是 ITU 给分组网上多媒体通信的一整套系统建议，不是一条报文。
+
+Abstract
+------------
+
+1996 年第一版强调无 QoS 局域网；同族还有 H.320（ISDN）、H.324（PSTN 电话线）。
+呼叫拆成 H.225.0（Q.931 风格建链 + RAS）和 H.245（能力协商、开逻辑信道），ASN.1 二进制。
+SIP 赢了心智份额；H.323 仍活在会议室终端、MCU、网关。T.120 是数据协作，不是呼叫信令。
+
+
+Why
+============
+
+* 对接 Polycom / 老 MCU / 运营商 H.323 中继时，只开 SIP 接不通。
+* 把 H.323 当“另一种 SIP 文本”去读 INVITE，抓包会什么都看不到。
+* 新呼叫中心若选 H.323 当主信令，WebRTC/SIP Trunk 互操作成本会高一个数量级。
+
+
+How
+============
+
+H.32x 与网络
+--------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 18 22 60
+
+   * - 标准
+     - 网络
+     - 角色
+   * - H.320
+     - ISDN
+     - 早期会议室系统
+   * - H.323
+     - IP / 分组网
+     - IP 语音与视频会议
+   * - H.324
+     - PSTN 电话线
+     - 拨号视频电话
+
+后来只有 IP 这一行不断扩张。IETF 用 SIP 走了更轻的文本路线。
+
+体系里的角色
+--------------------
+
+.. code-block:: text
+
+    终端 A ----\
+                +-- Gatekeeper（登记、许可、计费、地址解析）
+    终端 B ----/            |
+                            +-- MCU（多方混音混视频）
+                            |
+                            +-- Gateway（连 ISDN / PSTN）
+
+SIP 默认不强制这些网元；PBX / FreeSWITCH 把它们收进一个 B2BUA 进程。
+
+呼叫信令拆成两层
+--------------------
+
+1. **H.225.0**\ ：Setup / Connect / Release，以及 RAS（Registration, Admission, Status）
+2. **H.245**\ ：能力集、主从决定、逻辑信道打开（才开始传音视频）
+
+早期握手慢；后来 Fast Connect / 隧道 H.245 缩短接续。媒体仍是 RTP。
+数据协作曾挂 T.120（白板、文件、应用共享）。
+
+抓包端口（不是 5060）
+----------------------
+
+H.323 **没有** SIP INVITE。过滤器抄 5060 会得到空 pcap。
+
+.. list-table::
+   :header-rows: 1
+   :widths: 28 24 48
+
+   * - 端口
+     - 传输
+     - 内容
+   * - **1720**
+     - **TCP**
+     - H.225.0 呼叫信令（Setup / Connect）
+   * - 1719
+     - UDP
+     - RAS 单播（登记、许可）
+   * - 1718
+     - UDP
+     - RAS 组播发现（现代网络常关）
+   * - 动态
+     - TCP
+     - H.245（或隧道进 H.225）
+   * - 5060
+     - UDP/TCP
+     - **SIP**\ ；H.323 终端不走这里
+
+和 SIP 的对照
+--------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 24 38 38
+
+   * -
+     - H.323
+     - SIP
+   * - 出身
+     - ITU / 电信
+     - IETF / 互联网
+   * - 编码
+     - ASN.1 二进制
+     - 文本
+   * - 呼叫
+     - H.225.0 + H.245
+     - INVITE + SDP
+   * - 登记
+     - RAS / Gatekeeper
+     - REGISTER / Registrar
+   * - 扩展
+     - 新 ASN.1 字段
+     - 新 header / 方法 / Event
+   * - 今天
+     - 会议室、存量网关
+     - Trunk、PBX、WebRTC 网关
+   * - 默认端口
+     - TCP 1720
+     - UDP/TCP 5060
+
+FreeSWITCH
+--------------------
+
+``mod_h323`` / ``mod_opal`` 把 H.323 接到 FS 核心，再桥到 SIP 或会议。
+新呼叫中心不要选 H.323 当主信令。网关要注意：号码计划、Q.931 cause ↔ SIP Reason、Fast Connect、编解码交集（G.711 几乎是公约数）。
+
+实践注意
+--------------------
+
+1. 两者都是标准，互通过网关，不靠终端直接讲对方的话。
+2. Gatekeeper 组播发现在现代网络里常关掉，改静态配置。
+3. 抓包看 **TCP 1720**\ （H.225）和 UDP 1718/1719（RAS），不要看 5060。
+4. T.120 不要指望和 WebRTC DataChannel 互通。
+
+
+Example
+============
+
+确认模块并抓 **H.225 的 TCP 1720**\ （不要抄 SIP 的 5060）：
+
+.. code-block:: bash
+
+    fs_cli -x "module_exists mod_h323"
+    fs_cli -x "module_exists mod_opal"
+    sudo tcpdump -ni any 'tcp port 1720 or udp port 1719 or udp port 1718' -w h323.pcap
+    fs_cli -x "sofia global siptrace on"
+
+用 Wireshark 打开 pcap：显示过滤器 ``h225``\ ，应看到 **H.225 Setup**\ ，而不是 SIP INVITE。
+互通验证：H.323 终端拨 FS 上的 SIP 分机 —— 1720 上是 Setup，sofia siptrace 侧应出现 **另一条** INVITE（B2BUA 翻译后，Call-ID 与 H.323 无关）。
+若 5060 上也有 INVITE、1720 上什么都没有，你抓错腿了，或呼叫根本没走 H.323。
+G.711 不通就先只开 PCMU。具体 mod_h323 拨号串以你编译的模块文档为准（待确认当前树是否仍默认编译该模块）。
+
+
+Conclusion
+============
+
+* H.323 抓 TCP 1720 / UDP 1719，不是 5060。
+* 新系统主路径用 SIP；H.323 只做网关。
+* 翻译的是两个年代的世界观，cause/codec 都要显式映射。
+
+
+Reference
+============
+
+* `ITU-T H.323`_
+* :doc:`sip_core`
+* :doc:`../7.practice/freeswitch_overview`

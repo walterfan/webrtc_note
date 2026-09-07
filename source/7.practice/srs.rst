@@ -23,7 +23,7 @@ SRS
 
 SRS（Simple Realtime Server，简单实时服务器）是一个高性能的开源实时流媒体服务器，由国内开发者 Winlin 创建并维护。SRS 支持多种流媒体协议，包括 RTMP、HLS、HTTP-FLV、WebRTC、SRT、GB28181 等，是国内使用最广泛的开源流媒体服务器之一。
 
-SRS 的设计目标是 **简单高效**：采用单进程、协程（Coroutine）架构，基于 State-Threads（ST）库实现高并发，避免了多线程编程的复杂性。
+SRS 的设计目标是 **简单高效**\ ：采用单进程、协程（Coroutine）架构，基于 State-Threads（ST）库实现高并发，避免了多线程编程的复杂性。
 
 支持协议
 --------------------
@@ -98,25 +98,22 @@ SRS 的设计哲学可以概括为以下几点：
 
 SRS 采用单进程、协程架构，基于 State-Threads（ST）库实现高并发：
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────────┐
-   │                    SRS Process                           │
-   │                                                         │
-   │  ┌──────────┐  ┌──────────┐  ┌──────────┐             │
-   │  │  RTMP     │  │  HTTP    │  │  WebRTC  │  ...        │
-   │  │  Listener │  │  Listener│  │  Listener│             │
-   │  └────┬─────┘  └────┬─────┘  └────┬─────┘             │
-   │       │              │              │                    │
-   │  ┌────┴──────────────┴──────────────┴─────┐            │
-   │  │         State-Threads (Coroutine)       │            │
-   │  │                                         │            │
-   │  │  ┌─────────┐  ┌─────────┐  ┌────────┐ │            │
-   │  │  │ Source   │  │ Source   │  │ Source  │ │            │
-   │  │  │ (流 A)   │  │ (流 B)   │  │ (流 C)  │ │            │
-   │  │  └─────────┘  └─────────┘  └────────┘ │            │
-   │  └────────────────────────────────────────┘            │
-   └─────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph PROC["SRS Process"]
+       RTMP[RTMP Listener]
+       HTTP[HTTP Listener]
+       RTC[WebRTC Listener]
+       subgraph ST["State-Threads Coroutine"]
+         SA["Source 流 A"]
+         SB["Source 流 B"]
+         SC["Source 流 C"]
+       end
+       RTMP --> ST
+       HTTP --> ST
+       RTC --> ST
+     end
 
 单进程多协程 (State Threads)
 ---------------------------------
@@ -132,28 +129,24 @@ State-Threads（简称 ST）是一个轻量级的 C 语言协程库，最初由 
 * 单线程避免了锁竞争，简化了并发编程
 * 性能优异：单进程可处理数千并发连接
 
-.. code-block:: text
+.. mermaid::
 
-   传统多线程模型:
-   ┌──────────┐  ┌──────────┐  ┌──────────┐
-   │ Thread 1 │  │ Thread 2 │  │ Thread 3 │  ... (线程切换开销大, 需要锁)
-   │ Conn A   │  │ Conn B   │  │ Conn C   │
-   └──────────┘  └──────────┘  └──────────┘
-
-   异步回调模型 (如 Node.js):
-   ┌─────────────────────────────────────────┐
-   │ Event Loop                               │
-   │  callback(A) → callback(B) → callback(C) │  (回调地狱, 代码难维护)
-   └─────────────────────────────────────────┘
-
-   State-Threads 协程模型 (SRS):
-   ┌─────────────────────────────────────────┐
-   │ Single Thread                            │
-   │  ┌─────────┐ ┌─────────┐ ┌─────────┐   │
-   │  │Coroutine│ │Coroutine│ │Coroutine│   │  (同步写法, 异步性能)
-   │  │ Conn A  │ │ Conn B  │ │ Conn C  │   │  (无锁, 无线程切换)
-   │  └─────────┘ └─────────┘ └─────────┘   │
-   └─────────────────────────────────────────┘
+   flowchart TB
+     subgraph MT["传统多线程模型 线程切换开销大 需要锁"]
+       T1["Thread 1 Conn A"]
+       T2["Thread 2 Conn B"]
+       T3["Thread 3 Conn C"]
+     end
+     subgraph EL["异步回调模型 Node.js 回调地狱"]
+       CB["callback A to callback B to callback C"]
+     end
+     subgraph ST["State-Threads 协程模型 SRS 同步写法 异步性能 无锁"]
+       subgraph TH["Single Thread"]
+         C1["Coroutine Conn A"]
+         C2["Coroutine Conn B"]
+         C3["Coroutine Conn C"]
+       end
+     end
 
 高性能原理
 ---------------------------------
@@ -180,34 +173,24 @@ SRS 的代码结构采用模块化设计：
 * **Encoder**: 编码器模块，负责 HLS 切片、DVR 录制等。
 * **Forwarder**: 转发器模块，负责将流转发到其他服务器。
 
-.. code-block:: text
+.. mermaid::
 
-   SRS 模块架构:
-
-   ┌─────────────────────────────────────────────────────┐
-   │                   应用层 (App Layer)                  │
-   │  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐    │
-   │  │ RTMP │ │ HTTP │ │ RTC  │ │ SRT  │ │GB28181│    │
-   │  │Server│ │Server│ │Server│ │Server│ │Server │    │
-   │  └──┬───┘ └──┬───┘ └──┬───┘ └──┬───┘ └──┬────┘    │
-   │     │        │        │        │        │          │
-   │  ┌──┴────────┴────────┴────────┴────────┴──┐       │
-   │  │            Source Manager                │       │
-   │  │  ┌────────┐  ┌────────┐  ┌────────┐    │       │
-   │  │  │Source A│  │Source B│  │Source C│    │       │
-   │  │  │Consumer│  │Consumer│  │Consumer│    │       │
-   │  │  │Encoder │  │Encoder │  │Encoder │    │       │
-   │  │  └────────┘  └────────┘  └────────┘    │       │
-   │  └─────────────────────────────────────────┘       │
-   │                                                     │
-   │  ┌─────────────────────────────────────────┐       │
-   │  │         State-Threads Runtime            │       │
-   │  └─────────────────────────────────────────┘       │
-   │                                                     │
-   │  ┌─────────────────────────────────────────┐       │
-   │  │         OS (epoll/kqueue)                │       │
-   │  └─────────────────────────────────────────┘       │
-   └─────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph APP["应用层 App Layer"]
+       RTMP[RTMP Server]
+       HTTP[HTTP Server]
+       RTC[RTC Server]
+       SRT[SRT Server]
+       GB[GB28181 Server]
+     end
+     subgraph SM["Source Manager"]
+       SA["Source A Consumer Encoder"]
+       SB["Source B Consumer Encoder"]
+       SC["Source C Consumer Encoder"]
+     end
+     ST["State-Threads Runtime"]
+     OS["OS epoll/kqueue"]
+     APP --> SM --> ST --> OS
 
 
 安装
@@ -647,7 +630,7 @@ SRS 支持通过 FFmpeg 对直播流进行转码，例如调整分辨率、码�
        }
    }
 
-转码后会生成一个新的流，例如原始流为 ``live/stream1``，转码后的流为 ``live/stream1_sd``。
+转码后会生成一个新的流，例如原始流为 ``live/stream1``\ ，转码后的流为 ``live/stream1_sd``\ 。
 
 
 WebRTC 集成
@@ -658,41 +641,25 @@ SRS 的 WebRTC 集成是其最重要的特性之一，使得 SRS 可以作为 We
 SRS WebRTC 架构
 --------------------------
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────────────┐
-   │                    SRS WebRTC 架构                           │
-   ├─────────────────────────────────────────────────────────────┤
-   │                                                             │
-   │  ┌──────────────┐                    ┌──────────────┐      │
-   │  │  WebRTC      │   WHIP (HTTP POST) │              │      │
-   │  │  Publisher   │───────────────────>│  HTTP API    │      │
-   │  │  (Browser)   │   SDP Offer/Answer │  (Port 1985) │      │
-   │  └──────┬───────┘                    └──────┬───────┘      │
-   │         │                                    │              │
-   │         │  DTLS + SRTP (UDP)                 │              │
-   │         │                            ┌───────┴───────┐     │
-   │         └───────────────────────────>│  RTC Server   │     │
-   │                                      │  (Port 8000)  │     │
-   │                                      │               │     │
-   │                                      │  ICE-Lite     │     │
-   │                                      │  DTLS 1.2     │     │
-   │                                      │  SRTP         │     │
-   │                                      └───────┬───────┘     │
-   │                                              │              │
-   │                                      ┌───────┴───────┐     │
-   │                                      │    Source      │     │
-   │                                      │  (RTP → RTMP) │     │
-   │                                      └───────┬───────┘     │
-   │                                              │              │
-   │                    ┌─────────────────────────┼──────┐      │
-   │                    │                         │      │      │
-   │              ┌─────┴─────┐  ┌──────────┐  ┌─┴────┐ │      │
-   │              │   RTMP    │  │   HLS    │  │ FLV  │ │      │
-   │              │  Consumer │  │ Encoder  │  │Remux │ │      │
-   │              └───────────┘  └──────────┘  └──────┘ │      │
-   │                                                     │      │
-   └─────────────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph ARCH["SRS WebRTC 架构"]
+       PUB["WebRTC Publisher<br/>Browser"]
+       API["HTTP API<br/>Port 1985"]
+       RTC["RTC Server Port 8000<br/>ICE-Lite DTLS 1.2 SRTP"]
+       SRC["Source RTP to RTMP"]
+       RTMP[RTMP Consumer]
+       HLS[HLS Encoder]
+       FLV[FLV Remux]
+       PUB -->|WHIP HTTP POST SDP| API
+       PUB -->|DTLS + SRTP UDP| RTC
+       API --> RTC
+       RTC --> SRC
+       SRC --> RTMP
+       SRC --> HLS
+       SRC --> FLV
+     end
 
 WHIP/WHEP 配置
 --------------------------
@@ -702,54 +669,56 @@ WHIP（WebRTC-HTTP Ingestion Protocol）和 WHEP（WebRTC-HTTP Egress Protocol�
 
 **WHIP 推流流程**:
 
-.. code-block:: text
+.. mermaid::
 
-   Browser/Client                    SRS Server
-        |                                |
-        |--- HTTP POST /rtc/v1/whip ---->|  (Body: SDP Offer)
-        |<-- 201 Created ----------------|  (Body: SDP Answer)
-        |                                |
-        |=== DTLS Handshake ============>|
-        |=== SRTP Media ================>|  (推流)
-        |                                |
-        |  SRS 将 WebRTC 流转换为 RTMP/HLS/HTTP-FLV
+   sequenceDiagram
+     participant C as Browser/Client
+     participant S as SRS Server
+
+     C->>S: HTTP POST /rtc/v1/whip
+     Note right of C: Body SDP Offer
+     S-->>C: 201 Created
+     Note left of S: Body SDP Answer
+     C->>S: DTLS Handshake
+     C->>S: SRTP Media 推流
+     Note over S: SRS 将 WebRTC 流转换为 RTMP/HLS/HTTP-FLV
 
 **WHEP 拉流流程**:
 
-.. code-block:: text
+.. mermaid::
 
-   Browser/Client                    SRS Server
-        |                                |
-        |--- HTTP POST /rtc/v1/whep ---->|  (Body: SDP Offer)
-        |<-- 201 Created ----------------|  (Body: SDP Answer)
-        |                                |
-        |=== DTLS Handshake ============>|
-        |<== SRTP Media =================|  (拉流)
-        |                                |
+   sequenceDiagram
+     participant C as Browser/Client
+     participant S as SRS Server
+
+     C->>S: HTTP POST /rtc/v1/whep
+     Note right of C: Body SDP Offer
+     S-->>C: 201 Created
+     Note left of S: Body SDP Answer
+     C->>S: DTLS Handshake
+     S->>C: SRTP Media 拉流
 
 RTMP ↔ WebRTC 转换
 --------------------------
 
 SRS 的一大优势是支持多种协议之间的自动转换：
 
-.. code-block:: text
+.. mermaid::
 
-   推流端                    SRS                     拉流端
-   ┌──────────┐         ┌──────────┐          ┌──────────┐
-   │ WebRTC   │──WHIP──>│          │──RTMP───>│ VLC      │
-   │ Browser  │         │          │──HLS────>│ Browser  │
-   └──────────┘         │   SRS    │──FLV────>│ H5 Player│
-                        │          │──WebRTC─>│ Browser  │
-   ┌──────────┐         │          │          └──────────┘
-   │ OBS/     │──RTMP──>│          │
-   │ FFmpeg   │         └──────────┘
-   └──────────┘
+   flowchart LR
+     WB["WebRTC Browser"] -->|WHIP| SRS[SRS]
+     OBS["OBS/FFmpeg"] -->|RTMP| SRS
+     SRS -->|RTMP| VLC[VLC]
+     SRS -->|HLS| BR[Browser]
+     SRS -->|FLV| H5[H5 Player]
+     SRS -->|WebRTC| BR2[Browser]
 
-   支持的转换路径:
-   - WebRTC → RTMP → HLS/HTTP-FLV
-   - RTMP → WebRTC
-   - SRT → RTMP → HLS/HTTP-FLV/WebRTC
-   - GB28181 → RTMP → HLS/HTTP-FLV/WebRTC
+支持的转换路径:
+
+- WebRTC → RTMP → HLS/HTTP-FLV
+- RTMP → WebRTC
+- SRT → RTMP → HLS/HTTP-FLV/WebRTC
+- GB28181 → RTMP → HLS/HTTP-FLV/WebRTC
 
 **转换原理**:
 
@@ -923,17 +892,23 @@ Origin-Edge 架构
 
 SRS 支持 Origin-Edge 集群架构，用于大规模直播分发：
 
-.. code-block:: text
+.. mermaid::
 
-   推流端 ──RTMP──> Origin Server ──RTMP──> Edge Server 1 ──> 观众
-                                   ──RTMP──> Edge Server 2 ──> 观众
-                                   ──RTMP──> Edge Server 3 ──> 观众
+   flowchart LR
+     P[推流端] -->|RTMP| O[Origin Server]
+     O -->|RTMP| E1[Edge Server 1]
+     O -->|RTMP| E2[Edge Server 2]
+     O -->|RTMP| E3[Edge Server 3]
+     E1 --> V1[观众]
+     E2 --> V2[观众]
+     E3 --> V3[观众]
 
-   工作原理:
-   1. 推流端将流推送到 Origin 服务器
-   2. Edge 服务器在有观众请求时，自动从 Origin 拉流
-   3. 同一个 Edge 上的多个观众共享一路从 Origin 拉取的流
-   4. 无观众时 Edge 自动断开与 Origin 的连接
+工作原理:
+
+1. 推流端将流推送到 Origin 服务器
+2. Edge 服务器在有观众请求时，自动从 Origin 拉流
+3. 同一个 Edge 上的多个观众共享一路从 Origin 拉取的流
+4. 无观众时 Edge 自动断开与 Origin 的连接
 
 **Origin 配置**:
 
@@ -980,11 +955,13 @@ SRS 支持 Origin-Edge 集群架构，用于大规模直播分发：
 
 在 Edge 集群前面可以部署负载均衡器，将观众请求分发到不同的 Edge 服务器：
 
-.. code-block:: text
+.. mermaid::
 
-   观众 ──> Load Balancer (Nginx/HAProxy) ──> Edge 1
-                                           ──> Edge 2
-                                           ──> Edge 3
+   flowchart LR
+     V[观众] --> LB["Load Balancer Nginx/HAProxy"]
+     LB --> E1[Edge 1]
+     LB --> E2[Edge 2]
+     LB --> E3[Edge 3]
 
 **Nginx 负载均衡配置示例**:
 
@@ -1304,10 +1281,13 @@ CPU 优化
 
 适用于互动直播、在线教育、远程医疗等需要超低延迟的场景。端到端延迟可以控制在 200-500ms。
 
-.. code-block:: text
+.. mermaid::
 
-   主播 (Browser) ──WebRTC WHIP──> SRS ──WebRTC WHEP──> 观众 (Browser)
-                                        延迟: 200-500ms
+   flowchart LR
+     H["主播 Browser"] -->|WebRTC WHIP| SRS[SRS]
+     SRS -->|WebRTC WHEP| V["观众 Browser"]
+
+延迟: 200-500ms
 
 **配置要点**:
 
@@ -1344,33 +1324,43 @@ CPU 优化
    3. SRS 将两路流分别转发给对方 (WebRTC)
    4. 同时将两路流转换为 RTMP/HLS 供其他观众观看
 
-   主播 A ──WebRTC──> SRS ──WebRTC──> 观众 B (连麦)
-   观众 B ──WebRTC──> SRS ──WebRTC──> 主播 A (连麦)
-                       │
-                       ├──RTMP──> CDN ──HLS──> 普通观众
-                       └──HTTP-FLV──> 普通观众
+.. mermaid::
+
+   flowchart LR
+     A[主播 A] -->|WebRTC| SRS[SRS]
+     B["观众 B 连麦"] -->|WebRTC| SRS
+     SRS -->|WebRTC| B
+     SRS -->|WebRTC| A
+     SRS -->|RTMP| CDN[CDN]
+     CDN -->|HLS| V[普通观众]
+     SRS -->|HTTP-FLV| V2[普通观众]
 
 传统直播（RTMP 推流 + HLS/HTTP-FLV 拉流）
 ----------------------------------------------
 
 适用于大规模直播场景，兼容性好，可以配合 CDN 分发。
 
-.. code-block:: text
+.. mermaid::
 
-   主播 (OBS/FFmpeg) ──RTMP──> SRS ──HLS──────> 观众 (Browser/App)
-                                    ──HTTP-FLV──> 观众 (H5 Player)
-                                    延迟: HLS 5-10s, HTTP-FLV 1-3s
+   flowchart LR
+     H["主播 OBS/FFmpeg"] -->|RTMP| SRS[SRS]
+     SRS -->|HLS| V["观众 Browser/App"]
+     SRS -->|HTTP-FLV| H5["观众 H5 Player"]
+
+延迟: HLS 5-10s, HTTP-FLV 1-3s
 
 监控接入 (GB28181)
 --------------------------
 
 SRS 支持通过 GB28181 协议接入安防监控摄像头：
 
-.. code-block:: text
+.. mermaid::
 
-   IPC 摄像头 ──GB28181 (SIP+RTP)──> SRS ──RTMP──> 录制/存储
-                                          ──HLS──> Web 播放
-                                          ──WebRTC──> 实时预览
+   flowchart LR
+     IPC["IPC 摄像头"] -->|"GB28181 SIP+RTP"| SRS[SRS]
+     SRS -->|RTMP| REC[录制/存储]
+     SRS -->|HLS| WEB[Web 播放]
+     SRS -->|WebRTC| PRE[实时预览]
 
 **GB28181 配置**:
 

@@ -72,40 +72,24 @@ The IP address and transport protocol (but not the port) of a peer that is permi
 Basic flow
 ==================
 
-.. code-block::
+.. mermaid::
 
-                                       Peer A
-                                       Server-Reflexive    +---------+
-                                       Transport Address   |         |
-                                       192.0.2.150:32102   |         |
-                                           |              /|         |
-                         TURN              |            / ^|  Peer A |
-      Client's           Server            |           /  ||         |
-      Host Transport     Transport         |         //   ||         |
-      Address            Address           |       //     |+---------+
-   198.51.100.2:49721  192.0.2.15:3478     |+-+  //     Peer A
-              |            |               ||N| /       Host Transport
-              |   +-+      |               ||A|/        Address
-              |   | |      |               v|T|     203.0.113.2:49582
-              |   | |      |               /+-+
-   +---------+|   | |      |+---------+   /              +---------+
-   |         ||   |N|      ||         | //               |         |
-   | TURN    |v   | |      v| TURN    |/                 |         |
-   | Client  |----|A|-------| Server  |------------------|  Peer B |
-   |         |    | |^      |         |^                ^|         |
-   |         |    |T||      |         ||                ||         |
-   +---------+    | ||      +---------+|                |+---------+
-                  | ||                 |                |
-                  | ||                 |                |
-                  +-+|                 |                |
-                     |                 |                |
-                     |                 |                |
-            Client's                   |             Peer B
-            Server-Reflexive     Relayed             Transport
-            Transport Address    Transport Address   Address
-            192.0.2.1:7000       192.0.2.15:50000    192.0.2.210:49191
-
-                                  Figure 1
+   flowchart LR
+     TC["TURN Client<br/>198.51.100.2:49721"]
+     NAT1[NAT]
+     TS["TURN Server<br/>192.0.2.15:3478"]
+     REL["Relayed Address<br/>192.0.2.15:50000"]
+     NAT2[NAT]
+     PA["Peer A Host<br/>203.0.113.2:49582"]
+     PASRX["Peer A Server-Reflexive<br/>192.0.2.150:32102"]
+     PB["Peer B<br/>192.0.2.210:49191"]
+     CSRX["Client Server-Reflexive<br/>192.0.2.1:7000"]
+     TC --> NAT1 --> TS
+     NAT1 -.-> CSRX
+     TS --- REL
+     TS --> NAT2 --> PA
+     NAT2 -.-> PASRX
+     TS --> PB
 
 
 
@@ -134,89 +118,66 @@ or Datagram Transport Layer Security (DTLS) over UDP to carry the TURN messages 
 Allocation
 ================
 
-.. code-block:: 
+.. mermaid::
 
+   sequenceDiagram
+     participant Client as TURN client
+     participant Server as TURN server
+     participant PeerA as Peer A
+     participant PeerB as Peer B
 
-      TURN                                 TURN          Peer         Peer
-      client                               server         A            B
-        |-- Allocate request --------------->|            |            |
-        |   (invalid or missing credentials) |            |            |
-        |                                    |            |            |
-        |<--------------- Allocate failure --|            |            |
-        |              (401 Unauthenticated) |            |            |
-        |                                    |            |            |
-        |-- Allocate request --------------->|            |            |
-        |               (valid credentials)  |            |            |
-        |                                    |            |            |
-        |<---------- Allocate success resp --|            |            |
-        |            (192.0.2.15:50000)      |            |            |
-        //                                   //           //           //
-        |                                    |            |            |
-        |-- Refresh request ---------------->|            |            |
-        |                                    |            |            |
-        |<----------- Refresh success resp --|            |            |
-        |                                    |            |            |
-
-                                    Figure 2
+     Client->>Server: Allocate request invalid or missing credentials
+     Server-->>Client: Allocate failure 401 Unauthenticated
+     Client->>Server: Allocate request valid credentials
+     Server-->>Client: Allocate success 192.0.2.15:50000
+     Client->>Server: Refresh request
+     Server-->>Client: Refresh success resp
 
 
 Send Mechanism
 ==================
 
-.. code-block:: 
+.. mermaid::
 
+   sequenceDiagram
+     participant Client as TURN client
+     participant Server as TURN server
+     participant PeerA as Peer A
+     participant PeerB as Peer B
 
-   TURN                                TURN           Peer          Peer
-   client                              server          A             B
-     |                                   |             |             |
-     |-- CreatePermission req (Peer A) ->|             |             |
-     |<- CreatePermission success resp --|             |             |
-     |                                   |             |             |
-     |--- Send ind (Peer A)------------->|             |             |
-     |                                   |=== data ===>|             |
-     |                                   |             |             |
-     |                                   |<== data ====|             |
-     |<------------- Data ind (Peer A) --|             |             |
-     |                                   |             |             |
-     |                                   |             |             |
-     |--- Send ind (Peer B)------------->|             |             |
-     |                                   | dropped     |             |
-     |                                   |             |             |
-     |                                   |<== data ==================|
-     |                           dropped |             |             |
-     |                                   |             |             |
-
-                                  Figure 3
+     Client->>Server: CreatePermission req Peer A
+     Server-->>Client: CreatePermission success resp
+     Client->>Server: Send ind Peer A
+     Server->>PeerA: data
+     PeerA->>Server: data
+     Server-->>Client: Data ind Peer A
+     Client->>Server: Send ind Peer B
+     Note over Server: dropped no permission
+     PeerB->>Server: data
+     Note over Server: dropped
 
 Channel
 ====================
 
 
-.. code-block::
+.. mermaid::
 
+   sequenceDiagram
+     participant Client as TURN client
+     participant Server as TURN server
+     participant PeerA as Peer A
+     participant PeerB as Peer B
 
-   TURN                                TURN           Peer          Peer
-   client                              server          A             B
-     |                                   |             |             |
-     |-- ChannelBind req --------------->|             |             |
-     | (Peer A to 0x4001)                |             |             |
-     |                                   |             |             |
-     |<---------- ChannelBind succ resp -|             |             |
-     |                                   |             |             |
-     |-- (0x4001) data ----------------->|             |             |
-     |                                   |=== data ===>|             |
-     |                                   |             |             |
-     |                                   |<== data ====|             |
-     |<------------------ (0x4001) data -|             |             |
-     |                                   |             |             |
-     |--- Send ind (Peer A)------------->|             |             |
-     |                                   |=== data ===>|             |
-     |                                   |             |             |
-     |                                   |<== data ====|             |
-     |<------------------ (0x4001) data -|             |             |
-     |                                   |             |             |
-
-                                  Figure 4
+     Client->>Server: ChannelBind req Peer A to 0x4001
+     Server-->>Client: ChannelBind succ resp
+     Client->>Server: 0x4001 data
+     Server->>PeerA: data
+     PeerA->>Server: data
+     Server-->>Client: 0x4001 data
+     Client->>Server: Send ind Peer A
+     Server->>PeerA: data
+     PeerA->>Server: data
+     Server-->>Client: 0x4001 data
 
 
 TURN specs
@@ -226,7 +187,7 @@ TURN specs
 * RFC 6062 - TCP relaying TURN extension
 * RFC 6156 - IPv6 extension for TURN
 
-* `RFC 8656`_ - Traversal Using Relays around NAT (TURN):
+* `RFC8656`_ - Traversal Using Relays around NAT (TURN):
   Relay Extensions to Session  Traversal Utilities for NAT (STUN)
 
 * RFC 7443 - ALPN support for STUN & TURN
@@ -272,4 +233,4 @@ UDP (per RFC 5766)
 TCP (per RFC 6062)
 
 
-.. _RFC 8656: https://datatracker.ietf.org/doc/html/rfc8656
+.. _RFC8656: https://datatracker.ietf.org/doc/html/rfc8656

@@ -29,10 +29,10 @@ IVR（Interactive Voice Response，交互式语音应答）是电话系统中最
 
 FreeSWITCH 提供了多种方式来构建 IVR 应用：
 
-1. **Dialplan XML**：通过 XML 配置文件定义简单的 IVR 流程
-2. **mod_ivr**：内置的 IVR 模块，提供菜单、输入收集等功能
-3. **脚本语言**：通过 Lua、JavaScript、Python 等脚本语言实现复杂的 IVR 逻辑
-4. **ESL（Event Socket Library）**：通过外部程序控制 IVR 流程
+1. **Dialplan XML**\ ：通过 XML 配置文件定义简单的 IVR 流程
+2. **mod_ivr**\ ：内置的 IVR 模块，提供菜单、输入收集等功能
+3. **脚本语言**\ ：通过 Lua、JavaScript、Python 等脚本语言实现复杂的 IVR 逻辑
+4. **ESL（Event Socket Library）**\ ：通过外部程序控制 IVR 流程
 
 在 WebRTC 场景中，IVR 同样适用。WebRTC 客户端通过 ``mod_verto`` 或 SIP over WebSocket 接入后，
 可以与 IVR 系统进行交互，实现 Web 端的语音自助服务。
@@ -43,10 +43,10 @@ mod_ivr 基础
 
 ``mod_ivr`` 是 FreeSWITCH 的核心 IVR 模块，提供了以下基本功能：
 
-* **play_and_get_digits**：播放提示音并收集 DTMF 输入
-* **ivr_menu**：多级菜单系统
-* **read**：读取用户输入
-* **play_and_detect_speech**：播放提示音并进行语音识别
+* **play_and_get_digits**\ ：播放提示音并收集 DTMF 输入
+* **ivr_menu**\ ：多级菜单系统
+* **read**\ ：读取用户输入
+* **play_and_detect_speech**\ ：播放提示音并进行语音识别
 
 IVR 菜单配置
 --------------

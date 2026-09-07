@@ -344,10 +344,10 @@ y 轴为 smoothed\_delay\_ms_i, 即上而算出的平滑累计延迟变化
 
 7. 将计算出来的斜率与一个动态阈值进行比较, 来发现通道是否有拥塞
 
-每次接收到视频帧 :math:`t_i` 时，过度使用检测器都会产生一个信号 s，该信号基于排队延迟梯度 :math:`m(t_i)` 和阈值 :math:`\gamma` 来驱动 FSM (下面的有限状态机) 的状态 :math:`\sigma`，算法 1 详细显示了 s 是如何生成的 ：
+每次接收到视频帧 :math:`t_i` 时，过度使用检测器都会产生一个信号 s，该信号基于排队延迟梯度 :math:`m(t_i)` 和阈值 :math:`\gamma` 来驱动 FSM (下面的有限状态机) 的状态 :math:`\sigma`\ ，算法 1 详细显示了 s 是如何生成的 ：
 
 当 :math:`m(t_i) > \gamma` 时，算法通过增加帧间隔时间 :math:`\Delta T` 的变量 :math:`t_{OU}` 来跟踪在这种情况下花费的时间。 
-当 :math:`t_{OU}` 达到 :math:`\bar{t}_{OU}=100ms` 且 :math:`m(t_i) > m(t_{i-1})`` 时，产生过度使用信号。 
+当 :math:`t_{OU}` 达到 :math:`\bar{t}_{OU}=100ms` 且 :math:`m(t_i) > m(t_{i-1})`\ ` 时，产生过度使用信号。 
 
 另一方面，如果 :math:`m(t_i)` 减小到 :math:`\gamma` 以下，则产生未充分利用信号，而当 :math:`-\gamma \leq m(t_i) \leq \gamma` 时触发正常信号。
 

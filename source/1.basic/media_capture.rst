@@ -233,7 +233,7 @@ The value must not be less than 1.0 (you can't use this to scale the video up).
 
 如何获取摄像头的分辨率
 ------------------------
-采用探测法，给 getUserMedia 方法传入不同的分辨率，看是否能成功获取到媒体流，参见 `W3C Media Capture and Streams Spec`_。
+采用探测法，给 getUserMedia 方法传入不同的分辨率，看是否能成功获取到媒体流，参见 `W3C Media Capture and Streams Spec`_\ 。
 
 具体方法这里有详细讨论： https://webrtchacks.com/how-to-figure-out-webrtc-camera-resolutions/
 代码实例： https://stackoverflow.com/questions/27420581/get-maximum-video-resolution-with-getusermedia/43148358#43148358?newreg=c036061436d64b2a8c1317870fb8e160

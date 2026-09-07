@@ -27,7 +27,7 @@ Bandwidth Probe
 带宽探测（Bandwidth Probing）是 WebRTC 拥塞控制中的一个关键机制。
 在实时通信中，发送端需要知道网络路径的可用带宽，以便选择合适的编码参数。
 然而，仅靠被动观察（如延迟梯度、丢包率）来估计带宽存在一个根本性问题：
-**如果发送端不发送足够多的数据，就无法探测到更高的可用带宽**。
+**如果发送端不发送足够多的数据，就无法探测到更高的可用带宽**\ 。
 
 这就是所谓的 "鸡和蛋" 问题：
 
@@ -39,23 +39,19 @@ Bandwidth Probe
 来主动探测网络是否有更多的可用带宽。如果探测包能够以目标速率成功传输（没有显著的延迟增加或丢包），
 则说明网络有更多的可用容量，可以提高发送码率。
 
-.. code-block::
+.. mermaid::
 
-   带宽探测的基本流程:
-
-   ┌──────────┐    发送探测包集合     ┌──────────┐
-   │  发送端   │ ──────────────────► │  接收端   │
-   │          │  (高于当前码率)       │          │
-   │          │                      │          │
-   │          │ ◄────────────────── │          │
-   │          │   Transport-CC 反馈   │          │
-   │          │                      │          │
-   │ 分析探测  │                      │          │
-   │ 结果     │                      │          │
-   └──────────┘                      └──────────┘
-
-   如果探测成功 → 提高估计带宽 → 可能触发更多探测
-   如果探测失败 → 保持或降低估计带宽
+   sequenceDiagram
+     participant S as 发送端
+     participant R as 接收端
+     S->>R: 探测包集合 高于当前码率
+     R->>S: Transport-CC 反馈
+     Note over S: 分析探测结果
+     alt 探测成功
+       Note over S: 提高估计带宽，可能触发更多探测
+     else 探测失败
+       Note over S: 保持或降低估计带宽
+     end
 
 
 何时进行探测（When）
@@ -114,21 +110,14 @@ Bandwidth Probe
 然后，每当我们得到一个比特率估计值至少是上一次发送探测的大小的 ``further_probe_threshold`` 倍时，
 我们将发送另一个大小为 ``step_size`` 乘以新估计值的比特率。
 
-.. code-block::
+.. mermaid::
 
-   初始探测流程:
-
-   时间 ──────────────────────────────────────────►
-
-   ┌─────────┐     ┌─────────┐     ┌─────────┐
-   │ Probe 1 │     │ Probe 2 │     │ Probe 3 │
-   │ 900kbps │     │1800kbps │     │ 根据结果  │
-   └────┬────┘     └────┬────┘     └────┬────┘
-        │               │               │
-        ▼               ▼               ▼
-   估计: 800kbps   估计: 1500kbps  估计: 2000kbps
-   (> 900×0.7)    (> 1800×0.7)
-   触发下一次探测   触发下一次探测    达到目标，停止
+   flowchart LR
+     P1["Probe 1<br/>900kbps"] --> E1["估计 800kbps<br/>大于 900x0.7"]
+     E1 --> P2["Probe 2<br/>1800kbps"]
+     P2 --> E2["估计 1500kbps<br/>大于 1800x0.7"]
+     E2 --> P3["Probe 3<br/>根据结果"]
+     P3 --> E3["估计 2000kbps<br/>达到目标，停止"]
 
 
 保守探测（Conservative Probing）
@@ -138,7 +127,7 @@ Bandwidth Probe
 
 - 探测的目标码率不会远超当前估计带宽
 - 探测间隔更长，避免频繁探测对正常传输的干扰
-- 使用 ``further_exponential_probe_scale``（默认为 2）作为步进系数
+- 使用 ``further_exponential_probe_scale``\ （默认为 2）作为步进系数
 
 
 ALR 探测（ALR Probing）
@@ -162,7 +151,7 @@ ALR 探测（ALR Probing）
 
 
 探测集合机制（Probe Cluster）
-=========================
+=============================
 
 探测的基本单位是 Probe Cluster（探测集合），每个探测集合包含一组以目标速率发送的数据包。
 
@@ -229,8 +218,8 @@ Probe Cluster 的构成
 
 每个 Probe Cluster 有以下约束：
 
-- **最少包数（Min probes）**: 至少发送 ``kMinProbePacketsSent``（默认 5）个包
-- **最短持续时间（Min duration）**: 至少持续 ``kMinProbeDurationMs``（默认 15 ms）
+- **最少包数（Min probes）**: 至少发送 ``kMinProbePacketsSent``\ （默认 5）个包
+- **最短持续时间（Min duration）**: 至少持续 ``kMinProbeDurationMs``\ （默认 15 ms）
 - **目标发送速率（Target bitrate）**: 以指定的目标比特率发送
 
 
@@ -403,24 +392,18 @@ ProbeControllerConfig 默认值
 
 带宽探测与拥塞控制算法（如 GCC）紧密协作：
 
-.. code-block::
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────┐
-   │                  GccNetworkController                │
-   │                                                     │
-   │  ┌──────────────┐    ┌──────────────────────────┐   │
-   │  │ProbeController│───►│    PacingController       │   │
-   │  │ (决定何时探测) │    │ (按目标速率发送探测包)     │   │
-   │  └──────┬───────┘    └──────────────────────────┘   │
-   │         │                                           │
-   │         │ 探测结果                                   │
-   │         ▼                                           │
-   │  ┌──────────────────┐   ┌─────────────────────┐    │
-   │  │ProbeBitrateEstim. │──►│DelayBasedBweEstimator│    │
-   │  │ (分析探测结果)     │   │ (更新带宽估计)        │    │
-   │  └──────────────────┘   └─────────────────────┘    │
-   │                                                     │
-   └─────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph Gcc[GccNetworkController]
+       PC["ProbeController<br/>决定何时探测"]
+       Pac["PacingController<br/>按目标速率发送探测包"]
+       PBE["ProbeBitrateEstimator<br/>分析探测结果"]
+       DBE["DelayBasedBweEstimator<br/>更新带宽估计"]
+       PC --> Pac
+       PC -->|探测结果| PBE
+       PBE --> DBE
+     end
 
 交互流程：
 
@@ -428,13 +411,13 @@ ProbeControllerConfig 默认值
 2. ``PacingController`` 按照目标码率发送探测包（Probe Cluster）
 3. 接收端通过 Transport-CC 反馈探测包的到达时间
 4. ``ProbeBitrateEstimator`` 分析探测结果，计算探测带宽
-5. 探测结果被输入到 ``DelayBasedBwe``，用于更新带宽估计
+5. 探测结果被输入到 ``DelayBasedBwe``\ ，用于更新带宽估计
 6. 如果探测成功（估计带宽显著高于当前值），可能触发进一步的探测
 
 **重要注意事项**:
 
 - 探测期间，拥塞控制算法会特殊处理探测包的反馈，不会因为探测导致的短暂延迟增加而错误地降低带宽估计
-- 探测结果的等待时间有上限（``kMaxWaitingTimeForProbingResultMs``，默认 1000 ms），超时则认为探测失败
+- 探测结果的等待时间有上限（``kMaxWaitingTimeForProbingResultMs``\ ，默认 1000 ms），超时则认为探测失败
 - 探测的目标码率不会超过应用层设置的最大带宽限制
 
 
@@ -478,9 +461,9 @@ ALR（Application-Limited Region）检测器用于判断当前是否处于应用
 
 ALR 检测的工作原理：
 
-- ``AlrDetector`` 维护一个 ``IntervalBudget``（区间预算），跟踪实际发送量与估计带宽之间的差异
-- 当实际发送量持续低于估计带宽的 ``start_budget_level_ratio``（默认 80%）时，进入 ALR 状态
-- 当实际发送量恢复到估计带宽的 ``stop_budget_level_ratio``（默认 50%）以上时，退出 ALR 状态
+- ``AlrDetector`` 维护一个 ``IntervalBudget``\ （区间预算），跟踪实际发送量与估计带宽之间的差异
+- 当实际发送量持续低于估计带宽的 ``start_budget_level_ratio``\ （默认 80%）时，进入 ALR 状态
+- 当实际发送量恢复到估计带宽的 ``stop_budget_level_ratio``\ （默认 50%）以上时，退出 ALR 状态
 - 在 ALR 状态下，``ProbeController`` 会定期触发探测，以确保带宽估计的准确性
 
 ALR 状态的典型场景：

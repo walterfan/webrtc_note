@@ -24,18 +24,18 @@ WebRTC PeerConnection Channel
 在 WebRTC 内部，``PeerConnection`` 并不直接管理媒体的发送和接收，
 而是通过 **Channel** 层来协调信令线程、工作线程和网络线程之间的媒体操作。
 
-.. code-block:: text
+.. mermaid::
 
-   PeerConnection
-       │
-       ├── RtpTransceiver (mid=0, audio)
-       │       └── VoiceChannel ──► AudioSendStream / AudioReceiveStream
-       │
-       ├── RtpTransceiver (mid=1, video)
-       │       └── VideoChannel ──► VideoSendStream / VideoReceiveStream
-       │
-       └── SctpTransport
-               └── DataChannel
+   flowchart TD
+     PC[PeerConnection]
+     PC --> T0["RtpTransceiver mid=0 audio"]
+     T0 --> VC[VoiceChannel]
+     VC --> ASS[AudioSendStream / AudioReceiveStream]
+     PC --> T1["RtpTransceiver mid=1 video"]
+     T1 --> VCh[VideoChannel]
+     VCh --> VSS[VideoSendStream / VideoReceiveStream]
+     PC --> SCTP[SctpTransport]
+     SCTP --> DC[DataChannel]
 
 
 BaseChannel
@@ -87,7 +87,7 @@ Network 和 Worker 线程在某些配置下可以是同一个线程。
 VideoChannel
 ----------------------------
 
-``VideoChannel`` 继承自 ``BaseChannel``，管理视频流的生命周期：
+``VideoChannel`` 继承自 ``BaseChannel``\ ，管理视频流的生命周期：
 
 - 创建和销毁 ``VideoSendStream`` / ``VideoReceiveStream``
 - 处理视频相关的 SDP 协商（编解码器、分辨率、帧率）
@@ -98,7 +98,7 @@ VideoChannel
 VoiceChannel
 ----------------------------
 
-``VoiceChannel`` 继承自 ``BaseChannel``，管理音频流的生命周期：
+``VoiceChannel`` 继承自 ``BaseChannel``\ ，管理音频流的生命周期：
 
 - 创建和销毁 ``AudioSendStream`` / ``AudioReceiveStream``
 - 处理音频相关的 SDP 协商（编解码器、采样率、声道数）
@@ -134,21 +134,13 @@ SSRC 生成器
 Channel 与 Transport 的关系
 ==============================
 
-.. code-block:: text
+.. mermaid::
 
-   VoiceChannel / VideoChannel
-       │
-       ▼
-   RtpTransport (or SrtpTransport / DtlsSrtpTransport)
-       │
-       ▼
-   IceTransport (DTLS)
-       │
-       ▼
-   P2PTransportChannel (ICE)
-       │
-       ▼
-   UDP Socket
+   flowchart TD
+     Ch[VoiceChannel / VideoChannel] --> RT["RtpTransport / SrtpTransport / DtlsSrtpTransport"]
+     RT --> IceT[IceTransport DTLS]
+     IceT --> P2P[P2PTransportChannel ICE]
+     P2P --> UDP[UDP Socket]
 
 Channel 层不直接操作 Socket，而是通过 Transport 抽象层。
 这种分层使得可以灵活替换传输方式（直连、TURN 中继、BUNDLE 复用等）。

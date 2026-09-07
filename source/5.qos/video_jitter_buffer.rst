@@ -13,10 +13,10 @@
 
 视频 Jitter Buffer 与音频 Jitter Buffer 的目标相同——吸收网络抖动，保证平滑播放——但面临的挑战截然不同：
 
-- 视频帧**大小差异巨大**：I 帧可能是 P 帧的 10-50 倍
-- 一个视频帧通常**跨多个 RTP 包**，需要全部到齐才能解码
-- 视频帧之间有**依赖关系**：P/B 帧依赖参考帧
-- 视频对**延迟的容忍度**比音频稍高，但对**帧完整性**要求更严格
+- 视频帧**大小差异巨大**\ ：I 帧可能是 P 帧的 10-50 倍
+- 一个视频帧通常**跨多个 RTP 包**\ ，需要全部到齐才能解码
+- 视频帧之间有**依赖关系**\ ：P/B 帧依赖参考帧
+- 视频对**延迟的容忍度**\ 比音频稍高，但对**帧完整性**\ 要求更严格
 
 .. mermaid::
 
@@ -116,42 +116,52 @@ RTP 头部的 **M（Marker）位** 标记帧的最后一个包：
 
 视频帧之间的依赖关系决定了丢帧的影响范围：
 
-.. code-block:: text
+.. mermaid::
 
-   I ← P ← P ← P ← I ← P ← P ← P
-   |   |   |   |   |   |   |   |
-   如果这个 P 帧丢失 ──┘
-   后续的 P 帧都无法正确解码 ──────┘
+   flowchart LR
+     I0[I] --> P1[P]
+     P1 --> P2[P]
+     P2 --> P3[P]
+     P3 --> I1[I]
+     I1 --> P4[P]
+     P4 --> P5[P]
+     P5 --> P6[P]
+     P2 -.->|丢失| Lost[后续 P 帧无法正确解码]
 
 关键帧（I 帧）保护
 --------------------
 
 I 帧丢失的代价最高（后续所有帧都受影响），因此需要特殊保护：
 
-1. **FEC 保护**：对 I 帧使用更强的 FEC（如 FlexFEC）
-2. **NACK 重传**：I 帧的包丢失时优先重传
-3. **PLI/FIR 请求**：如果 I 帧无法恢复，请求发送端生成新的 I 帧
+1. **FEC 保护**\ ：对 I 帧使用更强的 FEC（如 FlexFEC）
+2. **NACK 重传**\ ：I 帧的包丢失时优先重传
+3. **PLI/FIR 请求**\ ：如果 I 帧无法恢复，请求发送端生成新的 I 帧
 
-.. code-block:: text
+.. mermaid::
 
-   接收端检测到关键帧丢失：
-   1. 发送 NACK 请求重传丢失的包
-   2. 等待重传（超时 ~RTT）
-   3. 如果重传失败，发送 PLI（Picture Loss Indication）
-   4. 发送端收到 PLI，在下一个编码机会生成 I 帧
+   flowchart TD
+     A[接收端检测到关键帧丢失] --> B[发送 NACK 请求重传丢失的包]
+     B --> C{重传成功?}
+     C -->|是| D[恢复关键帧]
+     C -->|超时约 RTT| E[发送 PLI]
+     E --> F[发送端在下一编码机会生成 I 帧]
 
 解码顺序 vs 显示顺序
 ----------------------
 
 当使用 B 帧时，解码顺序和显示顺序不同：
 
-.. code-block:: text
+.. mermaid::
 
-   显示顺序: I0  B1  B2  P3  B4  B5  P6
-   解码顺序: I0  P3  B1  B2  P6  B4  B5
-
-   Jitter Buffer 需要按解码顺序输出帧给解码器，
-   解码器输出后再按显示顺序排列给渲染器。
+   flowchart TB
+     subgraph Display[显示顺序]
+       D1[I0] --> D2[B1] --> D3[B2] --> D4[P3] --> D5[B4] --> D6[B5] --> D7[P6]
+     end
+     subgraph Decode[解码顺序]
+       C1[I0] --> C2[P3] --> C3[B1] --> C4[B2] --> C5[P6] --> C6[B4] --> C7[B5]
+     end
+     Display -.-> JB[Jitter Buffer 按解码顺序输出]
+     Decode -.-> Dec[解码器输出后再按显示顺序渲染]
 
 WebRTC 通常不使用 B 帧（增加延迟），但在 SVC 和某些 H.264 配置中可能出现。
 
@@ -217,22 +227,22 @@ WebRTC 中的实现
 
 WebRTC 的视频 Jitter Buffer 实现在 ``modules/video_coding/`` 目录下：
 
-- ``frame_buffer2.cc``：帧缓冲区管理
-- ``jitter_estimator.cc``：抖动估计（卡尔曼滤波）
-- ``timing.cc``：渲染时间计算
-- ``packet_buffer.cc``：RTP 包缓冲和帧组装
+- ``frame_buffer2.cc``\ ：帧缓冲区管理
+- ``jitter_estimator.cc``\ ：抖动估计（卡尔曼滤波）
+- ``timing.cc``\ ：渲染时间计算
+- ``packet_buffer.cc``\ ：RTP 包缓冲和帧组装
 
 关键流程：
 
-.. code-block:: text
+.. mermaid::
 
-   PacketBuffer::InsertPacket()
-     → 包排序、帧组装
-     → FrameBuffer::InsertFrame()
-       → 检查帧依赖（参考帧是否已解码）
-       → JitterEstimator::UpdateEstimate()
-       → Timing::RenderTimeMs() 计算渲染时间
-       → 帧可解码时通知解码线程
+   flowchart TD
+     A["PacketBuffer::InsertPacket()"] --> B[包排序、帧组装]
+     B --> C["FrameBuffer::InsertFrame()"]
+     C --> D[检查帧依赖]
+     C --> E["JitterEstimator::UpdateEstimate()"]
+     C --> F["Timing::RenderTimeMs() 计算渲染时间"]
+     D --> G[帧可解码时通知解码线程]
 
 小结
 ====

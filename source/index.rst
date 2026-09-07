@@ -24,16 +24,16 @@ WebRTC 学习笔记
          DTLS/SRTP
          RTP/RTCP
          SCTP/DataChannel
-       音频
+       信令
+         SIP Core
+         Call Control
+         History-Info
+         SIPREC
+       媒体
          语音编解码
          音频处理
-         AEC/AGC/ANS
-         Web Audio API
-       视频
          视频编解码
          Simulcast/SVC
-         屏幕共享
-         流媒体
        QoS
          拥塞控制
          FEC/NACK/RTX
@@ -75,8 +75,8 @@ WebRTC 是一项开源技术，使浏览器和移动应用能够通过简单的 
 - **WebRTC 简明教程** — 4 周学习路线，快速入门
 - **WebRTC 基础** — API、信令、SDP、媒体捕获等核心概念
 - **WebRTC 传输** — ICE、DTLS、SRTP、RTP/RTCP、DataChannel 等协议
-- **音频技术** — 语音编解码（Opus/G.711/G.722 等）、音频处理（AEC/AGC/ANS/VAD）
-- **视频技术** — 视频编解码（H.264/VP8/AV1）、Simulcast/SVC、屏幕共享
+- **信令协议** — SIP 核心、呼叫控制、呼叫中心相关扩展（REFER / History-Info / SIPREC 等）
+- **媒体技术** — 语音/视频编解码、音频处理（AEC/AGC/ANS/VAD）、Simulcast/SVC、屏幕共享
 - **QoS 与网络对抗** — 拥塞控制、FEC/NACK、Jitter Buffer、丢包隐藏
 - **WebRTC 源码分析** — Chromium WebRTC 源码深度解读
 - **WebRTC 实践** — SFU 架构、开源项目实战
@@ -94,8 +94,8 @@ WebRTC 是一项开源技术，使浏览器和移动应用能够通过简单的 
    0.tutorial/index
    1.basic/index
    2.transport/index
-   3.audio/index
-   4.video/index
+   3.signaling/index
+   4.media/index
    5.qos/index
    6.code/index
    7.practice/index

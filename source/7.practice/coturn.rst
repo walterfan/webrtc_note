@@ -61,58 +61,53 @@ NAT（Network Address Translation）是将私有 IP 地址映射为公网 IP 地
 
 **1. Full Cone NAT（完全锥形 NAT）**
 
-一旦内部主机 ``(iAddr:iPort)`` 被映射为 ``(eAddr:ePort)``，
+一旦内部主机 ``(iAddr:iPort)`` 被映射为 ``(eAddr:ePort)``\ ，
 任何外部主机都可以通过 ``(eAddr:ePort)`` 向内部主机发送数据。
 
-.. code-block:: text
+.. mermaid::
 
-   内部主机 (192.168.1.100:5000)
-       │
-       │ 映射为 (203.0.113.1:40000)
-       ▼
-   NAT ──── 任何外部主机都可以发送到 203.0.113.1:40000
-       │
-       ▼
-   外部主机 A (任意 IP:Port) ✓ 可以访问
-   外部主机 B (任意 IP:Port) ✓ 可以访问
+   flowchart TB
+     H["内部主机<br/>192.168.1.100:5000"] -->|映射为 203.0.113.1:40000| NAT[NAT]
+     NAT --> EA["外部主机 A<br/>任意 IP:Port<br/>可以访问"]
+     NAT --> EB["外部主机 B<br/>任意 IP:Port<br/>可以访问"]
 
 **2. Address Restricted Cone NAT（地址限制锥形 NAT）**
 
 只有内部主机之前向其发送过数据的外部 IP 地址，才能通过映射地址向内部主机发送数据。
 
-.. code-block:: text
+.. mermaid::
 
-   内部主机 → 外部主机 A (1.2.3.4:80)
-   映射为 (203.0.113.1:40000)
-
-   外部主机 A (1.2.3.4:任意端口) ✓ 可以访问（IP 匹配）
-   外部主机 B (5.6.7.8:任意端口) ✗ 不可以访问（IP 不匹配）
+   flowchart TB
+     H["内部主机"] -->|映射为 203.0.113.1:40000| A["外部主机 A 1.2.3.4:80"]
+     A --> OK["1.2.3.4 任意端口<br/>可以访问 IP 匹配"]
+     H -.-> B["外部主机 B 5.6.7.8"]
+     B --> NO["不可以访问 IP 不匹配"]
 
 **3. Port Restricted Cone NAT（端口限制锥形 NAT）**
 
 只有内部主机之前向其发送过数据的外部 IP:Port，才能通过映射地址向内部主机发送数据。
 
-.. code-block:: text
+.. mermaid::
 
-   内部主机 → 外部主机 A (1.2.3.4:80)
-   映射为 (203.0.113.1:40000)
-
-   外部主机 A (1.2.3.4:80)    ✓ 可以访问（IP:Port 匹配）
-   外部主机 A (1.2.3.4:8080)  ✗ 不可以访问（端口不匹配）
-   外部主机 B (5.6.7.8:80)    ✗ 不可以访问（IP 不匹配）
+   flowchart TB
+     H["内部主机"] -->|映射为 203.0.113.1:40000| A["外部主机 A 1.2.3.4:80"]
+     A --> OK["1.2.3.4:80 可以访问<br/>IP:Port 匹配"]
+     A --> NO1["1.2.3.4:8080 不可以访问<br/>端口不匹配"]
+     H -.-> B["外部主机 B 5.6.7.8:80"]
+     B --> NO2["不可以访问 IP 不匹配"]
 
 **4. Symmetric NAT（对称型 NAT）**
 
-对于每个不同的目标地址 ``(destAddr:destPort)``，NAT 都会分配一个不同的映射端口。
+对于每个不同的目标地址 ``(destAddr:destPort)``\ ，NAT 都会分配一个不同的映射端口。
 这是最严格的 NAT 类型，STUN 无法穿透。
 
-.. code-block:: text
+.. mermaid::
 
-   内部主机 → 外部主机 A (1.2.3.4:80)   → 映射为 (203.0.113.1:40000)
-   内部主机 → 外部主机 B (5.6.7.8:80)   → 映射为 (203.0.113.1:40001)  ← 不同的端口！
-
-   STUN 服务器看到的映射端口与实际通信时的映射端口不同，
-   因此 STUN 获取的地址无法用于 P2P 通信。
+   flowchart TB
+     H["内部主机"] -->|映射 203.0.113.1:40000| A["外部主机 A 1.2.3.4:80"]
+     H -->|映射 203.0.113.1:40001| B["外部主机 B 5.6.7.8:80"]
+     STUN["STUN 看到的映射端口<br/>与实际通信映射端口不同"]
+     H -.-> STUN
 
 **NAT 类型与穿透能力**:
 
@@ -201,7 +196,7 @@ STUN 消息由 20 字节的头部和可变长度的属性（Attributes）组成�
 
 * **Message Type（消息类型）**: 14 位，包含方法（Method）和类别（Class）
 * **Message Length（消息长度）**: 不包含 20 字节头部的消息体长度
-* **Magic Cookie**: 固定值 ``0x2112A442``，用于区分 STUN 和其他协议
+* **Magic Cookie**: 固定值 ``0x2112A442``\ ，用于区分 STUN 和其他协议
 * **Transaction ID**: 96 位随机值，用于匹配请求和响应
 
 Binding Request/Response
@@ -210,21 +205,19 @@ Binding Request/Response
 STUN 最基本的操作是 Binding（绑定），客户端发送 Binding Request，
 服务器返回 Binding Response，其中包含客户端的公网映射地址。
 
-.. code-block:: text
+.. mermaid::
 
-   Client (192.168.1.100:5000)          NAT              STUN Server
-     |                                   |                    |
-     |--- Binding Request ------------->|--- (映射为         |
-     |    (src: 192.168.1.100:5000)     |  203.0.113.1:40000)|
-     |                                   |--- Binding Req --->|
-     |                                   |    (src: 203.0.113.1:40000)
-     |                                   |                    |
-     |                                   |<-- Binding Resp ---|
-     |<-- Binding Response -------------|    XOR-MAPPED-ADDRESS:
-     |    XOR-MAPPED-ADDRESS:           |    203.0.113.1:40000
-     |    203.0.113.1:40000             |
-     |                                   |
-     |  现在客户端知道自己的公网地址是 203.0.113.1:40000
+   sequenceDiagram
+     participant C as Client
+     participant N as NAT
+     participant S as STUN Server
+
+     C->>N: Binding Request
+     Note right of N: 映射为 203.0.113.1:40000
+     N->>S: Binding Request
+     S-->>N: Binding Response
+     N-->>C: Binding Response
+     Note over C: XOR-MAPPED-ADDRESS 203.0.113.1:40000
 
 XOR-MAPPED-ADDRESS 属性
 --------------------------
@@ -297,40 +290,36 @@ TURN 工作原理
 TURN 服务器为客户端分配一个中继地址（Relay Address），
 所有发往该中继地址的数据都会被转发给客户端，反之亦然。
 
-.. code-block:: text
+.. mermaid::
 
-                        ┌──────────────────┐
-                        │                  │
-                        │   TURN Server    │
-                        │                  │
-   Client A ◄──────────►  Relay Address   ◄──────────► Client B
-   (NAT 后面)           │  203.0.113.1:   │            (NAT 后面)
-                        │  49152           │
-                        │                  │
-                        └──────────────────┘
+   flowchart LR
+     A["Client A<br/>NAT 后面"] <--> T["TURN Server<br/>Relay Address<br/>203.0.113.1:49152"]
+     T <--> B["Client B<br/>NAT 后面"]
 
-   Client A 的数据路径:
-   A → A's NAT → TURN Server → B's NAT → B
+Client A 的数据路径: A → A's NAT → TURN Server → B's NAT → B
 
-   延迟 = A→TURN + TURN→B（比 P2P 多一跳）
+延迟 = A→TURN + TURN→B（比 P2P 多一跳）
 
 Allocate（分配）
 --------------------------
 
 客户端首先向 TURN 服务器发送 Allocate 请求，服务器分配一个中继地址（Relay Address）。
 
-.. code-block:: text
+.. mermaid::
 
-   Client                    TURN Server
-     |                           |
-     |--- Allocate Request ----->|  (无认证，服务器返回 401)
-     |<-- 401 Unauthorized ------|  (包含 realm 和 nonce)
-     |                           |
-     |--- Allocate Request ----->|  (带认证信息)
-     |<-- Allocate Success ------|  (返回 Relay Address 和 Mapped Address)
-     |                           |
-     |  Relay Address: 203.0.113.1:49152 (TURN 服务器分配的中继地址)
-     |  Mapped Address: 198.51.100.1:12345 (客户端的公网映射地址)
+   sequenceDiagram
+     participant C as Client
+     participant T as TURN Server
+
+     C->>T: Allocate Request
+     Note right of T: 无认证
+     T-->>C: 401 Unauthorized
+     Note right of T: realm 和 nonce
+     C->>T: Allocate Request
+     Note right of C: 带认证信息
+     T-->>C: Allocate Success
+     Note over C,T: Relay Address 203.0.113.1:49152
+     Note over C,T: Mapped Address 198.51.100.1:12345
 
 **Allocate Request 的关键属性**:
 
@@ -350,17 +339,18 @@ Refresh（刷新）
 分配有生命周期（默认 600 秒），客户端需要定期发送 Refresh 请求来保持分配。
 发送 Lifetime=0 的 Refresh 请求可以主动释放分配。
 
-.. code-block:: text
+.. mermaid::
 
-   Client                    TURN Server
-     |                           |
-     |--- Refresh Request ------>|  (Lifetime: 600)
-     |<-- Refresh Success -------|  (Lifetime: 600)
-     |                           |
-     |  ... 每隔 ~300 秒刷新一次 ...
-     |                           |
-     |--- Refresh Request ------>|  (Lifetime: 0，释放分配)
-     |<-- Refresh Success -------|
+   sequenceDiagram
+     participant C as Client
+     participant T as TURN Server
+
+     C->>T: Refresh Request Lifetime 600
+     T-->>C: Refresh Success Lifetime 600
+     Note over C,T: 每隔约 300 秒刷新一次
+     C->>T: Refresh Request Lifetime 0
+     Note right of C: 释放分配
+     T-->>C: Refresh Success
 
 CreatePermission（创建权限）
 -------------------------------
@@ -368,15 +358,16 @@ CreatePermission（创建权限）
 在通过中继地址发送或接收数据之前，客户端需要为对端创建权限。
 权限基于对端的 IP 地址（不包含端口），有效期为 300 秒，需要定期刷新。
 
-.. code-block:: text
+.. mermaid::
 
-   Client                    TURN Server                    Peer
-     |                           |                           |
-     |--- CreatePermission ----->|                           |
-     |    (Peer: 192.0.2.1)     |                           |
-     |<-- Success Response ------|                           |
-     |                           |                           |
-     |  现在可以通过中继地址与 192.0.2.1 通信                  |
+   sequenceDiagram
+     participant C as Client
+     participant T as TURN Server
+     participant P as Peer
+
+     C->>T: CreatePermission Peer 192.0.2.1
+     T-->>C: Success Response
+     Note over C,T: 现在可以通过中继地址与 192.0.2.1 通信
 
 Send/Data Indication
 --------------------------
@@ -384,17 +375,17 @@ Send/Data Indication
 创建权限后，客户端可以通过 Send Indication 向对端发送数据，
 TURN 服务器通过 Data Indication 将对端的数据转发给客户端。
 
-.. code-block:: text
+.. mermaid::
 
-   Client                    TURN Server                    Peer
-     |                           |                           |
-     |--- Send Indication ------>|--- UDP Data ------------->|
-     |    (Peer: 192.0.2.1:5000,|                           |
-     |     Data: ...)            |                           |
-     |                           |                           |
-     |<-- Data Indication -------|<-- UDP Data --------------|
-     |    (Peer: 192.0.2.1:5000,|                           |
-     |     Data: ...)            |                           |
+   sequenceDiagram
+     participant C as Client
+     participant T as TURN Server
+     participant P as Peer
+
+     C->>T: Send Indication Peer 192.0.2.1:5000
+     T->>P: UDP Data
+     P->>T: UDP Data
+     T-->>C: Data Indication Peer 192.0.2.1:5000
 
 ChannelBind（通道绑定）
 --------------------------
@@ -402,18 +393,19 @@ ChannelBind（通道绑定）
 ChannelBind 为特定的对端地址创建一个通道号（Channel Number，0x4000-0x7FFF），
 后续数据传输使用更紧凑的 ChannelData 消息格式，减少开销。
 
-.. code-block:: text
+.. mermaid::
 
-   Client                    TURN Server                    Peer
-     |                           |                           |
-     |--- ChannelBind ---------->|                           |
-     |    (Channel: 0x4001,      |                           |
-     |     Peer: 192.0.2.1:5000)|                           |
-     |<-- Success Response ------|                           |
-     |                           |                           |
-     |=== ChannelData =========>|=== UDP Data =============>|
-     |    (4 bytes header)       |                           |
-     |<== ChannelData ==========|<== UDP Data ==============|
+   sequenceDiagram
+     participant C as Client
+     participant T as TURN Server
+     participant P as Peer
+
+     C->>T: ChannelBind Channel 0x4001 Peer 192.0.2.1:5000
+     T-->>C: Success Response
+     C->>T: ChannelData 4 bytes header
+     T->>P: UDP Data
+     P->>T: UDP Data
+     T->>C: ChannelData
 
 **ChannelData 消息格式**:
 
@@ -555,7 +547,7 @@ Docker 安装
 配置详解
 ========================
 
-coturn 的主要配置文件是 ``turnserver.conf``，通常位于 ``/etc/turnserver.conf`` 或 ``/usr/local/etc/turnserver.conf``。
+coturn 的主要配置文件是 ``turnserver.conf``\ ，通常位于 ``/etc/turnserver.conf`` 或 ``/usr/local/etc/turnserver.conf``\ 。
 
 .. code-block:: bash
 
@@ -1141,7 +1133,7 @@ Trickle ICE 是一个在线工具，可以测试 STUN/TURN 服务器的连通性
 使用 turnutils_uclient 测试
 -------------------------------
 
-coturn 自带测试工具 ``turnutils_uclient``：
+coturn 自带测试工具 ``turnutils_uclient``\ ：
 
 .. code-block:: bash
 
@@ -1367,11 +1359,11 @@ TURN 中继会消耗大量带宽，需要防止滥用：
 安全最佳实践总结
 --------------------------
 
-1. **使用时限凭证**: 避免使用静态长期凭证，使用 REST API 时限凭证（``use-auth-secret``）
+1. **使用时限凭证**: 避免使用静态长期凭证，使用 REST API 时限凭证（``use-auth-secret``\ ）
 2. **凭证轮换**: 定期更换 ``static-auth-secret``
 3. **IP 过滤**: 配置 ``denied-peer-ip`` 阻止中继到内网地址（防止 SSRF 攻击）
 4. **TLS 加密**: 启用 TURNS（TLS）并使用有效的证书
-5. **速率限制**: 配置带宽限制（``max-bps``）防止滥用
+5. **速率限制**: 配置带宽限制（``max-bps``\ ）防止滥用
 6. **最小权限**: 以非 root 用户运行 coturn
 7. **防火墙规则**: 只开放必要的端口（3478, 5349, 49152-65535）
 8. **日志监控**: 启用日志并监控异常行为

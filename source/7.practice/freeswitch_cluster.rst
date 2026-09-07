@@ -26,10 +26,10 @@ FreeSWITCH 集群与高可用
 在生产环境中，单节点的 FreeSWITCH 往往无法满足高可用性（High Availability）和大规模并发的需求。
 当业务规模增长时，需要考虑以下问题：
 
-* **单点故障（Single Point of Failure）**：单节点宕机将导致所有通话中断
-* **容量限制（Capacity Limitation）**：单节点的并发通话数受限于 CPU、内存和网络带宽
-* **地理分布（Geographic Distribution）**：用户分布在不同地区，需要就近接入
-* **维护窗口（Maintenance Window）**：升级和维护时需要不中断服务
+* **单点故障（Single Point of Failure）**\ ：单节点宕机将导致所有通话中断
+* **容量限制（Capacity Limitation）**\ ：单节点的并发通话数受限于 CPU、内存和网络带宽
+* **地理分布（Geographic Distribution）**\ ：用户分布在不同地区，需要就近接入
+* **维护窗口（Maintenance Window）**\ ：升级和维护时需要不中断服务
 
 本章介绍 FreeSWITCH 集群部署的各种方案，包括负载均衡、故障转移、数据库共享等技术。
 
@@ -75,24 +75,20 @@ FreeSWITCH 集群有多种架构方案，根据业务需求选择合适的方案
 
 这是最常见的集群方案。使用 Kamailio 或 OpenSIPS 作为 SIP Proxy，将请求分发到多个 FreeSWITCH 节点：
 
-::
+.. mermaid::
 
-                        ┌──────────────┐
-                        │   SIP Proxy  │
-                        │  (Kamailio)  │
-                        └──────┬───────┘
-                   ┌───────────┼───────────┐
-                   │           │           │
-            ┌──────┴──────┐ ┌──┴───────┐ ┌─┴──────────┐
-            │ FreeSWITCH  │ │FreeSWITCH│ │ FreeSWITCH │
-            │   Node 1    │ │  Node 2  │ │   Node 3   │
-            └─────────────┘ └──────────┘ └────────────┘
-                   │           │           │
-                   └───────────┼───────────┘
-                        ┌──────┴───────┐
-                        │  Shared DB   │
-                        │ (PostgreSQL) │
-                        └──────────────┘
+   flowchart TB
+     PROXY["SIP Proxy<br/>Kamailio"]
+     N1["FreeSWITCH Node 1"]
+     N2["FreeSWITCH Node 2"]
+     N3["FreeSWITCH Node 3"]
+     DB["Shared DB<br/>PostgreSQL"]
+     PROXY --> N1
+     PROXY --> N2
+     PROXY --> N3
+     N1 --> DB
+     N2 --> DB
+     N3 --> DB
 
 
 方案二：DNS SRV 负载均衡
@@ -409,8 +405,8 @@ SIP 层面的故障转移
 
 媒体流的故障转移比较复杂，因为 RTP 流是有状态的。常见的策略包括：
 
-1. **呼叫重建（Call Re-establishment）**：检测到节点故障后，通过 SIP RE-INVITE 将媒体流切换到新节点
-2. **媒体代理（Media Proxy）**：使用独立的 RTP Proxy（如 RTPEngine）处理媒体流，与信令节点解耦
+1. **呼叫重建（Call Re-establishment）**\ ：检测到节点故障后，通过 SIP RE-INVITE 将媒体流切换到新节点
+2. **媒体代理（Media Proxy）**\ ：使用独立的 RTP Proxy（如 RTPEngine）处理媒体流，与信令节点解耦
 
 .. code-block:: bash
 

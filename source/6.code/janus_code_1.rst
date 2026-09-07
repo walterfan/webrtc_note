@@ -34,21 +34,18 @@ Janus 是由 Meetecho 开发的开源 WebRTC 服务器网关，采用 C 语言�
 
 Janus 的整体架构分为三层：
 
-::
+.. mermaid::
 
-  ┌─────────────────────────────────────────┐
-  │          Transport Layer                │
-  │  (HTTP/HTTPS, WebSocket, RabbitMQ, ...) │
-  ├─────────────────────────────────────────┤
-  │          Janus Core (janus.c)           │
-  │  ├── Session 管理                       │
-  │  ├── Handle 管理                        │
-  │  ├── ICE/DTLS/SRTP 处理                 │
-  │  └── Plugin 调度                        │
-  ├─────────────────────────────────────────┤
-  │          Plugin Layer                   │
-  │  (VideoRoom, AudioBridge, Streaming...) │
-  └─────────────────────────────────────────┘
+   flowchart TB
+     T["Transport Layer<br/>HTTP/HTTPS, WebSocket, RabbitMQ"]
+     subgraph Core["Janus Core janus.c"]
+       S[Session 管理]
+       H[Handle 管理]
+       ICE[ICE/DTLS/SRTP 处理]
+       P[Plugin 调度]
+     end
+     PL["Plugin Layer<br/>VideoRoom, AudioBridge, Streaming"]
+     T --> Core --> PL
 
 * **Transport Layer**: 负责与客户端的信令通信，支持多种传输协议
 * **Janus Core**: 核心引擎，管理 WebRTC 连接的建立和媒体转发
@@ -160,13 +157,16 @@ Janus 的 ICE 处理由 ``ice.c`` 和 ``ice.h`` 实现，基于 libnice 库：
 
 媒体数据在 Janus 内部的转发路径：
 
-::
+.. mermaid::
 
-  Client A → ICE → SRTP 解密 → Plugin (如 VideoRoom)
-                                    |
-                                    → 转发给其他参与者
-                                    |
-  Client B ← ICE ← SRTP 加密 ← Plugin
+   flowchart LR
+     A[Client A] --> ICE1[ICE]
+     ICE1 --> Dec[SRTP 解密]
+     Dec --> Plugin["Plugin 如 VideoRoom"]
+     Plugin --> Fwd[转发给其他参与者]
+     Plugin --> Enc[SRTP 加密]
+     Enc --> ICE2[ICE]
+     ICE2 --> B[Client B]
 
 
 参考资料

@@ -324,7 +324,7 @@ WebRTC SDP 的特殊要求
 ------------------------------
 
 * **必须使用 DTLS-SRTP** - ``a=fingerprint`` 和 ``a=setup`` 属性
-* **必须支持 ICE** - ``a=ice-ufrag``、``a=ice-pwd``、``a=candidate`` 属性
+* **必须支持 ICE** - ``a=ice-ufrag``\ 、``a=ice-pwd``\ 、``a=candidate`` 属性
 * **必须使用 RTCP-MUX** - ``a=rtcp-mux`` 属性
 * **Bundle 支持** - ``a=group:BUNDLE`` 属性
 
@@ -370,7 +370,7 @@ WebRTC SDP 的特殊要求
 mod_verto 配置
 ========================
 
-mod_verto 的配置文件位于 ``autoload_configs/verto.conf.xml``：
+mod_verto 的配置文件位于 ``autoload_configs/verto.conf.xml``\ ：
 
 .. code-block:: xml
 

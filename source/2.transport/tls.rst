@@ -71,25 +71,17 @@ TLS 1.2 的握手过程需要 2 个 RTT (Round-Trip Time) 才能完成，建立�
 完整握手流程
 -----------------------
 
-.. code-block::
+.. mermaid::
 
-    Client                                               Server
+   sequenceDiagram
+     participant Client
+     participant Server
 
-    ClientHello                  -------->
-                                                    ServerHello
-                                                   Certificate*
-                                             ServerKeyExchange*
-                                            CertificateRequest*
-                                 <--------      ServerHelloDone
-    Certificate*
-    ClientKeyExchange
-    CertificateVerify*
-    [ChangeCipherSpec]
-    Finished                     -------->
-                                             [ChangeCipherSpec]
-                                 <--------             Finished
-
-    Application Data             <------->     Application Data
+     Client->>Server: ClientHello
+     Server->>Client: ServerHello Certificate* ServerKeyExchange* CertificateRequest* ServerHelloDone
+     Client->>Server: Certificate* ClientKeyExchange CertificateVerify* ChangeCipherSpec Finished
+     Server->>Client: ChangeCipherSpec Finished
+     Note over Client,Server: Application Data
 
 各步骤详解：
 
@@ -147,27 +139,17 @@ TLS 1.2 的握手过程需要 2 个 RTT (Round-Trip Time) 才能完成，建立�
 
 TLS 1.2 的密钥推导过程：
 
-.. code-block::
+.. mermaid::
 
-    Pre-Master Secret
-         |
-         v
-    Master Secret = PRF(pre_master_secret,
-                        "master secret",
-                        ClientHello.random + ServerHello.random)
-         |
-         v
-    Key Block = PRF(master_secret,
-                    "key expansion",
-                    ServerHello.random + ClientHello.random)
-         |
-         v
-    +-- client_write_MAC_key
-    +-- server_write_MAC_key
-    +-- client_write_key
-    +-- server_write_key
-    +-- client_write_IV
-    +-- server_write_IV
+   flowchart TB
+     A[Pre-Master Secret] --> B["Master Secret = PRF(pre_master_secret, master secret, ClientHello.random + ServerHello.random)"]
+     B --> C["Key Block = PRF(master_secret, key expansion, ServerHello.random + ClientHello.random)"]
+     C --> D[client_write_MAC_key]
+     C --> E[server_write_MAC_key]
+     C --> F[client_write_key]
+     C --> G[server_write_key]
+     C --> H[client_write_IV]
+     C --> I[server_write_IV]
 
 会话恢复
 -----------------------
@@ -176,46 +158,32 @@ TLS 1.2 支持两种会话恢复机制，避免完整握手的开销：
 
 **Session ID 恢复**
 
-.. code-block::
+.. mermaid::
 
-    Client                                               Server
+   sequenceDiagram
+     participant Client
+     participant Server
 
-    ClientHello
-    (with Session ID)            -------->
-                                                    ServerHello
-                                            (with same Session ID)
-                                             [ChangeCipherSpec]
-                                 <--------             Finished
-    [ChangeCipherSpec]
-    Finished                     -------->
-
-    Application Data             <------->     Application Data
+     Client->>Server: ClientHello with Session ID
+     Server->>Client: ServerHello same Session ID ChangeCipherSpec Finished
+     Client->>Server: ChangeCipherSpec Finished
+     Note over Client,Server: Application Data
 
 **Session Ticket 恢复 (RFC 5077)**
 
 服务器将会话状态加密后作为 ticket 发送给客户端，客户端在后续连接中携带该 ticket，服务器无需维护会话状态。
 
-.. code-block::
+.. mermaid::
 
-    Client                                               Server
+   sequenceDiagram
+     participant Client
+     participant Server
 
-    ClientHello
-    (empty SessionTicket extension)-------->
-                                                    ServerHello
-                                (empty SessionTicket extension)
-                                                   Certificate*
-                                             ServerKeyExchange*
-                                            CertificateRequest*
-                                 <--------      ServerHelloDone
-    Certificate*
-    ClientKeyExchange
-    CertificateVerify*
-    [ChangeCipherSpec]
-    Finished                     -------->
-                                               NewSessionTicket
-                                             [ChangeCipherSpec]
-                                 <--------             Finished
-    Application Data             <------->     Application Data
+     Client->>Server: ClientHello empty SessionTicket extension
+     Server->>Client: ServerHello empty SessionTicket Certificate* ServerKeyExchange* CertificateRequest* ServerHelloDone
+     Client->>Server: Certificate* ClientKeyExchange CertificateVerify* ChangeCipherSpec Finished
+     Server->>Client: NewSessionTicket ChangeCipherSpec Finished
+     Note over Client,Server: Application Data
 
 
 TLS 1.3 改进
@@ -228,29 +196,16 @@ TLS 1.3 (RFC 8446) 是 TLS 协议的重大升级，在安全性和性能方面�
 
 TLS 1.3 将握手缩短为 1 个 RTT：
 
-.. code-block::
+.. mermaid::
 
-    Client                                               Server
+   sequenceDiagram
+     participant Client
+     participant Server
 
-    ClientHello
-    + key_share
-    + signature_algorithms
-    + psk_key_exchange_modes
-    + pre_shared_key            -------->
-                                                    ServerHello
-                                                    + key_share
-                                               + pre_shared_key
-                                           {EncryptedExtensions}
-                                           {CertificateRequest*}
-                                                  {Certificate*}
-                                            {CertificateVerify*}
-                                                      {Finished}
-                                 <--------
-    {Certificate*}
-    {CertificateVerify*}
-    {Finished}                   -------->
-
-    [Application Data]           <------->  [Application Data]
+     Client->>Server: ClientHello + key_share + signature_algorithms + psk_key_exchange_modes + pre_shared_key
+     Server->>Client: ServerHello + key_share + pre_shared_key EncryptedExtensions CertificateRequest* Certificate* CertificateVerify* Finished
+     Client->>Server: Certificate* CertificateVerify* Finished
+     Note over Client,Server: Application Data
 
 关键改进：客户端在 ClientHello 中就发送了 key_share（密钥交换参数），服务器可以立即计算共享密钥，无需额外的往返。
 
@@ -259,26 +214,16 @@ TLS 1.3 将握手缩短为 1 个 RTT：
 
 TLS 1.3 支持 0-RTT 恢复，客户端可以在第一个消息中就发送应用数据：
 
-.. code-block::
+.. mermaid::
 
-    Client                                               Server
+   sequenceDiagram
+     participant Client
+     participant Server
 
-    ClientHello
-    + early_data
-    + key_share
-    + psk_key_exchange_modes
-    + pre_shared_key
-    (Application Data)           -------->
-                                                    ServerHello
-                                               + pre_shared_key
-                                           {EncryptedExtensions}
-                                                  + early_data*
-                                                      {Finished}
-                                 <--------
-    {EndOfEarlyData}
-    {Finished}                   -------->
-
-    [Application Data]           <------->  [Application Data]
+     Client->>Server: ClientHello + early_data + key_share + psk_key_exchange_modes + pre_shared_key Application Data
+     Server->>Client: ServerHello + pre_shared_key EncryptedExtensions + early_data* Finished
+     Client->>Server: EndOfEarlyData Finished
+     Note over Client,Server: Application Data
 
 .. warning::
 
@@ -309,7 +254,7 @@ TLS 1.3 仅保留以下密码套件：
 
 
 DTLS — WebRTC 的安全基石
-=======================
+========================
 
 为什么使用 DTLS 而不是 TLS
 -----------------------------------------
@@ -348,29 +293,19 @@ DTLS 握手与 TLS 类似，但增加了以下机制来适应 UDP：
 
 防止 DoS 攻击，服务器在正式握手前要求客户端回显一个 cookie：
 
-.. code-block::
+.. mermaid::
 
-    Client                                               Server
+   sequenceDiagram
+     participant Client
+     participant Server
 
-    ClientHello                  -------->
-                                 <-------- HelloVerifyRequest
-                                            (with cookie)
-    ClientHello
-    (with cookie)                -------->
-                                                    ServerHello
-                                                   Certificate*
-                                             ServerKeyExchange*
-                                            CertificateRequest*
-                                 <--------      ServerHelloDone
-    Certificate*
-    ClientKeyExchange
-    CertificateVerify*
-    [ChangeCipherSpec]
-    Finished                     -------->
-                                             [ChangeCipherSpec]
-                                 <--------             Finished
-
-    Application Data             <------->     Application Data
+     Client->>Server: ClientHello
+     Server->>Client: HelloVerifyRequest with cookie
+     Client->>Server: ClientHello with cookie
+     Server->>Client: ServerHello Certificate* ServerKeyExchange* CertificateRequest* ServerHelloDone
+     Client->>Server: Certificate* ClientKeyExchange CertificateVerify* ChangeCipherSpec Finished
+     Server->>Client: ChangeCipherSpec Finished
+     Note over Client,Server: Application Data
 
 **重传机制**
 
@@ -411,23 +346,15 @@ DTLS-SRTP (RFC 5764) 是 WebRTC 中用于保护 RTP/RTCP 媒体流的机制。DT
 
 密钥推导过程：
 
-.. code-block::
+.. mermaid::
 
-    DTLS 握手完成
-         |
-         v
-    使用 TLS exporter (RFC 5705) 导出密钥材料:
-    key_material = TLS-Exporter("EXTRACTOR-dtls_srtp",
-                                 client_random + server_random,
-                                 2 * (SRTPSecurityParams.master_key_len +
-                                      SRTPSecurityParams.master_salt_len))
-         |
-         v
-    分割密钥材料:
-    +-- client_write_SRTP_master_key
-    +-- server_write_SRTP_master_key
-    +-- client_write_SRTP_master_salt
-    +-- server_write_SRTP_master_salt
+   flowchart TB
+     A[DTLS 握手完成] --> B["TLS-Exporter EXTRACTOR-dtls_srtp<br/>client_random + server_random"]
+     B --> C[分割密钥材料]
+     C --> D[client_write_SRTP_master_key]
+     C --> E[server_write_SRTP_master_key]
+     C --> F[client_write_SRTP_master_salt]
+     C --> G[server_write_SRTP_master_salt]
 
 SRTP protection profile 在 DTLS 握手中通过 ``use_srtp`` 扩展协商：
 
@@ -492,25 +419,20 @@ WebRTC 使用自签名证书 (self-signed certificate) 进行 DTLS 握手，不�
 指纹验证流程
 -----------------------------------------
 
-.. code-block::
+.. mermaid::
 
-    Alice                    信令服务器                    Bob
-      |                          |                          |
-      |-- SDP Offer ----------->|                          |
-      |   (a=fingerprint:       |-- SDP Offer ----------->|
-      |    sha-256 AA:BB:...)   |   (a=fingerprint:       |
-      |                          |    sha-256 AA:BB:...)   |
-      |                          |                          |
-      |                          |<-- SDP Answer ----------|
-      |<-- SDP Answer ----------|   (a=fingerprint:       |
-      |   (a=fingerprint:       |    sha-256 CC:DD:...)   |
-      |    sha-256 CC:DD:...)   |                          |
-      |                          |                          |
-      |                                                     |
-      |<========= DTLS 握手 (直接 P2P) ==================>|
-      |  Alice 验证 Bob 的证书指纹 == CC:DD:...            |
-      |  Bob 验证 Alice 的证书指纹 == AA:BB:...            |
-      |                                                     |
+   sequenceDiagram
+     participant Alice
+     participant Sig as Signaling Server
+     participant Bob
+
+     Alice->>Sig: "SDP Offer a=fingerprint sha-256 AA:BB:..."
+     Sig->>Bob: "SDP Offer a=fingerprint sha-256 AA:BB:..."
+     Bob->>Sig: "SDP Answer a=fingerprint sha-256 CC:DD:..."
+     Sig->>Alice: "SDP Answer a=fingerprint sha-256 CC:DD:..."
+     Note over Alice,Bob: DTLS handshake P2P
+     Note over Alice: "verify Bob fingerprint == CC:DD:..."
+     Note over Bob: "verify Alice fingerprint == AA:BB:..."
 
 
 WebRTC 中的密码套件
@@ -571,21 +493,18 @@ DTLS 握手完成后，SRTP 密钥的推导过程如下：
 
 SRTP 数据包加密过程：
 
-.. code-block::
+.. mermaid::
 
-    原始 RTP 数据包:
-    +----+----------+
-    | RTP|  Payload  |
-    | Hdr|           |
-    +----+----------+
-
-    SRTP 加密后:
-    +----+----------+------+----+
-    | RTP| Encrypted | SRTP | Auth|
-    | Hdr|  Payload  | MKI* | Tag |
-    +----+----------+------+----+
-
-    * MKI (Master Key Identifier) 是可选的
+   flowchart TB
+     subgraph orig [原始 RTP 数据包]
+       H1[RTP Hdr] --> P1[Payload]
+     end
+     subgraph srtp [SRTP 加密后]
+       H2[RTP Hdr] --> P2[Encrypted Payload]
+       P2 --> MKI["SRTP MKI optional"]
+       MKI --> TAG[Auth Tag]
+     end
+     orig --> srtp
 
 
 mTLS (双向 TLS)

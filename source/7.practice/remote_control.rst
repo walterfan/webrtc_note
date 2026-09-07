@@ -26,10 +26,10 @@ Remote Control
 远程控制（Remote Desktop）允许用户通过网络操作远处的计算机。
 传统方案如 VNC 和 RDP 已广泛使用，而 WebRTC 技术为远程控制带来了新的可能：
 
-- **浏览器原生支持**：无需安装客户端
-- **NAT 穿透**：ICE/TURN 自动处理复杂网络环境
-- **低延迟**：端到端优化的媒体传输
-- **加密传输**：DTLS/SRTP 保证安全性
+- **浏览器原生支持**\ ：无需安装客户端
+- **NAT 穿透**\ ：ICE/TURN 自动处理复杂网络环境
+- **低延迟**\ ：端到端优化的媒体传输
+- **加密传输**\ ：DTLS/SRTP 保证安全性
 
 
 传统协议对比
@@ -60,28 +60,30 @@ Remote Control
 WebRTC 远程控制架构
 ========================
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────┐                    ┌─────────────────────┐
-   │   控制端 (浏览器)    │                    │   被控端 (Agent)     │
-   │                     │                    │                     │
-   │  显示远程画面 ◄──────── Video Track ────── 屏幕采集            │
-   │  (video element)    │                    │  (getDisplayMedia   │
-   │                     │                    │   或原生采集)        │
-   │  键盘/鼠标事件 ──────── DataChannel ────►  解释执行            │
-   │  (keydown/mousemove)│                    │  (模拟输入事件)      │
-   │                     │                    │                     │
-   │  音频播放 ◄──────────── Audio Track ────── 系统音频采集         │
-   └─────────────────────┘                    └─────────────────────┘
-               │                                       │
-               └───── WebRTC P2P (ICE/DTLS/SRTP) ──────┘
+   flowchart TB
+     subgraph CTL["控制端 浏览器"]
+       DISP["显示远程画面<br/>video element"]
+       INP["键盘/鼠标事件<br/>keydown/mousemove"]
+       AUD["音频播放"]
+     end
+     subgraph AGT["被控端 Agent"]
+       CAP["屏幕采集<br/>getDisplayMedia 或原生采集"]
+       EXE["解释执行<br/>模拟输入事件"]
+       SYS["系统音频采集"]
+     end
+     CAP -->|Video Track| DISP
+     INP -->|DataChannel| EXE
+     SYS -->|Audio Track| AUD
+     CTL <-->|WebRTC P2P ICE/DTLS/SRTP| AGT
 
 核心组件：
 
-1. **屏幕采集**：被控端捕获桌面画面作为视频流
-2. **视频传输**：通过 WebRTC Video Track 实时传送
-3. **输入事件传输**：控制端通过 DataChannel 发送鼠标/键盘事件
-4. **输入模拟**：被控端将收到的事件转化为系统级输入
+1. **屏幕采集**\ ：被控端捕获桌面画面作为视频流
+2. **视频传输**\ ：通过 WebRTC Video Track 实时传送
+3. **输入事件传输**\ ：控制端通过 DataChannel 发送鼠标/键盘事件
+4. **输入模拟**\ ：被控端将收到的事件转化为系统级输入
 
 
 DataChannel 控制协议设计
@@ -129,21 +131,24 @@ WebRTC 作为 VNC/RDP 网关
 
 WebRTC 也可以不替代 VNC/RDP，而是作为前端网关：
 
-.. code-block:: text
+.. mermaid::
 
-   浏览器 ◄── WebRTC ──► Gateway ◄── VNC/RDP ──► 远程桌面
-
-   Gateway 职责：
-   ├── WebRTC 信令处理
-   ├── VNC/RDP 画面 → WebRTC 视频流转码
-   ├── WebRTC DataChannel 输入 → VNC/RDP 输入指令
-   └── 管理多个远程桌面会话
+   flowchart LR
+     B[浏览器] <-->|WebRTC| GW[Gateway]
+     GW <-->|VNC/RDP| DESK[远程桌面]
+     subgraph DUTY["Gateway 职责"]
+       S["WebRTC 信令处理"]
+       V["VNC/RDP 画面 to WebRTC 视频流转码"]
+       I["WebRTC DataChannel 输入 to VNC/RDP 输入指令"]
+       M["管理多个远程桌面会话"]
+     end
+     GW --- DUTY
 
 开源实现参考：
 
-- **noVNC**：浏览器 VNC 客户端（WebSocket，非 WebRTC）
-- **Apache Guacamole**：Web 远程桌面网关（支持 VNC/RDP/SSH）
-- **neko**：基于 WebRTC 的虚拟浏览器（Docker + GStreamer + Pion）
+- **noVNC**\ ：浏览器 VNC 客户端（WebSocket，非 WebRTC）
+- **Apache Guacamole**\ ：Web 远程桌面网关（支持 VNC/RDP/SSH）
+- **neko**\ ：基于 WebRTC 的虚拟浏览器（Docker + GStreamer + Pion）
 
 
 关键技术挑战

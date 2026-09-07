@@ -35,27 +35,28 @@ FreeSWITCH 采用事件驱动（Event-Driven）的模块化架构设计，其核
 
 FreeSWITCH 的核心架构可以分为以下几个层次：
 
-.. code-block:: text
+.. mermaid::
 
-    +------------------------------------------------------------------+
-    |                        外部接口层                                  |
-    |  fs_cli | ESL | mod_xml_rpc | mod_event_socket                   |
-    +------------------------------------------------------------------+
-    |                        应用层                                      |
-    |  mod_conference | mod_voicemail | mod_callcenter | mod_ivr        |
-    +------------------------------------------------------------------+
-    |                        拨号计划层                                   |
-    |  mod_dialplan_xml | mod_dialplan_asterisk | mod_dialplan_lua      |
-    +------------------------------------------------------------------+
-    |                        核心引擎                                    |
-    |  Session Manager | Event System | State Machine | Codec Engine   |
-    +------------------------------------------------------------------+
-    |                        终端层                                      |
-    |  mod_sofia (SIP) | mod_verto (WebRTC) | mod_skinny | mod_portaudio|
-    +------------------------------------------------------------------+
-    |                        基础设施层                                   |
-    |  APR (Memory/Thread) | SQLite/PostgreSQL | Logging | XML Parser  |
-    +------------------------------------------------------------------+
+   flowchart TB
+     subgraph EXT["外部接口层"]
+       E["fs_cli | ESL | mod_xml_rpc | mod_event_socket"]
+     end
+     subgraph APP["应用层"]
+       A["mod_conference | mod_voicemail | mod_callcenter | mod_ivr"]
+     end
+     subgraph DP["拨号计划层"]
+       D["mod_dialplan_xml | mod_dialplan_asterisk | mod_dialplan_lua"]
+     end
+     subgraph CORE["核心引擎"]
+       C["Session Manager | Event System | State Machine | Codec Engine"]
+     end
+     subgraph EP["终端层"]
+       T["mod_sofia SIP | mod_verto WebRTC | mod_skinny | mod_portaudio"]
+     end
+     subgraph INF["基础设施层"]
+       I["APR Memory/Thread | SQLite/PostgreSQL | Logging | XML Parser"]
+     end
+     EXT --> APP --> DP --> CORE --> EP --> INF
 
 事件驱动模型
 ------------------------------
@@ -221,21 +222,21 @@ Event Consumer 模块允许外部系统订阅和处理 FreeSWITCH 的事件。
 
 通道是会话的具体实现，代表一条通信链路。通道有一个明确的状态机：
 
-.. code-block:: text
+.. mermaid::
 
-    CS_NEW          → 新建
-    CS_INIT         → 初始化
-    CS_ROUTING      → 路由中
-    CS_SOFT_EXECUTE → 软执行
-    CS_EXECUTE      → 执行中
-    CS_EXCHANGE_MEDIA → 媒体交换
-    CS_PARK         → 驻留
-    CS_CONSUME_MEDIA → 媒体消费
-    CS_HIBERNATE    → 休眠
-    CS_RESET        → 重置
-    CS_HANGUP       → 挂断
-    CS_REPORTING    → 报告
-    CS_DESTROY      → 销毁
+   flowchart LR
+     N["CS_NEW<br/>新建"] --> I["CS_INIT<br/>初始化"]
+     I --> R["CS_ROUTING<br/>路由中"]
+     R --> SE["CS_SOFT_EXECUTE<br/>软执行"]
+     SE --> EX["CS_EXECUTE<br/>执行中"]
+     EX --> EM["CS_EXCHANGE_MEDIA<br/>媒体交换"]
+     EM --> P["CS_PARK<br/>驻留"]
+     P --> CM["CS_CONSUME_MEDIA<br/>媒体消费"]
+     CM --> H["CS_HIBERNATE<br/>休眠"]
+     H --> RS["CS_RESET<br/>重置"]
+     RS --> HG["CS_HANGUP<br/>挂断"]
+     HG --> RP["CS_REPORTING<br/>报告"]
+     RP --> D["CS_DESTROY<br/>销毁"]
 
 通道桥接（Channel Bridge）
 ------------------------------
@@ -243,15 +244,17 @@ Event Consumer 模块允许外部系统订阅和处理 FreeSWITCH 的事件。
 当两个通道需要通话时，FreeSWITCH 会将它们桥接在一起。桥接后，
 两个通道之间的媒体流直接交换。
 
-.. code-block:: text
+.. mermaid::
 
-    通道 A (Caller)                    通道 B (Callee)
-    +----------+                      +----------+
-    | Session  |  <--- 媒体流 --->    | Session  |
-    | UUID: a1 |                      | UUID: b1 |
-    +----------+                      +----------+
-         |                                  |
-         +------------ Bridge --------------+
+   flowchart LR
+     subgraph A["通道 A Caller"]
+       SA["Session<br/>UUID: a1"]
+     end
+     subgraph B["通道 B Callee"]
+       SB["Session<br/>UUID: b1"]
+     end
+     SA <-->|媒体流| SB
+     A ---|Bridge| B
 
 桥接可以通过拨号计划中的 ``bridge`` 应用来实现：
 
@@ -327,7 +330,7 @@ FreeSWITCH 在处理呼叫时主动连接到外部程序：
 ESL 配置
 ------------------------------
 
-ESL 的配置文件位于 ``autoload_configs/event_socket.conf.xml``：
+ESL 的配置文件位于 ``autoload_configs/event_socket.conf.xml``\ ：
 
 .. code-block:: xml
 
@@ -383,18 +386,20 @@ PostgreSQL
 
 FreeSWITCH 的媒体处理管道负责音视频数据的接收、处理和发送。
 
-.. code-block:: text
+.. mermaid::
 
-    接收端                                    发送端
-    +--------+    +---------+    +--------+    +--------+
-    | RTP    | -> | Jitter  | -> | Decode | -> | App    |
-    | Recv   |    | Buffer  |    | (Codec)|    | Process|
-    +--------+    +---------+    +--------+    +--------+
-                                                   |
-    +--------+    +---------+    +--------+    +--------+
-    | RTP    | <- | Packe-  | <- | Encode | <- | Mix/   |
-    | Send   |    | tizer   |    | (Codec)|    | Route  |
-    +--------+    +---------+    +--------+    +--------+
+   flowchart LR
+     subgraph RX["接收端"]
+       R[RTP Recv] --> J[Jitter Buffer]
+       J --> D["Decode Codec"]
+       D --> AP[App Process]
+     end
+     subgraph TX["发送端"]
+       MX[Mix/Route] --> E["Encode Codec"]
+       E --> PK[Packetizer]
+       PK --> S[RTP Send]
+     end
+     AP --> MX
 
 媒体处理的关键步骤：
 

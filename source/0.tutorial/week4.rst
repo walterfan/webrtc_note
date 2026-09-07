@@ -38,54 +38,54 @@
 Day 1：QoS 概览与拥塞控制
 --------------------------
 
-**目标**：理解 WebRTC 如何应对网络波动
+**目标**\ ：理解 WebRTC 如何应对网络波动
 
-**学习内容**：
+**学习内容**\ ：
 
 - WebRTC QoS 策略全景
 - 拥塞控制的必要性
 - GCC（Google Congestion Control）算法原理
 - 基于延迟的带宽估计 vs 基于丢包的带宽估计
 
-**动手练习**：
+**动手练习**\ ：
 
 - 在 ``chrome://webrtc-internals`` 中观察带宽估计的变化曲线
 - 用 Linux TC（Traffic Control）或 Network Link Conditioner 模拟弱网环境
 
-**学习提示**：
+**学习提示**\ ：
 
 - 把 QoS 指标和用户体感联系起来：码率下降 → 画面模糊，帧率下降 → 画面卡顿，延迟增大 → 交流不自然
 - 弱网模拟是理解 QoS 最直观的方式
 
-**参考阅读**：:doc:`../5.qos/webrtc_qos` · :doc:`../5.qos/webrtc_cc` · :doc:`../5.qos/webrtc_gcc`
+**参考阅读**\ ：:doc:`../5.qos/webrtc_qos` · :doc:`../5.qos/webrtc_cc` · :doc:`../5.qos/webrtc_gcc`
 
 
 Day 2：带宽估计与反馈
 --------------------------
 
-**目标**：深入理解带宽估计的实现机制
+**目标**\ ：深入理解带宽估计的实现机制
 
-**学习内容**：
+**学习内容**\ ：
 
 - REMB（Receiver Estimated Maximum Bitrate）
 - TWCC（Transport-Wide Congestion Control）
 - 带宽探测（Bandwidth Probing）
 - 拥塞控制算法的评估方法
 
-**动手练习**：
+**动手练习**\ ：
 
 - 在 Wireshark 中找到 TWCC 反馈包
 - 观察不同网络条件下带宽估计的收敛过程
 
-**参考阅读**：:doc:`../5.qos/webrtc_remb` · :doc:`../5.qos/webrtc_twcc` · :doc:`../5.qos/webrtc_bw_probe` · :doc:`../5.qos/webrtc_cc_evaluation`
+**参考阅读**\ ：:doc:`../5.qos/webrtc_remb` · :doc:`../5.qos/webrtc_twcc` · :doc:`../5.qos/webrtc_bw_probe` · :doc:`../5.qos/webrtc_cc_evaluation`
 
 
 Day 3：丢包恢复机制
 --------------------------
 
-**目标**：掌握 WebRTC 对抗丢包的三板斧
+**目标**\ ：掌握 WebRTC 对抗丢包的三板斧
 
-**学习内容**：
+**学习内容**\ ：
 
 - NACK — 请求重传丢失的包
 - FEC（Forward Error Correction）— 前向纠错，不需要重传
@@ -93,25 +93,25 @@ Day 3：丢包恢复机制
 - RED（Redundant Encoding）— 冗余编码
 - RTCP 反馈消息：PLI、FIR、NACK
 
-**动手练习**：
+**动手练习**\ ：
 
 - 模拟 5% 丢包率，观察 NACK 和 FEC 的触发
 - 对比开启/关闭 FEC 时的视频质量
 
-**学习提示**：
+**学习提示**\ ：
 
 - NACK 适合低延迟场景（如对话），FEC 适合不方便重传的场景
 - 理解 NACK 和 FEC 的互补关系，是掌握 WebRTC QoS 的关键
 
-**参考阅读**：:doc:`../5.qos/webrtc_fec` · :doc:`../5.qos/webrtc_rtx` · :doc:`../5.qos/webrtc_red` · :doc:`../5.qos/webrtc_feedback`
+**参考阅读**\ ：:doc:`../5.qos/webrtc_fec` · :doc:`../5.qos/webrtc_rtx` · :doc:`../5.qos/webrtc_red` · :doc:`../5.qos/webrtc_feedback`
 
 
 Day 4：Jitter Buffer 与端到端延迟
 --------------------------------------
 
-**目标**：理解实时通信中的延迟控制
+**目标**\ ：理解实时通信中的延迟控制
 
-**学习内容**：
+**学习内容**\ ：
 
 - 什么是 Jitter（抖动）以及为什么需要 Jitter Buffer
 - 音频 Jitter Buffer（NetEQ）
@@ -120,20 +120,20 @@ Day 4：Jitter Buffer 与端到端延迟
 - 端到端延迟的组成和优化
 - WebRTC 质量指标体系
 
-**动手练习**：
+**动手练习**\ ：
 
 - 在 ``chrome://webrtc-internals`` 中观察 jitter 和 jitterBufferDelay
 - 模拟高抖动网络，观察 Jitter Buffer 的自适应行为
 
-**参考阅读**：:doc:`../5.qos/jitter_overview` · :doc:`../5.qos/audio_jitter_buffer` · :doc:`../5.qos/video_jitter_buffer` · :doc:`../5.qos/plc` · :doc:`../5.qos/webrtc_e2e_delay` · :doc:`../5.qos/webrtc_metrics`
+**参考阅读**\ ：:doc:`../5.qos/jitter_overview` · :doc:`../5.qos/audio_jitter_buffer` · :doc:`../5.qos/video_jitter_buffer` · :doc:`../5.qos/plc` · :doc:`../5.qos/webrtc_e2e_delay` · :doc:`../5.qos/webrtc_metrics`
 
 
 Day 5：SFU 架构与开源项目
 --------------------------
 
-**目标**：了解多人会议的服务端架构
+**目标**\ ：了解多人会议的服务端架构
 
-**学习内容**：
+**学习内容**\ ：
 
 - MCU vs SFU vs Mesh 架构对比
 - SFU 的工作原理
@@ -145,20 +145,20 @@ Day 5：SFU 架构与开源项目
 
 - WHIP/WHEP 协议简介
 
-**动手练习**：
+**动手练习**\ ：
 
 - 用 Docker 部署一个 Janus Gateway
 - 用 Janus VideoRoom 插件实现多人视频会议
 
-**参考阅读**：:doc:`../7.practice/sfu` · :doc:`../7.practice/janus` · :doc:`../7.practice/mediasoup` · :doc:`../7.practice/pion` · :doc:`../2.transport/whip`
+**参考阅读**\ ：:doc:`../7.practice/sfu` · :doc:`../7.practice/janus` · :doc:`../7.practice/mediasoup` · :doc:`../7.practice/pion` · :doc:`../2.transport/whip`
 
 
 Day 6-7：实战 — 多人视频会议
 --------------------------------------
 
-**目标**：完成本周的里程碑项目 🎯
+**目标**\ ：完成本周的里程碑项目 🎯
 
-**实战任务**：
+**实战任务**\ ：
 
 搭建一个完整的多人视频会议系统：
 
@@ -178,9 +178,9 @@ Day 6-7：实战 — 多人视频会议
    如果你是初学者，可以先跑通 SFU 自带的官方示例（如 Janus VideoRoom Demo），
    在理解架构之后再尝试自定义前端。搭建多人会议系统不必从零开始，站在开源项目的肩膀上更高效。
 
-**参考阅读**：:doc:`../7.practice/janus_plugins` · :doc:`../7.practice/overview` · :doc:`../7.practice/webrtc_security`
+**参考阅读**\ ：:doc:`../7.practice/janus_plugins` · :doc:`../7.practice/overview` · :doc:`../7.practice/webrtc_security`
 
-**检查清单**：
+**检查清单**\ ：
 
 - [ ] SFU 服务器能正常启动
 - [ ] 多个用户能加入同一个房间

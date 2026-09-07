@@ -35,6 +35,19 @@ else:
     plantuml = 'plantuml'
 
 mermaid_version = "11"
+# Default: mermaid.js in the browser (fast HTML builds).
+# Set MERMAID_OUTPUT_FORMAT=svg|png to bake images via mermaid-cli (mmdc).
+_mmdc = shutil.which("mmdc")
+_fmt = os.environ.get("MERMAID_OUTPUT_FORMAT", "raw").lower()
+if _mmdc and _fmt in ("svg", "png"):
+    mermaid_cmd = _mmdc
+    mermaid_output_format = _fmt
+    mermaid_params = ["-b", "transparent"]
+    _puppeteer_cfg = os.path.join(os.path.dirname(__file__), "..", "mermaid-puppeteer.json")
+    if os.path.isfile(_puppeteer_cfg):
+        mermaid_params += ["-p", _puppeteer_cfg]
+else:
+    mermaid_output_format = "raw"
 
 templates_path = ['_templates']
 exclude_patterns = ['_backup']

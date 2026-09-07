@@ -59,26 +59,28 @@ LAL 可以帮助管理复杂的构建环境和依赖关系，确保跨团队、�
 工作原理
 ==============
 
-.. code-block:: text
+.. mermaid::
 
-   ┌─────────────────────────────────────────────────────┐
-   │                  开发者机器                           │
-   │                                                     │
-   │  manifest.json ─► lal fetch ─► 下载依赖              │
-   │                    lal verify ─► 检查版本一致性       │
-   │                    lal build ──┐                     │
-   │                                │                     │
-   │  ┌─────────────────────────────▼───────────────────┐ │
-   │  │           Docker 容器 (构建环境)                  │ │
-   │  │                                                 │ │
-   │  │  ./BUILD 脚本                                    │ │
-   │  │  ├── cmake / make / autotools                   │ │
-   │  │  ├── cargo / go build                           │ │
-   │  │  └── 生成构建产物                                │ │
-   │  └─────────────────────────────────────────────────┘ │
-   │                                                     │
-   │  构建产物 ─► lal publish ─► Artifactory 制品仓库     │
-   └─────────────────────────────────────────────────────┘
+   flowchart TB
+     subgraph DEV["开发者机器"]
+       MF[manifest.json]
+       LF[lal fetch]
+       LV[lal verify]
+       LB[lal build]
+       subgraph DOCKER["Docker 容器 构建环境"]
+         BUILD["BUILD 脚本"]
+         TOOLS["cmake / make / autotools<br/>cargo / go build"]
+         OUT[生成构建产物]
+         BUILD --> TOOLS --> OUT
+       end
+       PUB[lal publish]
+       ART[Artifactory 制品仓库]
+       MF --> LF
+       LF --> DL[下载依赖]
+       LV --> CHK[检查版本一致性]
+       LB --> DOCKER
+       OUT --> PUB --> ART
+     end
 
 
 安装
@@ -108,9 +110,9 @@ LAL 可以帮助管理复杂的构建环境和依赖关系，确保跨团队、�
 
 一个 LAL 项目需要以下文件：
 
-- ``manifest.json``：声明依赖及其版本
-- ``BUILD``：构建脚本（可执行）
-- ``.lal/config``：LAL 配置（构建环境、制品仓库等）
+- ``manifest.json``\ ：声明依赖及其版本
+- ``BUILD``\ ：构建脚本（可执行）
+- ``.lal/config``\ ：LAL 配置（构建环境、制品仓库等）
 
 依赖管理
 --------------------------
@@ -150,7 +152,7 @@ LAL 可以帮助管理复杂的构建环境和依赖关系，确保跨团队、�
 
 
 manifest.json 示例
-==============
+==================
 
 .. code-block:: json
 

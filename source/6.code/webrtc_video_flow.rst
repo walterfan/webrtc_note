@@ -33,27 +33,21 @@ VideoSendStream 发送流程
 
 数据流如下：
 
-::
+.. mermaid::
 
-  VideoSource (Camera/Screen)
-       |
-  VideoBroadcaster
-       |
-  VideoStreamEncoder
-       |  ├── VideoAdapter (分辨率/帧率适配)
-       |  ├── VideoEncoder (VP8/VP9/H264/AV1)
-       |  └── EncoderRateSettings (码率控制)
-       |
-  EncodedImageCallback
-       |
-  RtpVideoSender
-       |  ├── RtpPacketizer (NAL → RTP)
-       |  ├── FecGenerator (ULP-FEC / FlexFEC)
-       |  └── RtxSender (重传)
-       |
-  PacedSender (平滑发送)
-       |
-  Network (UDP Socket)
+   flowchart TD
+     Src["VideoSource Camera/Screen"] --> VB[VideoBroadcaster]
+     VB --> VSE[VideoStreamEncoder]
+     VSE --> VA["VideoAdapter 分辨率/帧率适配"]
+     VSE --> VE["VideoEncoder VP8/VP9/H264/AV1"]
+     VSE --> ERS[EncoderRateSettings 码率控制]
+     VSE --> EIC[EncodedImageCallback]
+     EIC --> RVS[RtpVideoSender]
+     RVS --> RP["RtpPacketizer NAL to RTP"]
+     RVS --> FG["FecGenerator ULP-FEC / FlexFEC"]
+     RVS --> RTX[RtxSender 重传]
+     RVS --> PS[PacedSender 平滑发送]
+     PS --> Net[Network UDP Socket]
 
 关键类说明
 --------------
@@ -94,27 +88,21 @@ VideoReceiveStream 接收流程
 
 数据流如下：
 
-::
+.. mermaid::
 
-  Network (UDP Socket)
-       |
-  RtpVideoStreamReceiver2
-       |  ├── RtpDepacketizer (RTP → NAL)
-       |  ├── NackModule (丢包检测与重传请求)
-       |  └── PacketBuffer (帧组装)
-       |
-  FrameBuffer (帧排序与等待)
-       |  ├── 等待关键帧
-       |  ├── 帧间依赖检查
-       |  └── Jitter Buffer 延迟控制
-       |
-  VideoDecoder (VP8/VP9/H264/AV1)
-       |
-  VideoReceiveStream::OnDecodedFrame
-       |
-  IncomingVideoStream
-       |
-  VideoSink (Renderer / Display)
+   flowchart TD
+     Net[Network UDP Socket] --> Recv[RtpVideoStreamReceiver2]
+     Recv --> Dep["RtpDepacketizer RTP to NAL"]
+     Recv --> Nack[NackModule 丢包检测与重传请求]
+     Recv --> PB[PacketBuffer 帧组装]
+     Recv --> FB[FrameBuffer 帧排序与等待]
+     FB --> Wait[等待关键帧]
+     FB --> DepChk[帧间依赖检查]
+     FB --> JB[Jitter Buffer 延迟控制]
+     FB --> Dec["VideoDecoder VP8/VP9/H264/AV1"]
+     Dec --> ODF["VideoReceiveStream::OnDecodedFrame"]
+     ODF --> IVS[IncomingVideoStream]
+     IVS --> Sink[VideoSink Renderer / Display]
 
 关键类说明
 --------------
@@ -159,16 +147,14 @@ VideoReceiveStream 接收流程
 * **OveruseFrameDetector**: 监控 CPU 使用率，过载时降低帧率或分辨率
 * **BitrateAllocator**: 根据 GCC 估计的可用带宽分配码率
 
-::
+.. mermaid::
 
-  GCC 估计带宽下降
-       |
-  BitrateAllocator 降低目标码率
-       |
-  VideoStreamEncoder 调整编码参数
-       |  ├── 降低帧率 (FrameDropper)
-       |  ├── 降低分辨率 (VideoAdapter)
-       |  └── 降低编码质量 (QP 上升)
+   flowchart TD
+     A[GCC 估计带宽下降] --> B[BitrateAllocator 降低目标码率]
+     B --> C[VideoStreamEncoder 调整编码参数]
+     C --> D[降低帧率 FrameDropper]
+     C --> E[降低分辨率 VideoAdapter]
+     C --> F[降低编码质量 QP 上升]
 
 
 Simulcast 与 SVC
