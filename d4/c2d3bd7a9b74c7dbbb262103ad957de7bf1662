@@ -1,0 +1,20 @@
+source/3.signaling/overview.rst
+  s_061b3ddfe3b65a::t_4fd265c079896e 339-352,366-509
+  s_061b3ddfe3b65a::t_8da539bfd8e2f2 353-365
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "d4c2d3bd7a9b74c7dbbb262103ad957de7bf1662",
+  "prompts": {},
+  "sessions": {
+    "s_061b3ddfe3b65a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ae5e-418e-7b31-ba0d-5ec495404d68",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Walter Fan <walter.fan@zoom.us>"
+    }
+  }
+}
