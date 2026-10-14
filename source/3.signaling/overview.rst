@@ -336,6 +336,177 @@ FreeSWITCH 上的信令
 RFC 5359 尤其值得先读：直接给出 Hold、Transfer、Conference、Park、Pickup、Click-to-Dial 的完整 flow。
 端到端 8 步地图：:doc:`sip_call_center`\ 。
 
+Sofia-SIP 协议符合性表
+-----------------------
+
+下面两张表整理自 `Sofia-SIP SIP/SDP protocol features <https://sofia-sip.sourceforge.net/refdocs/sofia_sip_conformance.html>`__\ ，用于判断 ``mod_sofia`` 已经处理了什么，以及哪些语义仍要由应用实现。网页对应 Sofia-SIP 1.12.11。
+
+.. list-table:: Sofia-SIP：SIP 能力
+   :header-rows: 1
+   :widths: 15 25 60
+
+   * - RFC
+     - 能力
+     - 支持情况与应用侧职责
+   * - RFC 3261
+     - 基本 SIP 协议
+     - 支持 REGISTER、OPTIONS、INVITE、ACK、CANCEL、BYE 及 INFO、PRACK、SUBSCRIBE、NOTIFY、UPDATE、MESSAGE、REFER、PUBLISH 等扩展方法；支持 UAC/UAS、Proxy、Registrar 和 redirect server。未知扩展头可作为 name-value 传递。未实现保留字符自动转义和双引号字符串中的 NUL。
+   * - RFC 3261 §19/20
+     - 语法与编码
+     - 支持上述 SIP 方法和大量标准/扩展头的生成、解析与语法检查；可在运行时扩展特定头的解析器。
+   * - RFC 3261 §18
+     - UDP / TCP 传输
+     - 支持 IPv4/IPv6 上的 UDP、TCP；默认 UDP 1300 字节超限时尝试 TCP，TCP 连接可复用，服务端默认空闲 30 分钟关闭连接。SCTP 另见 RFC 4168。
+   * - RFC 3261 §17
+     - 事务
+     - 按 RFC 3261 实现事务状态机，并特别处理 INVITE、ACK、CANCEL；支持 UA 和 Proxy 两种模式，T1、T2、T4、Timer C 可配置。
+   * - RFC 3261 §26
+     - 安全
+     - 支持 TLS 和 SIPS URI；TLS 当前不要求也不校验客户端证书，未实现基于 TLS 证书的连接授权和 S/MIME。
+   * - RFC 2617
+     - HTTP Digest 鉴权
+     - 支持客户端和服务端 Digest，含 MD5、MD5-sess、RFC 2069 兼容算法，以及 ``auth``、``auth-int``、``opaque``。不支持 nextnonce 和 mutual authentication。
+   * - RFC 3262
+     - PRACK / 100rel
+     - 支持对话内 PRACK、可靠临时响应、RSeq 和 RAck，并自动重传临时响应。
+   * - RFC 3263
+     - SIP 服务器定位
+     - 支持从 SIP/SIPS URI 通过 NAPTR、SRV、A、AAAA 解析服务器；不解析 IM/PRES 等其他 URI 类型。
+   * - RFC 3265
+     - SIP 事件通知
+     - 支持 SUBSCRIBE/NOTIFY 的对话级发送、刷新和接收；应用负责具体事件包及事件内容，暂不支持 forked SUBSCRIBE。
+   * - RFC 2806
+     - ``tel:`` URI
+     - 可解析 ``tel:`` URI，但不负责解析 URI 对应的下一跳。
+   * - RFC 2976
+     - INFO
+     - 原生支持对话内 INFO；INFO body 的生成和处理由应用负责。
+   * - RFC 3311
+     - UPDATE
+     - 支持 UPDATE 和 UPDATE 中的 Offer/Answer；发起 UPDATE 由应用负责。
+   * - RFC 3313
+     - 媒体鉴权
+     - 支持 P-Media-Authorization 扩展头；应用负责把授权 token 传给 QoS 预留流程。
+   * - RFC 3323
+     - Privacy
+     - 支持 Privacy 头，并默认用不含主机名/IP 的随机 Call-ID；匿名 URI、显示名、Privacy 值、Proxy-Require 及匿名回拨 URI 等由应用正确生成。
+   * - RFC 3325
+     - Asserted Identity
+     - 支持 P-Asserted-Identity、P-Preferred-Identity 和 Remote-Party-ID 的生成、解析、语法检查；不实现身份隐私和信任域策略。
+   * - RFC 3326
+     - Reason
+     - 支持 Reason 头；生成和处理具体 Reason 值由应用负责。
+   * - RFC 3327
+     - Path
+     - REGISTER 可添加 ``path`` option tag，并支持 Path 头。
+   * - RFC 3329
+     - Security Agreement
+     - 部分支持 Security-Client、Security-Server、Security-Verify，机制为 ``digest``；不计算正确的 d-ver 值。
+   * - RFC 3361
+     - DHCP 定位 SIP 服务器
+     - 支持 outbound proxy；应用负责从 DHCP 客户端取得并传入代理地址。
+   * - RFC 3420
+     - ``message/sipfrag``
+     - 将收到的 SIP 头传给应用，应用负责生成和处理 sipfrag body。
+   * - RFC 3428
+     - MESSAGE
+     - 原生支持 MESSAGE 方法。
+   * - RFC 3486
+     - SIP 压缩
+     - 支持在 Via 和 SIP URI 中使用 ``comp=sigcomp`` 参数；不包含 SigComp 实现。
+   * - RFC 3515
+     - REFER
+     - 原生支持 REFER，自动处理入站 REFER 并生成正确的 NOTIFY；应用负责后续转接动作时可使用 NUA API。
+   * - RFC 3608
+     - Service-Route
+     - 支持解析、生成和使用 Service-Route，UA 可按配置使用 Registrar 提供的路由。
+   * - RFC 3680
+     - ``reg`` 事件
+     - 提供通用 SIP 事件订阅、刷新和状态管理；应用负责生成订阅、处理通知及 XML。
+   * - RFC 3824
+     - ENUM
+     - 支持在 SIP 头和 URI 参数中使用 tel URI；不把 E.164 号码解析为下一跳地址，需由网络代理完成。
+   * - RFC 3840
+     - 被叫能力
+     - 可在 REGISTER 的 Contact 以及其他请求的 Contact 扩展参数中发送 feature parameters；接收后的能力处理由应用负责。
+   * - RFC 3841
+     - 主叫偏好
+     - 支持生成、解析 Accept-Contact、Reject-Contact、Request-Disposition，并计算 Contact score；UAS 对这些头的业务处理由应用负责。
+   * - RFC 3842
+     - Message Waiting
+     - 提供通用 SIP 事件支持；应用负责订阅 ``message-summary``、设置 Event/Accept 并处理通知内容。
+   * - RFC 3856 / RFC 3859
+     - Presence
+     - 提供通用 SIP 事件支持，支持 ``pres:`` URI（下一跳必须是 SIP URI）；不通过 DNS 解析 pres URI。presence 订阅、通知和内容处理由应用负责。
+   * - RFC 3857 / RFC 3858
+     - ``winfo`` 事件
+     - 提供通用 SIP 事件支持；应用负责订阅 winfo、设置 Event/Accept 并处理 watcherinfo XML。
+   * - RFC 3860
+     - IM URI
+     - 可解析 ``im:`` URI；解析 URI 的具体下一跳由应用负责。
+   * - RFC 3891
+     - Replaces
+     - 支持 Replaces 头的生成、解析和语法检查；从对话生成并匹配 Replaces 由应用负责。
+   * - RFC 3892
+     - Referred-By
+     - 支持 Referred-By 头及文本 SIP body 中的 token；token 的生成、加密、验证和解密由应用负责。
+   * - RFC 3903
+     - PUBLISH
+     - 原生支持 PUBLISH、SIP-ETag 和 SIP-If-Match，并可自动刷新发布数据；应用负责正确设置 Event 并持久化 SIP-ETag。
+   * - RFC 4028
+     - Session Timers
+     - 支持 Session-Expires、Min-SE 和刷新协商；UA 可自动用 re-INVITE/UPDATE 刷新，无 SIP 活动时自动 BYE。
+   * - RFC 4168
+     - SCTP 传输
+     - ``transport=sctp`` 和 SCTP 为实验性支持，需配置 ``--enable-sctp``；可发送小于 64K 的 SIP 消息。
+   * - RFC 4320
+     - Non-INVITE 事务修正
+     - 支持 action 2；action 1 需传入 ``NTATAG_EXTRA_100(1)``。408 默认不转发，可用 ``NTATAG_PASS_408(1)`` 开启。
+   * - RFC 4488
+     - 抑制 REFER 隐式订阅
+     - 支持 Refer-Sub；请求或响应带 ``Refer-Sub: true`` 时可抑制隐式订阅。客户端应用需在 ``nua_refer()`` 中显式设置该头。
+   * - RFC 5057
+     - SIP 中的多个 Dialog Usage
+     - 提供 ``sip_response_terminates_dialog()`` 判断响应是否终止对话；客户端应用应使用 NUA 或该函数。
+
+.. list-table:: Sofia-SIP：SDP 能力
+   :header-rows: 1
+   :widths: 15 25 60
+
+   * - RFC
+     - 能力
+     - 支持情况与应用侧职责
+   * - RFC 4566 / RFC 2327 / RFC 3266
+     - SDP 与 IPv6
+     - 提供 SDP 的通用生成、解析和语法检查，支持 v/o/c/b/t/r/z/k/a/m 行以及 sendrecv、sendonly、recvonly、inactive、rtpmap、fmtp 属性；RFC 4566 的 token 定义更新尚未完全反映。
+   * - RFC 3264
+     - SDP Offer/Answer
+     - 支持生成和处理 offer/answer；生成或处理 answer 时不考虑 ``a=fmtp`` 参数。
+   * - RFC 3312
+     - Preconditions
+     - 支持符合 SDP 语法的属性行和 SIP feature tags；前置条件语义及资源预留由应用负责。
+   * - RFC 3388
+     - Media Line 分组
+     - 支持通用 SDP 属性行；``mid``、``group``、``LS``、``FID`` 的生成、处理及媒体传输分组由应用负责。
+   * - RFC 3407
+     - Capability Declaration
+     - 支持通用 SDP 属性行；应用负责定义 ``sqn``、``cdsc``、``cpar`` 等属性、处理属性行和执行能力协商。
+   * - RFC 3524
+     - SRF
+     - 支持通用 SDP 属性行；SRF 属性的定义、处理由应用负责。
+   * - RFC 3551
+     - RTP/AVP
+     - 可识别 RFC 3551 中定义的常见音视频 codec payload type；音视频处理以及必要时生成 rtpmap/fmtp 由应用负责。
+   * - RFC 3556
+     - 带宽
+     - 支持通用 SDP 属性行；RS/RR 带宽修饰符及带宽分配语义由应用负责。
+   * - RFC 3605
+     - RTCP 属性
+     - 支持通用 SDP 属性行；端口发现以及 RTCP 属性行的生成和处理由应用负责。
+   * - RFC 3890
+     - TIAS
+     - 支持通用 SDP 属性行；TIAS 带宽修饰符和 ``maxprate`` 属性行由应用负责。
+
 建议学习顺序
 --------------------
 
