@@ -59,9 +59,12 @@
 
 ```bash
 # macOS
-brew install python3 graphviz plantuml
-make setup
+brew install uv python3 graphviz plantuml
+make deps
 ```
+
+项目使用 uv 管理 Python 依赖。`make deps` 根据 `uv.lock` 安装依赖到 `.venv`；`make setup` 为兼容别名。
+添加依赖使用 `uv add <package>`，更新锁定版本使用 `uv lock --upgrade`，然后运行 `make deps`。
 
 ### PlantUML (可选)
 
