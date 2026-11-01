@@ -1,0 +1,53 @@
+README.md
+  s_d6cdef853a9cd2::t_0444bf27ba06df 62-63,66-67
+  s_d6cdef853a9cd2::t_17bdc7579e3654 68
+Makefile
+  s_d6cdef853a9cd2::t_0444bf27ba06df 9,14-16,19,21,23,26-29,31-33,37,48,60,65
+skills/kb/SKILL.md
+  s_46720850425597::t_0511136cbb474a 1-78
+skills/kb/kb_mcp_server.py
+  s_46720850425597::t_12d12cadcf5877 1-159
+source/5.qos/audio_jitter_buffer.rst
+  s_88edaab65657e7::t_eb0ba31d3e2ac2 14,74-77,442-443,445-446,448,450-452,456-552,559-626,631-791,794-935
+  s_88edaab65657e7::t_fb5be606a9ea76 628-630,792-793
+  s_88edaab65657e7::t_d89f177fc7d94b 215-220,222-225,239,242,285,355,406-409,413-434,436-439,554-558,627
+  s_88edaab65657e7::t_5a5a624368082f 69,453-455
+  s_88edaab65657e7::t_919aa76763c196 229,941-943,971-972,986
+  s_88edaab65657e7::t_ef1c474dd4b1b5 78
+pyproject.toml
+  s_d6cdef853a9cd2::t_0444bf27ba06df 1,5,7-16,18-19
+uv.lock
+  s_d6cdef853a9cd2::t_58e158646a37e1 1-8,13-16,22-25,31-95,100-104,109-215,220-378,384-387,392-457,462-466,472-482,485-498,503-506,512-522,527-531,536-540,546-549,555-561,566-573,576-587,591-729,734-738,743-753,756-766,770-778,783-787,793-822,828-886,891-901,904-911,913-923,927-931,937-962,965-995,1000-1007,1013-1022,1028-1031,1037-1040,1046-1049,1055-1062,1067-1071,1077-1085,1091-1094,1096,1101-1104,1110-1113,1118-1185,1190-1194,1199-1203,1207-1219,1222-1231,1233-1328
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "60b25b2127a4dffe9d8862ceffd3ae409c18db74",
+  "prompts": {},
+  "sessions": {
+    "s_46720850425597": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ecc2eca1bffeLtX8lOW5aC05Uf",
+        "model": "glm-5.3-highspeed"
+      },
+      "human_author": "Walter Fan <walter.fan@zoom.us>"
+    },
+    "s_88edaab65657e7": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a187ea-306b-7d00-b9fb-10ed71fda860",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Walter Fan <walter.fan@zoom.us>"
+    },
+    "s_d6cdef853a9cd2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a196ee-5dad-7cf0-9cdd-0ae4c21b045d",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Walter Fan <walter.fan@zoom.us>"
+    }
+  }
+}
