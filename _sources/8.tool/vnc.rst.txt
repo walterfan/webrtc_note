@@ -1,0 +1,84 @@
+########################
+VNC vs. RDP
+########################
+
+
+.. include:: ../links.ref
+.. include:: ../tags.ref
+.. include:: ../abbrs.ref
+
+============ ==========================
+**Abstract** VNC vs. RDP 远程桌面
+**Authors**  Walter Fan
+**Status**   v1
+**Updated**  |date|
+============ ==========================
+
+
+
+.. contents::
+   :local:
+
+
+Overview
+=========================
+
+RDP
+-------------------------
+Remote Desktop Protocol, or RDP, is a proprietary protocol that allows its users to graphically control a remote computer. 
+
+RDP is usually intended for 1:1 usage, and many remote computers can share the resources of a main computer through different profiles. Being Microsoft’s proprietary protocol, RDP  works only with Windows systems, although the client is available for nearly all operating systems such as Mac, Android, and Linux.  
+
+VNC
+-------------------------
+Virtual Network Computing, or VNC, is a graphical desktop sharing system that lets its users remotely control a computer while the main user can interact and watch. It is pixel-based, which means it is more flexible than RDP. 
+
+VNC is platform-independent, which means it can easily be used across Mac, Windows, Linux, Raspberry Pi, and other platforms to share a desktop across different computers, and there are no limits in using VNC applications to connect to different computers on different platforms.
+
+
+Tight VNC on Ubuntu
+=========================
+
+
+.. code-block:: bash
+
+   sudo apt update
+   # select default display manager
+   sudo apt install -y xfce4 xfce4-goodies
+   sudo apt install -y tightvncserver
+   vncserver   #set password
+   vncserver -kill :1
+
+   mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+   vim +x ~/.vnc/xstartup # set GUI
+   chmod +x ~/.vnc/xstartup
+   vncserver # start it again
+
+xstartup 内容如下
+
+.. code-block::
+
+   #!/bin/bash
+   xrdb $HOME/.Xresources
+   startxfce4 &
+
+
+you may need to use xfe-terminal instead of the terminal emulator because it needs d-bus
+
+
+novnc
+=========================
+
+* quick steps
+
+.. code-block::
+
+   apt -y install novnc python3-websockify python3-numpy
+   openssl req -x509 -nodes -newkey rsa:3072 -keyout novnc.pem -out novnc.pem -days 3650
+   websockify -D --web=/usr/share/novnc/ --cert=/home/ubuntu/novnc.pem 6080 localhost:5901
+
+Reference
+=========================
+* https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-20-04
+* https://serverspace.io/support/help/install-tightvnc-server-on-ubuntu-20-04/
+* https://discover.realvnc.com/blog/vnc-vs-rdp-which-remote-desktop-tool-is-best
